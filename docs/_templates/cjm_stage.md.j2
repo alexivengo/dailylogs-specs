@@ -1,0 +1,40 @@
+# CJM Stage: {{ stage.id or stage.stage_id }} <button class="copy-link" aria-label="Copy page link" onclick="window.spechubCopyLink && window.spechubCopyLink()">🔗 Copy link</button>
+
+{{ stage.title or stage.name or '' }}
+
+<p class="badges">
+  <span class="badge version">v{{ version }}</span>
+  <span class="badge build">{{ build_info.timestamp }} · <a href="{{ REPO_URL }}/commits/{{ REPO_BRANCH }}" target="_blank" rel="noopener" class="sha">{{ build_info.git_sha }}</a></span>
+  {% if schema_ok is sameas true %}
+  <span class="badge schema ok">Schema OK</span>
+  {% elif schema_ok is sameas false %}
+  <span class="badge schema failed">Schema failed</span>
+  {% else %}
+  <span class="badge schema unknown">Schema unknown</span>
+  {% endif %}
+</p>
+
+{% if stage.desc %}
+{{ stage.desc }}
+{% endif %}
+
+{% if stage.barriers %}
+## Barriers
+{% for b in stage.barriers %}- {{ b }}
+{% endfor %}
+{% endif %}
+
+{% if stage.opportunities %}
+## Opportunities
+{% for o in stage.opportunities %}- {{ o }}
+{% endfor %}
+{% endif %}
+
+{% if stage.metrics %}
+## Metrics
+{% for m in stage.metrics %}- {{ m }}
+{% endfor %}
+{% endif %}
+
+---
+✏️ Edit source: {{ edit_href }}

@@ -1,0 +1,112 @@
+name: Build and Deploy SpecHub
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y graphviz
+
+      - name: Build specs artifacts
+        run: |
+          python3 specs/_build/build.py
+
+      - name: Validate traces and set schema badge
+        run: |
+          python3 trace_validator.py
+          if [ $? -eq 0 ]; then echo "SPECHUB_SCHEMA_STATUS=ok" >> $GITHUB_ENV; else echo "SPECHUB_SCHEMA_STATUS=failed" >> $GITHUB_ENV; fi
+
+      - name: Install Python deps (generator)
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install mkdocs mkdocs-material jinja2 pydot graphviz markdownify
+
+      - name: Generate SpecHub docs
+        run: |
+          python3 docs/generate_docs.py
+
+      - name: Build MkDocs site
+        run: |
+          mkdocs build --strict
+
+      - name: Link check (internal only)
+        run: |
+          docker run --rm -v "$PWD/site":/site ghcr.io/lycheeverse/lychee:latest \
+            --offline \
+            --no-progress \
+            --timeout 10 \
+            --verbose \
+            "/site/**/*.html"
+
+      - name: Link check (external; warnings only)
+        continue-on-error: true
+        run: |
+          docker run --rm -v "$PWD/site":/site ghcr.io/lycheeverse/lychee:latest \
+            --no-progress \
+            --timeout 10 \
+            --verbose \
+            --exclude "https://json-schema.org,https://github.com" \
+            "/site/**/*.html"
+
+      - name: Markdown lint (warnings only)
+        continue-on-error: true
+        run: |
+          npm -g i markdownlint-cli2
+          markdownlint-cli2 "docs/**/*.md"
+
+      - name: Upload site artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: site
+
+      - name: Upload diagrams
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: diagrams
+          path: docs/_media/*.svg
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './site'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

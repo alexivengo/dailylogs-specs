@@ -1,0 +1,42 @@
+# PRD Section: {{ section.id or section.section_id }} <button class="copy-link" aria-label="Copy page link" onclick="window.spechubCopyLink && window.spechubCopyLink()">🔗 Copy link</button>
+
+{{ section.title or section.name or '' }}
+
+<p class="badges">
+  <span class="badge version">v{{ version }}</span>
+  <span class="badge build">{{ build_info.timestamp }} · <a href="{{ REPO_URL if REPO_URL else '' }}" onclick="return false;" class="sha">{{ build_info.git_sha }}</a></span>
+  {% if schema_ok is sameas true %}
+  <span class="badge schema ok">Schema OK</span>
+  {% elif schema_ok is sameas false %}
+  <span class="badge schema failed">Schema failed</span>
+  {% else %}
+  <span class="badge schema unknown">Schema unknown</span>
+  {% endif %}
+</p>
+
+{% if section.goals %}
+## Goals
+{% for g in section.goals %}- {{ g }}
+{% endfor %}
+{% endif %}
+
+{% if section.metrics %}
+## Metrics
+{% for m in section.metrics %}- {{ m }}
+{% endfor %}
+{% endif %}
+
+{% if section.acceptance %}
+## Acceptance
+{% for a in section.acceptance %}- {{ a }}
+{% endfor %}
+{% endif %}
+
+{% if section.refs %}
+## Refs
+{% for r in section.refs %}- {{ r }}
+{% endfor %}
+{% endif %}
+
+---
+✏️ Edit source: {{ edit_href }}

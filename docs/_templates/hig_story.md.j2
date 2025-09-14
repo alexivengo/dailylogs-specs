@@ -1,0 +1,63 @@
+# HIG Patterns for {{ hig_story.story_id }} <button class="copy-link" aria-label="Copy page link" onclick="window.spechubCopyLink && window.spechubCopyLink()">🔗 Copy link</button>
+
+<p class="badges">
+  <span class="badge version">v{{ version }}</span>
+  <span class="badge build">{{ build_info.timestamp }} · <a href="{{ REPO_URL }}/commit/{{ build_info.git_sha }}" target="_blank" rel="noopener" class="sha">{{ build_info.git_sha }}</a></span>
+  {% if schema_ok is sameas true %}
+  <span class="badge schema ok">Schema OK</span>
+  {% elif schema_ok is sameas false %}
+  <span class="badge schema failed">Schema failed</span>
+  {% else %}
+  <span class="badge schema unknown">Schema unknown</span>
+  {% endif %}
+</p>
+
+{{ hig_story.title or '' }}
+
+**Role:** {{ hig_story.role }}  
+**Value:** {{ hig_story.value }}
+
+## Candidates
+{% for c in hig_story.candidates %}
+### {{ c.title }} (`{{ c.pattern_id }}`)
+- Action: {{ c.action }}
+- HIG sections:
+{% for s in c.hig_sections %}  - {{ s }}
+{% endfor %}
+- SwiftUI primitives:
+{% for p in c.swiftui_primitives %}  - `{{ p }}`
+{% endfor %}
+- Pros:
+{% for p in c.pros %}  - {{ p }}
+{% endfor %}
+- Cons:
+{% for p in c.cons %}  - {{ p }}
+{% endfor %}
+- Accessibility notes:
+{% for a in c.accessibility_notes %}  - {{ a }}
+{% endfor %}
+- Common mistakes:
+{% for m in c.common_mistakes %}  - {{ m }}
+{% endfor %}
+- Scores: fit {{ c.scores.fit }}, load {{ c.scores.load }}, consistency {{ c.scores.consistency }}, a11y {{ c.scores.accessibility }}, risk {{ c.scores.risk }}, total {{ c.scores.total }}
+- Refs:
+  - PRD: {{ ", ".join(c.refs.prd_ids or []) }}
+  - CJM: {{ ", ".join(c.refs.cjm_ids or []) }}
+  - Flow: {{ ", ".join(c.refs.flow_nodes or []) }}
+  - Story: {{ c.refs.user_story_id }}
+
+{% endfor %}
+
+{% if hig_story.recommendation %}
+## Recommendation
+- Best fit: {{ ", ".join(hig_story.recommendation.best_fit or []) }}
+- Rationale: {{ hig_story.recommendation.rationale }}
+- Refs:
+  - PRD: {{ ", ".join(hig_story.recommendation.refs.prd_ids or []) }}
+  - CJM: {{ ", ".join(hig_story.recommendation.refs.cjm_ids or []) }}
+  - Flow: {{ ", ".join(hig_story.recommendation.refs.flow_nodes or []) }}
+  - Story: {{ hig_story.recommendation.refs.user_story_id }}
+{% endif %}
+
+---
+✏️ Edit source: {{ edit_href }}

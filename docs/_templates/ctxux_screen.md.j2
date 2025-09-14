@@ -1,0 +1,44 @@
+# Contextual UX: {{ screen.id }} <button class="copy-link" aria-label="Copy page link" onclick="window.spechubCopyLink && window.spechubCopyLink()">🔗 Copy link</button>
+
+{{ screen.title or '' }}
+
+<p class="badges">
+  <span class="badge version">v{{ version }}</span>
+  <span class="badge build">{{ build_info.timestamp }} · <a href="{{ REPO_URL }}/commit/{{ build_info.git_sha }}" target="_blank" rel="noopener" class="sha">{{ build_info.git_sha }}</a></span>
+  {% if schema_ok is sameas true %}
+  <span class="badge schema ok">Schema OK</span>
+  {% elif schema_ok is sameas false %}
+  <span class="badge schema failed">Schema failed</span>
+  {% else %}
+  <span class="badge schema unknown">Schema unknown</span>
+  {% endif %}
+</p>
+{% if screen.desc %}
+{{ screen.desc }}
+{% endif %}
+
+{% if screen.local_principles %}
+## Local Principles
+{% for lp in screen.local_principles %}- **{{ lp.id }} — {{ lp.title }}**
+  - Rationale: {{ lp.rationale }}
+  - Acceptance:
+{% for a in lp.acceptance %}    - {{ a }}
+{% endfor %}
+  - Telemetry:
+{% for t in lp.telemetry %}    - `{{ t }}`
+{% endfor %}
+  - Global: {{ ", ".join(lp.global_principle_ids or []) }}
+  - Stories: {{ ", ".join(lp.user_story_ids or []) }}
+{% endfor %}
+{% endif %}
+
+{% if screen.refs %}
+## Refs
+{% for k, vals in screen.refs.items() %}- **{{ k }}**:
+{% for v in vals %}  - {{ v }}
+{% endfor %}
+{% endfor %}
+{% endif %}
+
+---
+✏️ Edit source: {{ edit_href }}
