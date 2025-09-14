@@ -204,7 +204,8 @@ def render_index(env: Environment, artifacts: Dict[str, Any], graph: Dict[str, A
     )
     write_file(DOCS_DIR / "index.md", content)
     # Persist build info for footer injection
-    write_file(DOCS_DIR / "assets" / "build.json", json.dumps(bi))
+    build_meta = {**bi, "repo_url": REPO_URL or "", "branch": REPO_BRANCH}
+    write_file(DOCS_DIR / "assets" / "build.json", json.dumps(build_meta))
 
 
 def render_prd(env: Environment, prd: Dict[str, Any], graph: Dict[str, Any]) -> None:
@@ -603,6 +604,7 @@ def write_mkdocs_yaml() -> None:
     cache_bust = bi.get("git_sha", "dev")
     base = f"""
 site_name: SpecHub
+site_url: https://alexivengo.github.io/dailylogs-specs/
 site_description: Specification Hub
 theme:
   name: material

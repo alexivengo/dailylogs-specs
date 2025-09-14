@@ -6,6 +6,8 @@ theme:
   features:
     - navigation.instant
     - navigation.tracking
+    - navigation.tabs
+    - navigation.indexes
     - content.code.copy
     - search.suggest
   palette:
@@ -21,6 +23,10 @@ markdown_extensions:
 extra:
   generator: spechub
 # We add custom 'Edit source' links inside pages instead of using edit_uri
+extra_javascript:
+  - assets/javascripts/spechub.js?v=c109b0e
+extra_css:
+  - assets/stylesheets/spechub.css?v=c109b0e
 nav:
   - Overview: index.md
   - Orphans: orphans.md
