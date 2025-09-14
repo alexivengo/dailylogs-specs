@@ -1,0 +1,120 @@
+{
+  "$schema": "../../_schemas/hig_story_candidates.schema.json",
+  "story_id": "us-13",
+  "title": "реестр документов с поиском/фильтрами и офлайн-доступом",
+  "role": "руководитель стройплощадки",
+  "value": "быстро находить нужную документацию",
+  "core_actions": [
+    "Browse & search docs",
+    "Offline opening"
+  ],
+  "candidates": [
+    {
+      "action": "Browse & search",
+      "pattern_id": "list-searchable",
+      "title": "List with .searchable and Section headers",
+      "hig_sections": [
+        "Navigation > Search",
+        "Views > Lists"
+      ],
+      "swiftui_primitives": [
+        "List",
+        ".searchable",
+        "Section",
+        "Toolbar"
+      ],
+      "pros": [
+        "Native, performant filtering; sectioned info"
+      ],
+      "cons": [
+        "Custom tag logic needed"
+      ],
+      "accessibility_notes": [
+        "Announce result counts; support DT"
+      ],
+      "common_mistakes": [
+        "No debouncing causing jank"
+      ],
+      "scores": {
+        "fit": 5,
+        "load": 5,
+        "consistency": 5,
+        "accessibility": 5,
+        "risk": 4,
+        "total": 24
+      },
+      "refs": {
+        "prd_ids": [
+          "4_3",
+          "5",
+          "8",
+          "11"
+        ],
+        "cjm_ids": [],
+        "flow_nodes": [],
+        "user_story_id": "us-13"
+      }
+    },
+    {
+      "action": "Offline continuity",
+      "pattern_id": "local-cache-list",
+      "title": "Open cached docs offline; Lazy list",
+      "hig_sections": [
+        "Data Display > Lists"
+      ],
+      "swiftui_primitives": [
+        "List",
+        "LazyVStack"
+      ],
+      "pros": [
+        "Works offline; incremental load"
+      ],
+      "cons": [
+        "Requires cache policy & status UI"
+      ],
+      "accessibility_notes": [
+        "Explicit 'Offline' badge/state"
+      ],
+      "common_mistakes": [
+        "Silent failure opening file"
+      ],
+      "scores": {
+        "fit": 5,
+        "load": 4,
+        "consistency": 4,
+        "accessibility": 5,
+        "risk": 3,
+        "total": 21
+      },
+      "refs": {
+        "prd_ids": [
+          "4_3",
+          "5",
+          "8",
+          "11"
+        ],
+        "cjm_ids": [],
+        "flow_nodes": [],
+        "user_story_id": "us-13"
+      }
+    }
+  ],
+  "recommendation": {
+    "best_fit": [
+      "list-searchable",
+      "local-cache-list"
+    ],
+    "rationale": "Meets perf and offline SLAs with clear UI.",
+    "refs": {
+      "prd_ids": [
+        "4_3",
+        "5",
+        "8",
+        "11"
+      ],
+      "cjm_ids": [],
+      "flow_nodes": [],
+      "user_story_id": "us-13"
+    }
+  }
+}

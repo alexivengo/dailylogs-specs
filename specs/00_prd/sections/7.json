@@ -1,0 +1,12 @@
+{
+  "id": "7",
+  "title": "Навигация и UX",
+  "desc": "NavigationStack с enum Route; простые пути; TipKit для пустых состояний.",
+  "scope": "mvp",
+  "requirements": [
+    "Маршрут: Projects → ProjectDashboard → (DailyCalendar → DayLog → EntryEditor/ReportPreview) ∥ Documents → Gallery",
+    "Цветовые статусы дня: черновик/подписан",
+    "Крупные элементы управления, минимум вложенности",
+    "TipKit для обучения в пустых состояниях"
+  ]
+}

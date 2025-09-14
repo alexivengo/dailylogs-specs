@@ -1,0 +1,118 @@
+{
+  "$schema": "../../_schemas/hig_story_candidates.schema.json",
+  "story_id": "us-16",
+  "title": "локализованные строки, форматы дат/единиц и шаблон имени файла",
+  "role": "руководитель стройплощадки",
+  "value": "отчёты и UI понятны",
+  "core_actions": [
+    "Localize UI & formats",
+    "Generate filename"
+  ],
+  "candidates": [
+    {
+      "action": "Localize UI & formats",
+      "pattern_id": "string-localized",
+      "title": "String(localized:) + FormatStyle/Date.FormatStyle",
+      "hig_sections": [
+        "Internationalization"
+      ],
+      "swiftui_primitives": [
+        "String(localized:)",
+        "FormatStyle",
+        "Date.FormatStyle"
+      ],
+      "pros": [
+        "Handles plurals/regions correctly"
+      ],
+      "cons": [
+        "Coverage/testing work"
+      ],
+      "accessibility_notes": [
+        "VO and formats in user locale"
+      ],
+      "common_mistakes": [
+        "Hardcoded strings/format"
+      ],
+      "scores": {
+        "fit": 5,
+        "load": 5,
+        "consistency": 5,
+        "accessibility": 5,
+        "risk": 4,
+        "total": 24
+      },
+      "refs": {
+        "prd_ids": [
+          "10",
+          "11"
+        ],
+        "cjm_ids": [],
+        "flow_nodes": [
+          "export-generate"
+        ],
+        "user_story_id": "us-16"
+      }
+    },
+    {
+      "action": "Filename template",
+      "pattern_id": "export-filename",
+      "title": "Sanitized filename template using Date.FormatStyle",
+      "hig_sections": [
+        "Internationalization"
+      ],
+      "swiftui_primitives": [
+        "String interpolation",
+        "Date.FormatStyle"
+      ],
+      "pros": [
+        "Consistent report filenames"
+      ],
+      "cons": [
+        "Sanitization & privacy needed"
+      ],
+      "accessibility_notes": [
+        "Avoid PII; consistent separators"
+      ],
+      "common_mistakes": [
+        "Locale-inappropriate characters in filesystem"
+      ],
+      "scores": {
+        "fit": 5,
+        "load": 4,
+        "consistency": 5,
+        "accessibility": 4,
+        "risk": 4,
+        "total": 22
+      },
+      "refs": {
+        "prd_ids": [
+          "10",
+          "11"
+        ],
+        "cjm_ids": [],
+        "flow_nodes": [
+          "export-generate"
+        ],
+        "user_story_id": "us-16"
+      }
+    }
+  ],
+  "recommendation": {
+    "best_fit": [
+      "string-localized",
+      "export-filename"
+    ],
+    "rationale": "Meets i18n expectations for UI and artifacts.",
+    "refs": {
+      "prd_ids": [
+        "10",
+        "11"
+      ],
+      "cjm_ids": [],
+      "flow_nodes": [
+        "export-generate"
+      ],
+      "user_story_id": "us-16"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "id": "5",
+  "title": "Нефункциональные требования и стандарты",
+  "desc": "Платформа, архитектура, состояние, данные, сеть, DI, логирование, доступность, зависимости, тестирование.",
+  "scope": "mvp",
+  "requirements": [
+    "iOS 18+; iPhone-only",
+    "SwiftUI-only UI; дизайн‑токены и каталоги ассетов",
+    "Архитектура: MV (Model–View), навигация только во View",
+    "Состояние: Observation (@Observable/@State/@Binding/@Environment)",
+    "SwiftData @Model; единый save() на действие; @MainActor",
+    "Swift Concurrency (async/await, AsyncSequence)",
+    "URLSession + URLComponents; HTTPS-only; ATS on",
+    "DI через init/@Environment; без синглтонов",
+    "os.Logger; минимальная телеметрия",
+    "Доступность и i18n: WCAG AA, Dynamic Type, локализация",
+    "SPM-only; версии фиксированы; без тяжёлых бинарных SDK",
+    "Юнит + снапшот‑тесты; зелёный CI",
+    "Конфиги/секреты вне репо; Keychain для учётных данных",
+    "Фичефлаги/килл‑свитч для рискованных возможностей"
+  ]
+}

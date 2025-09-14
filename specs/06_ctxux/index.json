@@ -1,0 +1,11 @@
+{
+  "$schema": "../_schemas/ctxux.schema.json",
+  "version": "1.0.1",
+  "meta": {
+    "context": [
+      "documents-view",
+      "gallery"
+    ]
+  },
+  "screens": []
+}

@@ -1,0 +1,12 @@
+{
+  "$id": "hig_candidates.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["version", "governing_rules", "source_files"],
+  "properties": {
+    "version": {"type": "string"},
+    "governing_rules": {"type": "array", "items": {"type": "string"}},
+    "source_files": {"type": "array", "items": {"type": "string"}},
+    "stories": {"type": "object"}
+  }
+}

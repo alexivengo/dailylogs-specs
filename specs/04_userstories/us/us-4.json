@@ -1,0 +1,69 @@
+{
+  "story_id": "us-4",
+  "epic_id": "epic-2",
+  "role": "руководитель стройплощадки",
+  "capability": "«Сохранить и добавить ещё»",
+  "value": "ускорить ввод повторяющихся записей",
+  "priority": "high",
+  "status": "proposed",
+  "acceptance_criteria": [
+    "Given редактор записи When жму «Сохранить и добавить ещё» Then запись сохраняется офлайн и открывается новый пустой редактор (FLOW:#entry-editor, FLOW:#save-entry; PRD:#4_2)",
+    "Given включено предзаполнение When открывается новый редактор Then копируются [ASSUMPTION] тип работ/пакет; уникальные поля сбрасываются (PRD:#4_2)",
+    "Given ошибка сохранения When диалог Then доступны «Повторить/Отмена», озвучки корректны (FLOW:#error-entry-save; PRD:#10)"
+  ],
+  "metrics": {
+    "leading": [
+      {
+        "name": "Entry Addition Time",
+        "kpi_ref": "PRD:#11"
+      }
+    ],
+    "lagging": [
+      {
+        "name": "Доля дней с журналом",
+        "kpi_ref": "PRD:#11"
+      }
+    ]
+  },
+  "nfr": {
+    "performance": "Локальный save ≤200 мс",
+    "accessibility": "Порядок фокуса и читабельные ярлыки",
+    "localization": "Ошибки и подсказки локализованы"
+  },
+  "dependencies": {
+    "blocked_by": [],
+    "relates_to": []
+  },
+  "risks": [
+    {
+      "desc": "Потеря данных при сбое офлайн",
+      "severity": "high",
+      "refs": [
+        "PRD:#8"
+      ]
+    }
+  ],
+  "refs": [
+    "PRD:#4_2",
+    "PRD:#8",
+    "PRD:#10",
+    "PRD:#11",
+    "CJM:#daily-logging",
+    "FLOW:#entry-editor",
+    "FLOW:#save-entry",
+    "FLOW:#error-entry-save"
+  ],
+  "affects_mot": false,
+  "mot_refs": [],
+  "analytics_events": [
+    "entry_editor_view",
+    "entry_saved"
+  ],
+  "analytics_owner": "Product",
+  "analytics_pii": false,
+  "story_points": 5,
+  "estimate_confidence": "medium",
+  "assumptions": [
+    "Политика предзаполнения будет подтверждена."
+  ]
+}

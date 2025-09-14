@@ -1,0 +1,26 @@
+{
+  "$id": "ux_antipatterns.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["items"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "why_harmful", "severity"],
+        "properties": {
+          "name": {"type": "string"},
+          "why_harmful": {"type": "string"},
+          "severity": {"type": "string", "enum": ["low", "medium", "high"]},
+          "impact_area": {"type": "array", "items": {"type": "string"}},
+          "refs": {"type": "array", "items": {"type": "string"}},
+          "source_principle_ids": {"type": "array", "items": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"}}
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": false
+}

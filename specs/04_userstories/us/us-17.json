@@ -1,0 +1,77 @@
+{
+  "story_id": "us-17",
+  "epic_id": "epic-7",
+  "role": "Product Team",
+  "capability": "события аналитики на ключевых шагах",
+  "value": "измерять Time to Report, % подписанных дней и ошибки экспорта",
+  "priority": "medium",
+  "status": "proposed",
+  "acceptance_criteria": [
+    "Given happy-path When выполняются шаги Then логируются app_launch, project_create_view, entry_saved, report_preview_view, tap_sign, report_signed, report_exported",
+    "Given ошибка экспорта When показан диалог Then логируются export_failed, export_retry, export_abort c (attempt, error_code)",
+    "Given пустое состояние When показано Then логируется empty_state_shown (PRD:#11)"
+  ],
+  "metrics": {
+    "leading": [
+      {
+        "name": "Instrumentation Coverage",
+        "kpi_ref": "PRD:#11"
+      }
+    ],
+    "lagging": [
+      {
+        "name": "Точность KPI-дашбордов",
+        "kpi_ref": "PRD:#11"
+      }
+    ]
+  },
+  "nfr": {
+    "performance": "Неблокирующее логирование",
+    "security_privacy": "Без сторонних SDK и без PII"
+  },
+  "dependencies": {
+    "blocked_by": [],
+    "relates_to": [
+      "us-1",
+      "us-4",
+      "us-9",
+      "us-10"
+    ]
+  },
+  "risks": [
+    {
+      "desc": "Избыточные логи → деградация производительности",
+      "severity": "medium",
+      "refs": []
+    }
+  ],
+  "refs": [
+    "PRD:#11",
+    "FLOW:#app-launch",
+    "FLOW:#report-preview",
+    "FLOW:#report-sign",
+    "FLOW:#lock-day",
+    "FLOW:#export-generate",
+    "FLOW:#export-error"
+  ],
+  "affects_mot": false,
+  "mot_refs": [],
+  "analytics_events": [
+    "app_launch",
+    "project_create_view",
+    "entry_saved",
+    "report_preview_view",
+    "tap_sign",
+    "report_signed",
+    "report_exported",
+    "export_failed",
+    "export_retry",
+    "export_abort",
+    "empty_state_shown"
+  ],
+  "analytics_owner": "Product",
+  "analytics_pii": false,
+  "story_points": 2,
+  "estimate_confidence": "high",
+  "assumptions": []
+}

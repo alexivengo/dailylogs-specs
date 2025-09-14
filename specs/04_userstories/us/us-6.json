@@ -1,0 +1,59 @@
+{
+  "story_id": "us-6",
+  "epic_id": "epic-2",
+  "role": "руководитель стройплощадки",
+  "capability": "прикреплять фото к записи",
+  "value": "визуально документировать прогресс/проблемы",
+  "priority": "medium",
+  "status": "proposed",
+  "acceptance_criteria": [
+    "Given разрешение выдано When нажимаю «Прикрепить фото» Then открывается камера; после подтверждения фото прикрепляется (FLOW:#capture-photo; PRD:#4_2)",
+    "Given фото прикреплено When просматриваю запись Then вижу миниатюру (FLOW:#entry-editor; PRD:#4_2)",
+    "Given слабая сеть When синхронизирую Then сохраняется локально с флагом для аплоада (PRD:#8)"
+  ],
+  "metrics": {
+    "leading": [
+      {
+        "name": "Photo attach rate",
+        "kpi_ref": "PRD:#11"
+      }
+    ],
+    "lagging": [
+      {
+        "name": "Time to Report",
+        "kpi_ref": "PRD:#11"
+      }
+    ]
+  },
+  "nfr": {
+    "performance": "Прикрепление неблокирующее",
+    "security_privacy": "Запрашивать минимум прав",
+    "accessibility": "Озвучки кнопок камеры и подтверждения"
+  },
+  "dependencies": {
+    "blocked_by": [],
+    "relates_to": [
+      "us-7",
+      "us-14"
+    ]
+  },
+  "risks": [],
+  "refs": [
+    "PRD:#4_2",
+    "PRD:#8",
+    "PRD:#11",
+    "FLOW:#entry-editor",
+    "FLOW:#capture-photo"
+  ],
+  "affects_mot": false,
+  "mot_refs": [],
+  "analytics_events": [
+    "photo_captured",
+    "entry_saved"
+  ],
+  "analytics_owner": "Product",
+  "analytics_pii": false,
+  "story_points": 3,
+  "estimate_confidence": "high",
+  "assumptions": []
+}

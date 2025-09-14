@@ -1,0 +1,12 @@
+{
+  "$schema": "../_schemas/cjm.schema.json",
+  "version": "1.0.0",
+  "stages": [
+    "awareness",
+    "evaluation-acquisition",
+    "onboarding-first-project",
+    "daily-logging",
+    "reporting-signoff",
+    "retention-advocacy"
+  ]
+}

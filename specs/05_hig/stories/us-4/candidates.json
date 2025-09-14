@@ -1,0 +1,170 @@
+{
+  "$schema": "../../_schemas/hig_story_candidates.schema.json",
+  "story_id": "us-4",
+  "title": "«Сохранить и добавить ещё»",
+  "role": "руководитель стройплощадки",
+  "value": "ускорить ввод повторяющихся записей",
+  "core_actions": [
+    "Save current entry & open new editor",
+    "Handle save error"
+  ],
+  "candidates": [
+    {
+      "action": "Save and create new",
+      "pattern_id": "form-save-add",
+      "title": "Form with explicit 'Save & Add Another' primary action",
+      "hig_sections": [
+        "Controls > Forms",
+        "Bars > Toolbars"
+      ],
+      "swiftui_primitives": [
+        "Form",
+        "Button",
+        "Toolbar .confirmationAction",
+        "FocusState"
+      ],
+      "pros": [
+        "Minimizes taps; predictable focus after reopen",
+        "Supports prefill policy"
+      ],
+      "cons": [
+        "State management complexity"
+      ],
+      "accessibility_notes": [
+        "Announce success; autofocus first field"
+      ],
+      "common_mistakes": [
+        "Prefilling unique identifiers"
+      ],
+      "scores": {
+        "fit": 5,
+        "load": 5,
+        "consistency": 5,
+        "accessibility": 5,
+        "risk": 4,
+        "total": 24
+      },
+      "refs": {
+        "prd_ids": [
+          "4_2",
+          "11"
+        ],
+        "cjm_ids": [],
+        "flow_nodes": [
+          "entry-editor",
+          "save-entry"
+        ],
+        "user_story_id": "us-4"
+      }
+    },
+    {
+      "action": "Save and create new",
+      "pattern_id": "menu-save",
+      "title": "Menu containing Save and Save & Add Another",
+      "hig_sections": [
+        "Controls > Menus",
+        "Bars > Toolbars"
+      ],
+      "swiftui_primitives": [
+        "Menu",
+        "ToolbarItem"
+      ],
+      "pros": [
+        "Keeps toolbar uncluttered"
+      ],
+      "cons": [
+        "Extra tap vs two primary buttons"
+      ],
+      "accessibility_notes": [
+        "Ensure menu labels read well in VO"
+      ],
+      "common_mistakes": [
+        "Hiding critical action in deep menu"
+      ],
+      "scores": {
+        "fit": 4,
+        "load": 4,
+        "consistency": 5,
+        "accessibility": 5,
+        "risk": 4,
+        "total": 22
+      },
+      "refs": {
+        "prd_ids": [
+          "4_2",
+          "11"
+        ],
+        "cjm_ids": [],
+        "flow_nodes": [
+          "entry-editor",
+          "save-entry"
+        ],
+        "user_story_id": "us-4"
+      }
+    },
+    {
+      "action": "Errors",
+      "pattern_id": "alert-entry-retry",
+      "title": "Alert with Retry/Cancel on entry save failure",
+      "hig_sections": [
+        "Feedback > Alerts"
+      ],
+      "swiftui_primitives": [
+        "Alert",
+        "ProgressView"
+      ],
+      "pros": [
+        "Consistent with project save error"
+      ],
+      "cons": [
+        "Modal interruption"
+      ],
+      "accessibility_notes": [
+        "Assertive message; preserve state"
+      ],
+      "common_mistakes": [
+        "Vague messaging"
+      ],
+      "scores": {
+        "fit": 5,
+        "load": 5,
+        "consistency": 5,
+        "accessibility": 5,
+        "risk": 5,
+        "total": 25
+      },
+      "refs": {
+        "prd_ids": [
+          "10",
+          "11"
+        ],
+        "cjm_ids": [],
+        "flow_nodes": [
+          "error-entry-save"
+        ],
+        "user_story_id": "us-4"
+      }
+    }
+  ],
+  "recommendation": {
+    "best_fit": [
+      "form-save-add",
+      "alert-entry-retry"
+    ],
+    "rationale": "Fast loop for repetitive entry creation; reliable failure path.",
+    "refs": {
+      "prd_ids": [
+        "4_2",
+        "10",
+        "11"
+      ],
+      "cjm_ids": [],
+      "flow_nodes": [
+        "entry-editor",
+        "save-entry",
+        "error-entry-save"
+      ],
+      "user_story_id": "us-4"
+    }
+  }
+}

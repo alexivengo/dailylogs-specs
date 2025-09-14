@@ -1,0 +1,38 @@
+{
+  "$schema": "../../_schemas/ctxux_screen.schema.json",
+  "id": "projects-empty",
+  "title": "Пустой список проектов",
+  "desc": "Экран пустого списка с TipKit и CTA создания проекта.",
+  "local_principles": [
+    {
+      "id": "empty-to-create-primary",
+      "title": "Первичный CTA на пустом экране",
+      "rationale": "Первичное действие на пустом экране должно быть максимально явным и доступным.",
+      "acceptance": [
+        "Основной CTA фокусируем по Tab первым",
+        "Подсказка TipKit доступна для скринридера"
+      ],
+      "telemetry": [
+        "empty_state_shown",
+        "empty_state_cta_tapped"
+      ],
+      "related_principles": [
+        "one-screen-one-action",
+        "guide-and-request-in-the-moment"
+      ],
+      "global_principle_ids": [
+        "one-screen-one-action",
+        "guide-and-request-in-the-moment"
+      ],
+      "user_story_ids": ["us-10"]
+    }
+  ],
+  "refs": {
+    "UserStory": ["us-10"],
+    "GlobalPrinciple": [
+      "one-screen-one-action",
+      "guide-and-request-in-the-moment"
+    ],
+    "UserFlow": ["projects-empty", "project-create"]
+  }
+}

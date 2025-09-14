@@ -1,0 +1,45 @@
+{
+  "version": "1.1.0",
+  "domain": "documents",
+  "nodes": [
+    {
+      "id": "documents-view",
+      "type": "screen",
+      "desc": "Список документов проекта с поиском и офлайн-кэшем (provisional).",
+      "inputs": [
+        "project_id"
+      ],
+      "outputs": [],
+      "edges": [
+        {
+          "id": "e-docs-back",
+          "action": "back",
+          "target": "project-dashboard",
+          "refs": [
+            "PRD:#4_3",
+            "CJM:#retention-advocacy"
+          ]
+        }
+      ],
+      "a11y": {
+        "role": "main",
+        "labels": [
+          "Документы"
+        ],
+        "focus_order": [],
+        "keyboard": "Стрелки — навигация; Enter — открыть",
+        "announcements": "Открыт список документов.",
+        "live_region": "polite"
+      },
+      "analytics": [
+        "documents_search"
+      ],
+      "refs": [
+        "PRD:#4_3",
+        "PRD:#5",
+        "PRD:#8",
+        "CJM:#retention-advocacy"
+      ]
+    }
+  ]
+}

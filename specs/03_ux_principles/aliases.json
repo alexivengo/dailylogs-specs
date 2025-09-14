@@ -1,0 +1,19 @@
+{
+  "aliases": [
+    {
+      "alias": "accessibility-as-constraint",
+      "canonical_id": "honor-wcag-dynamic-type-focus-targets",
+      "note": "Use explicit WCAG/Dynamic Type/focus/target phrasing"
+    },
+    {
+      "alias": "prevent-dont-punish",
+      "canonical_id": "guide-and-request-in-the-moment",
+      "note": "Prefer proactive guidance over post-factum errors"
+    },
+    {
+      "alias": "offline-first",
+      "canonical_id": "offline-first-graceful-fallback",
+      "note": "Clarify behavior for detection, manual input, and status signaling"
+    }
+  ]
+}

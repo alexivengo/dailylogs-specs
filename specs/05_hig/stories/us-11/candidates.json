@@ -1,0 +1,118 @@
+{
+  "$schema": "../../_schemas/hig_story_candidates.schema.json",
+  "story_id": "us-11",
+  "title": "альтернативные форматы экспорта (CSV)",
+  "role": "руководитель стройплощадки",
+  "value": "делиться табличными данными",
+  "core_actions": [
+    "Select alternative format"
+  ],
+  "candidates": [
+    {
+      "action": "Select alternative format",
+      "pattern_id": "picker-menu-format",
+      "title": "Picker inside Menu",
+      "hig_sections": [
+        "Controls > Menus",
+        "Controls > Pickers"
+      ],
+      "swiftui_primitives": [
+        "Menu",
+        "Picker"
+      ],
+      "pros": [
+        "Compact & scalable; consistent with export"
+      ],
+      "cons": [
+        "Hidden behind menu"
+      ],
+      "accessibility_notes": [
+        "Announce value change"
+      ],
+      "common_mistakes": [
+        "Unlocalized labels"
+      ],
+      "scores": {
+        "fit": 5,
+        "load": 5,
+        "consistency": 5,
+        "accessibility": 5,
+        "risk": 4,
+        "total": 24
+      },
+      "refs": {
+        "prd_ids": [
+          "4_2",
+          "10",
+          "11"
+        ],
+        "cjm_ids": [],
+        "flow_nodes": [
+          "export-generate"
+        ],
+        "user_story_id": "us-11"
+      }
+    },
+    {
+      "action": "Select alternative format",
+      "pattern_id": "segmented-pick",
+      "title": "Segmented Picker for 2–3 formats",
+      "hig_sections": [
+        "Controls > Segmented Controls"
+      ],
+      "swiftui_primitives": [
+        "Picker(.segmented)"
+      ],
+      "pros": [
+        "High visibility & speed"
+      ],
+      "cons": [
+        "Doesn't scale to many options"
+      ],
+      "accessibility_notes": [
+        "Ensure readable labels; sufficient spacing"
+      ],
+      "common_mistakes": [
+        "Too many segments"
+      ],
+      "scores": {
+        "fit": 4,
+        "load": 4,
+        "consistency": 5,
+        "accessibility": 5,
+        "risk": 4,
+        "total": 22
+      },
+      "refs": {
+        "prd_ids": [
+          "4_2",
+          "10",
+          "11"
+        ],
+        "cjm_ids": [],
+        "flow_nodes": [
+          "export-generate"
+        ],
+        "user_story_id": "us-11"
+      }
+    }
+  ],
+  "recommendation": {
+    "best_fit": [
+      "picker-menu-format"
+    ],
+    "rationale": "Menu+Picker scales and stays compact.",
+    "refs": {
+      "prd_ids": [
+        "4_2",
+        "10",
+        "11"
+      ],
+      "cjm_ids": [],
+      "flow_nodes": [
+        "export-generate"
+      ],
+      "user_story_id": "us-11"
+    }
+  }
+}

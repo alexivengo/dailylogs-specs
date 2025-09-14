@@ -1,0 +1,59 @@
+{
+  "version": "1.1.0",
+  "entities": {
+    "weather": {
+      "properties": {
+        "temperatureC": {
+          "type": "number"
+        },
+        "condition": {
+          "type": "string"
+        }
+      }
+    },
+    "workDate": {
+      "properties": {
+        "iso": {
+          "type": "string"
+        },
+        "isLocked": {
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  "extracted_keys": [
+    "day_date",
+    "day_status",
+    "entry_data",
+    "entry_id",
+    "entry_type",
+    { "name": "entries_count", "coverage": "optional" },
+    "error_code",
+    "export_dest",
+    "export_format",
+    "file_name",
+    "has_projects",
+    "is_online",
+    "permission_status",
+    "photo_id",
+    "project_data",
+    "project_id",
+    "project_location",
+    "project_name",
+    "report_preview",
+    "selected_date",
+    "signature_blob",
+    "signed_at",
+    "signed_pdf_checksum",
+    "signer_name",
+    "source",
+    "weather_data",
+    "weather_manual",
+    "weather_precip_mm",
+    "weather_provider",
+    "weather_source",
+    "weather_temp_c",
+    "weather_wind_ms"
+  ]
+}

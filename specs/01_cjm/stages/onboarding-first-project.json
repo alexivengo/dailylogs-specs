@@ -1,0 +1,129 @@
+{
+  "id": "onboarding-first-project",
+  "title": "Первый запуск и создание проекта",
+  "personas": [
+    "site-manager"
+  ],
+  "segments": [
+    "smb-contractor"
+  ],
+  "touchpoints": [
+    "mobile.app.first_launch",
+    "mobile.app.project_create",
+    "mobile.app.ui_tipkit",
+    "mobile.app.welcome"
+  ],
+  "emotions": [
+    "надежда на быстрый старт",
+    "облегчение при минимуме полей",
+    "тревога из-за длинной настройки"
+  ],
+  "expectations": [
+    "минимум обязательных полей",
+    "понятный следующий шаг на пустых экранах",
+    "создание проекта ≤1–2 минут"
+  ],
+  "barriers": [
+    {
+      "type": "friction",
+      "desc": "Перегруженная форма создания проекта увеличивает когнитивную нагрузку.",
+      "severity": "high",
+      "confidence": "high",
+      "refs": [
+        "PRD:#4_1"
+      ]
+    },
+    {
+      "type": "time",
+      "desc": "Длинный и неотключаемый туториал отнимает время.",
+      "severity": "medium",
+      "confidence": "medium",
+      "refs": [
+        "Persona:#site-manager"
+      ]
+    },
+    {
+      "type": "understanding",
+      "desc": "Пустой первый экран без явного CTA к созданию проекта.",
+      "severity": "high",
+      "confidence": "high",
+      "refs": [
+        "PRD:#7"
+      ]
+    }
+  ],
+  "opportunities": [
+    {
+      "type": "quick_win",
+      "desc": "TipKit-подсказки в пустых состояниях вместо блокирующего туториала.",
+      "effort": "low",
+      "impact": "high",
+      "confidence": "high",
+      "rationale": "Обучает «в моменте», ускоряет активацию.",
+      "model": "ICE",
+      "components": {
+        "impact": 5,
+        "confidence": 4,
+        "ease": 5
+      },
+      "score": 100,
+      "refs": [
+        "PRD:#7"
+      ]
+    },
+    {
+      "type": "strategic",
+      "desc": "Создание «проекта по имени» — остальные поля позже в дашборде.",
+      "effort": "medium",
+      "impact": "high",
+      "confidence": "medium",
+      "rationale": "Резко снижает трение и time-to-value.",
+      "model": "ICE",
+      "components": {
+        "impact": 5,
+        "confidence": 4,
+        "ease": 4
+      },
+      "score": 80,
+      "refs": [
+        "PRD:#4_1"
+      ]
+    }
+  ],
+  "moment_of_truth": {
+    "is_mot": true,
+    "why": "Первый успешный проект подтверждает ценность и предотвращает ранний churn.",
+    "key_metric": "Onboarding Completion Rate",
+    "risk_if_failed": "Ранний отказ, отрицательный отзыв.",
+    "test_method": "A/B: минимальная vs. полная форма проекта."
+  },
+  "metrics": {
+    "leading": [
+      {
+        "name": "Time to First Project",
+        "type": "leading",
+        "definition": "Среднее время от первого запуска до сохранения первого проекта.",
+        "unit": "seconds",
+        "kpi_ref": "PRD:#11",
+        "refs": [
+          "PRD:#4_1"
+        ]
+      }
+    ],
+    "lagging": [
+      {
+        "name": "Onboarding Completion Rate",
+        "type": "lagging",
+        "definition": "Доля новых пользователей, создавших первый проект.",
+        "unit": "percentage",
+        "kpi_ref": "PRD:#11"
+      }
+    ]
+  },
+  "refs": [
+    "PRD:#4_1",
+    "PRD:#7",
+    "Persona:#site-manager",
+    "Segment:#smb-contractor"
+  ]
+}

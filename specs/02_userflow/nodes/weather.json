@@ -1,0 +1,130 @@
+{
+  "version": "1.1.0",
+  "domain": "weather",
+  "nodes": [
+    {
+      "id": "fetch-weather",
+      "type": "system",
+      "desc": "Автозаполнение погоды через сеть (URLSession). В случае сбоя — остаётся ручной ввод.",
+      "inputs": [
+        "selected_date",
+        "project_location"
+      ],
+      "outputs": [
+        "weather_data",
+        "weather_temp_c",
+        "weather_wind_ms",
+        "weather_precip_mm",
+        "weather_provider",
+        "weather_source"
+      ],
+      "edges": [
+        {
+          "id": "e-weather-success",
+          "action": "handle_success",
+          "target": "day-log-populated",
+          "effects": [
+            "set_weather_auto"
+          ],
+          "analytics": [
+            "weather_fetched"
+          ],
+          "refs": [
+            "PRD:#8",
+            "CJM:#daily-logging"
+          ]
+        },
+        {
+          "id": "e-weather-fail",
+          "action": "handle_error",
+          "target": "day-log-populated",
+          "analytics": [
+            "weather_fetched"
+          ],
+          "timeout_ms": 8000,
+          "refs": [
+            "PRD:#8",
+            "CJM:#daily-logging"
+          ]
+        }
+      ],
+      "system_events": [
+        "loading",
+        "timeout",
+        "retry"
+      ],
+      "a11y": {
+        "role": "system",
+        "labels": [],
+        "focus_order": [],
+        "keyboard": "N/A",
+        "announcements": "Получаем погоду…",
+        "live_region": "polite"
+      },
+      "analytics": [
+        "weather_fetched"
+      ],
+      "refs": [
+        "PRD:#8",
+        "CJM:#daily-logging"
+      ]
+    },
+    {
+      "id": "manual-weather",
+      "type": "screen",
+      "desc": "Экран ручного ввода погоды: температура, ветер, осадки. Данные сохраняются в день.",
+      "inputs": [],
+      "outputs": [
+        "weather_manual",
+        "weather_temp_c",
+        "weather_wind_ms",
+        "weather_precip_mm",
+        "weather_source"
+      ],
+      "edges": [
+        {
+          "id": "e-weather-submit",
+          "action": "submit",
+          "target": "day-log-populated",
+          "effects": [
+            "set_weather_manual"
+          ],
+          "analytics": [
+            "manual_weather_input"
+          ],
+          "refs": [
+            "PRD:#4_2",
+            "PRD:#8",
+            "CJM:#daily-logging"
+          ]
+        }
+      ],
+      "a11y": {
+        "role": "form",
+        "labels": [
+          "Температура",
+          "Ветер",
+          "Осадки",
+          "Сохранить"
+        ],
+        "focus_order": [
+          "temp_field",
+          "wind_field",
+          "precip_field",
+          "save_button"
+        ],
+        "keyboard": "Return — отправить",
+        "announcements": "Введите погоду вручную.",
+        "live_region": "polite"
+      },
+      "analytics": [
+        "manual_weather_input"
+      ],
+      "refs": [
+        "PRD:#4_2",
+        "PRD:#8",
+        "CJM:#daily-logging"
+      ]
+    }
+  ]
+}

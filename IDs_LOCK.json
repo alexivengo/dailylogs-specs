@@ -1,0 +1,675 @@
+{
+  "policy": {
+    "append_only": true
+  },
+  "ids": {
+    "userflow": {
+      "nodes": [
+        "app-launch",
+        "success-done",
+        "cancel-out",
+        "daily-calendar",
+        "day-entries-decision",
+        "day-log-empty",
+        "day-log-populated",
+        "documents-view",
+        "entry-editor",
+        "save-entry",
+        "error-entry-save",
+        "report-preview",
+        "report-sign",
+        "lock-day",
+        "report-preview-signed",
+        "export-decision",
+        "export-generate",
+        "export-error",
+        "camera-permission",
+        "capture-photo",
+        "camera-permission-error",
+        "gallery",
+        "save-project",
+        "error-save",
+        "future-date-error",
+        "check-network-for-weather",
+        "projects-empty",
+        "project-create",
+        "project-dashboard",
+        "fetch-weather",
+        "manual-weather"
+      ],
+      "edges": [
+        "e-app-start-to-empty",
+        "e-cal-select-today",
+        "e-cal-future-date",
+        "e-day-state-empty",
+        "e-day-state-populated",
+        "e-day-add-entry-empty",
+        "e-weather-manage-empty",
+        "e-day-add-entry-populated",
+        "e-day-open-preview",
+        "e-weather-manage-populated",
+        "e-docs-back",
+        "e-entry-attach-photo",
+        "e-entry-submit",
+        "e-save-and-add-another",
+        "e-save-entry-success",
+        "e-save-entry-validation",
+        "e-save-entry-system-error",
+        "e-entry-retry",
+        "e-entry-cancel",
+        "e-preview-tap-sign",
+        "e-sign-confirm",
+        "e-lock-success",
+        "e-lock-failure",
+        "e-signed-export-pdf",
+        "e-export-format-pdf",
+        "e-export-format-other",
+        "e-export-cancel",
+        "e-export-success",
+        "e-export-error",
+        "e-export-retry",
+        "e-export-abort",
+        "e-cam-granted",
+        "e-cam-denied",
+        "e-photo-success",
+        "e-open-settings",
+        "e-continue-without",
+        "e-gallery-back",
+        "e-save-proj-success",
+        "e-save-proj-failure",
+        "e-save-retry",
+        "e-save-cancel",
+        "e-net-available",
+        "e-net-offline",
+        "e-empty-create",
+        "e-create-submit",
+        "e-create-cancel",
+        "e-dash-open-daily",
+        "e-dash-open-documents",
+        "e-dash-open-gallery",
+        "e-weather-success",
+        "e-weather-fail",
+        "e-weather-submit"
+      ],
+      "events": [
+        "app_launch",
+        "camera_permission_error_view",
+        "continue_without_photo",
+        "daily_calendar_view",
+        "day_log_view",
+        "documents_search",
+        "empty_state_cta_tapped",
+        "empty_state_shown",
+        "entry_create_attempt",
+        "entry_editor_view",
+        "entry_saved",
+        "error_entry_save",
+        "error_project_save",
+        "export_abort",
+        "export_failed",
+        "export_options_view",
+        "export_process_started",
+        "export_retry",
+        "flow_cancel",
+        "flow_success",
+        "gallery_bulk_attach",
+        "manual_weather_input",
+        "open_settings_camera",
+        "open_today",
+        "permission_check_camera",
+        "photo_captured",
+        "project_create_attempt",
+        "project_create_view",
+        "project_dashboard_view",
+        "project_save_retry",
+        "project_saved",
+        "report_exported",
+        "report_preview_signed_view",
+        "report_preview_view",
+        "report_signed",
+        "sheet_presented",
+        "tap_add_entry",
+        "tap_sign",
+        "weather_check",
+        "weather_fetch_fallback",
+        "weather_fetched",
+        "documents_view",
+        "entry_copy_to_day",
+        "gallery_view"
+      ]
+    },
+    "ctxux": {
+      "screens": [
+        "documents-view",
+        "gallery",
+        "export-decision",
+        "manual-weather",
+        "projects-empty"
+      ],
+      "local_principles": [
+        "progressive-disclosure",
+        "clear-default-and-safe-cancel",
+        "fast-primary-action",
+        "minimal-required-input",
+        "empty-to-create-primary"
+      ]
+    },
+    "ux": {
+      "principles": [
+        "explicit-status-signature-locking",
+        "guide-and-request-in-the-moment",
+        "honor-wcag-dynamic-type-focus-targets",
+        "minimize-required-input",
+        "offline-first-graceful-fallback",
+        "one-screen-one-action"
+      ]
+    },
+    "prd": {
+      "sections": [
+        "Resume",
+        "4_1",
+        "4_2",
+        "4_3",
+        "4_4",
+        "5",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11"
+      ]
+    },
+    "cjm": {
+      "stages": [
+        "awareness",
+        "evaluation-acquisition",
+        "onboarding-first-project",
+        "daily-logging",
+        "reporting-signoff",
+        "retention-advocacy"
+      ]
+    }
+  },
+  "status": {
+    "prd:sections:Resume": {
+      "status": "active"
+    },
+    "prd:sections:4_1": {
+      "status": "active"
+    },
+    "prd:sections:4_2": {
+      "status": "active"
+    },
+    "prd:sections:4_3": {
+      "status": "active"
+    },
+    "prd:sections:4_4": {
+      "status": "active"
+    },
+    "prd:sections:5": {
+      "status": "active"
+    },
+    "prd:sections:7": {
+      "status": "active"
+    },
+    "prd:sections:8": {
+      "status": "active"
+    },
+    "prd:sections:9": {
+      "status": "active"
+    },
+    "prd:sections:10": {
+      "status": "active"
+    },
+    "prd:sections:11": {
+      "status": "active"
+    },
+    "cjm:stages:awareness": {
+      "status": "active"
+    },
+    "cjm:stages:evaluation-acquisition": {
+      "status": "active"
+    },
+    "cjm:stages:onboarding-first-project": {
+      "status": "active"
+    },
+    "cjm:stages:daily-logging": {
+      "status": "active"
+    },
+    "cjm:stages:reporting-signoff": {
+      "status": "active"
+    },
+    "cjm:stages:retention-advocacy": {
+      "status": "active"
+    },
+    "userflow:nodes:app-launch": {
+      "status": "active"
+    },
+    "userflow:nodes:success-done": {
+      "status": "active"
+    },
+    "userflow:nodes:cancel-out": {
+      "status": "active"
+    },
+    "userflow:nodes:daily-calendar": {
+      "status": "active"
+    },
+    "userflow:nodes:day-entries-decision": {
+      "status": "active"
+    },
+    "userflow:nodes:day-log-empty": {
+      "status": "active"
+    },
+    "userflow:nodes:day-log-populated": {
+      "status": "active"
+    },
+    "userflow:nodes:documents-view": {
+      "status": "active"
+    },
+    "userflow:nodes:entry-editor": {
+      "status": "active"
+    },
+    "userflow:nodes:save-entry": {
+      "status": "active"
+    },
+    "userflow:nodes:error-entry-save": {
+      "status": "active"
+    },
+    "userflow:nodes:report-preview": {
+      "status": "active"
+    },
+    "userflow:nodes:report-sign": {
+      "status": "active"
+    },
+    "userflow:nodes:lock-day": {
+      "status": "active"
+    },
+    "userflow:nodes:report-preview-signed": {
+      "status": "active"
+    },
+    "userflow:nodes:export-decision": {
+      "status": "active"
+    },
+    "userflow:nodes:export-generate": {
+      "status": "active"
+    },
+    "userflow:nodes:export-error": {
+      "status": "active"
+    },
+    "userflow:nodes:camera-permission": {
+      "status": "active"
+    },
+    "userflow:nodes:capture-photo": {
+      "status": "active"
+    },
+    "userflow:nodes:camera-permission-error": {
+      "status": "active"
+    },
+    "userflow:nodes:gallery": {
+      "status": "active"
+    },
+    "userflow:nodes:save-project": {
+      "status": "active"
+    },
+    "userflow:nodes:error-save": {
+      "status": "active"
+    },
+    "userflow:nodes:future-date-error": {
+      "status": "active"
+    },
+    "userflow:nodes:check-network-for-weather": {
+      "status": "active"
+    },
+    "userflow:nodes:projects-empty": {
+      "status": "active"
+    },
+    "userflow:nodes:project-create": {
+      "status": "active"
+    },
+    "userflow:nodes:project-dashboard": {
+      "status": "active"
+    },
+    "userflow:nodes:fetch-weather": {
+      "status": "active"
+    },
+    "userflow:nodes:manual-weather": {
+      "status": "active"
+    },
+    "userflow:edges:e-app-start-to-empty": {
+      "status": "active"
+    },
+    "userflow:edges:e-cal-select-today": {
+      "status": "active"
+    },
+    "userflow:edges:e-cal-future-date": {
+      "status": "active"
+    },
+    "userflow:edges:e-day-state-empty": {
+      "status": "active"
+    },
+    "userflow:edges:e-day-state-populated": {
+      "status": "active"
+    },
+    "userflow:edges:e-day-add-entry-empty": {
+      "status": "active"
+    },
+    "userflow:edges:e-weather-manage-empty": {
+      "status": "active"
+    },
+    "userflow:edges:e-day-add-entry-populated": {
+      "status": "active"
+    },
+    "userflow:edges:e-day-open-preview": {
+      "status": "active"
+    },
+    "userflow:edges:e-weather-manage-populated": {
+      "status": "active"
+    },
+    "userflow:edges:e-docs-back": {
+      "status": "active"
+    },
+    "userflow:edges:e-entry-attach-photo": {
+      "status": "active"
+    },
+    "userflow:edges:e-entry-submit": {
+      "status": "active"
+    },
+    "userflow:edges:e-save-and-add-another": {
+      "status": "active"
+    },
+    "userflow:edges:e-save-entry-success": {
+      "status": "active"
+    },
+    "userflow:edges:e-save-entry-validation": {
+      "status": "active"
+    },
+    "userflow:edges:e-save-entry-system-error": {
+      "status": "active"
+    },
+    "userflow:edges:e-entry-retry": {
+      "status": "active"
+    },
+    "userflow:edges:e-entry-cancel": {
+      "status": "active"
+    },
+    "userflow:edges:e-preview-tap-sign": {
+      "status": "active"
+    },
+    "userflow:edges:e-sign-confirm": {
+      "status": "active"
+    },
+    "userflow:edges:e-lock-success": {
+      "status": "active"
+    },
+    "userflow:edges:e-lock-failure": {
+      "status": "active"
+    },
+    "userflow:edges:e-signed-export-pdf": {
+      "status": "active"
+    },
+    "userflow:edges:e-export-format-pdf": {
+      "status": "active"
+    },
+    "userflow:edges:e-export-format-other": {
+      "status": "active"
+    },
+    "userflow:edges:e-export-cancel": {
+      "status": "active"
+    },
+    "userflow:edges:e-export-success": {
+      "status": "active"
+    },
+    "userflow:edges:e-export-error": {
+      "status": "active"
+    },
+    "userflow:edges:e-export-retry": {
+      "status": "active"
+    },
+    "userflow:edges:e-export-abort": {
+      "status": "active"
+    },
+    "userflow:edges:e-cam-granted": {
+      "status": "active"
+    },
+    "userflow:edges:e-cam-denied": {
+      "status": "active"
+    },
+    "userflow:edges:e-photo-success": {
+      "status": "active"
+    },
+    "userflow:edges:e-open-settings": {
+      "status": "active"
+    },
+    "userflow:edges:e-continue-without": {
+      "status": "active"
+    },
+    "userflow:edges:e-gallery-back": {
+      "status": "active"
+    },
+    "userflow:edges:e-save-proj-success": {
+      "status": "active"
+    },
+    "userflow:edges:e-save-proj-failure": {
+      "status": "active"
+    },
+    "userflow:edges:e-save-retry": {
+      "status": "active"
+    },
+    "userflow:edges:e-save-cancel": {
+      "status": "active"
+    },
+    "userflow:edges:e-net-available": {
+      "status": "active"
+    },
+    "userflow:edges:e-net-offline": {
+      "status": "active"
+    },
+    "userflow:edges:e-empty-create": {
+      "status": "active"
+    },
+    "userflow:edges:e-create-submit": {
+      "status": "active"
+    },
+    "userflow:edges:e-create-cancel": {
+      "status": "active"
+    },
+    "userflow:edges:e-dash-open-daily": {
+      "status": "active"
+    },
+    "userflow:edges:e-dash-open-documents": {
+      "status": "active"
+    },
+    "userflow:edges:e-dash-open-gallery": {
+      "status": "active"
+    },
+    "userflow:edges:e-weather-success": {
+      "status": "active"
+    },
+    "userflow:edges:e-weather-fail": {
+      "status": "active"
+    },
+    "userflow:edges:e-weather-submit": {
+      "status": "active"
+    },
+    "userflow:events:app_launch": {
+      "status": "active"
+    },
+    "userflow:events:camera_permission_error_view": {
+      "status": "active"
+    },
+    "userflow:events:continue_without_photo": {
+      "status": "active"
+    },
+    "userflow:events:daily_calendar_view": {
+      "status": "active"
+    },
+    "userflow:events:day_log_view": {
+      "status": "active"
+    },
+    "userflow:events:documents_search": {
+      "status": "active"
+    },
+    "userflow:events:documents_view": {
+      "status": "active"
+    },
+    "userflow:events:empty_state_cta_tapped": {
+      "status": "active"
+    },
+    "userflow:events:empty_state_shown": {
+      "status": "active"
+    },
+    "userflow:events:entry_copy_to_day": {
+      "status": "active"
+    },
+    "userflow:events:entry_create_attempt": {
+      "status": "active"
+    },
+    "userflow:events:entry_editor_view": {
+      "status": "active"
+    },
+    "userflow:events:entry_saved": {
+      "status": "active"
+    },
+    "userflow:events:error_entry_save": {
+      "status": "active"
+    },
+    "userflow:events:error_project_save": {
+      "status": "active"
+    },
+    "userflow:events:export_abort": {
+      "status": "active"
+    },
+    "userflow:events:export_failed": {
+      "status": "active"
+    },
+    "userflow:events:export_options_view": {
+      "status": "active"
+    },
+    "userflow:events:export_process_started": {
+      "status": "active"
+    },
+    "userflow:events:export_retry": {
+      "status": "active"
+    },
+    "userflow:events:flow_cancel": {
+      "status": "active"
+    },
+    "userflow:events:flow_success": {
+      "status": "active"
+    },
+    "userflow:events:gallery_bulk_attach": {
+      "status": "active"
+    },
+    "userflow:events:gallery_view": {
+      "status": "active"
+    },
+    "userflow:events:manual_weather_input": {
+      "status": "active"
+    },
+    "userflow:events:open_settings_camera": {
+      "status": "active"
+    },
+    "userflow:events:open_today": {
+      "status": "active"
+    },
+    "userflow:events:permission_check_camera": {
+      "status": "active"
+    },
+    "userflow:events:photo_captured": {
+      "status": "active"
+    },
+    "userflow:events:project_create_attempt": {
+      "status": "active"
+    },
+    "userflow:events:project_create_view": {
+      "status": "active"
+    },
+    "userflow:events:project_dashboard_view": {
+      "status": "active"
+    },
+    "userflow:events:project_save_retry": {
+      "status": "active"
+    },
+    "userflow:events:project_saved": {
+      "status": "active"
+    },
+    "userflow:events:report_exported": {
+      "status": "active"
+    },
+    "userflow:events:report_preview_signed_view": {
+      "status": "active"
+    },
+    "userflow:events:report_preview_view": {
+      "status": "active"
+    },
+    "userflow:events:report_signed": {
+      "status": "active"
+    },
+    "userflow:events:sheet_presented": {
+      "status": "active"
+    },
+    "userflow:events:tap_add_entry": {
+      "status": "active"
+    },
+    "userflow:events:tap_sign": {
+      "status": "active"
+    },
+    "userflow:events:weather_check": {
+      "status": "active"
+    },
+    "userflow:events:weather_fetch_fallback": {
+      "status": "active"
+    },
+    "userflow:events:weather_fetched": {
+      "status": "active"
+    },
+    "ctxux:screens:documents-view": {
+      "status": "active"
+    },
+    "ctxux:screens:gallery": {
+      "status": "active"
+    },
+    "ux:principles:explicit-status-signature-locking": {
+      "status": "active"
+    },
+    "ux:principles:guide-and-request-in-the-moment": {
+      "status": "active"
+    },
+    "ux:principles:honor-wcag-dynamic-type-focus-targets": {
+      "status": "active"
+    },
+    "ux:principles:minimize-required-input": {
+      "status": "active"
+    },
+    "ux:principles:offline-first-graceful-fallback": {
+      "status": "active"
+    },
+    "ux:principles:one-screen-one-action": {
+      "status": "active"
+    },
+    "ctxux:screens:export-decision": {
+      "status": "active"
+    },
+    "ctxux:screens:manual-weather": {
+      "status": "active"
+    },
+    "ctxux:screens:projects-empty": {
+      "status": "active"
+    },
+    "ctxux:local_principles:progressive-disclosure": {
+      "status": "active"
+    },
+    "ctxux:local_principles:clear-default-and-safe-cancel": {
+      "status": "active"
+    },
+    "ctxux:local_principles:fast-primary-action": {
+      "status": "active"
+    },
+    "ctxux:local_principles:minimal-required-input": {
+      "status": "active"
+    },
+    "ctxux:local_principles:empty-to-create-primary": {
+      "status": "active"
+    }
+  }
+}

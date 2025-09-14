@@ -1,0 +1,118 @@
+{
+  "$schema": "../../_schemas/hig_story_candidates.schema.json",
+  "story_id": "us-18",
+  "title": "понятная обработка ошибок при создании проекта (Retry/Отмена) с сохранением введённых данных",
+  "role": "пользователь",
+  "value": "не терять прогресс и быстро восстановиться",
+  "core_actions": [
+    "Notify & recover"
+  ],
+  "candidates": [
+    {
+      "action": "Notify & recover",
+      "pattern_id": "alert-retry-cancel",
+      "title": "Alert with Retry/Cancel, state preserved",
+      "hig_sections": [
+        "Feedback > Alerts"
+      ],
+      "swiftui_primitives": [
+        "Alert",
+        "ProgressView"
+      ],
+      "pros": [
+        "Correct severity & blocking semantics",
+        "Focus moves to alert; assertive announcement"
+      ],
+      "cons": [
+        "Text-only; keep copy concise"
+      ],
+      "accessibility_notes": [
+        "Descriptive buttons; live-region assertive; restore focus after dismiss"
+      ],
+      "common_mistakes": [
+        "Non-actionable 'OK' only; overusing alerts"
+      ],
+      "scores": {
+        "fit": 5,
+        "load": 5,
+        "consistency": 5,
+        "accessibility": 5,
+        "risk": 5,
+        "total": 25
+      },
+      "refs": {
+        "prd_ids": [
+          "5",
+          "10",
+          "11"
+        ],
+        "cjm_ids": [],
+        "flow_nodes": [
+          "error-save"
+        ],
+        "user_story_id": "us-18"
+      }
+    },
+    {
+      "action": "Notify & recover",
+      "pattern_id": "confirmation-dialog",
+      "title": "Confirmation dialog with options",
+      "hig_sections": [
+        "Modal presentations > Confirmation dialogs"
+      ],
+      "swiftui_primitives": [
+        "confirmationDialog"
+      ],
+      "pros": [
+        "Compact list of options"
+      ],
+      "cons": [
+        "Less expected for system errors"
+      ],
+      "accessibility_notes": [
+        "Ensure descriptive title; roles"
+      ],
+      "common_mistakes": [
+        "Using for critical failures"
+      ],
+      "scores": {
+        "fit": 3,
+        "load": 4,
+        "consistency": 4,
+        "accessibility": 4,
+        "risk": 4,
+        "total": 19
+      },
+      "refs": {
+        "prd_ids": [
+          "5",
+          "10",
+          "11"
+        ],
+        "cjm_ids": [],
+        "flow_nodes": [
+          "error-save"
+        ],
+        "user_story_id": "us-18"
+      }
+    }
+  ],
+  "recommendation": {
+    "best_fit": [
+      "alert-retry-cancel"
+    ],
+    "rationale": "Critical save failure requires explicit acknowledgement and recovery choice; preserve editor state.",
+    "refs": {
+      "prd_ids": [
+        "5",
+        "10",
+        "11"
+      ],
+      "cjm_ids": [],
+      "flow_nodes": [
+        "error-save"
+      ],
+      "user_story_id": "us-18"
+    }
+  }
+}

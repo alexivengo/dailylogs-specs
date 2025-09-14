@@ -1,0 +1,169 @@
+{
+  "$schema": "../../_schemas/hig_story_candidates.schema.json",
+  "story_id": "us-12",
+  "title": "выбирать дату с запретом будущих",
+  "role": "руководитель стройплощадки",
+  "value": "фиксировать записи только за допустимые дни",
+  "core_actions": [
+    "Pick date (with Today)",
+    "Prevent future dates"
+  ],
+  "candidates": [
+    {
+      "action": "Select date",
+      "pattern_id": "datepicker-graphical",
+      "title": "Graphical DatePicker with Today control, limited to valid range",
+      "hig_sections": [
+        "Controls > Pickers"
+      ],
+      "swiftui_primitives": [
+        "DatePicker(.graphical)",
+        "Toolbar Button 'Today'"
+      ],
+      "pros": [
+        "Localized calendar; prevention via `in:`; fast navigation"
+      ],
+      "cons": [
+        "Limited decoration"
+      ],
+      "accessibility_notes": [
+        "Grid VO; ensure quick Today access"
+      ],
+      "common_mistakes": [
+        "Omitting quick Today"
+      ],
+      "scores": {
+        "fit": 5,
+        "load": 5,
+        "consistency": 5,
+        "accessibility": 5,
+        "risk": 5,
+        "total": 25
+      },
+      "refs": {
+        "prd_ids": [
+          "4_2",
+          "11"
+        ],
+        "cjm_ids": [
+          "daily-logging"
+        ],
+        "flow_nodes": [
+          "daily-calendar"
+        ],
+        "user_story_id": "us-12"
+      }
+    },
+    {
+      "action": "Select date",
+      "pattern_id": "list-dates",
+      "title": "List of dates with Today shortcut",
+      "hig_sections": [
+        "Views > Lists"
+      ],
+      "swiftui_primitives": [
+        "List",
+        "Button"
+      ],
+      "pros": [
+        "Lightweight & simple"
+      ],
+      "cons": [
+        "Not a calendar; less overview"
+      ],
+      "accessibility_notes": [
+        "Clear labels; announce selected date"
+      ],
+      "common_mistakes": [
+        "Unbounded infinite list"
+      ],
+      "scores": {
+        "fit": 4,
+        "load": 4,
+        "consistency": 4,
+        "accessibility": 4,
+        "risk": 4,
+        "total": 20
+      },
+      "refs": {
+        "prd_ids": [
+          "4_2",
+          "11"
+        ],
+        "cjm_ids": [
+          "daily-logging"
+        ],
+        "flow_nodes": [
+          "daily-calendar"
+        ],
+        "user_story_id": "us-12"
+      }
+    },
+    {
+      "action": "Prevent future selection",
+      "pattern_id": "disable-range",
+      "title": "Disable future dates via `in:` on DatePicker",
+      "hig_sections": [
+        "Controls > Pickers"
+      ],
+      "swiftui_primitives": [
+        "DatePicker(.graphical)"
+      ],
+      "pros": [
+        "Prevents errors upfront; VO announces disabled"
+      ],
+      "cons": [
+        "Disabled style may have low contrast in glare"
+      ],
+      "accessibility_notes": [
+        "Supplement with text hint if needed"
+      ],
+      "common_mistakes": [
+        "Ignoring disabled indication"
+      ],
+      "scores": {
+        "fit": 5,
+        "load": 5,
+        "consistency": 5,
+        "accessibility": 5,
+        "risk": 5,
+        "total": 25
+      },
+      "refs": {
+        "prd_ids": [
+          "4_2",
+          "11"
+        ],
+        "cjm_ids": [
+          "daily-logging"
+        ],
+        "flow_nodes": [
+          "future-date-error",
+          "daily-calendar"
+        ],
+        "user_story_id": "us-12"
+      }
+    }
+  ],
+  "recommendation": {
+    "best_fit": [
+      "datepicker-graphical",
+      "disable-range"
+    ],
+    "rationale": "Prevent, don’t punish: close the range and provide a Today jump.",
+    "refs": {
+      "prd_ids": [
+        "4_2",
+        "11"
+      ],
+      "cjm_ids": [
+        "daily-logging"
+      ],
+      "flow_nodes": [
+        "daily-calendar",
+        "future-date-error"
+      ],
+      "user_story_id": "us-12"
+    }
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "id": "explicit-status-signature-locking",
+  "title": "Make day status, signature, and locking explicit",
+  "rationale": "Compliance and trust require visible state transitions and immutable records after locking, with a transparent way to rectify mistakes without altering the original",
+  "example": "The UI clearly indicates signed and locked state and prevents accidental edits while offering a safe, auditable correction path that preserves the original record",
+  "priority": "high",
+  "refs": [
+    "CJM:#reporting-signoff",
+    "HIG:#Feedback",
+    "PRD:#9",
+    "UserFlow:#lock-day"
+  ],
+  "antipatterns": [
+    {
+      "name": "Allowing edits after lock without a clear warning",
+      "why_harmful": "Breaks audit trail and undermines integrity",
+      "severity": "high",
+      "impact_area": [
+        "error_handling",
+        "security",
+        "state_management"
+      ],
+      "refs": [
+        "HIG:#Feedback",
+        "PRD:#9",
+        "UserFlow:#lock-day"
+      ]
+    },
+    {
+      "name": "Failing to provide feedback on data persistence",
+      "why_harmful": "Creates anxiety about unsaved data, especially offline",
+      "severity": "high",
+      "impact_area": [
+        "feedback",
+        "offline_reliability",
+        "state_management"
+      ],
+      "refs": [
+        "PRD:#8",
+        "UserFlow:#save-entry"
+      ]
+    }
+  ]
+}

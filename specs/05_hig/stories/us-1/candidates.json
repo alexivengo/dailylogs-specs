@@ -1,0 +1,185 @@
+{
+  "$schema": "../../_schemas/hig_story_candidates.schema.json",
+  "story_id": "us-1",
+  "title": "создать первый проект по минимальному набору полей",
+  "role": "руководитель стройплощадки",
+  "value": "быстро начать работу и увидеть ценность",
+  "core_actions": [
+    "Open creation surface",
+    "Input & save minimal data"
+  ],
+  "candidates": [
+    {
+      "action": "Open creation surface",
+      "pattern_id": "sheet-create",
+      "title": "Present creation form in a sheet",
+      "hig_sections": [
+        "Modal presentations > Sheets"
+      ],
+      "swiftui_primitives": [
+        "Sheet",
+        "Button"
+      ],
+      "pros": [
+        "Isolates short, single-step task",
+        "Preserves context; easy cancel"
+      ],
+      "cons": [
+        "Gesture dismissal risk"
+      ],
+      "accessibility_notes": [
+        "Trap focus; provide explicit Cancel; large hit targets"
+      ],
+      "common_mistakes": [
+        "Non-dismissible sheet without cause"
+      ],
+      "scores": {
+        "fit": 5,
+        "load": 5,
+        "consistency": 5,
+        "accessibility": 5,
+        "risk": 4,
+        "total": 24
+      },
+      "refs": {
+        "prd_ids": [
+          "4_1",
+          "7",
+          "8",
+          "11"
+        ],
+        "cjm_ids": [
+          "onboarding-first-project"
+        ],
+        "flow_nodes": [
+          "project-create",
+          "save-project"
+        ],
+        "user_story_id": "us-1"
+      }
+    },
+    {
+      "action": "Open creation surface",
+      "pattern_id": "nav-push-create",
+      "title": "Navigation push to creation view",
+      "hig_sections": [
+        "Navigation > Navigation Bars & Stack"
+      ],
+      "swiftui_primitives": [
+        "NavigationStack",
+        "NavigationLink"
+      ],
+      "pros": [
+        "Clear forward progress & back affordance"
+      ],
+      "cons": [
+        "Overkill for a single-step form",
+        "Stack churn"
+      ],
+      "accessibility_notes": [
+        "Clear title; obvious Cancel in toolbar"
+      ],
+      "common_mistakes": [
+        "Hiding Cancel; vague 'Done'"
+      ],
+      "scores": {
+        "fit": 4,
+        "load": 4,
+        "consistency": 5,
+        "accessibility": 5,
+        "risk": 4,
+        "total": 22
+      },
+      "refs": {
+        "prd_ids": [
+          "4_1",
+          "7",
+          "8",
+          "11"
+        ],
+        "cjm_ids": [
+          "onboarding-first-project"
+        ],
+        "flow_nodes": [
+          "project-create",
+          "save-project"
+        ],
+        "user_story_id": "us-1"
+      }
+    },
+    {
+      "action": "Input & save minimal data",
+      "pattern_id": "form-minimal",
+      "title": "Form with single required TextField & Save",
+      "hig_sections": [
+        "Controls > Forms",
+        "Controls > Text Fields"
+      ],
+      "swiftui_primitives": [
+        "Form",
+        "TextField",
+        "Toolbar .confirmationAction",
+        "Alert (on failure)"
+      ],
+      "pros": [
+        "Native validation; inline errors; minimal chrome"
+      ],
+      "cons": [
+        "Can feel heavy if over-sectioned"
+      ],
+      "accessibility_notes": [
+        "Use labels (not placeholders); DT and VO friendly"
+      ],
+      "common_mistakes": [
+        "Placeholder-only labels"
+      ],
+      "scores": {
+        "fit": 5,
+        "load": 5,
+        "consistency": 5,
+        "accessibility": 5,
+        "risk": 5,
+        "total": 25
+      },
+      "refs": {
+        "prd_ids": [
+          "4_1",
+          "7",
+          "8",
+          "11"
+        ],
+        "cjm_ids": [
+          "onboarding-first-project"
+        ],
+        "flow_nodes": [
+          "project-create",
+          "save-project"
+        ],
+        "user_story_id": "us-1"
+      }
+    }
+  ],
+  "recommendation": {
+    "best_fit": [
+      "sheet-create",
+      "form-minimal"
+    ],
+    "rationale": "One screen, one action. Use a sheet with a minimal Form; Alert handles failure; state is preserved.",
+    "refs": {
+      "prd_ids": [
+        "4_1",
+        "7",
+        "8",
+        "11"
+      ],
+      "cjm_ids": [
+        "onboarding-first-project"
+      ],
+      "flow_nodes": [
+        "project-create",
+        "save-project"
+      ],
+      "user_story_id": "us-1"
+    }
+  }
+}

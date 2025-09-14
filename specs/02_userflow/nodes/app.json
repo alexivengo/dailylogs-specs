@@ -1,0 +1,102 @@
+{
+  "version": "1.1.0",
+  "domain": "app",
+  "nodes": [
+    {
+      "id": "app-launch",
+      "type": "system",
+      "desc": "Инициализация приложения, проверка локального стора (SwiftData), определение наличия проектов и статуса сети.",
+      "inputs": [],
+      "outputs": [
+        "has_projects",
+        "is_online"
+      ],
+      "edges": [
+        {
+          "id": "e-app-start-to-empty",
+          "action": "initiate",
+          "target": "projects-empty",
+          "guard": "has_projects == false",
+          "analytics": [
+            "app_launch"
+          ],
+          "refs": [
+            "PRD:#5",
+            "PRD:#7",
+            "PRD:#8",
+            "CJM:#onboarding-first-project"
+          ]
+        }
+      ],
+      "system_events": [
+        "loading",
+        "offline_check"
+      ],
+      "a11y": {
+        "role": "system",
+        "labels": [],
+        "focus_order": [],
+        "keyboard": "N/A",
+        "announcements": "Запуск DailyLogs…",
+        "live_region": "polite"
+      },
+      "analytics": [
+        "app_launch"
+      ],
+      "refs": [
+        "PRD:#5",
+        "PRD:#7",
+        "PRD:#8",
+        "CJM:#onboarding-first-project"
+      ]
+    },
+    {
+      "id": "success-done",
+      "type": "terminator",
+      "result": "success",
+      "desc": "Отчёт успешно экспортирован/поделен. День подписан и заблокирован.",
+      "inputs": [],
+      "outputs": [],
+      "edges": [],
+      "a11y": {
+        "role": "system",
+        "labels": [],
+        "focus_order": [],
+        "keyboard": "N/A",
+        "announcements": "Отчёт успешно отправлен.",
+        "live_region": "polite"
+      },
+      "analytics": [
+        "flow_success"
+      ],
+      "refs": [
+        "PRD:#11",
+        "CJM:#reporting-signoff"
+      ]
+    },
+    {
+      "id": "cancel-out",
+      "type": "terminator",
+      "result": "cancel",
+      "desc": "Пользователь отменил действие и вышел из потока.",
+      "inputs": [],
+      "outputs": [],
+      "edges": [],
+      "a11y": {
+        "role": "system",
+        "labels": [],
+        "focus_order": [],
+        "keyboard": "N/A",
+        "announcements": "Действие отменено.",
+        "live_region": "polite"
+      },
+      "analytics": [
+        "flow_cancel"
+      ],
+      "refs": [
+        "PRD:#7",
+        "CJM:#daily-logging"
+      ]
+    }
+  ]
+}

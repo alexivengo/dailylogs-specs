@@ -1,0 +1,222 @@
+{
+  "version": "1.1.0",
+  "domain": "entries",
+  "nodes": [
+    {
+      "id": "entry-editor",
+      "type": "screen",
+      "desc": "Форма записи: тип/интервалы/кол-во/заметки/вложения. Быстрые режимы: «Сохранить и добавить ещё», «Копировать из истории».",
+      "inputs": [
+        "selected_date"
+      ],
+      "outputs": [
+        "entry_data",
+        "entry_type"
+      ],
+      "edges": [
+        {
+          "id": "e-entry-attach-photo",
+          "action": "attach_photo",
+          "target": "camera-permission",
+          "refs": [
+            "PRD:#4_4",
+            "PRD:#9",
+            "CJM:#daily-logging"
+          ]
+        },
+        {
+          "id": "e-entry-submit",
+          "action": "tap_save_entry",
+          "target": "save-entry",
+          "effects": [
+            "normalize_entry",
+            "validate_entry"
+          ],
+          "analytics": [
+            "entry_create_attempt"
+          ],
+          "refs": [
+            "PRD:#4_2",
+            "CJM:#daily-logging"
+          ]
+        },
+        {
+          "id": "e-save-and-add-another",
+          "action": "save_and_add_another",
+          "target": "save-entry",
+          "effects": [
+            "mark_prefill_policy[type,work_package,tags,time_ranges]"
+          ],
+          "analytics": [
+            "entry_create_attempt"
+          ],
+          "refs": [
+            "CJM:#daily-logging",
+            "PRD:#4_2"
+          ]
+        }
+      ],
+      "errors": [
+        {
+          "id": "err-entry-required",
+          "type": "validation",
+          "desc": "Не заполнены обязательные поля записи.",
+          "recovery": "Подсветить поля, вернуть фокус.",
+          "refs": [
+            "PRD:#4_2"
+          ]
+        }
+      ],
+      "system_events": [],
+      "a11y": {
+        "role": "form",
+        "labels": [
+          "Тип записи",
+          "Сохранить",
+          "Сохранить и добавить ещё",
+          "Прикрепить фото"
+        ],
+        "focus_order": [
+          "fields",
+          "save_button",
+          "save_and_add_button",
+          "attach_button"
+        ],
+        "keyboard": "Return — сохранить; Cmd+S — сохранить",
+        "announcements": "Редактор записи.",
+        "live_region": "assertive"
+      },
+      "analytics": [
+        "entry_editor_view"
+      ],
+      "refs": [
+        "PRD:#4_2",
+        "PRD:#4_4",
+        "CJM:#daily-logging"
+      ]
+    },
+    {
+      "id": "save-entry",
+      "type": "system",
+      "desc": "Сохранение записи в SwiftData. Валидация и одно атомарное сохранение на действие.",
+      "inputs": [
+        "entry_data"
+      ],
+      "outputs": [
+        "entry_id",
+        "source"
+      ],
+      "edges": [
+        {
+          "id": "e-save-entry-success",
+          "action": "handle_success",
+          "target": "day-log-populated",
+          "analytics": [
+            "entry_saved"
+          ],
+          "refs": [
+            "PRD:#4_2",
+            "PRD:#5",
+            "CJM:#daily-logging"
+          ]
+        },
+        {
+          "id": "e-save-entry-validation",
+          "action": "handle_validation_error",
+          "target": "entry-editor",
+          "refs": [
+            "PRD:#4_2",
+            "CJM:#daily-logging"
+          ]
+        },
+        {
+          "id": "e-save-entry-system-error",
+          "action": "handle_error",
+          "target": "error-entry-save",
+          "refs": [
+            "PRD:#5",
+            "CJM:#daily-logging"
+          ]
+        }
+      ],
+      "system_events": [
+        "loading"
+      ],
+      "a11y": {
+        "role": "system",
+        "labels": [],
+        "focus_order": [],
+        "keyboard": "N/A",
+        "announcements": "Сохраняем запись…",
+        "live_region": "polite"
+      },
+      "analytics": [
+        "entry_saved"
+      ],
+      "refs": [
+        "PRD:#4_2",
+        "PRD:#5",
+        "CJM:#daily-logging"
+      ]
+    },
+    {
+      "id": "error-entry-save",
+      "type": "error",
+      "desc": "Системная ошибка сохранения записи (I/O). Предложить повтор или отмену.",
+      "inputs": [
+        "error_code"
+      ],
+      "outputs": [],
+      "edges": [
+        {
+          "id": "e-entry-retry",
+          "action": "tap_retry",
+          "target": "save-entry",
+          "retry_policy": {
+            "max_attempts": 3,
+            "backoff": "exponential",
+            "base_ms": 1000
+          },
+          "analytics": [
+            "error_entry_save"
+          ],
+          "refs": [
+            "PRD:#5",
+            "CJM:#daily-logging"
+          ]
+        },
+        {
+          "id": "e-entry-cancel",
+          "action": "tap_cancel",
+          "target": "day-log-populated",
+          "refs": [
+            "PRD:#4_2",
+            "CJM:#daily-logging"
+          ]
+        }
+      ],
+      "a11y": {
+        "role": "alertdialog",
+        "labels": [
+          "Повторить",
+          "Отмена"
+        ],
+        "focus_order": [
+          "message",
+          "retry_button",
+          "cancel_button"
+        ],
+        "keyboard": "Tab по кнопкам; Enter активирует",
+        "announcements": "Не удалось сохранить запись.",
+        "live_region": "assertive"
+      },
+      "analytics": [
+        "error_entry_save"
+      ],
+      "refs": [
+        "PRD:#5",
+        "CJM:#daily-logging"
+      ]
+    }
+  ]
+}

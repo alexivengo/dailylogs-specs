@@ -1,0 +1,62 @@
+name: Traceability Validation
+
+on:
+  push:
+    branches: [ main, master, '**' ]
+  pull_request:
+    branches: [ '**' ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Build modular specs (validate → assemble → cross-ref)
+        run: |
+          set -euo pipefail
+          python3 specs/_build/build.py | tee build_summary.txt
+
+      - name: Upload build artifacts (specs/_build)
+        uses: actions/upload-artifact@v4
+        with:
+          name: specs-build-artifacts
+          path: specs/_build/
+
+      - name: Run trace validator and capture report
+        run: |
+          set -o pipefail
+          python3 Specs/trace_validator.py | tee validator_report.txt
+        continue-on-error: true
+
+      - name: Gate on fatals and DD warnings
+        run: |
+          if grep -Eq 'Total:\s+([1-9][0-9]*) fatal' validator_report.txt; then
+            echo "Fatal issues found by validator"
+            exit 1
+          fi
+          if grep -q 'warn-unused-data-dictionary' validator_report.txt; then
+            echo "Data Dictionary warnings present (gated)"
+            exit 1
+          fi
+          echo "Gate passed: no fatals and no DD warnings"
+
+      - name: Upload validator report artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: validator-report
+          path: validator_report.txt
+
+      - name: Upload build summary
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-summary
+          path: build_summary.txt

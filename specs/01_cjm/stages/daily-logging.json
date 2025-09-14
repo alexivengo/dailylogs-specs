@@ -1,0 +1,146 @@
+{
+  "id": "daily-logging",
+  "title": "Ежедневный ввод (ядро, guardrail)",
+  "personas": [
+    "site-manager"
+  ],
+  "segments": [
+    "smb-contractor"
+  ],
+  "touchpoints": [
+    "mobile.app.camera_capture",
+    "mobile.app.daily_log_create",
+    "mobile.app.daily_log_view",
+    "mobile.app.documents_attach"
+  ],
+  "emotions": [
+    "удовлетворение от «с первого раза»",
+    "усталость/спешка в поле",
+    "уверенность при быстрых повторах"
+  ],
+  "expectations": [
+    "крупные элементы управления",
+    "минимум ввода текста",
+    "быстрые повторы и шаблоны"
+  ],
+  "barriers": [
+    {
+      "type": "friction",
+      "desc": "Слишком много шагов для повторяющихся записей.",
+      "severity": "high",
+      "confidence": "high",
+      "refs": [
+        "PRD:#4_2"
+      ]
+    },
+    {
+      "type": "time",
+      "desc": "Ручной ввод погоды без сети замедляет закрытие дня.",
+      "severity": "high",
+      "confidence": "high",
+      "refs": [
+        "PRD:#4_2",
+        "PRD:#8"
+      ]
+    },
+    {
+      "type": "risk",
+      "desc": "Опасения потери данных при сбое в офлайне до синхронизации.",
+      "severity": "medium",
+      "confidence": "medium",
+      "refs": [
+        "PRD:#8"
+      ]
+    }
+  ],
+  "opportunities": [
+    {
+      "type": "quick_win",
+      "desc": "«Copy to another day» + «Save & add another» в редакторе записей.",
+      "effort": "low",
+      "impact": "high",
+      "confidence": "high",
+      "rationale": "Сокращает время ввода в частых сценариях.",
+      "model": "ICE",
+      "components": {
+        "impact": 5,
+        "confidence": 4,
+        "ease": 5
+      },
+      "score": 100,
+      "refs": [
+        "PRD:#4_2"
+      ]
+    },
+    {
+      "type": "quick_win",
+      "desc": "Базовые офлайн-аннотации фото (рамка/стрелка/текст).",
+      "effort": "low",
+      "impact": "medium",
+      "confidence": "high",
+      "rationale": "Повышает информативность отчёта без лишних шагов.",
+      "model": "ICE",
+      "components": {
+        "impact": 3,
+        "confidence": 4,
+        "ease": 5
+      },
+      "score": 60,
+      "refs": [
+        "PRD:#4_4"
+      ]
+    },
+    {
+      "type": "strategic",
+      "desc": "«Наборы дня» — шаблоны типовых записей (например, «Заливка бетона»).",
+      "effort": "medium",
+      "impact": "high",
+      "confidence": "medium",
+      "rationale": "Оптимизирует целые рабочие сценарии, а не отдельные записи.",
+      "model": "ICE",
+      "components": {
+        "impact": 5,
+        "confidence": 4,
+        "ease": 3
+      },
+      "score": 60,
+      "refs": [
+        "PRD:#4_2"
+      ]
+    }
+  ],
+  "moment_of_truth": {
+    "is_mot": false,
+    "why": "Критический guardrail для удержания и прохождения к финальному результату."
+  },
+  "metrics": {
+    "leading": [
+      {
+        "name": "Entry Addition Time",
+        "type": "leading",
+        "definition": "Среднее время создания одной записи журнала.",
+        "unit": "seconds",
+        "kpi_ref": "PRD:#11",
+        "refs": [
+          "PRD:#4_2"
+        ]
+      }
+    ],
+    "lagging": [
+      {
+        "name": "Доля дней с журналом",
+        "type": "lagging",
+        "definition": "Процент календарных рабочих дней, в которых есть записи.",
+        "unit": "percentage",
+        "kpi_ref": "PRD:#11"
+      }
+    ]
+  },
+  "refs": [
+    "PRD:#4_2",
+    "PRD:#4_4",
+    "PRD:#8",
+    "Persona:#site-manager",
+    "Segment:#smb-contractor"
+  ]
+}

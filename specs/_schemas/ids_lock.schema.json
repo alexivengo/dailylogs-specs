@@ -1,0 +1,9 @@
+{
+  "$id": "ids_lock.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "description": "Schema for IDs_LOCK.md rendered JSON; optional for future.",
+  "properties": {
+    "ids": {"type": "array", "items": {"type": "string"}}
+  }
+}

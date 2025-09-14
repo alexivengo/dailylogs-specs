@@ -1,0 +1,22 @@
+{
+  "id": "Resume",
+  "title": "Резюме (Executive Summary)",
+  "desc": "DailyLogs — мобильное offline-first приложение для iPhone, ускоряет и стандартизирует ежедневную фиксацию работ на строительной площадке. Целевая аудитория: малые/средние подрядчики. MVP фокус: скорость, надёжность, офлайн, простота.",
+  "scope": "mvp",
+  "modules_core": [
+    "4_1",
+    "4_2",
+    "4_3",
+    "4_4"
+  ],
+  "modules_post_mvp": [
+    "RFI",
+    "Tasks",
+    "Timesheets",
+    "Materials",
+    "Tools",
+    "Checklists",
+    "Members",
+    "ActivityTimeline"
+  ]
+}

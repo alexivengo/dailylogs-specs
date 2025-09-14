@@ -1,0 +1,174 @@
+{
+  "$schema": "../../_schemas/hig_story_candidates.schema.json",
+  "story_id": "us-9",
+  "title": "предпросмотр отчёта и подписание с блокировкой дня",
+  "role": "руководитель стройплощадки",
+  "value": "неизменяемый комплаенс-артефакт",
+  "core_actions": [
+    "Preview report",
+    "Capture signature",
+    "Confirm irreversible lock"
+  ],
+  "candidates": [
+    {
+      "action": "Preview report",
+      "pattern_id": "pdfkit-preview",
+      "title": "PDFKit PDFView preview",
+      "hig_sections": [
+        "Content Views > Documents"
+      ],
+      "swiftui_primitives": [
+        "UIViewRepresentable(PDFView)"
+      ],
+      "pros": [
+        "Zoom/search/select; standard behavior"
+      ],
+      "cons": [
+        "UIKit interop"
+      ],
+      "accessibility_notes": [
+        "Ensure text is VO-readable; buttons labeled"
+      ],
+      "common_mistakes": [
+        "Rendering as static bitmap"
+      ],
+      "scores": {
+        "fit": 5,
+        "load": 4,
+        "consistency": 5,
+        "accessibility": 4,
+        "risk": 5,
+        "total": 23
+      },
+      "refs": {
+        "prd_ids": [
+          "9",
+          "11"
+        ],
+        "cjm_ids": [
+          "reporting-signoff"
+        ],
+        "flow_nodes": [
+          "report-preview"
+        ],
+        "user_story_id": "us-9"
+      }
+    },
+    {
+      "action": "Capture signature",
+      "pattern_id": "canvas-signature",
+      "title": "Signature canvas with Clear & Confirm",
+      "hig_sections": [
+        "Controls > Custom drawing"
+      ],
+      "swiftui_primitives": [
+        "Canvas",
+        "Gesture",
+        "Button"
+      ],
+      "pros": [
+        "Natural signing; simple UI"
+      ],
+      "cons": [
+        "Smoothing/export work"
+      ],
+      "accessibility_notes": [
+        "Label canvas; focus canvas→Confirm; include Clear"
+      ],
+      "common_mistakes": [
+        "Missing Clear/Undo; tiny targets"
+      ],
+      "scores": {
+        "fit": 5,
+        "load": 3,
+        "consistency": 4,
+        "accessibility": 4,
+        "risk": 4,
+        "total": 20
+      },
+      "refs": {
+        "prd_ids": [
+          "9",
+          "11"
+        ],
+        "cjm_ids": [
+          "reporting-signoff"
+        ],
+        "flow_nodes": [
+          "report-sign"
+        ],
+        "user_story_id": "us-9"
+      }
+    },
+    {
+      "action": "Confirm lock",
+      "pattern_id": "alert-destructive-lock",
+      "title": "Alert with destructive 'Lock Day'",
+      "hig_sections": [
+        "Feedback > Alerts"
+      ],
+      "swiftui_primitives": [
+        "Alert",
+        "Button(.destructive)"
+      ],
+      "pros": [
+        "Communicates finality; explicit decision"
+      ],
+      "cons": [
+        "Limited to 2–3 actions"
+      ],
+      "accessibility_notes": [
+        "Use explicit titles; destructive role announces severity"
+      ],
+      "common_mistakes": [
+        "Ambiguous OK/Cancel"
+      ],
+      "scores": {
+        "fit": 5,
+        "load": 5,
+        "consistency": 5,
+        "accessibility": 5,
+        "risk": 5,
+        "total": 25
+      },
+      "refs": {
+        "prd_ids": [
+          "9",
+          "11"
+        ],
+        "cjm_ids": [
+          "reporting-signoff"
+        ],
+        "flow_nodes": [
+          "lock-day",
+          "report-preview-signed"
+        ],
+        "user_story_id": "us-9"
+      }
+    }
+  ],
+  "recommendation": {
+    "best_fit": [
+      "pdfkit-preview",
+      "alert-destructive-lock",
+      "canvas-signature"
+    ],
+    "rationale": "Strongest fidelity for preview; explicit confirmation for irreversible lock; custom canvas for signing.",
+    "refs": {
+      "prd_ids": [
+        "9",
+        "11"
+      ],
+      "cjm_ids": [
+        "reporting-signoff"
+      ],
+      "flow_nodes": [
+        "report-preview",
+        "report-sign",
+        "lock-day",
+        "report-preview-signed"
+      ],
+      "user_story_id": "us-9"
+    }
+  }
+}

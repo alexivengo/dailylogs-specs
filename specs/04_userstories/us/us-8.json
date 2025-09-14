@@ -1,0 +1,59 @@
+{
+  "story_id": "us-8",
+  "epic_id": "epic-2",
+  "role": "руководитель стройплощадки",
+  "capability": "копировать запись на другой день",
+  "value": "ускорить ввод повторяющихся работ",
+  "priority": "medium",
+  "status": "proposed",
+  "acceptance_criteria": [
+    "Given список When выбираю «Копировать на другую дату» Then создаётся копия на выбранный день (PRD:#4_2)",
+    "Given копирование When сохраняю Then операция атомарна, без перезаписи существующих (FLOW:#save-entry; PRD:#4_2)",
+    "Given VoiceOver When завершено Then объявление «Запись скопирована» (PRD:#10)"
+  ],
+  "metrics": {
+    "leading": [
+      {
+        "name": "Entry Addition Time",
+        "kpi_ref": "PRD:#11"
+      }
+    ],
+    "lagging": [
+      {
+        "name": "Доля дней с журналом",
+        "kpi_ref": "PRD:#11"
+      }
+    ]
+  },
+  "nfr": {
+    "performance": "Операция локальная и быстрая",
+    "accessibility": "Подтверждающее объявление"
+  },
+  "dependencies": {
+    "blocked_by": [],
+    "relates_to": []
+  },
+  "risks": [
+    {
+      "desc": "Дублирование ошибок в копиях",
+      "severity": "low",
+      "refs": []
+    }
+  ],
+  "refs": [
+    "PRD:#4_2",
+    "PRD:#10",
+    "PRD:#11",
+    "FLOW:#save-entry"
+  ],
+  "affects_mot": false,
+  "mot_refs": [],
+  "analytics_events": [
+    "entry_copy_to_day"
+  ],
+  "analytics_owner": "Product",
+  "analytics_pii": false,
+  "story_points": 3,
+  "estimate_confidence": "high",
+  "assumptions": []
+}

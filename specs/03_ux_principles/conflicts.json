@@ -1,0 +1,37 @@
+[
+  {
+    "between": [
+      "minimize-required-input",
+      "explicit-status-signature-locking"
+    ],
+    "tie_break": "Collect only legally essential fields upfront; defer the rest with reminders"
+  },
+  {
+    "between": [
+      "offline-first-graceful-fallback",
+      "minimize-required-input"
+    ],
+    "tie_break": "Never block on network; allow manual entry and backfill when online"
+  },
+  {
+    "between": [
+      "one-screen-one-action",
+      "minimize-required-input"
+    ],
+    "tie_break": "Prefer clarity of the primary task; use progressive disclosure for learning"
+  },
+  {
+    "between": [
+      "explicit-status-signature-locking",
+      "offline-first-graceful-fallback"
+    ],
+    "tie_break": "Integrity wins; corrections happen via auditable paths that preserve the original"
+  },
+  {
+    "between": [
+      "honor-wcag-dynamic-type-focus-targets",
+      "performance"
+    ],
+    "tie_break": "Maintain WCAG AA even with minor performance trade-offs"
+  }
+]

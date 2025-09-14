@@ -1,0 +1,208 @@
+{
+  "version": "1.1.0",
+  "domain": "misc",
+  "nodes": [
+    {
+      "id": "save-project",
+      "type": "system",
+      "desc": "Проверка и сохранение проекта в SwiftData; атомарное сохранение, контекст @MainActor.",
+      "inputs": [
+        "project_data"
+      ],
+      "outputs": [
+        "project_id"
+      ],
+      "edges": [
+        {
+          "id": "e-save-proj-success",
+          "action": "handle_success",
+          "target": "project-dashboard",
+          "effects": [
+            "create project_record",
+            "set current_project_id"
+          ],
+          "analytics": [
+            "project_saved"
+          ],
+          "refs": [
+            "PRD:#4_1",
+            "PRD:#5",
+            "CJM:#onboarding-first-project"
+          ]
+        },
+        {
+          "id": "e-save-proj-failure",
+          "action": "handle_error",
+          "target": "error-save",
+          "refs": [
+            "PRD:#5",
+            "CJM:#onboarding-first-project"
+          ]
+        }
+      ],
+      "system_events": [
+        "loading",
+        "retry"
+      ],
+      "a11y": {
+        "role": "system",
+        "labels": [],
+        "focus_order": [],
+        "keyboard": "N/A",
+        "announcements": "Сохраняем проект…",
+        "live_region": "polite"
+      },
+      "analytics": [
+        "project_saved"
+      ],
+      "refs": [
+        "PRD:#4_1",
+        "PRD:#5",
+        "CJM:#onboarding-first-project"
+      ]
+    },
+    {
+      "id": "error-save",
+      "type": "error",
+      "desc": "Сбой сохранения проекта (например, I/O/хранилище). Предложить повтор или отмену.",
+      "inputs": [
+        "error_code"
+      ],
+      "outputs": [],
+      "edges": [
+        {
+          "id": "e-save-retry",
+          "action": "tap_retry",
+          "target": "save-project",
+          "retry_policy": {
+            "max_attempts": 3,
+            "backoff": "exponential",
+            "base_ms": 1000
+          },
+          "analytics": [
+            "error_project_save"
+          ],
+          "refs": [
+            "PRD:#5",
+            "CJM:#onboarding-first-project"
+          ]
+        },
+        {
+          "id": "e-save-cancel",
+          "action": "tap_cancel",
+          "target": "cancel-out",
+          "refs": [
+            "PRD:#7",
+            "CJM:#onboarding-first-project"
+          ]
+        }
+      ],
+      "system_events": [
+        "retry"
+      ],
+      "a11y": {
+        "role": "alertdialog",
+        "labels": [
+          "Ошибка сохранения",
+          "Повторить",
+          "Отмена"
+        ],
+        "focus_order": [
+          "message",
+          "retry_button",
+          "cancel_button"
+        ],
+        "keyboard": "Tab по кнопкам; Enter активирует",
+        "announcements": "Не удалось сохранить проект.",
+        "live_region": "assertive"
+      },
+      "analytics": [
+        "error_project_save"
+      ],
+      "refs": [
+        "PRD:#5",
+        "PRD:#7",
+        "CJM:#onboarding-first-project"
+      ]
+    },
+    {
+      "id": "future-date-error",
+      "type": "error",
+      "desc": "Показ предупреждения при попытке выбрать будущую дату.",
+      "inputs": [
+        "selected_date"
+      ],
+      "outputs": [],
+      "edges": [],
+      "a11y": {
+        "role": "alert",
+        "labels": [
+          "Нельзя выбрать будущую дату"
+        ],
+        "focus_order": [
+          "message"
+        ],
+        "keyboard": "Esc — закрыть",
+        "announcements": "Будущие даты недоступны.",
+        "live_region": "assertive"
+      },
+      "analytics": [],
+      "refs": [
+        "PRD:#4_2",
+        "CJM:#daily-logging"
+      ]
+    },
+    {
+      "id": "check-network-for-weather",
+      "type": "decision",
+      "desc": "Проверка сети для автоматического снимка погоды либо переход к ручному вводу.",
+      "inputs": [],
+      "outputs": [],
+      "edges": [
+        {
+          "id": "e-net-available",
+          "action": "proceed",
+          "target": "fetch-weather",
+          "guard": "is_online == true",
+          "refs": [
+            "PRD:#8",
+            "CJM:#daily-logging"
+          ]
+        },
+        {
+          "id": "e-net-offline",
+          "action": "fallback",
+          "target": "manual-weather",
+          "guard": "is_online == false",
+          "refs": [
+            "PRD:#8",
+            "CJM:#daily-logging"
+          ]
+        }
+      ],
+      "decision_policy": {
+        "mutually_exclusive": true,
+        "exhaustive": true,
+        "default_edge_id": "e-net-offline"
+      },
+      "system_events": [
+        "offline_check"
+      ],
+      "a11y": {
+        "role": "system",
+        "labels": [],
+        "focus_order": [],
+        "keyboard": "N/A",
+        "announcements": "Проверка сети для погоды…",
+        "live_region": "polite"
+      },
+      "analytics": [
+        "weather_check"
+      ],
+      "refs": [
+        "PRD:#8",
+        "CJM:#daily-logging"
+      ]
+    }
+  ]
+}

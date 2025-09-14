@@ -1,0 +1,61 @@
+{
+  "story_id": "us-16",
+  "epic_id": "epic-6",
+  "role": "руководитель стройплощадки",
+  "capability": "локализованные строки, форматы дат/единиц и шаблон имени файла",
+  "value": "отчёты и UI были понятны",
+  "priority": "low",
+  "status": "proposed",
+  "acceptance_criteria": [
+    "Given смена языка ОС When перезапускаю приложение Then UI и форматы локализованы без артефактов (PRD:#10)",
+    "Given экспорт When локализация включена Then имя файла формируется по шаблону [ASSUMPTION] report_<project>_<date>.pdf (FLOW:#export-generate; PRD:#9)"
+  ],
+  "metrics": {
+    "leading": [
+      {
+        "name": "Coverage of localized strings",
+        "kpi_ref": "PRD:#11"
+      }
+    ],
+    "lagging": [
+      {
+        "name": "NPS локализации",
+        "kpi_ref": "PRD:#11"
+      }
+    ]
+  },
+  "nfr": {
+    "security_privacy": "Без PII в имени файла",
+    "localization": "ICU/plurals; форматы дат/единиц по региону"
+  },
+  "dependencies": {
+    "blocked_by": [],
+    "relates_to": [
+      "us-10"
+    ]
+  },
+  "risks": [
+    {
+      "desc": "Неконсистентные форматы дат",
+      "severity": "low",
+      "refs": []
+    }
+  ],
+  "refs": [
+    "PRD:#10",
+    "PRD:#11",
+    "FLOW:#export-generate"
+  ],
+  "affects_mot": false,
+  "mot_refs": [],
+  "analytics_events": [
+    "export_process_started"
+  ],
+  "analytics_owner": "Product",
+  "analytics_pii": false,
+  "story_points": 2,
+  "estimate_confidence": "high",
+  "assumptions": [
+    "Шаблон имени файла и локализация метаданных согласуются."
+  ]
+}

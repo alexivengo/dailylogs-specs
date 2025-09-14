@@ -1,0 +1,192 @@
+{
+  "version": "1.1.0",
+  "domain": "gallery",
+  "nodes": [
+    {
+      "id": "camera-permission",
+      "type": "decision",
+      "desc": "Проверка статуса доступа к камере для съёмки фото.",
+      "inputs": [],
+      "outputs": [
+        "permission_status"
+      ],
+      "edges": [
+        {
+          "id": "e-cam-granted",
+          "action": "granted",
+          "target": "capture-photo",
+          "guard": "permission_status == \"granted\"",
+          "refs": [
+            "PRD:#9",
+            "CJM:#daily-logging"
+          ]
+        },
+        {
+          "id": "e-cam-denied",
+          "action": "denied",
+          "target": "camera-permission-error",
+          "guard": "permission_status == \"denied\"",
+          "refs": [
+            "PRD:#9",
+            "CJM:#daily-logging"
+          ]
+        }
+      ],
+      "system_events": [
+        "permission_prompt"
+      ],
+      "a11y": {
+        "role": "system",
+        "labels": [],
+        "focus_order": [],
+        "keyboard": "N/A",
+        "announcements": "Требуется доступ к камере.",
+        "live_region": "polite"
+      },
+      "analytics": [
+        "permission_check_camera"
+      ],
+      "refs": [
+        "PRD:#9",
+        "CJM:#daily-logging"
+      ]
+    },
+    {
+      "id": "capture-photo",
+      "type": "system",
+      "desc": "Запуск камеры, захват фото и сохранение офлайн. Автопривязка к черновику записи.",
+      "inputs": [],
+      "outputs": [
+        "photo_id"
+      ],
+      "edges": [
+        {
+          "id": "e-photo-success",
+          "action": "handle_success",
+          "target": "entry-editor",
+          "effects": [
+            "attach_photo_to_entry"
+          ],
+          "analytics": [
+            "photo_captured"
+          ],
+          "refs": [
+            "PRD:#4_4",
+            "CJM:#daily-logging"
+          ]
+        }
+      ],
+      "system_events": [
+        "loading"
+      ],
+      "a11y": {
+        "role": "system",
+        "labels": [],
+        "focus_order": [],
+        "keyboard": "N/A",
+        "announcements": "Фото сохранено.",
+        "live_region": "polite"
+      },
+      "analytics": [
+        "photo_captured"
+      ],
+      "refs": [
+        "PRD:#4_4",
+        "CJM:#daily-logging"
+      ]
+    },
+    {
+      "id": "camera-permission-error",
+      "type": "error",
+      "desc": "Доступ к камере отклонён. Предложить открыть Настройки или продолжить без фото.",
+      "inputs": [],
+      "outputs": [],
+      "edges": [
+        {
+          "id": "e-open-settings",
+          "action": "open_settings",
+          "target": "entry-editor",
+          "analytics": [
+            "open_settings_camera"
+          ],
+          "refs": [
+            "PRD:#9",
+            "CJM:#daily-logging"
+          ]
+        },
+        {
+          "id": "e-continue-without",
+          "action": "continue_without_photo",
+          "target": "entry-editor",
+          "analytics": [
+            "continue_without_photo"
+          ],
+          "refs": [
+            "PRD:#9",
+            "CJM:#daily-logging"
+          ]
+        }
+      ],
+      "a11y": {
+        "role": "alertdialog",
+        "labels": [
+          "Открыть Настройки",
+          "Продолжить без фото"
+        ],
+        "focus_order": [
+          "message",
+          "open_settings_button",
+          "continue_button"
+        ],
+        "keyboard": "Tab по опциям; Enter активирует",
+        "announcements": "Доступ к камере запрещён.",
+        "live_region": "assertive"
+      },
+      "analytics": [
+        "camera_permission_error_view"
+      ],
+      "refs": [
+        "PRD:#9",
+        "CJM:#daily-logging"
+      ]
+    },
+    {
+      "id": "gallery",
+      "type": "screen",
+      "desc": "Галерея с группировкой по дням и массовыми действиями (provisional).",
+      "inputs": [
+        "project_id"
+      ],
+      "outputs": [],
+      "edges": [
+        {
+          "id": "e-gallery-back",
+          "action": "back",
+          "target": "project-dashboard",
+          "refs": [
+            "PRD:#4_4",
+            "CJM:#daily-logging"
+          ]
+        }
+      ],
+      "a11y": {
+        "role": "main",
+        "labels": [
+          "Галерея"
+        ],
+        "focus_order": [],
+        "keyboard": "Стрелки — навигация; Enter — выбрать",
+        "announcements": "Открыта галерея.",
+        "live_region": "polite"
+      },
+      "analytics": [
+        "gallery_bulk_attach"
+      ],
+      "refs": [
+        "PRD:#4_4",
+        "PRD:#11",
+        "CJM:#daily-logging"
+      ]
+    }
+  ]
+}

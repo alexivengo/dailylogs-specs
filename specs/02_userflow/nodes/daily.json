@@ -1,0 +1,254 @@
+{
+  "version": "1.1.0",
+  "domain": "daily",
+  "nodes": [
+    {
+      "id": "daily-calendar",
+      "type": "screen",
+      "desc": "Компактный календарь с индикаторами статуса дня и кнопкой «Сегодня».",
+      "inputs": [
+        "project_id"
+      ],
+      "outputs": [
+        "selected_date",
+        "day_date"
+      ],
+      "edges": [
+        {
+          "id": "e-cal-select-today",
+          "action": "select_today",
+          "target": "day-entries-decision",
+          "effects": [
+            "ensure_day_record"
+          ],
+          "analytics": [
+            "open_today"
+          ],
+          "refs": [
+            "PRD:#4_2",
+            "CJM:#daily-logging"
+          ]
+        },
+        {
+          "id": "e-cal-future-date",
+          "action": "select_date",
+          "target": "future-date-error",
+          "guard": "selected_date > today",
+          "refs": [
+            "PRD:#4_2",
+            "CJM:#daily-logging"
+          ]
+        }
+      ],
+      "errors": [
+        {
+          "id": "err-future-date",
+          "type": "validation",
+          "desc": "Выбрана будущая дата. Действие заблокировано.",
+          "recovery": "Сообщить и вернуть к календарю.",
+          "refs": [
+            "PRD:#4_2"
+          ]
+        }
+      ],
+      "a11y": {
+        "role": "grid",
+        "labels": [
+          "Календарь",
+          "Сегодня"
+        ],
+        "focus_order": [
+          "calendar_grid",
+          "today_button"
+        ],
+        "keyboard": "Стрелки — перемещение по датам; Enter — выбрать",
+        "announcements": "Дата выбрана.",
+        "live_region": "polite"
+      },
+      "analytics": [
+        "daily_calendar_view"
+      ],
+      "refs": [
+        "PRD:#4_2",
+        "CJM:#daily-logging"
+      ]
+    },
+    {
+      "id": "day-entries-decision",
+      "type": "decision",
+      "desc": "Определяет, пустой ли день или уже содержит записи.",
+      "inputs": [
+        "selected_date"
+      ],
+      "outputs": [],
+      "edges": [
+        {
+          "id": "e-day-state-empty",
+          "action": "proceed",
+          "target": "day-log-empty",
+          "guard": "entries_count == 0",
+          "refs": [
+            "PRD:#4_2",
+            "CJM:#daily-logging"
+          ]
+        },
+        {
+          "id": "e-day-state-populated",
+          "action": "proceed",
+          "target": "day-log-populated",
+          "guard": "entries_count > 0",
+          "refs": [
+            "PRD:#4_2",
+            "CJM:#daily-logging"
+          ]
+        }
+      ],
+      "decision_policy": {
+        "mutually_exclusive": true,
+        "exhaustive": true,
+        "default_edge_id": "e-day-state-empty"
+      },
+      "a11y": {
+        "role": "system",
+        "labels": [],
+        "focus_order": [],
+        "keyboard": "N/A",
+        "announcements": "Определение состояния дня…",
+        "live_region": "polite"
+      },
+      "analytics": [],
+      "refs": [
+        "PRD:#4_2",
+        "CJM:#daily-logging"
+      ]
+    },
+    {
+      "id": "day-log-empty",
+      "type": "screen",
+      "desc": "Пустой день: подсказки и CTA «Добавить запись», «Погода».",
+      "inputs": [
+        "selected_date",
+        "project_id"
+      ],
+      "outputs": [
+        "day_date"
+      ],
+      "edges": [
+        {
+          "id": "e-day-add-entry-empty",
+          "action": "tap_add_entry",
+          "target": "entry-editor",
+          "analytics": [
+            "tap_add_entry"
+          ],
+          "refs": [
+            "PRD:#4_2",
+            "CJM:#daily-logging"
+          ]
+        },
+        {
+          "id": "e-weather-manage-empty",
+          "action": "manage_weather",
+          "target": "check-network-for-weather",
+          "refs": [
+            "PRD:#8",
+            "PRD:#4_2",
+            "CJM:#daily-logging"
+          ]
+        }
+      ],
+      "a11y": {
+        "role": "main",
+        "labels": [
+          "Добавить запись",
+          "Погода"
+        ],
+        "focus_order": [
+          "fab_add",
+          "weather_button"
+        ],
+        "keyboard": "Tab к кнопкам; Enter активирует",
+        "announcements": "День пуст. Добавьте первую запись.",
+        "live_region": "polite"
+      },
+      "analytics": [
+        "day_log_view"
+      ],
+      "refs": [
+        "PRD:#4_2",
+        "PRD:#8",
+        "CJM:#daily-logging"
+      ]
+    },
+    {
+      "id": "day-log-populated",
+      "type": "screen",
+      "desc": "День с записями: список по группам, быстрые действия, переход к превью отчёта.",
+      "inputs": [
+        "selected_date",
+        "project_id"
+      ],
+      "outputs": [
+        "day_date"
+      ],
+      "edges": [
+        {
+          "id": "e-day-add-entry-populated",
+          "action": "tap_add_entry",
+          "target": "entry-editor",
+          "analytics": [
+            "tap_add_entry"
+          ],
+          "refs": [
+            "PRD:#4_2",
+            "CJM:#daily-logging"
+          ]
+        },
+        {
+          "id": "e-day-open-preview",
+          "action": "open_report_preview",
+          "target": "report-preview",
+          "analytics": [
+            "report_preview_view"
+          ],
+          "refs": [
+            "PRD:#4_2",
+            "CJM:#reporting-signoff"
+          ]
+        },
+        {
+          "id": "e-weather-manage-populated",
+          "action": "manage_weather",
+          "target": "check-network-for-weather",
+          "refs": [
+            "PRD:#8",
+            "PRD:#4_2",
+            "CJM:#daily-logging"
+          ]
+        }
+      ],
+      "a11y": {
+        "role": "main",
+        "labels": [
+          "Список записей",
+          "Предпросмотр отчёта"
+        ],
+        "focus_order": [
+          "entries_list",
+          "preview_button"
+        ],
+        "keyboard": "Стрелки — навигация по списку",
+        "announcements": "Загружены записи дня.",
+        "live_region": "polite"
+      },
+      "analytics": [
+        "day_log_view"
+      ],
+      "refs": [
+        "PRD:#4_2",
+        "PRD:#8",
+        "CJM:#reporting-signoff"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,380 @@
+{
+  "version": "1.1.0",
+  "domain": "export",
+  "nodes": [
+    {
+      "id": "report-preview",
+      "type": "screen",
+      "desc": "Предпросмотр PDF/A-2u отчёта с чек-листом готовности. Подпись доступна из этого экрана.",
+      "inputs": [
+        "selected_date",
+        "project_id"
+      ],
+      "outputs": [
+        "day_status",
+        "report_preview"
+      ],
+      "edges": [
+        {
+          "id": "e-preview-tap-sign",
+          "action": "tap_sign",
+          "target": "report-sign",
+          "analytics": [
+            "tap_sign"
+          ],
+          "refs": [
+            "PRD:#9",
+            "CJM:#reporting-signoff"
+          ]
+        }
+      ],
+      "system_events": [
+        "loading"
+      ],
+      "a11y": {
+        "role": "document",
+        "labels": [
+          "Подписать"
+        ],
+        "focus_order": [
+          "preview",
+          "sign_button"
+        ],
+        "keyboard": "Tab к кнопке «Подписать», Enter — подтвердить",
+        "announcements": "Готов превью отчёта.",
+        "live_region": "polite"
+      },
+      "analytics": [
+        "report_preview_view"
+      ],
+      "refs": [
+        "PRD:#9",
+        "CJM:#reporting-signoff"
+      ]
+    },
+    {
+      "id": "report-sign",
+      "type": "screen",
+      "desc": "Экран подписи: полотно для росписи и подтверждение. Можно ввести ФИО [ASSUMPTION].",
+      "inputs": [
+        "report_preview"
+      ],
+      "outputs": [
+        "signature_blob",
+        "signer_name"
+      ],
+      "edges": [
+        {
+          "id": "e-sign-confirm",
+          "action": "confirm_signature",
+          "target": "lock-day",
+          "refs": [
+            "PRD:#9",
+            "CJM:#reporting-signoff"
+          ]
+        }
+      ],
+      "a11y": {
+        "role": "form",
+        "labels": [
+          "Поле подписи",
+          "Подтвердить подпись"
+        ],
+        "focus_order": [
+          "signature_canvas",
+          "confirm_button"
+        ],
+        "keyboard": "Enter — подтвердить; Esc — отменить",
+        "announcements": "Подписано.",
+        "live_region": "assertive"
+      },
+      "analytics": [
+        "tap_sign"
+      ],
+      "refs": [
+        "PRD:#9",
+        "CJM:#reporting-signoff"
+      ]
+    },
+    {
+      "id": "lock-day",
+      "type": "system",
+      "desc": "Финализация дня: вычисление checksum, установка статуса locked (read-only).",
+      "inputs": [
+        "signature_blob",
+        "selected_date",
+        "project_id"
+      ],
+      "outputs": [
+        "signed_pdf_checksum",
+        "signed_at"
+      ],
+      "edges": [
+        {
+          "id": "e-lock-success",
+          "action": "handle_success",
+          "target": "report-preview-signed",
+          "analytics": [
+            "report_signed"
+          ],
+          "refs": [
+            "PRD:#9",
+            "CJM:#reporting-signoff"
+          ]
+        },
+        {
+          "id": "e-lock-failure",
+          "action": "handle_error",
+          "target": "report-preview",
+          "refs": [
+            "PRD:#9",
+            "CJM:#reporting-signoff"
+          ]
+        }
+      ],
+      "system_events": [
+        "loading"
+      ],
+      "a11y": {
+        "role": "system",
+        "labels": [],
+        "focus_order": [],
+        "keyboard": "N/A",
+        "announcements": "День заблокирован.",
+        "live_region": "polite"
+      },
+      "analytics": [
+        "report_signed"
+      ],
+      "refs": [
+        "PRD:#9",
+        "CJM:#reporting-signoff"
+      ]
+    },
+    {
+      "id": "report-preview-signed",
+      "type": "screen",
+      "desc": "Предпросмотр подписанного отчёта. Доступен быстрый экспорт.",
+      "inputs": [
+        "signed_pdf_checksum",
+        "selected_date",
+        "project_id"
+      ],
+      "outputs": [],
+      "edges": [
+        {
+          "id": "e-signed-export-pdf",
+          "action": "open_export",
+          "target": "export-decision",
+          "refs": [
+            "PRD:#9",
+            "PRD:#4_2",
+            "CJM:#reporting-signoff"
+          ]
+        }
+      ],
+      "a11y": {
+        "role": "document",
+        "labels": [
+          "Экспорт"
+        ],
+        "focus_order": [
+          "preview",
+          "export_button"
+        ],
+        "keyboard": "Tab к кнопке «Экспорт», Enter — открыть",
+        "announcements": "Отчёт подписан.",
+        "live_region": "polite"
+      },
+      "analytics": [
+        "report_preview_signed_view"
+      ],
+      "refs": [
+        "PRD:#9",
+        "CJM:#reporting-signoff"
+      ]
+    },
+    {
+      "id": "export-decision",
+      "type": "decision",
+      "desc": "Выбор формата и канала экспорта: PDF/A-2u (по умолчанию) или другой формат; либо отмена.",
+      "inputs": [
+        "signed_pdf_checksum"
+      ],
+      "outputs": [
+        "export_format",
+        "export_dest"
+      ],
+      "edges": [
+        {
+          "id": "e-export-format-pdf",
+          "action": "choose_pdf",
+          "target": "export-generate",
+          "guard": "export_format == \"pdf_a_2u\"",
+          "refs": [
+            "PRD:#4_2",
+            "PRD:#9",
+            "CJM:#reporting-signoff"
+          ]
+        },
+        {
+          "id": "e-export-format-other",
+          "action": "choose_other_format",
+          "target": "export-generate",
+          "refs": [
+            "PRD:#4_2",
+            "CJM:#reporting-signoff"
+          ]
+        },
+        {
+          "id": "e-export-cancel",
+          "action": "tap_cancel",
+          "target": "report-preview-signed",
+          "refs": [
+            "PRD:#7",
+            "CJM:#reporting-signoff"
+          ]
+        }
+      ],
+      "a11y": {
+        "role": "system",
+        "labels": [],
+        "focus_order": [],
+        "keyboard": "Стрелки — выбор формата; Enter — подтвердить",
+        "announcements": "Опции экспорта.",
+        "live_region": "polite"
+      },
+      "analytics": [
+        "export_options_view"
+      ],
+      "refs": [
+        "PRD:#4_2",
+        "PRD:#9",
+        "CJM:#reporting-signoff"
+      ]
+    },
+    {
+      "id": "export-generate",
+      "type": "system",
+      "desc": "Генерация файла выбранного формата и вызов iOS Share Sheet. Обработка таймаутов и low storage.",
+      "inputs": [
+        "export_format",
+        "selected_date",
+        "project_id"
+      ],
+      "outputs": [
+        "file_name"
+      ],
+      "edges": [
+        {
+          "id": "e-export-success",
+          "action": "handle_success",
+          "target": "success-done",
+          "analytics": [
+            "report_exported"
+          ],
+          "refs": [
+            "PRD:#4_2",
+            "PRD:#9",
+            "CJM:#reporting-signoff"
+          ]
+        },
+        {
+          "id": "e-export-error",
+          "action": "handle_error",
+          "target": "export-error",
+          "refs": [
+            "PRD:#9",
+            "CJM:#reporting-signoff"
+          ]
+        }
+      ],
+      "system_events": [
+        "loading",
+        "timeout",
+        "retry"
+      ],
+      "a11y": {
+        "role": "system",
+        "labels": [],
+        "focus_order": [],
+        "keyboard": "N/A",
+        "announcements": "Генерация файла…",
+        "live_region": "polite"
+      },
+      "analytics": [
+        "export_process_started"
+      ],
+      "refs": [
+        "PRD:#4_2",
+        "PRD:#9",
+        "CJM:#reporting-signoff"
+      ]
+    },
+    {
+      "id": "export-error",
+      "type": "error",
+      "desc": "Ошибка при экспорте/шеринге (включая недостаток памяти).",
+      "inputs": [
+        "error_code"
+      ],
+      "outputs": [
+        "error_code"
+      ],
+      "edges": [
+        {
+          "id": "e-export-retry",
+          "action": "tap_retry",
+          "target": "export-generate",
+          "retry_policy": {
+            "max_attempts": 3,
+            "backoff": "fixed",
+            "base_ms": 1500
+          },
+          "analytics": [
+            "export_retry"
+          ],
+          "refs": [
+            "PRD:#9",
+            "CJM:#reporting-signoff"
+          ]
+        },
+        {
+          "id": "e-export-abort",
+          "action": "tap_cancel",
+          "target": "report-preview-signed",
+          "analytics": [
+            "export_abort"
+          ],
+          "refs": [
+            "PRD:#9",
+            "PRD:#7",
+            "CJM:#reporting-signoff"
+          ]
+        }
+      ],
+      "a11y": {
+        "role": "alertdialog",
+        "labels": [
+          "Повторить",
+          "Отмена"
+        ],
+        "focus_order": [
+          "message",
+          "retry_button",
+          "cancel_button"
+        ],
+        "keyboard": "Tab по кнопкам; Enter активирует",
+        "announcements": "Ошибка экспорта.",
+        "live_region": "assertive"
+      },
+      "analytics": [
+        "export_failed"
+      ],
+      "refs": [
+        "PRD:#9",
+        "CJM:#reporting-signoff"
+      ]
+    }
+  ]
+}

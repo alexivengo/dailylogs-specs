@@ -1,0 +1,181 @@
+{
+  "$schema": "../../_schemas/hig_story_candidates.schema.json",
+  "story_id": "us-10",
+  "title": "экспорт подписанного отчёта через iOS Share Sheet с ретраями",
+  "role": "руководитель стройплощадки",
+  "value": "быстро отправить отчёт",
+  "core_actions": [
+    "Choose format & share",
+    "Handle generation timeout with retries"
+  ],
+  "candidates": [
+    {
+      "action": "Export/share",
+      "pattern_id": "sharelink",
+      "title": "ShareLink to invoke Share Sheet",
+      "hig_sections": [
+        "System Experiences > Sharing"
+      ],
+      "swiftui_primitives": [
+        "ShareLink"
+      ],
+      "pros": [
+        "Native sharing; minimal effort"
+      ],
+      "cons": [
+        "Limited pre-UI"
+      ],
+      "accessibility_notes": [
+        "Provide meaningful item title/preview"
+      ],
+      "common_mistakes": [
+        "Attempting share before file ready"
+      ],
+      "scores": {
+        "fit": 5,
+        "load": 5,
+        "consistency": 5,
+        "accessibility": 5,
+        "risk": 4,
+        "total": 24
+      },
+      "refs": {
+        "prd_ids": [
+          "4_2",
+          "9",
+          "11"
+        ],
+        "cjm_ids": [
+          "reporting-signoff"
+        ],
+        "flow_nodes": [
+          "export-decision",
+          "report-preview-signed"
+        ],
+        "user_story_id": "us-10"
+      }
+    },
+    {
+      "action": "Select format",
+      "pattern_id": "picker-menu-format",
+      "title": "Picker inside Menu to choose format (PDF/CSV)",
+      "hig_sections": [
+        "Controls > Menus",
+        "Controls > Pickers"
+      ],
+      "swiftui_primitives": [
+        "Menu",
+        "Picker",
+        "Button"
+      ],
+      "pros": [
+        "Compact, scalable"
+      ],
+      "cons": [
+        "Hidden affordance"
+      ],
+      "accessibility_notes": [
+        "Announce selection; default PDF/A-2u"
+      ],
+      "common_mistakes": [
+        "Too many items; unclear labels"
+      ],
+      "scores": {
+        "fit": 4,
+        "load": 4,
+        "consistency": 5,
+        "accessibility": 5,
+        "risk": 4,
+        "total": 22
+      },
+      "refs": {
+        "prd_ids": [
+          "4_2",
+          "9",
+          "11"
+        ],
+        "cjm_ids": [
+          "reporting-signoff"
+        ],
+        "flow_nodes": [
+          "export-decision"
+        ],
+        "user_story_id": "us-10"
+      }
+    },
+    {
+      "action": "Timeout/retry",
+      "pattern_id": "progress-alert-retry",
+      "title": "ProgressView and Alert with retry/backoff",
+      "hig_sections": [
+        "Feedback > Progress Indicators",
+        "Feedback > Alerts"
+      ],
+      "swiftui_primitives": [
+        "ProgressView",
+        "Alert",
+        "Task"
+      ],
+      "pros": [
+        "Transparent progress; controlled retries"
+      ],
+      "cons": [
+        "Modal hops if frequent"
+      ],
+      "accessibility_notes": [
+        "Announce progress & retry count; cap attempts"
+      ],
+      "common_mistakes": [
+        "Infinite retries; silent failure"
+      ],
+      "scores": {
+        "fit": 5,
+        "load": 4,
+        "consistency": 5,
+        "accessibility": 5,
+        "risk": 3,
+        "total": 22
+      },
+      "refs": {
+        "prd_ids": [
+          "4_2",
+          "9",
+          "11"
+        ],
+        "cjm_ids": [
+          "reporting-signoff"
+        ],
+        "flow_nodes": [
+          "export-generate",
+          "export-error"
+        ],
+        "user_story_id": "us-10"
+      }
+    }
+  ],
+  "recommendation": {
+    "best_fit": [
+      "sharelink",
+      "picker-menu-format",
+      "progress-alert-retry"
+    ],
+    "rationale": "Fast export with optional explicit format selection; robust timeout behavior.",
+    "refs": {
+      "prd_ids": [
+        "4_2",
+        "9",
+        "11"
+      ],
+      "cjm_ids": [
+        "reporting-signoff"
+      ],
+      "flow_nodes": [
+        "export-decision",
+        "export-generate",
+        "export-error",
+        "report-preview-signed"
+      ],
+      "user_story_id": "us-10"
+    }
+  }
+}

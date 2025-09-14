@@ -1,0 +1,83 @@
+{
+  "story_id": "us-9",
+  "epic_id": "epic-3",
+  "role": "руководитель стройплощадки",
+  "capability": "предпросмотр отчёта и подписание с блокировкой дня",
+  "value": "получить неизменяемый комплаенс-артефакт",
+  "priority": "high",
+  "status": "proposed",
+  "acceptance_criteria": [
+    "Given есть записи When открываю «Предпросмотр» Then генерируется PDF/A-2u с чек-листом (FLOW:#report-preview; PRD:#9)",
+    "Given подписываю When подтверждаю подпись Then день получает статус locked и checksum (FLOW:#report-sign, FLOW:#lock-day; PRD:#9)",
+    "Given день locked When открываю календарь/список Then редактирование недоступно, виден индикатор «Подписан» (FLOW:#report-preview-signed; PRD:#9)",
+    "Given VoiceOver When экран подписи активен Then фокус: canvas → Confirm (PRD:#10)"
+  ],
+  "metrics": {
+    "leading": [
+      {
+        "name": "Доля дней с превью",
+        "kpi_ref": "PRD:#11"
+      },
+      {
+        "name": "Доля дней, дошедших до подписи",
+        "kpi_ref": "PRD:#11"
+      }
+    ],
+    "lagging": [
+      {
+        "name": "% подписанных дней",
+        "kpi_ref": "PRD:#11"
+      },
+      {
+        "name": "Time to Report",
+        "kpi_ref": "PRD:#11"
+      }
+    ]
+  },
+  "nfr": {
+    "performance": "Блокировка ≤1 с",
+    "security_privacy": "Неизменяемость locked, checksum",
+    "accessibility": "Порядок фокуса и озвучки",
+    "localization": "Локализованные статусы/подписи"
+  },
+  "dependencies": {
+    "blocked_by": [],
+    "relates_to": []
+  },
+  "risks": [
+    {
+      "desc": "Ошибка после блокировки — нужна безопасная коррекция",
+      "severity": "high",
+      "refs": [
+        "CJM:#reporting-signoff"
+      ]
+    }
+  ],
+  "refs": [
+    "PRD:#9",
+    "PRD:#10",
+    "PRD:#11",
+    "CJM:#reporting-signoff",
+    "FLOW:#report-preview",
+    "FLOW:#report-sign",
+    "FLOW:#lock-day",
+    "FLOW:#report-preview-signed"
+  ],
+  "affects_mot": true,
+  "mot_refs": [
+    "CJM:#reporting-signoff"
+  ],
+  "analytics_events": [
+    "report_preview_view",
+    "tap_sign",
+    "report_signed",
+    "report_preview_signed_view"
+  ],
+  "analytics_owner": "Product",
+  "analytics_pii": false,
+  "story_points": 5,
+  "estimate_confidence": "medium",
+  "assumptions": [
+    "[ASSUMPTION] ФИО подписанта хранится в отчёте."
+  ]
+}

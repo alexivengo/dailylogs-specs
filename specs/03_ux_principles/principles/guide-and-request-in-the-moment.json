@@ -1,0 +1,40 @@
+{
+  "id": "guide-and-request-in-the-moment",
+  "title": "Guide and request in the moment, never block",
+  "rationale": "Professionals prefer just-in-time guidance and consent; requests should appear exactly when needed with a non-blocking recovery path",
+  "example": "On attaching a photo, request camera access with clear rationale and provide options to continue such as choose existing, open settings, or proceed without blocking the task",
+  "priority": "medium",
+  "refs": [
+    "CJM:#onboarding-first-project",
+    "HIG:#Permissions",
+    "PRD:#7",
+    "UserFlow:#camera-permission"
+  ],
+  "antipatterns": [
+    {
+      "name": "Permission prompts out of context",
+      "why_harmful": "Drives denial and causes later broken flows",
+      "severity": "medium",
+      "impact_area": [
+        "feedback",
+        "permissions"
+      ],
+      "refs": [
+        "HIG:#Permissions",
+        "UserFlow:#camera-permission"
+      ]
+    },
+    {
+      "name": "Empty states without a clear next action",
+      "why_harmful": "Waste screen real estate and stall progress",
+      "severity": "medium",
+      "impact_area": [
+        "empty_states",
+        "navigation"
+      ],
+      "refs": [
+        "HIG:#Feedback"
+      ]
+    }
+  ]
+}

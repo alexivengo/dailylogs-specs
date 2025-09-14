@@ -1,0 +1,37 @@
+{
+  "$schema": "../../_schemas/ctxux_screen.schema.json",
+  "id": "manual-weather",
+  "title": "Ручной ввод погоды",
+  "desc": "Экран ручного ввода метеоданных при оффлайне или отказе провайдера.",
+  "local_principles": [
+    {
+      "id": "minimal-required-input",
+      "title": "Минимум обязательного ввода",
+      "rationale": "Просим только критичные поля и даём разумные значения по умолчанию.",
+      "acceptance": [
+        "Все поля подписаны и доступны в VoiceOver",
+        "Сохранение возможно при заполнении минимального набора"
+      ],
+      "telemetry": [
+        "manual_weather_input"
+      ],
+      "related_principles": [
+        "minimize-required-input",
+        "offline-first-graceful-fallback"
+      ],
+      "global_principle_ids": [
+        "minimize-required-input",
+        "offline-first-graceful-fallback"
+      ],
+      "user_story_ids": ["us-12"]
+    }
+  ],
+  "refs": {
+    "UserStory": ["us-12"],
+    "GlobalPrinciple": [
+      "minimize-required-input",
+      "offline-first-graceful-fallback"
+    ],
+    "UserFlow": ["manual-weather", "check-network-for-weather", "fetch-weather"]
+  }
+}

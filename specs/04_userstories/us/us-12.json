@@ -1,0 +1,74 @@
+{
+  "story_id": "us-12",
+  "epic_id": "epic-2",
+  "role": "руководитель стройплощадки",
+  "capability": "выбирать дату с запретом будущих",
+  "value": "фиксировать записи только за допустимые дни",
+  "priority": "high",
+  "status": "proposed",
+  "acceptance_criteria": [
+    "Given календарь открыт When выбираю «Сегодня» Then перехожу к списку записей за сегодня (FLOW:#daily-calendar; PRD:#4_2)",
+    "Given попытка будущей даты When подтверждаю Then вижу «Будущие даты недоступны», остаюсь в календаре (FLOW:#future-date-error; PRD:#4_2)",
+    "Given офлайн When выбираю дату Then переход работает без сети (PRD:#8)",
+    "Given VoiceOver When навигирую Then grid-role, стрелочная навигация, assertive «Дата выбрана» (PRD:#10)"
+  ],
+  "metrics": {
+    "leading": [
+      {
+        "name": "Daily Calendar View",
+        "kpi_ref": "PRD:#11"
+      },
+      {
+        "name": "Open Today",
+        "kpi_ref": "PRD:#11"
+      }
+    ],
+    "lagging": [
+      {
+        "name": "Доля дней с журналом",
+        "kpi_ref": "PRD:#11"
+      }
+    ]
+  },
+  "nfr": {
+    "performance": "Загрузка календаря ≤0.5 с",
+    "accessibility": "Grid, клавиатурная навигация, assertive объявления",
+    "localization": "Локальные форматы дат"
+  },
+  "dependencies": {
+    "blocked_by": [],
+    "relates_to": [
+      "us-4",
+      "us-8"
+    ]
+  },
+  "risks": [
+    {
+      "desc": "Конфликт с будущим планированием",
+      "severity": "medium",
+      "refs": [
+        "PRD:#4_2"
+      ]
+    }
+  ],
+  "refs": [
+    "PRD:#4_2",
+    "PRD:#8",
+    "PRD:#10",
+    "PRD:#11",
+    "CJM:#daily-logging",
+    "FLOW:#daily-calendar",
+    "FLOW:#future-date-error"
+  ],
+  "affects_mot": false,
+  "mot_refs": [],
+  "analytics_events": [
+    "daily_calendar_view",
+    "open_today"
+  ],
+  "analytics_owner": "Product",
+  "analytics_pii": false,
+  "story_points": 5,
+  "estimate_confidence": "medium",
+  "assumptions": []
+}

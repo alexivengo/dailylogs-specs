@@ -1,0 +1,60 @@
+{
+  "story_id": "us-2",
+  "epic_id": "epic-1",
+  "role": "новый пользователь",
+  "capability": "ясный CTA на пустом экране проектов",
+  "value": "сразу понять, как начать",
+  "priority": "high",
+  "status": "proposed",
+  "acceptance_criteria": [
+    "Given нет проектов When открываю приложение Then вижу пустое состояние с пояснением и CTA (FLOW:#projects-empty; PRD:#7)",
+    "Given пустой экран When нажимаю CTA Then открывается форма создания (FLOW:#project-create; PRD:#4_1)",
+    "Given VoiceOver When экран пуст Then объявляются: заголовок → подсказка → CTA; таргеты ≥44 pt (PRD:#10)"
+  ],
+  "metrics": {
+    "leading": [
+      {
+        "name": "Empty State CTR",
+        "kpi_ref": "PRD:#11"
+      }
+    ],
+    "lagging": [
+      {
+        "name": "Onboarding Completion Rate",
+        "kpi_ref": "PRD:#11"
+      }
+    ]
+  },
+  "nfr": {
+    "accessibility": "Контраст и поддержка Dynamic Type",
+    "localization": "Подсказки и CTA локализованы"
+  },
+  "dependencies": {
+    "blocked_by": [],
+    "relates_to": [
+      "us-1"
+    ]
+  },
+  "risks": [],
+  "refs": [
+    "PRD:#7",
+    "PRD:#10",
+    "PRD:#11",
+    "CJM:#onboarding-first-project",
+    "FLOW:#projects-empty",
+    "FLOW:#project-create"
+  ],
+  "affects_mot": true,
+  "mot_refs": [
+    "CJM:#onboarding-first-project"
+  ],
+  "analytics_events": [
+    "empty_state_shown",
+    "project_create_view"
+  ],
+  "analytics_owner": "Product",
+  "analytics_pii": false,
+  "story_points": 2,
+  "estimate_confidence": "high",
+  "assumptions": []
+}

@@ -1,0 +1,44 @@
+{
+  "$id": "ctxux_screen.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["id", "title", "refs"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "id": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+    "title": {"type": "string"},
+    "desc": {"type": "string"},
+    "local_principles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "rationale", "user_story_ids", "global_principle_ids"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+          "title": {"type": "string"},
+          "rationale": {"type": "string"},
+          "anti_patterns": {"type": "array", "items": {"type": "string"}},
+          "acceptance": {"type": "array", "items": {"type": "string"}},
+          "telemetry": {"type": "array", "items": {"type": "string", "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"}},
+          "related_principles": {"type": "array", "items": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"}},
+          "user_story_ids": {"type": "array", "items": {"type": "string", "pattern": "^us-[0-9]+$"}},
+          "global_principle_ids": {"type": "array", "items": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"}}
+        },
+        "additionalProperties": true
+      }
+    },
+    "refs": {
+      "type": "object",
+      "properties": {
+        "UserStory": {"type": "array", "items": {"type": "string", "pattern": "^us-[0-9]+$"}},
+        "HIG": {"type": "array", "items": {"type": "string"}},
+        "Wireframes": {"type": "array", "items": {"type": "string"}},
+        "DesignSystem": {"type": "array", "items": {"type": "string"}},
+        "GlobalPrinciple": {"type": "array", "items": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"}},
+        "UserFlow": {"type": "array", "items": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"}}
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,1905 @@
+{
+  "version": "1.0.0",
+  "meta": {},
+  "source_files": {
+    "prd": "00_PRD_v1.json",
+    "cjm": "01_CJM_v1.json",
+    "user_flow": "02_UserFlow_v1.json",
+    "user_stories": "04_UserStories_v1.json",
+    "ux_principles": "03_Global_UX_Principles_v1.json"
+  },
+  "governing_rules": {
+    "native_first": true,
+    "swiftui_only": true,
+    "ios_min": "18.0",
+    "design_axioms": [
+      "Prevent, don’t punish",
+      "One screen, one action",
+      "Offline-first augments network; do not block on fetch",
+      "Accessibility as a constraint (Dynamic Type, 44pt, VO order)"
+    ]
+  },
+  "stories": [
+    {
+      "story_id": "us-2",
+      "title": "ясный CTA на пустом экране проектов",
+      "role": "новый пользователь",
+      "value": "сразу понять, как начать",
+      "core_actions": [
+        "Display empty state with single CTA"
+      ],
+      "candidates": [
+        {
+          "action": "Display empty state CTA",
+          "pattern_id": "content-unavailable-view",
+          "title": "ContentUnavailableView + primary CTA",
+          "hig_sections": [
+            "Onboarding > Empty States"
+          ],
+          "swiftui_primitives": [
+            "ContentUnavailableView",
+            "Button",
+            "TipKit (optional)"
+          ],
+          "pros": [
+            "Semantic empty-state layout",
+            "Pairs cleanly with a single CTA",
+            "Good default VO grouping"
+          ],
+          "cons": [
+            "Less brand flexibility"
+          ],
+          "accessibility_notes": [
+            "Ensure VO order: title → hint → CTA",
+            "Maintain 44pt targets and contrast"
+          ],
+          "common_mistakes": [
+            "Multiple primary CTAs",
+            "Verbose copy"
+          ],
+          "scores": {
+            "fit": 5,
+            "load": 5,
+            "consistency": 5,
+            "accessibility": 5,
+            "risk": 5,
+            "total": 25
+          },
+          "refs": {
+            "prd_ids": [
+              "7",
+              "10",
+              "11"
+            ],
+            "cjm_ids": [
+              "onboarding-first-project"
+            ],
+            "flow_nodes": [
+              "projects-empty",
+              "project-create"
+            ],
+            "user_story_id": "us-2"
+          }
+        },
+        {
+          "action": "Display empty state CTA",
+          "pattern_id": "vstack-empty",
+          "title": "VStack + Text/Image + Button",
+          "hig_sections": [
+            "Layout & Organization"
+          ],
+          "swiftui_primitives": [
+            "VStack",
+            "Text",
+            "Image",
+            "Button"
+          ],
+          "pros": [
+            "Full control & easy theming"
+          ],
+          "cons": [
+            "Manual a11y and spacing",
+            "Easy to overdo copy"
+          ],
+          "accessibility_notes": [
+            "Assign heading role; 44pt; clear labels"
+          ],
+          "common_mistakes": [
+            "Missing accessibilityLabel on image"
+          ],
+          "scores": {
+            "fit": 5,
+            "load": 4,
+            "consistency": 4,
+            "accessibility": 4,
+            "risk": 4,
+            "total": 21
+          },
+          "refs": {
+            "prd_ids": [
+              "7",
+              "10",
+              "11"
+            ],
+            "cjm_ids": [
+              "onboarding-first-project"
+            ],
+            "flow_nodes": [
+              "projects-empty",
+              "project-create"
+            ],
+            "user_story_id": "us-2"
+          }
+        },
+        {
+          "action": "Contextual education",
+          "pattern_id": "tipkit-inline",
+          "title": "TipKit inline tip next to CTA",
+          "hig_sections": [
+            "Onboarding > Educating People"
+          ],
+          "swiftui_primitives": [
+            "TipKit"
+          ],
+          "pros": [
+            "Non-blocking guidance",
+            "Dismissible"
+          ],
+          "cons": [
+            "iOS 17+",
+            "Tips may be ignored"
+          ],
+          "accessibility_notes": [
+            "Use polite live region; tip must be focusable"
+          ],
+          "common_mistakes": [
+            "Overusing tips → fatigue"
+          ],
+          "scores": {
+            "fit": 4,
+            "load": 4,
+            "consistency": 5,
+            "accessibility": 5,
+            "risk": 4,
+            "total": 22
+          },
+          "refs": {
+            "prd_ids": [
+              "7",
+              "10",
+              "11"
+            ],
+            "cjm_ids": [
+              "onboarding-first-project"
+            ],
+            "flow_nodes": [
+              "projects-empty",
+              "project-create"
+            ],
+            "user_story_id": "us-2"
+          }
+        }
+      ],
+      "recommendation": {
+        "best_fit": [
+          "content-unavailable-view"
+        ],
+        "rationale": "Semantic native empty state with single primary CTA; TipKit optional for contextual nudge.",
+        "refs": {
+          "prd_ids": [
+            "7",
+            "10",
+            "11"
+          ],
+          "cjm_ids": [
+            "onboarding-first-project"
+          ],
+          "flow_nodes": [
+            "projects-empty",
+            "project-create"
+          ],
+          "user_story_id": "us-2"
+        }
+      }
+    },
+    {
+      "story_id": "us-1",
+      "title": "создать первый проект по минимальному набору полей",
+      "role": "руководитель стройплощадки",
+      "value": "быстро начать работу и увидеть ценность",
+      "core_actions": [
+        "Open creation surface",
+        "Input & save minimal data"
+      ],
+      "candidates": [
+        {
+          "action": "Open creation surface",
+          "pattern_id": "sheet-create",
+          "title": "Present creation form in a sheet",
+          "hig_sections": [
+            "Modal presentations > Sheets"
+          ],
+          "swiftui_primitives": [
+            "Sheet",
+            "Button"
+          ],
+          "pros": [
+            "Isolates short, single-step task",
+            "Preserves context; easy cancel"
+          ],
+          "cons": [
+            "Gesture dismissal risk"
+          ],
+          "accessibility_notes": [
+            "Trap focus; provide explicit Cancel; large hit targets"
+          ],
+          "common_mistakes": [
+            "Non-dismissible sheet without cause"
+          ],
+          "scores": {
+            "fit": 5,
+            "load": 5,
+            "consistency": 5,
+            "accessibility": 5,
+            "risk": 4,
+            "total": 24
+          },
+          "refs": {
+            "prd_ids": [
+              "4_1",
+              "7",
+              "8",
+              "11"
+            ],
+            "cjm_ids": [
+              "onboarding-first-project"
+            ],
+            "flow_nodes": [
+              "project-create",
+              "save-project"
+            ],
+            "user_story_id": "us-1"
+          }
+        },
+        {
+          "action": "Open creation surface",
+          "pattern_id": "nav-push-create",
+          "title": "Navigation push to creation view",
+          "hig_sections": [
+            "Navigation > Navigation Bars & Stack"
+          ],
+          "swiftui_primitives": [
+            "NavigationStack",
+            "NavigationLink"
+          ],
+          "pros": [
+            "Clear forward progress & back affordance"
+          ],
+          "cons": [
+            "Overkill for a single-step form",
+            "Stack churn"
+          ],
+          "accessibility_notes": [
+            "Clear title; obvious Cancel in toolbar"
+          ],
+          "common_mistakes": [
+            "Hiding Cancel; vague 'Done'"
+          ],
+          "scores": {
+            "fit": 4,
+            "load": 4,
+            "consistency": 5,
+            "accessibility": 5,
+            "risk": 4,
+            "total": 22
+          },
+          "refs": {
+            "prd_ids": [
+              "4_1",
+              "7",
+              "8",
+              "11"
+            ],
+            "cjm_ids": [
+              "onboarding-first-project"
+            ],
+            "flow_nodes": [
+              "project-create",
+              "save-project"
+            ],
+            "user_story_id": "us-1"
+          }
+        },
+        {
+          "action": "Input & save minimal data",
+          "pattern_id": "form-minimal",
+          "title": "Form with single required TextField & Save",
+          "hig_sections": [
+            "Controls > Forms",
+            "Controls > Text Fields"
+          ],
+          "swiftui_primitives": [
+            "Form",
+            "TextField",
+            "Toolbar .confirmationAction",
+            "Alert (on failure)"
+          ],
+          "pros": [
+            "Native validation; inline errors; minimal chrome"
+          ],
+          "cons": [
+            "Can feel heavy if over-sectioned"
+          ],
+          "accessibility_notes": [
+            "Use labels (not placeholders); DT and VO friendly"
+          ],
+          "common_mistakes": [
+            "Placeholder-only labels"
+          ],
+          "scores": {
+            "fit": 5,
+            "load": 5,
+            "consistency": 5,
+            "accessibility": 5,
+            "risk": 5,
+            "total": 25
+          },
+          "refs": {
+            "prd_ids": [
+              "4_1",
+              "7",
+              "8",
+              "11"
+            ],
+            "cjm_ids": [
+              "onboarding-first-project"
+            ],
+            "flow_nodes": [
+              "project-create",
+              "save-project"
+            ],
+            "user_story_id": "us-1"
+          }
+        }
+      ],
+      "recommendation": {
+        "best_fit": [
+          "sheet-create",
+          "form-minimal"
+        ],
+        "rationale": "One screen, one action. Use a sheet with a minimal Form; Alert handles failure; state is preserved.",
+        "refs": {
+          "prd_ids": [
+            "4_1",
+            "7",
+            "8",
+            "11"
+          ],
+          "cjm_ids": [
+            "onboarding-first-project"
+          ],
+          "flow_nodes": [
+            "project-create",
+            "save-project"
+          ],
+          "user_story_id": "us-1"
+        }
+      }
+    },
+    {
+      "story_id": "us-18",
+      "title": "понятная обработка ошибок при создании проекта (Retry/Отмена) с сохранением введённых данных",
+      "role": "пользователь",
+      "value": "не терять прогресс и быстро восстановиться",
+      "core_actions": [
+        "Notify & recover"
+      ],
+      "candidates": [
+        {
+          "action": "Notify & recover",
+          "pattern_id": "alert-retry-cancel",
+          "title": "Alert with Retry/Cancel, state preserved",
+          "hig_sections": [
+            "Feedback > Alerts"
+          ],
+          "swiftui_primitives": [
+            "Alert",
+            "ProgressView"
+          ],
+          "pros": [
+            "Correct severity & blocking semantics",
+            "Focus moves to alert; assertive announcement"
+          ],
+          "cons": [
+            "Text-only; keep copy concise"
+          ],
+          "accessibility_notes": [
+            "Descriptive buttons; live-region assertive; restore focus after dismiss"
+          ],
+          "common_mistakes": [
+            "Non-actionable 'OK' only; overusing alerts"
+          ],
+          "scores": {
+            "fit": 5,
+            "load": 5,
+            "consistency": 5,
+            "accessibility": 5,
+            "risk": 5,
+            "total": 25
+          },
+          "refs": {
+            "prd_ids": [
+              "5",
+              "10",
+              "11"
+            ],
+            "cjm_ids": [],
+            "flow_nodes": [
+              "error-save"
+            ],
+            "user_story_id": "us-18"
+          }
+        },
+        {
+          "action": "Notify & recover",
+          "pattern_id": "confirmation-dialog",
+          "title": "Confirmation dialog with options",
+          "hig_sections": [
+            "Modal presentations > Confirmation dialogs"
+          ],
+          "swiftui_primitives": [
+            "confirmationDialog"
+          ],
+          "pros": [
+            "Compact list of options"
+          ],
+          "cons": [
+            "Less expected for system errors"
+          ],
+          "accessibility_notes": [
+            "Ensure descriptive title; roles"
+          ],
+          "common_mistakes": [
+            "Using for critical failures"
+          ],
+          "scores": {
+            "fit": 3,
+            "load": 4,
+            "consistency": 4,
+            "accessibility": 4,
+            "risk": 4,
+            "total": 19
+          },
+          "refs": {
+            "prd_ids": [
+              "5",
+              "10",
+              "11"
+            ],
+            "cjm_ids": [],
+            "flow_nodes": [
+              "error-save"
+            ],
+            "user_story_id": "us-18"
+          }
+        }
+      ],
+      "recommendation": {
+        "best_fit": [
+          "alert-retry-cancel"
+        ],
+        "rationale": "Critical save failure requires explicit acknowledgement and recovery choice; preserve editor state.",
+        "refs": {
+          "prd_ids": [
+            "5",
+            "10",
+            "11"
+          ],
+          "cjm_ids": [],
+          "flow_nodes": [
+            "error-save"
+          ],
+          "user_story_id": "us-18"
+        }
+      }
+    },
+    {
+      "story_id": "us-12",
+      "title": "выбирать дату с запретом будущих",
+      "role": "руководитель стройплощадки",
+      "value": "фиксировать записи только за допустимые дни",
+      "core_actions": [
+        "Pick date (with Today)",
+        "Prevent future dates"
+      ],
+      "candidates": [
+        {
+          "action": "Select date",
+          "pattern_id": "datepicker-graphical",
+          "title": "Graphical DatePicker with Today control, limited to valid range",
+          "hig_sections": [
+            "Controls > Pickers"
+          ],
+          "swiftui_primitives": [
+            "DatePicker(.graphical)",
+            "Toolbar Button 'Today'"
+          ],
+          "pros": [
+            "Localized calendar; prevention via `in:`; fast navigation"
+          ],
+          "cons": [
+            "Limited decoration"
+          ],
+          "accessibility_notes": [
+            "Grid VO; ensure quick Today access"
+          ],
+          "common_mistakes": [
+            "Omitting quick Today"
+          ],
+          "scores": {
+            "fit": 5,
+            "load": 5,
+            "consistency": 5,
+            "accessibility": 5,
+            "risk": 5,
+            "total": 25
+          },
+          "refs": {
+            "prd_ids": [
+              "4_2",
+              "11"
+            ],
+            "cjm_ids": [
+              "daily-logging"
+            ],
+            "flow_nodes": [
+              "daily-calendar"
+            ],
+            "user_story_id": "us-12"
+          }
+        },
+        {
+          "action": "Select date",
+          "pattern_id": "list-dates",
+          "title": "List of dates with Today shortcut",
+          "hig_sections": [
+            "Views > Lists"
+          ],
+          "swiftui_primitives": [
+            "List",
+            "Button"
+          ],
+          "pros": [
+            "Lightweight & simple"
+          ],
+          "cons": [
+            "Not a calendar; less overview"
+          ],
+          "accessibility_notes": [
+            "Clear labels; announce selected date"
+          ],
+          "common_mistakes": [
+            "Unbounded infinite list"
+          ],
+          "scores": {
+            "fit": 4,
+            "load": 4,
+            "consistency": 4,
+            "accessibility": 4,
+            "risk": 4,
+            "total": 20
+          },
+          "refs": {
+            "prd_ids": [
+              "4_2",
+              "11"
+            ],
+            "cjm_ids": [
+              "daily-logging"
+            ],
+            "flow_nodes": [
+              "daily-calendar"
+            ],
+            "user_story_id": "us-12"
+          }
+        },
+        {
+          "action": "Prevent future selection",
+          "pattern_id": "disable-range",
+          "title": "Disable future dates via `in:` on DatePicker",
+          "hig_sections": [
+            "Controls > Pickers"
+          ],
+          "swiftui_primitives": [
+            "DatePicker(.graphical)"
+          ],
+          "pros": [
+            "Prevents errors upfront; VO announces disabled"
+          ],
+          "cons": [
+            "Disabled style may have low contrast in glare"
+          ],
+          "accessibility_notes": [
+            "Supplement with text hint if needed"
+          ],
+          "common_mistakes": [
+            "Ignoring disabled indication"
+          ],
+          "scores": {
+            "fit": 5,
+            "load": 5,
+            "consistency": 5,
+            "accessibility": 5,
+            "risk": 5,
+            "total": 25
+          },
+          "refs": {
+            "prd_ids": [
+              "4_2",
+              "11"
+            ],
+            "cjm_ids": [
+              "daily-logging"
+            ],
+            "flow_nodes": [
+              "future-date-error",
+              "daily-calendar"
+            ],
+            "user_story_id": "us-12"
+          }
+        }
+      ],
+      "recommendation": {
+        "best_fit": [
+          "datepicker-graphical",
+          "disable-range"
+        ],
+        "rationale": "Prevent, don’t punish: close the range and provide a Today jump.",
+        "refs": {
+          "prd_ids": [
+            "4_2",
+            "11"
+          ],
+          "cjm_ids": [
+            "daily-logging"
+          ],
+          "flow_nodes": [
+            "daily-calendar",
+            "future-date-error"
+          ],
+          "user_story_id": "us-12"
+        }
+      }
+    },
+    {
+      "story_id": "us-4",
+      "title": "«Сохранить и добавить ещё»",
+      "role": "руководитель стройплощадки",
+      "value": "ускорить ввод повторяющихся записей",
+      "core_actions": [
+        "Save current entry & open new editor",
+        "Handle save error"
+      ],
+      "candidates": [
+        {
+          "action": "Save and create new",
+          "pattern_id": "form-save-add",
+          "title": "Form with explicit 'Save & Add Another' primary action",
+          "hig_sections": [
+            "Controls > Forms",
+            "Bars > Toolbars"
+          ],
+          "swiftui_primitives": [
+            "Form",
+            "Button",
+            "Toolbar .confirmationAction",
+            "FocusState"
+          ],
+          "pros": [
+            "Minimizes taps; predictable focus after reopen",
+            "Supports prefill policy"
+          ],
+          "cons": [
+            "State management complexity"
+          ],
+          "accessibility_notes": [
+            "Announce success; autofocus first field"
+          ],
+          "common_mistakes": [
+            "Prefilling unique identifiers"
+          ],
+          "scores": {
+            "fit": 5,
+            "load": 5,
+            "consistency": 5,
+            "accessibility": 5,
+            "risk": 4,
+            "total": 24
+          },
+          "refs": {
+            "prd_ids": [
+              "4_2",
+              "11"
+            ],
+            "cjm_ids": [],
+            "flow_nodes": [
+              "entry-editor",
+              "save-entry"
+            ],
+            "user_story_id": "us-4"
+          }
+        },
+        {
+          "action": "Save and create new",
+          "pattern_id": "menu-save",
+          "title": "Menu containing Save and Save & Add Another",
+          "hig_sections": [
+            "Controls > Menus",
+            "Bars > Toolbars"
+          ],
+          "swiftui_primitives": [
+            "Menu",
+            "ToolbarItem"
+          ],
+          "pros": [
+            "Keeps toolbar uncluttered"
+          ],
+          "cons": [
+            "Extra tap vs two primary buttons"
+          ],
+          "accessibility_notes": [
+            "Ensure menu labels read well in VO"
+          ],
+          "common_mistakes": [
+            "Hiding critical action in deep menu"
+          ],
+          "scores": {
+            "fit": 4,
+            "load": 4,
+            "consistency": 5,
+            "accessibility": 5,
+            "risk": 4,
+            "total": 22
+          },
+          "refs": {
+            "prd_ids": [
+              "4_2",
+              "11"
+            ],
+            "cjm_ids": [],
+            "flow_nodes": [
+              "entry-editor",
+              "save-entry"
+            ],
+            "user_story_id": "us-4"
+          }
+        },
+        {
+          "action": "Errors",
+          "pattern_id": "alert-entry-retry",
+          "title": "Alert with Retry/Cancel on entry save failure",
+          "hig_sections": [
+            "Feedback > Alerts"
+          ],
+          "swiftui_primitives": [
+            "Alert",
+            "ProgressView"
+          ],
+          "pros": [
+            "Consistent with project save error"
+          ],
+          "cons": [
+            "Modal interruption"
+          ],
+          "accessibility_notes": [
+            "Assertive message; preserve state"
+          ],
+          "common_mistakes": [
+            "Vague messaging"
+          ],
+          "scores": {
+            "fit": 5,
+            "load": 5,
+            "consistency": 5,
+            "accessibility": 5,
+            "risk": 5,
+            "total": 25
+          },
+          "refs": {
+            "prd_ids": [
+              "10",
+              "11"
+            ],
+            "cjm_ids": [],
+            "flow_nodes": [
+              "error-entry-save"
+            ],
+            "user_story_id": "us-4"
+          }
+        }
+      ],
+      "recommendation": {
+        "best_fit": [
+          "form-save-add",
+          "alert-entry-retry"
+        ],
+        "rationale": "Fast loop for repetitive entry creation; reliable failure path.",
+        "refs": {
+          "prd_ids": [
+            "4_2",
+            "10",
+            "11"
+          ],
+          "cjm_ids": [],
+          "flow_nodes": [
+            "entry-editor",
+            "save-entry",
+            "error-entry-save"
+          ],
+          "user_story_id": "us-4"
+        }
+      }
+    },
+    {
+      "story_id": "us-5",
+      "title": "автоподстановка погоды онлайн и ручной ввод офлайн",
+      "role": "руководитель стройплощадки",
+      "value": "закрывать день без блокеров",
+      "core_actions": [
+        "Auto-fetch weather non-blocking",
+        "Manual form fallback"
+      ],
+      "candidates": [
+        {
+          "action": "Auto-fetch",
+          "pattern_id": "task-progress",
+          "title": "Task-driven fetch with inline ProgressView and timeout",
+          "hig_sections": [
+            "Feedback > Progress Indicators"
+          ],
+          "swiftui_primitives": [
+            "Task",
+            "ProgressView",
+            "Text"
+          ],
+          "pros": [
+            "Non-blocking; visible status; timeout-friendly"
+          ],
+          "cons": [
+            "Spinner fatigue if long"
+          ],
+          "accessibility_notes": [
+            "Announce start/timeout; role='status'"
+          ],
+          "common_mistakes": [
+            "No timeout → hang state"
+          ],
+          "scores": {
+            "fit": 5,
+            "load": 4,
+            "consistency": 5,
+            "accessibility": 4,
+            "risk": 4,
+            "total": 22
+          },
+          "refs": {
+            "prd_ids": [
+              "8",
+              "11"
+            ],
+            "cjm_ids": [],
+            "flow_nodes": [
+              "check-network-for-weather",
+              "fetch-weather"
+            ],
+            "user_story_id": "us-5"
+          }
+        },
+        {
+          "action": "Fallback manual",
+          "pattern_id": "inline-weather-form",
+          "title": "Inline form when offline/timeout",
+          "hig_sections": [
+            "Controls > Forms",
+            "Controls > Pickers"
+          ],
+          "swiftui_primitives": [
+            "Form",
+            "TextField",
+            "Picker"
+          ],
+          "pros": [
+            "Keeps user in flow; works offline"
+          ],
+          "cons": [
+            "Unit localization & validation work"
+          ],
+          "accessibility_notes": [
+            "Use LabeledContent; numeric keyboards; avoid color-only cues"
+          ],
+          "common_mistakes": [
+            "Overpacked form"
+          ],
+          "scores": {
+            "fit": 5,
+            "load": 5,
+            "consistency": 5,
+            "accessibility": 5,
+            "risk": 4,
+            "total": 24
+          },
+          "refs": {
+            "prd_ids": [
+              "8",
+              "11"
+            ],
+            "cjm_ids": [],
+            "flow_nodes": [
+              "manual-weather"
+            ],
+            "user_story_id": "us-5"
+          }
+        }
+      ],
+      "recommendation": {
+        "best_fit": [
+          "task-progress",
+          "inline-weather-form"
+        ],
+        "rationale": "Do not block on network; inline fallback ensures closure.",
+        "refs": {
+          "prd_ids": [
+            "8",
+            "11"
+          ],
+          "cjm_ids": [],
+          "flow_nodes": [
+            "check-network-for-weather",
+            "fetch-weather",
+            "manual-weather"
+          ],
+          "user_story_id": "us-5"
+        }
+      }
+    },
+    {
+      "story_id": "us-9",
+      "title": "предпросмотр отчёта и подписание с блокировкой дня",
+      "role": "руководитель стройплощадки",
+      "value": "неизменяемый комплаенс-артефакт",
+      "core_actions": [
+        "Preview report",
+        "Capture signature",
+        "Confirm irreversible lock"
+      ],
+      "candidates": [
+        {
+          "action": "Preview report",
+          "pattern_id": "pdfkit-preview",
+          "title": "PDFKit PDFView preview",
+          "hig_sections": [
+            "Content Views > Documents"
+          ],
+          "swiftui_primitives": [
+            "UIViewRepresentable(PDFView)"
+          ],
+          "pros": [
+            "Zoom/search/select; standard behavior"
+          ],
+          "cons": [
+            "UIKit interop"
+          ],
+          "accessibility_notes": [
+            "Ensure text is VO-readable; buttons labeled"
+          ],
+          "common_mistakes": [
+            "Rendering as static bitmap"
+          ],
+          "scores": {
+            "fit": 5,
+            "load": 4,
+            "consistency": 5,
+            "accessibility": 4,
+            "risk": 5,
+            "total": 23
+          },
+          "refs": {
+            "prd_ids": [
+              "9",
+              "11"
+            ],
+            "cjm_ids": [
+              "reporting-signoff"
+            ],
+            "flow_nodes": [
+              "report-preview"
+            ],
+            "user_story_id": "us-9"
+          }
+        },
+        {
+          "action": "Capture signature",
+          "pattern_id": "canvas-signature",
+          "title": "Signature canvas with Clear & Confirm",
+          "hig_sections": [
+            "Controls > Custom drawing"
+          ],
+          "swiftui_primitives": [
+            "Canvas",
+            "Gesture",
+            "Button"
+          ],
+          "pros": [
+            "Natural signing; simple UI"
+          ],
+          "cons": [
+            "Smoothing/export work"
+          ],
+          "accessibility_notes": [
+            "Label canvas; focus canvas→Confirm; include Clear"
+          ],
+          "common_mistakes": [
+            "Missing Clear/Undo; tiny targets"
+          ],
+          "scores": {
+            "fit": 5,
+            "load": 3,
+            "consistency": 4,
+            "accessibility": 4,
+            "risk": 4,
+            "total": 20
+          },
+          "refs": {
+            "prd_ids": [
+              "9",
+              "11"
+            ],
+            "cjm_ids": [
+              "reporting-signoff"
+            ],
+            "flow_nodes": [
+              "report-sign"
+            ],
+            "user_story_id": "us-9"
+          }
+        },
+        {
+          "action": "Confirm lock",
+          "pattern_id": "alert-destructive-lock",
+          "title": "Alert with destructive 'Lock Day'",
+          "hig_sections": [
+            "Feedback > Alerts"
+          ],
+          "swiftui_primitives": [
+            "Alert",
+            "Button(.destructive)"
+          ],
+          "pros": [
+            "Communicates finality; explicit decision"
+          ],
+          "cons": [
+            "Limited to 2–3 actions"
+          ],
+          "accessibility_notes": [
+            "Use explicit titles; destructive role announces severity"
+          ],
+          "common_mistakes": [
+            "Ambiguous OK/Cancel"
+          ],
+          "scores": {
+            "fit": 5,
+            "load": 5,
+            "consistency": 5,
+            "accessibility": 5,
+            "risk": 5,
+            "total": 25
+          },
+          "refs": {
+            "prd_ids": [
+              "9",
+              "11"
+            ],
+            "cjm_ids": [
+              "reporting-signoff"
+            ],
+            "flow_nodes": [
+              "lock-day",
+              "report-preview-signed"
+            ],
+            "user_story_id": "us-9"
+          }
+        }
+      ],
+      "recommendation": {
+        "best_fit": [
+          "pdfkit-preview",
+          "alert-destructive-lock",
+          "canvas-signature"
+        ],
+        "rationale": "Strongest fidelity for preview; explicit confirmation for irreversible lock; custom canvas for signing.",
+        "refs": {
+          "prd_ids": [
+            "9",
+            "11"
+          ],
+          "cjm_ids": [
+            "reporting-signoff"
+          ],
+          "flow_nodes": [
+            "report-preview",
+            "report-sign",
+            "lock-day",
+            "report-preview-signed"
+          ],
+          "user_story_id": "us-9"
+        }
+      }
+    },
+    {
+      "story_id": "us-10",
+      "title": "экспорт подписанного отчёта через iOS Share Sheet с ретраями",
+      "role": "руководитель стройплощадки",
+      "value": "быстро отправить отчёт",
+      "core_actions": [
+        "Choose format & share",
+        "Handle generation timeout with retries"
+      ],
+      "candidates": [
+        {
+          "action": "Export/share",
+          "pattern_id": "sharelink",
+          "title": "ShareLink to invoke Share Sheet",
+          "hig_sections": [
+            "System Experiences > Sharing"
+          ],
+          "swiftui_primitives": [
+            "ShareLink"
+          ],
+          "pros": [
+            "Native sharing; minimal effort"
+          ],
+          "cons": [
+            "Limited pre-UI"
+          ],
+          "accessibility_notes": [
+            "Provide meaningful item title/preview"
+          ],
+          "common_mistakes": [
+            "Attempting share before file ready"
+          ],
+          "scores": {
+            "fit": 5,
+            "load": 5,
+            "consistency": 5,
+            "accessibility": 5,
+            "risk": 4,
+            "total": 24
+          },
+          "refs": {
+            "prd_ids": [
+              "4_2",
+              "9",
+              "11"
+            ],
+            "cjm_ids": [
+              "reporting-signoff"
+            ],
+            "flow_nodes": [
+              "export-decision",
+              "report-preview-signed"
+            ],
+            "user_story_id": "us-10"
+          }
+        },
+        {
+          "action": "Select format",
+          "pattern_id": "picker-menu-format",
+          "title": "Picker inside Menu to choose format (PDF/CSV)",
+          "hig_sections": [
+            "Controls > Menus",
+            "Controls > Pickers"
+          ],
+          "swiftui_primitives": [
+            "Menu",
+            "Picker",
+            "Button"
+          ],
+          "pros": [
+            "Compact, scalable"
+          ],
+          "cons": [
+            "Hidden affordance"
+          ],
+          "accessibility_notes": [
+            "Announce selection; default PDF/A-2u"
+          ],
+          "common_mistakes": [
+            "Too many items; unclear labels"
+          ],
+          "scores": {
+            "fit": 4,
+            "load": 4,
+            "consistency": 5,
+            "accessibility": 5,
+            "risk": 4,
+            "total": 22
+          },
+          "refs": {
+            "prd_ids": [
+              "4_2",
+              "9",
+              "11"
+            ],
+            "cjm_ids": [
+              "reporting-signoff"
+            ],
+            "flow_nodes": [
+              "export-decision"
+            ],
+            "user_story_id": "us-10"
+          }
+        },
+        {
+          "action": "Timeout/retry",
+          "pattern_id": "progress-alert-retry",
+          "title": "ProgressView and Alert with retry/backoff",
+          "hig_sections": [
+            "Feedback > Progress Indicators",
+            "Feedback > Alerts"
+          ],
+          "swiftui_primitives": [
+            "ProgressView",
+            "Alert",
+            "Task"
+          ],
+          "pros": [
+            "Transparent progress; controlled retries"
+          ],
+          "cons": [
+            "Modal hops if frequent"
+          ],
+          "accessibility_notes": [
+            "Announce progress & retry count; cap attempts"
+          ],
+          "common_mistakes": [
+            "Infinite retries; silent failure"
+          ],
+          "scores": {
+            "fit": 5,
+            "load": 4,
+            "consistency": 5,
+            "accessibility": 5,
+            "risk": 3,
+            "total": 22
+          },
+          "refs": {
+            "prd_ids": [
+              "4_2",
+              "9",
+              "11"
+            ],
+            "cjm_ids": [
+              "reporting-signoff"
+            ],
+            "flow_nodes": [
+              "export-generate",
+              "export-error"
+            ],
+            "user_story_id": "us-10"
+          }
+        }
+      ],
+      "recommendation": {
+        "best_fit": [
+          "sharelink",
+          "picker-menu-format",
+          "progress-alert-retry"
+        ],
+        "rationale": "Fast export with optional explicit format selection; robust timeout behavior.",
+        "refs": {
+          "prd_ids": [
+            "4_2",
+            "9",
+            "11"
+          ],
+          "cjm_ids": [
+            "reporting-signoff"
+          ],
+          "flow_nodes": [
+            "export-decision",
+            "export-generate",
+            "export-error",
+            "report-preview-signed"
+          ],
+          "user_story_id": "us-10"
+        }
+      }
+    },
+    {
+      "story_id": "us-11",
+      "title": "альтернативные форматы экспорта (CSV)",
+      "role": "руководитель стройплощадки",
+      "value": "делиться табличными данными",
+      "core_actions": [
+        "Select alternative format"
+      ],
+      "candidates": [
+        {
+          "action": "Select alternative format",
+          "pattern_id": "picker-menu-format",
+          "title": "Picker inside Menu",
+          "hig_sections": [
+            "Controls > Menus",
+            "Controls > Pickers"
+          ],
+          "swiftui_primitives": [
+            "Menu",
+            "Picker"
+          ],
+          "pros": [
+            "Compact & scalable; consistent with export"
+          ],
+          "cons": [
+            "Hidden behind menu"
+          ],
+          "accessibility_notes": [
+            "Announce value change"
+          ],
+          "common_mistakes": [
+            "Unlocalized labels"
+          ],
+          "scores": {
+            "fit": 5,
+            "load": 5,
+            "consistency": 5,
+            "accessibility": 5,
+            "risk": 4,
+            "total": 24
+          },
+          "refs": {
+            "prd_ids": [
+              "4_2",
+              "10",
+              "11"
+            ],
+            "cjm_ids": [],
+            "flow_nodes": [
+              "export-generate"
+            ],
+            "user_story_id": "us-11"
+          }
+        },
+        {
+          "action": "Select alternative format",
+          "pattern_id": "segmented-pick",
+          "title": "Segmented Picker for 2–3 formats",
+          "hig_sections": [
+            "Controls > Segmented Controls"
+          ],
+          "swiftui_primitives": [
+            "Picker(.segmented)"
+          ],
+          "pros": [
+            "High visibility & speed"
+          ],
+          "cons": [
+            "Doesn't scale to many options"
+          ],
+          "accessibility_notes": [
+            "Ensure readable labels; sufficient spacing"
+          ],
+          "common_mistakes": [
+            "Too many segments"
+          ],
+          "scores": {
+            "fit": 4,
+            "load": 4,
+            "consistency": 5,
+            "accessibility": 5,
+            "risk": 4,
+            "total": 22
+          },
+          "refs": {
+            "prd_ids": [
+              "4_2",
+              "10",
+              "11"
+            ],
+            "cjm_ids": [],
+            "flow_nodes": [
+              "export-generate"
+            ],
+            "user_story_id": "us-11"
+          }
+        }
+      ],
+      "recommendation": {
+        "best_fit": [
+          "picker-menu-format"
+        ],
+        "rationale": "Menu+Picker scales and stays compact.",
+        "refs": {
+          "prd_ids": [
+            "4_2",
+            "10",
+            "11"
+          ],
+          "cjm_ids": [],
+          "flow_nodes": [
+            "export-generate"
+          ],
+          "user_story_id": "us-11"
+        }
+      }
+    },
+    {
+      "story_id": "us-13",
+      "title": "реестр документов с поиском/фильтрами и офлайн-доступом",
+      "role": "руководитель стройплощадки",
+      "value": "быстро находить нужную документацию",
+      "core_actions": [
+        "Browse & search docs",
+        "Offline opening"
+      ],
+      "candidates": [
+        {
+          "action": "Browse & search",
+          "pattern_id": "list-searchable",
+          "title": "List with .searchable and Section headers",
+          "hig_sections": [
+            "Navigation > Search",
+            "Views > Lists"
+          ],
+          "swiftui_primitives": [
+            "List",
+            ".searchable",
+            "Section",
+            "Toolbar"
+          ],
+          "pros": [
+            "Native, performant filtering; sectioned info"
+          ],
+          "cons": [
+            "Custom tag logic needed"
+          ],
+          "accessibility_notes": [
+            "Announce result counts; support DT"
+          ],
+          "common_mistakes": [
+            "No debouncing causing jank"
+          ],
+          "scores": {
+            "fit": 5,
+            "load": 5,
+            "consistency": 5,
+            "accessibility": 5,
+            "risk": 4,
+            "total": 24
+          },
+          "refs": {
+            "prd_ids": [
+              "4_3",
+              "5",
+              "8",
+              "11"
+            ],
+            "cjm_ids": [],
+            "flow_nodes": [],
+            "user_story_id": "us-13"
+          }
+        },
+        {
+          "action": "Offline continuity",
+          "pattern_id": "local-cache-list",
+          "title": "Open cached docs offline; Lazy list",
+          "hig_sections": [
+            "Data Display > Lists"
+          ],
+          "swiftui_primitives": [
+            "List",
+            "LazyVStack"
+          ],
+          "pros": [
+            "Works offline; incremental load"
+          ],
+          "cons": [
+            "Requires cache policy & status UI"
+          ],
+          "accessibility_notes": [
+            "Explicit 'Offline' badge/state"
+          ],
+          "common_mistakes": [
+            "Silent failure opening file"
+          ],
+          "scores": {
+            "fit": 5,
+            "load": 4,
+            "consistency": 4,
+            "accessibility": 5,
+            "risk": 3,
+            "total": 21
+          },
+          "refs": {
+            "prd_ids": [
+              "4_3",
+              "5",
+              "8",
+              "11"
+            ],
+            "cjm_ids": [],
+            "flow_nodes": [],
+            "user_story_id": "us-13"
+          }
+        }
+      ],
+      "recommendation": {
+        "best_fit": [
+          "list-searchable",
+          "local-cache-list"
+        ],
+        "rationale": "Meets perf and offline SLAs with clear UI.",
+        "refs": {
+          "prd_ids": [
+            "4_3",
+            "5",
+            "8",
+            "11"
+          ],
+          "cjm_ids": [],
+          "flow_nodes": [],
+          "user_story_id": "us-13"
+        }
+      }
+    },
+    {
+      "story_id": "us-14",
+      "title": "галерея с группировкой по дням и массовыми действиями",
+      "role": "руководитель стройплощадки",
+      "value": "отслеживать прогресс и быстро прикреплять медиа",
+      "core_actions": [
+        "Browse by day",
+        "Bulk select & attach"
+      ],
+      "candidates": [
+        {
+          "action": "Browse grouped gallery",
+          "pattern_id": "grid-sectioned",
+          "title": "LazyVGrid with Section per day",
+          "hig_sections": [
+            "Data Display > Grids"
+          ],
+          "swiftui_primitives": [
+            "LazyVGrid",
+            "Section"
+          ],
+          "pros": [
+            "Visual density & grouping"
+          ],
+          "cons": [
+            "Size class tuning needed"
+          ],
+          "accessibility_notes": [
+            "Alt text for shots; clear selection cues"
+          ],
+          "common_mistakes": [
+            "Loading huge originals instead of thumbs"
+          ],
+          "scores": {
+            "fit": 5,
+            "load": 5,
+            "consistency": 5,
+            "accessibility": 4,
+            "risk": 4,
+            "total": 23
+          },
+          "refs": {
+            "prd_ids": [
+              "4_4",
+              "11"
+            ],
+            "cjm_ids": [],
+            "flow_nodes": [],
+            "user_story_id": "us-14"
+          }
+        },
+        {
+          "action": "Bulk select & act",
+          "pattern_id": "multi-selection-edit-mode",
+          "title": "Multi-selection via selection + edit mode",
+          "hig_sections": [
+            "Controls > Selection",
+            "Bars > Toolbars"
+          ],
+          "swiftui_primitives": [
+            "List/Grid selection",
+            "EditMode",
+            "Toolbar"
+          ],
+          "pros": [
+            "Native bulk affordance; VO announces counts"
+          ],
+          "cons": [
+            "Discoverability of edit mode"
+          ],
+          "accessibility_notes": [
+            "Visible Edit toggle; confirmation before destructive"
+          ],
+          "common_mistakes": [
+            "Hidden affordance to exit edit mode"
+          ],
+          "scores": {
+            "fit": 5,
+            "load": 4,
+            "consistency": 5,
+            "accessibility": 5,
+            "risk": 4,
+            "total": 23
+          },
+          "refs": {
+            "prd_ids": [
+              "4_4",
+              "11"
+            ],
+            "cjm_ids": [],
+            "flow_nodes": [],
+            "user_story_id": "us-14"
+          }
+        }
+      ],
+      "recommendation": {
+        "best_fit": [
+          "grid-sectioned",
+          "multi-selection-edit-mode"
+        ],
+        "rationale": "Visual scan meets native bulk mechanics.",
+        "refs": {
+          "prd_ids": [
+            "4_4",
+            "11"
+          ],
+          "cjm_ids": [],
+          "flow_nodes": [],
+          "user_story_id": "us-14"
+        }
+      }
+    },
+    {
+      "story_id": "us-15",
+      "title": "корректные a11y-паттерны (VoiceOver/клавиатура/DT)",
+      "role": "любой пользователь (в т.ч. с нарушениями зрения)",
+      "value": "эффективно пользоваться приложением",
+      "core_actions": [
+        "Correct dialogs",
+        "Dynamic Type & targets"
+      ],
+      "candidates": [
+        {
+          "action": "Dialogs focus & announcements",
+          "pattern_id": "alert-focus",
+          "title": "Alert with explicit focus & assertive live region",
+          "hig_sections": [
+            "Accessibility",
+            "Feedback > Alerts"
+          ],
+          "swiftui_primitives": [
+            "Alert",
+            ".accessibilityFocused"
+          ],
+          "pros": [
+            "Correct roles & focus; consistent copy"
+          ],
+          "cons": [
+            "Alert-only"
+          ],
+          "accessibility_notes": [
+            "Announce message; focus first actionable"
+          ],
+          "common_mistakes": [
+            "Random focus order; vague copy"
+          ],
+          "scores": {
+            "fit": 5,
+            "load": 5,
+            "consistency": 5,
+            "accessibility": 5,
+            "risk": 4,
+            "total": 24
+          },
+          "refs": {
+            "prd_ids": [
+              "10",
+              "11"
+            ],
+            "cjm_ids": [],
+            "flow_nodes": [
+              "report-sign",
+              "error-entry-save"
+            ],
+            "user_story_id": "us-15"
+          }
+        },
+        {
+          "action": "Dynamic Type & targets",
+          "pattern_id": "dynamic-type-44pt",
+          "title": "System typography + min 44pt targets",
+          "hig_sections": [
+            "Typography",
+            "Accessibility"
+          ],
+          "swiftui_primitives": [
+            "Text(system fonts)",
+            "Button"
+          ],
+          "pros": [
+            "Global readability outdoors"
+          ],
+          "cons": [
+            "Layout testing across sizes"
+          ],
+          "accessibility_notes": [
+            "Respect larger type; avoid clipping"
+          ],
+          "common_mistakes": [
+            "Fixed heights; color-only cues"
+          ],
+          "scores": {
+            "fit": 5,
+            "load": 5,
+            "consistency": 5,
+            "accessibility": 5,
+            "risk": 4,
+            "total": 24
+          },
+          "refs": {
+            "prd_ids": [
+              "10",
+              "11"
+            ],
+            "cjm_ids": [],
+            "flow_nodes": [
+              "report-sign",
+              "error-entry-save"
+            ],
+            "user_story_id": "us-15"
+          }
+        }
+      ],
+      "recommendation": {
+        "best_fit": [
+          "alert-focus",
+          "dynamic-type-44pt"
+        ],
+        "rationale": "A11y as constraint baked into wireframes.",
+        "refs": {
+          "prd_ids": [
+            "10",
+            "11"
+          ],
+          "cjm_ids": [],
+          "flow_nodes": [
+            "report-sign",
+            "error-entry-save"
+          ],
+          "user_story_id": "us-15"
+        }
+      }
+    },
+    {
+      "story_id": "us-16",
+      "title": "локализованные строки, форматы дат/единиц и шаблон имени файла",
+      "role": "руководитель стройплощадки",
+      "value": "отчёты и UI понятны",
+      "core_actions": [
+        "Localize UI & formats",
+        "Generate filename"
+      ],
+      "candidates": [
+        {
+          "action": "Localize UI & formats",
+          "pattern_id": "string-localized",
+          "title": "String(localized:) + FormatStyle/Date.FormatStyle",
+          "hig_sections": [
+            "Internationalization"
+          ],
+          "swiftui_primitives": [
+            "String(localized:)",
+            "FormatStyle",
+            "Date.FormatStyle"
+          ],
+          "pros": [
+            "Handles plurals/regions correctly"
+          ],
+          "cons": [
+            "Coverage/testing work"
+          ],
+          "accessibility_notes": [
+            "VO and formats in user locale"
+          ],
+          "common_mistakes": [
+            "Hardcoded strings/format"
+          ],
+          "scores": {
+            "fit": 5,
+            "load": 5,
+            "consistency": 5,
+            "accessibility": 5,
+            "risk": 4,
+            "total": 24
+          },
+          "refs": {
+            "prd_ids": [
+              "10",
+              "11"
+            ],
+            "cjm_ids": [],
+            "flow_nodes": [
+              "export-generate"
+            ],
+            "user_story_id": "us-16"
+          }
+        },
+        {
+          "action": "Filename template",
+          "pattern_id": "export-filename",
+          "title": "Sanitized filename template using Date.FormatStyle",
+          "hig_sections": [
+            "Internationalization"
+          ],
+          "swiftui_primitives": [
+            "String interpolation",
+            "Date.FormatStyle"
+          ],
+          "pros": [
+            "Consistent report filenames"
+          ],
+          "cons": [
+            "Sanitization & privacy needed"
+          ],
+          "accessibility_notes": [
+            "Avoid PII; consistent separators"
+          ],
+          "common_mistakes": [
+            "Locale-inappropriate characters in filesystem"
+          ],
+          "scores": {
+            "fit": 5,
+            "load": 4,
+            "consistency": 5,
+            "accessibility": 4,
+            "risk": 4,
+            "total": 22
+          },
+          "refs": {
+            "prd_ids": [
+              "10",
+              "11"
+            ],
+            "cjm_ids": [],
+            "flow_nodes": [
+              "export-generate"
+            ],
+            "user_story_id": "us-16"
+          }
+        }
+      ],
+      "recommendation": {
+        "best_fit": [
+          "string-localized",
+          "export-filename"
+        ],
+        "rationale": "Meets i18n expectations for UI and artifacts.",
+        "refs": {
+          "prd_ids": [
+            "10",
+            "11"
+          ],
+          "cjm_ids": [],
+          "flow_nodes": [
+            "export-generate"
+          ],
+          "user_story_id": "us-16"
+        }
+      }
+    }
+  ]
+}

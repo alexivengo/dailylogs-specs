@@ -1,0 +1,10 @@
+# CODEOWNERS for modular specs
+/specs/02_userflow/** @platform-team @analytics-team
+/specs/06_ctxux/** @design-team @ios-team
+/specs/03_ux_principles/** @design-team
+/specs/04_userstories/** @product-team
+/specs/00_prd/** @product-team
+/specs/01_cjm/** @research-team @cs-team
+/specs/05_hig/** @design-team @ios-team
+/specs/_schemas/** @platform-team
+/specs/_build/** @platform-team

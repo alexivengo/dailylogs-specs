@@ -1,0 +1,15 @@
+{
+  "$id": "userflow_events.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["version", "events"],
+  "properties": {
+    "version": {"type": "string"},
+    "events": {
+      "type": "array",
+      "items": {"type": "string", "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"},
+      "uniqueItems": true
+    }
+  },
+  "additionalProperties": false
+}

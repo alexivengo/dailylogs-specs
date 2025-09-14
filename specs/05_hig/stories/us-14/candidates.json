@@ -1,0 +1,113 @@
+{
+  "$schema": "../../_schemas/hig_story_candidates.schema.json",
+  "story_id": "us-14",
+  "title": "галерея с группировкой по дням и массовыми действиями",
+  "role": "руководитель стройплощадки",
+  "value": "отслеживать прогресс и быстро прикреплять медиа",
+  "core_actions": [
+    "Browse by day",
+    "Bulk select & attach"
+  ],
+  "candidates": [
+    {
+      "action": "Browse grouped gallery",
+      "pattern_id": "grid-sectioned",
+      "title": "LazyVGrid with Section per day",
+      "hig_sections": [
+        "Data Display > Grids"
+      ],
+      "swiftui_primitives": [
+        "LazyVGrid",
+        "Section"
+      ],
+      "pros": [
+        "Visual density & grouping"
+      ],
+      "cons": [
+        "Size class tuning needed"
+      ],
+      "accessibility_notes": [
+        "Alt text for shots; clear selection cues"
+      ],
+      "common_mistakes": [
+        "Loading huge originals instead of thumbs"
+      ],
+      "scores": {
+        "fit": 5,
+        "load": 5,
+        "consistency": 5,
+        "accessibility": 4,
+        "risk": 4,
+        "total": 23
+      },
+      "refs": {
+        "prd_ids": [
+          "4_4",
+          "11"
+        ],
+        "cjm_ids": [],
+        "flow_nodes": [],
+        "user_story_id": "us-14"
+      }
+    },
+    {
+      "action": "Bulk select & act",
+      "pattern_id": "multi-selection-edit-mode",
+      "title": "Multi-selection via selection + edit mode",
+      "hig_sections": [
+        "Controls > Selection",
+        "Bars > Toolbars"
+      ],
+      "swiftui_primitives": [
+        "List/Grid selection",
+        "EditMode",
+        "Toolbar"
+      ],
+      "pros": [
+        "Native bulk affordance; VO announces counts"
+      ],
+      "cons": [
+        "Discoverability of edit mode"
+      ],
+      "accessibility_notes": [
+        "Visible Edit toggle; confirmation before destructive"
+      ],
+      "common_mistakes": [
+        "Hidden affordance to exit edit mode"
+      ],
+      "scores": {
+        "fit": 5,
+        "load": 4,
+        "consistency": 5,
+        "accessibility": 5,
+        "risk": 4,
+        "total": 23
+      },
+      "refs": {
+        "prd_ids": [
+          "4_4",
+          "11"
+        ],
+        "cjm_ids": [],
+        "flow_nodes": [],
+        "user_story_id": "us-14"
+      }
+    }
+  ],
+  "recommendation": {
+    "best_fit": [
+      "grid-sectioned",
+      "multi-selection-edit-mode"
+    ],
+    "rationale": "Visual scan meets native bulk mechanics.",
+    "refs": {
+      "prd_ids": [
+        "4_4",
+        "11"
+      ],
+      "cjm_ids": [],
+      "flow_nodes": [],
+      "user_story_id": "us-14"
+    }
+  }
+}

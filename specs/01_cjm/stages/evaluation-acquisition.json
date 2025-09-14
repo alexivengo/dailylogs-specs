@@ -1,0 +1,152 @@
+{
+  "id": "evaluation-acquisition",
+  "title": "Оценка листинга и установка",
+  "personas": [
+    "site-manager"
+  ],
+  "segments": [
+    "smb-contractor"
+  ],
+  "touchpoints": [
+    "3rd_party.app_store.install",
+    "3rd_party.app_store.listing",
+    "3rd_party.app_store.reviews",
+    "3rd_party.app_store.screenshots"
+  ],
+  "emotions": [
+    "облегчение от чистого UI",
+    "придирчивый просмотр деталей",
+    "тревога о «подводных камнях»"
+  ],
+  "expectations": [
+    "ясное описание без жаргона",
+    "понятный прайс и условия",
+    "явная демонстрация офлайн-режима"
+  ],
+  "barriers": [
+    {
+      "type": "understanding",
+      "desc": "Перегруженный/жаргонный текст листинга — трудно быстро понять ценность.",
+      "severity": "high",
+      "confidence": "high",
+      "refs": [
+        "PRD:#7"
+      ]
+    },
+    {
+      "type": "trust",
+      "desc": "Низкий объём/рейтинг отзывов снижает доверие.",
+      "severity": "high",
+      "confidence": "medium",
+      "refs": [
+        "Persona:#site-manager"
+      ]
+    },
+    {
+      "type": "time",
+      "desc": "Медленная загрузка приложения при слабой связи/большом размере бандла.",
+      "severity": "high",
+      "confidence": "high",
+      "refs": [
+        "PRD:#5",
+        "Segment:#smb-contractor"
+      ]
+    }
+  ],
+  "opportunities": [
+    {
+      "type": "quick_win",
+      "desc": "Скриншоты/видео с видимым офлайн-индикатором и статусами дней.",
+      "effort": "low",
+      "impact": "high",
+      "confidence": "high",
+      "rationale": "Мгновенно закрывает главный вопрос: работает ли без сети.",
+      "model": "ICE",
+      "components": {
+        "impact": 5,
+        "confidence": 4,
+        "ease": 4
+      },
+      "score": 80,
+      "refs": [
+        "PRD:#8",
+        "PRD:#4_2",
+        "PRD:#9"
+      ]
+    },
+    {
+      "type": "quick_win",
+      "desc": "Оптимизация размера приложения/ассетов для ускорения загрузки.",
+      "effort": "low",
+      "impact": "high",
+      "confidence": "high",
+      "rationale": "Снижает барьер времени в полевых условиях.",
+      "model": "ICE",
+      "components": {
+        "impact": 4,
+        "confidence": 4,
+        "ease": 4
+      },
+      "score": 64,
+      "refs": [
+        "PRD:#5"
+      ]
+    },
+    {
+      "type": "strategic",
+      "desc": "Лендинг с прозрачной ценой и FAQ, ссылка из листинга.",
+      "effort": "low",
+      "impact": "medium",
+      "confidence": "high",
+      "rationale": "Устраняет опасения стоимости и возвратов.",
+      "model": "ICE",
+      "components": {
+        "impact": 3,
+        "confidence": 4,
+        "ease": 4
+      },
+      "score": 48,
+      "refs": [
+        "Segment:#smb-contractor"
+      ]
+    }
+  ],
+  "moment_of_truth": {
+    "is_mot": false,
+    "why": "Решение об установке важно, но ключевая проверка ценности происходит в онбординге."
+  },
+  "metrics": {
+    "leading": [
+      {
+        "name": "Вовлечённость ассетами листинга",
+        "type": "leading",
+        "definition": "Доля просмотров, в которых был запуск видео/скролл галереи скриншотов.",
+        "unit": "percentage",
+        "kpi_ref": "PRD:#11"
+      },
+      {
+        "name": "Стартов загрузки",
+        "type": "leading",
+        "definition": "Количество нажатий на «Загрузить/Установить».",
+        "unit": "count"
+      }
+    ],
+    "lagging": [
+      {
+        "name": "Конверсия листинга в установку",
+        "type": "lagging",
+        "definition": "Доля пользователей, установивших приложение после просмотра листинга.",
+        "unit": "percentage",
+        "kpi_ref": "PRD:#11"
+      }
+    ]
+  },
+  "refs": [
+    "PRD:#7",
+    "PRD:#8",
+    "PRD:#5",
+    "PRD:#9",
+    "Persona:#site-manager",
+    "Segment:#smb-contractor"
+  ]
+}

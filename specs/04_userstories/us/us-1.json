@@ -1,0 +1,66 @@
+{
+  "story_id": "us-1",
+  "epic_id": "epic-1",
+  "role": "руководитель стройплощадки",
+  "capability": "создать первый проект по минимальному набору полей",
+  "value": "быстро начать работу и увидеть ценность",
+  "priority": "high",
+  "status": "proposed",
+  "acceptance_criteria": [
+    "Given пустой список проектов When нажимаю «Создать проект» Then открывается форма с обязательным «Название» (FLOW:#project-create; PRD:#4_1)",
+    "Given форма валидна When жму «Сохранить» Then проект сохраняется офлайн и открывается дашборд (FLOW:#save-project; PRD:#8)",
+    "Given первый запуск When пустое состояние Then вижу CTA и TipKit вместо блокирующего туториала (PRD:#7; CJM:#onboarding-first-project)"
+  ],
+  "metrics": {
+    "leading": [
+      {
+        "name": "Time to First Project",
+        "kpi_ref": "PRD:#11"
+      }
+    ],
+    "lagging": [
+      {
+        "name": "Onboarding Completion Rate",
+        "kpi_ref": "PRD:#11"
+      }
+    ]
+  },
+  "nfr": {
+    "performance": "Локальный save проекта ≤500 мс",
+    "security_privacy": "SwiftData, NSFileProtectionComplete",
+    "accessibility": "Корректные labels и порядок фокуса формы",
+    "localization": "Локализованные строки формы"
+  },
+  "dependencies": {
+    "blocked_by": [],
+    "relates_to": [
+      "us-18"
+    ]
+  },
+  "risks": [],
+  "refs": [
+    "PRD:#4_1",
+    "PRD:#7",
+    "PRD:#8",
+    "PRD:#11",
+    "CJM:#onboarding-first-project",
+    "FLOW:#project-create",
+    "FLOW:#save-project"
+  ],
+  "affects_mot": true,
+  "mot_refs": [
+    "CJM:#onboarding-first-project"
+  ],
+  "analytics_events": [
+    "project_create_view",
+    "project_saved",
+    "empty_state_shown"
+  ],
+  "analytics_owner": "Product",
+  "analytics_pii": false,
+  "story_points": 3,
+  "estimate_confidence": "medium",
+  "assumptions": [
+    "[ASSUMPTION] Дополнительные поля можно заполнить позже."
+  ]
+}

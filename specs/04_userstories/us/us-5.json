@@ -1,0 +1,67 @@
+{
+  "story_id": "us-5",
+  "epic_id": "epic-2",
+  "role": "руководитель стройплощадки",
+  "capability": "автоподстановку погоды онлайн и ручной ввод офлайн",
+  "value": "закрывать день без блокеров",
+  "priority": "medium",
+  "status": "proposed",
+  "acceptance_criteria": [
+    "Given сеть есть When открываю «Сегодня» Then погода подтягивается автоматически (FLOW:#fetch-weather; PRD:#8)",
+    "Given офлайн/таймаут 8 с When не подтянулось Then переключаюсь на ручной ввод (FLOW:#manual-weather; PRD:#8)",
+    "Given VoiceOver When редактирую погоду Then озвучиваются названия/единицы (PRD:#10)"
+  ],
+  "metrics": {
+    "leading": [
+      {
+        "name": "Auto-weather share",
+        "kpi_ref": "PRD:#11"
+      }
+    ],
+    "lagging": [
+      {
+        "name": "Time to Report",
+        "kpi_ref": "PRD:#11"
+      }
+    ]
+  },
+  "nfr": {
+    "performance": "Fetch погоды ≤8 с",
+    "accessibility": "Подписи полей/единиц измерения",
+    "localization": "Единицы/форматы по региону"
+  },
+  "dependencies": {
+    "blocked_by": [],
+    "relates_to": []
+  },
+  "risks": [
+    {
+      "desc": "Нестабильность API погоды → требуется кеш/фолбек",
+      "severity": "medium",
+      "refs": [
+        "PRD:#8"
+      ]
+    }
+  ],
+  "refs": [
+    "PRD:#8",
+    "PRD:#10",
+    "PRD:#11",
+    "CJM:#daily-logging",
+    "FLOW:#check-network-for-weather",
+    "FLOW:#fetch-weather",
+    "FLOW:#manual-weather"
+  ],
+  "affects_mot": false,
+  "mot_refs": [],
+  "analytics_events": [
+    "weather_check",
+    "weather_fetched",
+    "manual_weather_input"
+  ],
+  "analytics_owner": "Product",
+  "analytics_pii": false,
+  "story_points": 3,
+  "estimate_confidence": "medium",
+  "assumptions": []
+}

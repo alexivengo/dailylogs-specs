@@ -1,0 +1,188 @@
+{
+  "version": "1.1.0",
+  "domain": "projects",
+  "nodes": [
+    {
+      "id": "projects-empty",
+      "type": "screen",
+      "desc": "Пустой список проектов с TipKit и CTA «Создать проект». Кратко объясняет следующий шаг.",
+      "inputs": [],
+      "outputs": [
+        "project_location"
+      ],
+      "edges": [
+        {
+          "id": "e-empty-create",
+          "action": "tap_create_project",
+          "target": "project-create",
+          "analytics": [
+            "empty_state_shown"
+          ],
+          "refs": [
+            "PRD:#4_1",
+            "PRD:#7",
+            "CJM:#onboarding-first-project"
+          ]
+        }
+      ],
+      "a11y": {
+        "role": "main",
+        "labels": [
+          "Создать проект",
+          "Подсказка TipKit"
+        ],
+        "focus_order": [
+          "tip",
+          "primary_cta"
+        ],
+        "keyboard": "Tab к кнопке «Создать проект», Enter активирует",
+        "announcements": "Нет проектов. Нажмите «Создать проект».",
+        "live_region": "polite"
+      },
+      "analytics": [
+        "empty_state_shown"
+      ],
+      "refs": [
+        "PRD:#4_1",
+        "PRD:#7",
+        "CJM:#onboarding-first-project"
+      ]
+    },
+    {
+      "id": "project-create",
+      "type": "screen",
+      "desc": "Минимальная форма создания проекта: обязательное поле «Название проекта». Остальные поля — позже в дашборде.",
+      "inputs": [
+        "project_name"
+      ],
+      "outputs": [
+        "project_data",
+        "project_name"
+      ],
+      "edges": [
+        {
+          "id": "e-create-submit",
+          "action": "submit_form",
+          "target": "save-project",
+          "guard": "len(project_name) > 0",
+          "analytics": [
+            "project_create_attempt"
+          ],
+          "refs": [
+            "PRD:#4_1",
+            "CJM:#onboarding-first-project"
+          ]
+        },
+        {
+          "id": "e-create-cancel",
+          "action": "tap_cancel",
+          "target": "cancel-out",
+          "refs": [
+            "PRD:#7",
+            "CJM:#onboarding-first-project"
+          ]
+        }
+      ],
+      "errors": [
+        {
+          "id": "err-project-name-required",
+          "type": "validation",
+          "desc": "Пользователь нажал «Сохранить» без названия проекта.",
+          "recovery": "Показать inline-ошибку и вернуть фокус в поле.",
+          "refs": [
+            "PRD:#4_1"
+          ]
+        }
+      ],
+      "a11y": {
+        "role": "form",
+        "labels": [
+          "Название проекта",
+          "Сохранить",
+          "Отмена"
+        ],
+        "focus_order": [
+          "name_field",
+          "save_button",
+          "cancel_button"
+        ],
+        "keyboard": "Return — сохранить; Esc — отменить",
+        "announcements": "Введите название проекта.",
+        "live_region": "assertive"
+      },
+      "analytics": [
+        "project_create_view"
+      ],
+      "refs": [
+        "PRD:#4_1",
+        "CJM:#onboarding-first-project"
+      ]
+    },
+    {
+      "id": "project-dashboard",
+      "type": "screen",
+      "desc": "Дашборд проекта с быстрыми ссылками на модули. Основной CTA — Журнал работ.",
+      "inputs": [
+        "project_id"
+      ],
+      "outputs": [],
+      "edges": [
+        {
+          "id": "e-dash-open-daily",
+          "action": "open_daily_logs",
+          "target": "daily-calendar",
+          "analytics": [
+            "project_dashboard_view"
+          ],
+          "refs": [
+            "PRD:#4_1",
+            "PRD:#4_2",
+            "CJM:#daily-logging"
+          ]
+        },
+        {
+          "id": "e-dash-open-documents",
+          "action": "open_documents",
+          "target": "documents-view",
+          "refs": [
+            "PRD:#4_3",
+            "PRD:#5",
+            "PRD:#8",
+            "CJM:#retention-advocacy"
+          ]
+        },
+        {
+          "id": "e-dash-open-gallery",
+          "action": "open_gallery",
+          "target": "gallery",
+          "refs": [
+            "PRD:#4_4",
+            "PRD:#11",
+            "CJM:#daily-logging"
+          ]
+        }
+      ],
+      "a11y": {
+        "role": "main",
+        "labels": [
+          "Журнал работ"
+        ],
+        "focus_order": [
+          "title",
+          "daily_logs_cta"
+        ],
+        "keyboard": "Tab к ссылкам; Enter открывает",
+        "announcements": "Открыт дашборд проекта.",
+        "live_region": "polite"
+      },
+      "analytics": [
+        "project_dashboard_view"
+      ],
+      "refs": [
+        "PRD:#4_1",
+        "PRD:#4_2",
+        "CJM:#daily-logging"
+      ]
+    }
+  ]
+}

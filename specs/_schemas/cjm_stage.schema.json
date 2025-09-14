@@ -1,0 +1,16 @@
+{
+  "$id": "cjm_stage.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["id", "title"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "id": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+    "title": {"type": "string"},
+    "barriers": {"type": "array", "items": {"type": "string"}},
+    "opportunities": {"type": "array", "items": {"type": "string"}},
+    "metrics": {"type": "array", "items": {"type": "string"}},
+    "refs": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": true
+}

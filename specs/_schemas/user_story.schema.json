@@ -1,0 +1,11 @@
+{
+  "$id": "user_story.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["version", "stories"],
+  "properties": {
+    "version": {"type": "string"},
+    "epics": {"type": "object", "additionalProperties": {"type": "array", "items": {"type": "string"}}},
+    "stories": {"type": "array", "items": {"type": "string"}}
+  }
+}

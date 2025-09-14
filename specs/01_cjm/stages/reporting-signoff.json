@@ -1,0 +1,160 @@
+{
+  "id": "reporting-signoff",
+  "title": "Превью → подпись → экспорт отчёта",
+  "personas": [
+    "site-manager"
+  ],
+  "segments": [
+    "smb-contractor"
+  ],
+  "touchpoints": [
+    "email.compose_send",
+    "mobile.app.export_share",
+    "mobile.app.report_preview",
+    "mobile.app.report_sign",
+    "sms.compose_send"
+  ],
+  "emotions": [
+    "облегчение после отправки",
+    "тревога за полноту и вид отчёта",
+    "уверенность при блокировке дня"
+  ],
+  "expectations": [
+    "профессиональный PDF/A-2u + checksum",
+    "быстрый шаринг через системный лист",
+    "прозрачные статусы «день/подпись/блокировка»"
+  ],
+  "barriers": [
+    {
+      "type": "trust",
+      "desc": "Сомнения в «официальности»/качестве итогового PDF.",
+      "severity": "high",
+      "confidence": "high",
+      "refs": [
+        "PRD:#9",
+        "PRD:#4_2"
+      ]
+    },
+    {
+      "type": "friction",
+      "desc": "Лишние шаги в цепочке превью → подпись → экспорт.",
+      "severity": "medium",
+      "confidence": "medium",
+      "refs": [
+        "PRD:#4_2"
+      ]
+    },
+    {
+      "type": "risk",
+      "desc": "Ошибка, обнаруженная после блокировки дня, требует обходного рабочего процесса.",
+      "severity": "medium",
+      "confidence": "medium",
+      "refs": [
+        "PRD:#9"
+      ]
+    }
+  ],
+  "opportunities": [
+    {
+      "type": "quick_win",
+      "desc": "Интеграция iOS Share Sheet в превью отчёта.",
+      "effort": "low",
+      "impact": "high",
+      "confidence": "high",
+      "rationale": "Ускоряет и упрощает распространение отчёта.",
+      "model": "ICE",
+      "components": {
+        "impact": 4,
+        "confidence": 4,
+        "ease": 5
+      },
+      "score": 80,
+      "refs": [
+        "PRD:#4_2"
+      ]
+    },
+    {
+      "type": "quick_win",
+      "desc": "Быстрый экшен «Share Last Report» на дашборде проекта.",
+      "effort": "low",
+      "impact": "medium",
+      "confidence": "high",
+      "rationale": "Частая повторная задача — одно касание.",
+      "model": "ICE",
+      "components": {
+        "impact": 3,
+        "confidence": 4,
+        "ease": 4
+      },
+      "score": 48,
+      "refs": [
+        "Persona:#site-manager"
+      ]
+    },
+    {
+      "type": "strategic",
+      "desc": "Опциональное брендирование PDF (логотип компании) при сохранении соответствия PDF/A-2u.",
+      "effort": "medium",
+      "impact": "high",
+      "confidence": "medium",
+      "rationale": "Повышает воспринимаемую ценность и профессионализм.",
+      "model": "ICE",
+      "components": {
+        "impact": 4,
+        "confidence": 3,
+        "ease": 3
+      },
+      "score": 36,
+      "refs": [
+        "Segment:#smb-contractor"
+      ]
+    }
+  ],
+  "moment_of_truth": {
+    "is_mot": true,
+    "why": "«Работа сделана»: ключевой артефакт для комплаенса и биллинга.",
+    "key_metric": "Time to Report",
+    "risk_if_failed": "Ручные костыли, эскалации, churn.",
+    "test_method": "E2E-замер по шагам + юзабилити-сессии."
+  },
+  "metrics": {
+    "leading": [
+      {
+        "name": "Доля дней с превью отчёта",
+        "type": "leading",
+        "definition": "Процент активных рабочих дней, для которых пользователь открывал превью отчёта.",
+        "unit": "percentage"
+      }
+    ],
+    "lagging": [
+      {
+        "name": "Time to Report",
+        "type": "lagging",
+        "definition": "Среднее время от последней записи в день до успешного экспорта отчёта.",
+        "unit": "minutes",
+        "kpi_ref": "PRD:#11"
+      },
+      {
+        "name": "Export Success / Error Rate",
+        "type": "lagging",
+        "definition": "Доля успешных экспортов и доля экспортов с ошибкой.",
+        "unit": "percentage",
+        "kpi_ref": "PRD:#11"
+      },
+      {
+        "name": "% подписанных дней",
+        "type": "lagging",
+        "definition": "Процент дней, помеченных как «подписанные/заблокированные».",
+        "unit": "percentage",
+        "kpi_ref": "PRD:#11"
+      }
+    ]
+  },
+  "refs": [
+    "PRD:#4_2",
+    "PRD:#9",
+    "PRD:#11",
+    "Persona:#site-manager",
+    "Segment:#smb-contractor"
+  ]
+}

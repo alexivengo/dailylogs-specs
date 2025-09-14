@@ -1,0 +1,37 @@
+{
+  "$schema": "../../_schemas/ctxux_screen.schema.json",
+  "id": "export-decision",
+  "title": "Выбор формата экспорта",
+  "desc": "Экран выбора формата и канала экспорта отчёта.",
+  "local_principles": [
+    {
+      "id": "clear-default-and-safe-cancel",
+      "title": "Чёткий формат по умолчанию и безопасная отмена",
+      "rationale": "По умолчанию предлагается совместимый формат PDF/A-2u, с явной возможностью отмены без потери данных.",
+      "acceptance": [
+        "Формат по умолчанию видим и отмечен",
+        "Отмена возвращает на предыдущий экран без сайд-эффектов"
+      ],
+      "telemetry": [
+        "export_options_view"
+      ],
+      "related_principles": [
+        "one-screen-one-action",
+        "explicit-status-signature-locking"
+      ],
+      "global_principle_ids": [
+        "one-screen-one-action",
+        "explicit-status-signature-locking"
+      ],
+      "user_story_ids": ["us-1", "us-2"]
+    }
+  ],
+  "refs": {
+    "UserStory": ["us-1", "us-2"],
+    "GlobalPrinciple": [
+      "one-screen-one-action",
+      "explicit-status-signature-locking"
+    ],
+    "UserFlow": ["export-decision", "export-generate", "report-preview-signed"]
+  }
+}

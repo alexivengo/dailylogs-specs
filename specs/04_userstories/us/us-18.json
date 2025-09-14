@@ -1,0 +1,50 @@
+{
+  "story_id": "us-18",
+  "epic_id": "epic-1",
+  "role": "пользователь",
+  "capability": "понятную обработку ошибок при создании проекта (Retry/Отмена) с сохранением введённых данных",
+  "value": "не терять прогресс и быстро восстановиться",
+  "priority": "medium",
+  "status": "proposed",
+  "acceptance_criteria": [
+    "Given ошибка сохранения When показывается диалог Then есть «Повторить»/«Отмена», фокус на сообщении, live_region=assertive (FLOW:#error-save; PRD:#10)",
+    "Given жму «Повторить» When восстановилась возможность Then выполняется повторное сохранение с backoff; данные формы не теряются (PRD:#5)",
+    "Given жму «Отмена» When диалог закрыт Then остаюсь в редакторе с сохранёнными полями для ручной правки"
+  ],
+  "metrics": {
+    "leading": [
+      {
+        "name": "Save Error Recovery Rate",
+        "kpi_ref": "PRD:#11"
+      }
+    ],
+    "lagging": []
+  },
+  "nfr": {
+    "performance": "Повторная попытка в окне ≤5 с",
+    "security_privacy": "Без лишних логов ошибок/PII",
+    "accessibility": "Alertdialog с правильным фокусом и озвучкой"
+  },
+  "dependencies": {
+    "blocked_by": [],
+    "relates_to": []
+  },
+  "risks": [],
+  "refs": [
+    "FLOW:#error-save",
+    "PRD:#5",
+    "PRD:#10",
+    "PRD:#11"
+  ],
+  "affects_mot": false,
+  "mot_refs": [],
+  "analytics_events": [
+    "error_project_save",
+    "project_save_retry"
+  ],
+  "analytics_owner": "Product",
+  "analytics_pii": false,
+  "story_points": 2,
+  "estimate_confidence": "high",
+  "assumptions": []
+}

@@ -1,0 +1,13 @@
+{
+  "$id": "prd.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["version", "sections"],
+  "properties": {
+    "version": {"type": "string"},
+    "sections": {
+      "type": "array",
+      "items": {"type": "string"}
+    }
+  }
+}

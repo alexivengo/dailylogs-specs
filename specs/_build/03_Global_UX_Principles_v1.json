@@ -1,0 +1,633 @@
+{
+  "version": "1.0.0",
+  "meta": {},
+  "principles": [
+    {
+      "id": "explicit-status-signature-locking",
+      "title": "Make day status, signature, and locking explicit",
+      "rationale": "Compliance and trust require visible state transitions and immutable records after locking, with a transparent way to rectify mistakes without altering the original",
+      "example": "The UI clearly indicates signed and locked state and prevents accidental edits while offering a safe, auditable correction path that preserves the original record",
+      "priority": "high",
+      "refs": [
+        "CJM:#reporting-signoff",
+        "HIG:#Feedback",
+        "PRD:#9",
+        "UserFlow:#lock-day"
+      ],
+      "antipatterns": [
+        {
+          "name": "Allowing edits after lock without a clear warning",
+          "why_harmful": "Breaks audit trail and undermines integrity",
+          "severity": "high",
+          "impact_area": [
+            "error_handling",
+            "security",
+            "state_management"
+          ],
+          "refs": [
+            "HIG:#Feedback",
+            "PRD:#9",
+            "UserFlow:#lock-day"
+          ]
+        },
+        {
+          "name": "Failing to provide feedback on data persistence",
+          "why_harmful": "Creates anxiety about unsaved data, especially offline",
+          "severity": "high",
+          "impact_area": [
+            "feedback",
+            "offline_reliability",
+            "state_management"
+          ],
+          "refs": [
+            "PRD:#8",
+            "UserFlow:#save-entry"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "guide-and-request-in-the-moment",
+      "title": "Guide and request in the moment, never block",
+      "rationale": "Professionals prefer just-in-time guidance and consent; requests should appear exactly when needed with a non-blocking recovery path",
+      "example": "On attaching a photo, request camera access with clear rationale and provide options to continue such as choose existing, open settings, or proceed without blocking the task",
+      "priority": "medium",
+      "refs": [
+        "CJM:#onboarding-first-project",
+        "HIG:#Permissions",
+        "PRD:#7",
+        "UserFlow:#camera-permission"
+      ],
+      "antipatterns": [
+        {
+          "name": "Permission prompts out of context",
+          "why_harmful": "Drives denial and causes later broken flows",
+          "severity": "medium",
+          "impact_area": [
+            "feedback",
+            "permissions"
+          ],
+          "refs": [
+            "HIG:#Permissions",
+            "UserFlow:#camera-permission"
+          ]
+        },
+        {
+          "name": "Empty states without a clear next action",
+          "why_harmful": "Waste screen real estate and stall progress",
+          "severity": "medium",
+          "impact_area": [
+            "empty_states",
+            "navigation"
+          ],
+          "refs": [
+            "HIG:#Feedback"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "honor-wcag-dynamic-type-focus-targets",
+      "title": "Honor WCAG AA, Dynamic Type, focus order, and target sizes",
+      "rationale": "Outdoor use and accessibility needs demand robust legibility and operability, improving accuracy and speed for everyone",
+      "example": "Forms maintain at least 44pt tap targets, valid focus order, scalable type, and sufficient contrast for bright conditions",
+      "priority": "medium",
+      "refs": [
+        "HIG:#Controls",
+        "HIG:#Typography",
+        "PRD:#10",
+        "WCAG:#1-4-3",
+        "WCAG:#1-4-4",
+        "WCAG:#2-4-3",
+        "WCAG:#2-5-5"
+      ],
+      "antipatterns": [
+        {
+          "name": "Insufficient contrast or ignoring Dynamic Type",
+          "why_harmful": "Reduces readability and excludes users",
+          "severity": "high",
+          "impact_area": [
+            "accessibility",
+            "adaptive_layout"
+          ],
+          "refs": [
+            "HIG:#Typography",
+            "PRD:#10",
+            "WCAG:#1-4-3",
+            "WCAG:#1-4-4"
+          ]
+        },
+        {
+          "name": "Using placeholders instead of labels",
+          "why_harmful": "Labels vanish on input, harming comprehension and accessibility",
+          "severity": "medium",
+          "impact_area": [
+            "accessibility",
+            "forms"
+          ],
+          "refs": [
+            "HIG:#Forms",
+            "WCAG:#3-3-2"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "minimize-required-input",
+      "title": "Minimize required input to reach value fast",
+      "rationale": "Lowering initial data burden accelerates Time-to-First-Project and activation; defer noncritical fields and support efficient repetition",
+      "example": "Create a project with essential minimum and accelerate routine input with repeat-friendly actions such as save-and-add-another or copy previous details",
+      "priority": "high",
+      "refs": [
+        "CJM:#onboarding-first-project",
+        "HIG:#Forms",
+        "PRD:#4_1",
+        "WCAG:#3-3-2"
+      ],
+      "antipatterns": [
+        {
+          "name": "Overloaded project creation form",
+          "why_harmful": "Cognitive overload delays activation and increases abandonment",
+          "severity": "high",
+          "impact_area": [
+            "data_entry",
+            "forms"
+          ],
+          "refs": [
+            "CJM:#onboarding-first-project",
+            "HIG:#Forms",
+            "PRD:#4_1"
+          ]
+        },
+        {
+          "name": "Too many steps for repetitive entries",
+          "why_harmful": "Inflates effort for routine logs and harms flow",
+          "severity": "high",
+          "impact_area": [
+            "data_entry",
+            "forms"
+          ],
+          "refs": [
+            "CJM:#daily-logging",
+            "PRD:#4_2"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "offline-first-graceful-fallback",
+      "title": "Offline is a first-class mode with graceful fallback",
+      "rationale": "Core flows must not block on network; auto-detect connectivity, accept manual inputs, queue work locally, and clearly signal status",
+      "example": "When online, weather can auto-populate; when offline, the app accepts manual values and confirms local save with later sync",
+      "priority": "high",
+      "refs": [
+        "CJM:#daily-logging",
+        "HIG:#Feedback",
+        "PRD:#8",
+        "UserFlow:#check-network-for-weather"
+      ],
+      "antipatterns": [
+        {
+          "name": "Blocking core flows on network availability",
+          "why_harmful": "Prevents field progress and forces error loops",
+          "severity": "high",
+          "impact_area": [
+            "error_handling",
+            "offline_reliability",
+            "state_management"
+          ],
+          "refs": [
+            "PRD:#8",
+            "UserFlow:#check-network-for-weather"
+          ]
+        },
+        {
+          "name": "Displaying network-dependent spinners or loaders",
+          "why_harmful": "Encourages waiting on the network instead of progressing offline",
+          "severity": "high",
+          "impact_area": [
+            "feedback",
+            "offline_reliability",
+            "performance"
+          ],
+          "refs": [
+            "HIG:#Feedback",
+            "PRD:#8"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "one-screen-one-action",
+      "title": "One screen — one key action",
+      "rationale": "Under time pressure, a single dominant goal per screen reduces cognitive load and navigation errors while preserving the shortest happy path",
+      "example": "Project Dashboard surfaces one primary CTA to continue daily work; secondary actions are visually subordinate",
+      "priority": "high",
+      "refs": [
+        "CJM:#daily-logging",
+        "HIG:#Navigation",
+        "PRD:#7"
+      ],
+      "antipatterns": [
+        {
+          "name": "Combining unrelated tasks on one screen",
+          "why_harmful": "Fragments attention and increases error risk in field use",
+          "severity": "high",
+          "impact_area": [
+            "information_architecture",
+            "navigation"
+          ],
+          "refs": [
+            "HIG:#Navigation",
+            "PRD:#7"
+          ]
+        },
+        {
+          "name": "Hiding the primary action behind menus",
+          "why_harmful": "Slows time-to-action and obscures intent",
+          "severity": "medium",
+          "impact_area": [
+            "content",
+            "navigation"
+          ],
+          "refs": [
+            "HIG:#Navigation"
+          ]
+        }
+      ]
+    }
+  ],
+  "antipatterns_registry": [
+    {
+      "name": "Allowing edits after lock without a clear warning",
+      "why_harmful": "Breaks audit trail and undermines integrity",
+      "severity": "high",
+      "impact_area": [
+        "error_handling",
+        "security",
+        "state_management"
+      ],
+      "refs": [
+        "HIG:#Feedback",
+        "PRD:#9",
+        "UserFlow:#lock-day"
+      ],
+      "related_principle_ids": [
+        "explicit-status-signature-locking"
+      ]
+    },
+    {
+      "name": "Blocking core flows on network availability",
+      "why_harmful": "Prevents field progress and forces error loops",
+      "severity": "high",
+      "impact_area": [
+        "error_handling",
+        "offline_reliability",
+        "state_management"
+      ],
+      "refs": [
+        "PRD:#8",
+        "UserFlow:#check-network-for-weather"
+      ],
+      "related_principle_ids": [
+        "offline-first-graceful-fallback"
+      ]
+    },
+    {
+      "name": "Combining unrelated tasks on one screen",
+      "why_harmful": "Increases cognitive load and navigation errors",
+      "severity": "high",
+      "impact_area": [
+        "information_architecture",
+        "navigation"
+      ],
+      "refs": [
+        "HIG:#Navigation",
+        "PRD:#7"
+      ],
+      "related_principle_ids": [
+        "one-screen-one-action"
+      ]
+    },
+    {
+      "name": "Displaying network-dependent spinners or loaders",
+      "why_harmful": "Encourages waiting on the network instead of progressing offline",
+      "severity": "high",
+      "impact_area": [
+        "feedback",
+        "offline_reliability",
+        "performance"
+      ],
+      "refs": [
+        "HIG:#Feedback",
+        "PRD:#8"
+      ],
+      "related_principle_ids": [
+        "offline-first-graceful-fallback"
+      ]
+    },
+    {
+      "name": "Failing to provide feedback on data persistence",
+      "why_harmful": "Creates anxiety about unsaved data, especially offline",
+      "severity": "high",
+      "impact_area": [
+        "feedback",
+        "offline_reliability",
+        "state_management"
+      ],
+      "refs": [
+        "PRD:#8",
+        "UserFlow:#save-entry"
+      ],
+      "related_principle_ids": [
+        "explicit-status-signature-locking",
+        "offline-first-graceful-fallback"
+      ]
+    },
+    {
+      "name": "Insufficient contrast or ignoring Dynamic Type",
+      "why_harmful": "Reduces readability in outdoor conditions",
+      "severity": "high",
+      "impact_area": [
+        "accessibility",
+        "adaptive_layout"
+      ],
+      "refs": [
+        "PRD:#10",
+        "WCAG:#1-4-3",
+        "WCAG:#1-4-4"
+      ],
+      "related_principle_ids": [
+        "honor-wcag-dynamic-type-focus-targets"
+      ]
+    },
+    {
+      "name": "Overloaded project creation form",
+      "why_harmful": "Delays activation and increases abandonment",
+      "severity": "high",
+      "impact_area": [
+        "data_entry",
+        "forms"
+      ],
+      "refs": [
+        "CJM:#onboarding-first-project",
+        "HIG:#Forms",
+        "PRD:#4_1"
+      ],
+      "related_principle_ids": [
+        "minimize-required-input"
+      ]
+    },
+    {
+      "name": "Silent failure leading to data loss in offline state",
+      "why_harmful": "Erodes trust; app must surface status and retries to protect data",
+      "severity": "high",
+      "impact_area": [
+        "error_handling",
+        "offline_reliability",
+        "security"
+      ],
+      "refs": [
+        "PRD:#8",
+        "UserFlow:#save-entry"
+      ],
+      "related_principle_ids": [
+        "explicit-status-signature-locking",
+        "offline-first-graceful-fallback"
+      ]
+    },
+    {
+      "name": "Too many steps for repetitive entries",
+      "why_harmful": "Slows routine work and raises error risk",
+      "severity": "high",
+      "impact_area": [
+        "data_entry",
+        "forms"
+      ],
+      "refs": [
+        "CJM:#daily-logging",
+        "PRD:#4_2"
+      ],
+      "related_principle_ids": [
+        "minimize-required-input"
+      ]
+    },
+    {
+      "name": "Unclear report statuses and error-prone export flows",
+      "why_harmful": "Causes rework and lowers trust",
+      "severity": "high",
+      "impact_area": [
+        "error_handling",
+        "feedback",
+        "privacy_security"
+      ],
+      "refs": [
+        "CJM:#reporting-signoff",
+        "PRD:#9"
+      ],
+      "related_principle_ids": [
+        "explicit-status-signature-locking"
+      ]
+    },
+    {
+      "name": "Dead end after denial with no guided path",
+      "why_harmful": "Leaves users stuck post-denial",
+      "severity": "medium",
+      "impact_area": [
+        "error_handling",
+        "permissions"
+      ],
+      "refs": [
+        "HIG:#Permissions",
+        "UserFlow:#camera-permission-error"
+      ],
+      "related_principle_ids": [
+        "guide-and-request-in-the-moment"
+      ]
+    },
+    {
+      "name": "Empty states without a clear next action",
+      "why_harmful": "Miss the chance to teach and nudge",
+      "severity": "medium",
+      "impact_area": [
+        "empty_states",
+        "navigation"
+      ],
+      "refs": [
+        "HIG:#Feedback"
+      ],
+      "related_principle_ids": [
+        "guide-and-request-in-the-moment"
+      ]
+    },
+    {
+      "name": "Hiding the primary action behind menus",
+      "why_harmful": "Obscures the happy path and slows action",
+      "severity": "medium",
+      "impact_area": [
+        "content",
+        "navigation"
+      ],
+      "refs": [
+        "HIG:#Navigation"
+      ],
+      "related_principle_ids": [
+        "one-screen-one-action"
+      ]
+    },
+    {
+      "name": "Incorrect focus order and small tap targets",
+      "why_harmful": "Increases mis-taps and accessibility failures",
+      "severity": "medium",
+      "impact_area": [
+        "accessibility",
+        "forms"
+      ],
+      "refs": [
+        "HIG:#Controls",
+        "WCAG:#2-4-3",
+        "WCAG:#2-5-5"
+      ],
+      "related_principle_ids": [
+        "honor-wcag-dynamic-type-focus-targets"
+      ]
+    },
+    {
+      "name": "Manual mode switching without guidance",
+      "why_harmful": "Confuses users about online and offline behavior",
+      "severity": "medium",
+      "impact_area": [
+        "feedback",
+        "offline_reliability"
+      ],
+      "refs": [
+        "PRD:#8"
+      ],
+      "related_principle_ids": [
+        "offline-first-graceful-fallback"
+      ]
+    },
+    {
+      "name": "Permission prompts out of context",
+      "why_harmful": "Leads to denial and broken flows later",
+      "severity": "medium",
+      "impact_area": [
+        "feedback",
+        "permissions"
+      ],
+      "refs": [
+        "HIG:#Permissions",
+        "UserFlow:#camera-permission"
+      ],
+      "related_principle_ids": [
+        "guide-and-request-in-the-moment"
+      ]
+    },
+    {
+      "name": "Relying on color alone to convey status",
+      "why_harmful": "Excludes users with color vision deficiencies and is ambiguous in bright conditions",
+      "severity": "medium",
+      "impact_area": [
+        "accessibility",
+        "feedback",
+        "localization"
+      ],
+      "refs": [
+        "WCAG:#1-4-1"
+      ],
+      "related_principle_ids": [
+        "honor-wcag-dynamic-type-focus-targets"
+      ]
+    },
+    {
+      "name": "Using placeholders instead of labels",
+      "why_harmful": "Removes persistent cues once typing begins and harms comprehension",
+      "severity": "medium",
+      "impact_area": [
+        "accessibility",
+        "forms"
+      ],
+      "refs": [
+        "HIG:#Forms",
+        "WCAG:#3-3-2"
+      ],
+      "related_principle_ids": [
+        "honor-wcag-dynamic-type-focus-targets"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "between": [
+        "minimize-required-input",
+        "explicit-status-signature-locking"
+      ],
+      "tie_break": "Collect only legally essential fields upfront; defer the rest with reminders"
+    },
+    {
+      "between": [
+        "offline-first-graceful-fallback",
+        "minimize-required-input"
+      ],
+      "tie_break": "Never block on network; allow manual entry and backfill when online"
+    },
+    {
+      "between": [
+        "one-screen-one-action",
+        "minimize-required-input"
+      ],
+      "tie_break": "Prefer clarity of the primary task; use progressive disclosure for learning"
+    },
+    {
+      "between": [
+        "explicit-status-signature-locking",
+        "offline-first-graceful-fallback"
+      ],
+      "tie_break": "Integrity wins; corrections happen via auditable paths that preserve the original"
+    },
+    {
+      "between": [
+        "honor-wcag-dynamic-type-focus-targets",
+        "performance"
+      ],
+      "tie_break": "Maintain WCAG AA even with minor performance trade-offs"
+    }
+  ],
+  "open_questions": [
+    "Is signer_name required alongside a drawn signature for legal sufficiency",
+    "Do we support Dynamic Type through largest sizes (e.g., XXXL) across all forms and calendars",
+    "What timeout, retry, and backoff do we use for weather fetch, and what are the minimum offline fields for manual entry",
+    "What SLO do we target for report generation with many photos, and what are the file naming and localization rules",
+    "What is the policy for pre-filling on save-and-add-another, and which fields auto-carry to the next entry or day",
+    "Which locales are in scope for MVP and what is the fallback language policy",
+    "What minimum tap target size do we guarantee for dense lists and calendars (e.g., at least 44pt)",
+    "What are offline media retention and storage-pressure behaviors (limits, warnings, purge policy)",
+    "What standard indicator language and visuals do we use for online, offline, and queued states"
+  ],
+  "aliases": [
+    {
+      "alias": "accessibility-as-constraint",
+      "canonical_id": "honor-wcag-dynamic-type-focus-targets",
+      "note": "Use explicit WCAG/Dynamic Type/focus/target phrasing"
+    },
+    {
+      "alias": "prevent-dont-punish",
+      "canonical_id": "guide-and-request-in-the-moment",
+      "note": "Prefer proactive guidance over post-factum errors"
+    },
+    {
+      "alias": "offline-first",
+      "canonical_id": "offline-first-graceful-fallback",
+      "note": "Clarify behavior for detection, manual input, and status signaling"
+    }
+  ],
+  "acceptance_checklist": [
+    "3–7 principles, each ≤1 sentence (no trailing period)",
+    "Each principle has priority and 1–2 explicit antipatterns",
+    "Antipatterns include severity, impact_area (enum), and refs (PRD/CJM/UserFlow/HIG/WCAG)",
+    "Registry is de-duplicated and deterministically sorted (severity → name) and presented in a scannable structure",
+    "Examples illustrate outcomes, not prescribe implementations",
+    "Locking and integrity patterns are explicit (immutability after lock; auditable correction path)",
+    "Markdown and JSON counts and IDs are consistent"
+  ]
+}

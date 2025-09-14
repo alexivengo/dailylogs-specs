@@ -1,0 +1,126 @@
+{
+  "id": "awareness",
+  "title": "Осознание проблемы и поиск решения",
+  "personas": [
+    "site-manager"
+  ],
+  "segments": [
+    "smb-contractor"
+  ],
+  "touchpoints": [
+    "3rd_party.app_store.search",
+    "social.word_of_mouth",
+    "web.search.engine"
+  ],
+  "emotions": [
+    "надежда на простое офлайн-решение",
+    "раздражение от бумажной рутины",
+    "скепсис к «тяжёлым» приложениям"
+  ],
+  "expectations": [
+    "быстро понять ценность (≤20 сек)",
+    "прозрачность цены",
+    "явное подтверждение офлайн-режима"
+  ],
+  "barriers": [
+    {
+      "type": "understanding",
+      "desc": "Сложно отличить простое офлайн-решение от перегруженных enterprise-инструментов.",
+      "severity": "medium",
+      "confidence": "medium",
+      "refs": [
+        "PRD:#Resume",
+        "Persona:#site-manager",
+        "Segment:#smb-contractor"
+      ]
+    },
+    {
+      "type": "trust",
+      "desc": "Сомнения в надёжности и долгосрочной поддержке продукта.",
+      "severity": "medium",
+      "confidence": "medium",
+      "refs": [
+        "Persona:#site-manager"
+      ]
+    },
+    {
+      "type": "cost",
+      "desc": "Опасения скрытых платежей и дорогой подписки для небольшой команды.",
+      "severity": "low",
+      "confidence": "low",
+      "refs": [
+        "Segment:#smb-contractor"
+      ]
+    }
+  ],
+  "opportunities": [
+    {
+      "type": "strategic",
+      "desc": "ASO по офлайн-ключам и сниппеты про офлайн на листинге.",
+      "effort": "medium",
+      "impact": "high",
+      "confidence": "medium",
+      "rationale": "Соответствует поисковому интенту и дифференцирует продукт в категории.",
+      "model": "ICE",
+      "components": {
+        "impact": 4,
+        "confidence": 3,
+        "ease": 3
+      },
+      "score": 36,
+      "refs": [
+        "Persona:#site-manager"
+      ]
+    },
+    {
+      "type": "strategic",
+      "desc": "Контент-маркетинг на профильных блогах/коммьюнити (офлайн, простота).",
+      "effort": "medium",
+      "impact": "medium",
+      "confidence": "medium",
+      "rationale": "Формирует доверие и приводит трафик более высокой релевантности.",
+      "model": "ICE",
+      "components": {
+        "impact": 4,
+        "confidence": 3,
+        "ease": 3
+      },
+      "score": 36,
+      "refs": [
+        "Segment:#smb-contractor"
+      ]
+    }
+  ],
+  "moment_of_truth": {
+    "is_mot": false,
+    "why": "Этап проблемного поиска; критические моменты наступают при первом опыте использования."
+  },
+  "metrics": {
+    "leading": [
+      {
+        "name": "Просмотры листинга из поиска",
+        "type": "leading",
+        "definition": "Количество просмотров страницы приложения в App Store, пришедших из органического поиска/рефералов.",
+        "unit": "count",
+        "kpi_ref": "PRD:#11",
+        "refs": [
+          "PRD:#Resume"
+        ]
+      }
+    ],
+    "lagging": [
+      {
+        "name": "Установки по каналам",
+        "type": "lagging",
+        "definition": "Число первых установок, атрибуцированных по источнику трафика.",
+        "unit": "count",
+        "kpi_ref": "PRD:#11"
+      }
+    ]
+  },
+  "refs": [
+    "PRD:#Resume",
+    "Persona:#site-manager",
+    "Segment:#smb-contractor"
+  ]
+}

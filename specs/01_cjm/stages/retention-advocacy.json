@@ -1,0 +1,152 @@
+{
+  "id": "retention-advocacy",
+  "title": "Регулярное использование и рекомендации",
+  "personas": [
+    "site-manager"
+  ],
+  "segments": [
+    "smb-contractor"
+  ],
+  "touchpoints": [
+    "3rd_party.app_store.reviews",
+    "mobile.app.documents",
+    "mobile.app.gallery",
+    "mobile.app.project_list",
+    "social.word_of_mouth"
+  ],
+  "emotions": [
+    "организованность и контроль",
+    "уверенность в инструменте",
+    "ожидание аккуратных пост-MVP улучшений"
+  ],
+  "expectations": [
+    "стабильная производительность при росте данных",
+    "удобный поиск и фильтры",
+    "лёгкое шеринговое продвижение среди коллег"
+  ],
+  "barriers": [
+    {
+      "type": "friction",
+      "desc": "Деградация производительности при большом числе проектов/записей.",
+      "severity": "high",
+      "confidence": "medium",
+      "refs": [
+        "PRD:#5"
+      ]
+    },
+    {
+      "type": "trust",
+      "desc": "Риск серьёзного бага/потери данных подрывает уверенность.",
+      "severity": "high",
+      "confidence": "medium",
+      "refs": [
+        "PRD:#9"
+      ]
+    },
+    {
+      "type": "cost",
+      "desc": "Негативная реакция на изменение цены/модели монетизации.",
+      "severity": "high",
+      "confidence": "low",
+      "refs": [
+        "Segment:#smb-contractor"
+      ]
+    }
+  ],
+  "opportunities": [
+    {
+      "type": "quick_win",
+      "desc": "Усилить фильтры/поиск в Галерее и Документах.",
+      "effort": "low",
+      "impact": "medium",
+      "confidence": "high",
+      "rationale": "Сокращает время поиска артефактов при накоплении данных.",
+      "model": "ICE",
+      "components": {
+        "impact": 3,
+        "confidence": 4,
+        "ease": 5
+      },
+      "score": 60,
+      "refs": [
+        "PRD:#4_3",
+        "PRD:#4_4"
+      ]
+    },
+    {
+      "type": "strategic",
+      "desc": "Глобальный поиск/кросс-проектный дашборд.",
+      "effort": "high",
+      "impact": "high",
+      "confidence": "low",
+      "rationale": "Поддерживает масштабирование использования на портфеле проектов.",
+      "model": "ICE",
+      "components": {
+        "impact": 4,
+        "confidence": 3,
+        "ease": 2
+      },
+      "score": 24,
+      "refs": [
+        "PRD:#4_1"
+      ]
+    },
+    {
+      "type": "strategic",
+      "desc": "Лёгкий реферал-шеринг («поделиться приложением с коллегой»).",
+      "effort": "medium",
+      "impact": "medium",
+      "confidence": "medium",
+      "rationale": "Конвертирует позитивный опыт в органический рост.",
+      "model": "ICE",
+      "components": {
+        "impact": 3,
+        "confidence": 3,
+        "ease": 4
+      },
+      "score": 36,
+      "refs": [
+        "Segment:#smb-contractor"
+      ]
+    }
+  ],
+  "moment_of_truth": {
+    "is_mot": false,
+    "why": "Этап поддержания ценности и органического роста."
+  },
+  "metrics": {
+    "leading": [
+      {
+        "name": "Частота сессий в неделю",
+        "type": "leading",
+        "definition": "Среднее число сессий на пользователя в неделю.",
+        "unit": "count",
+        "kpi_ref": "PRD:#11"
+      }
+    ],
+    "lagging": [
+      {
+        "name": "Retention D30",
+        "type": "lagging",
+        "definition": "Доля пользователей, вернувшихся в течение 30 дней с первой сессии.",
+        "unit": "percentage",
+        "kpi_ref": "PRD:#11"
+      },
+      {
+        "name": "Оценка в сторе / NPS",
+        "type": "lagging",
+        "definition": "Средний рейтинг в App Store и/или NPS.",
+        "unit": "score"
+      }
+    ]
+  },
+  "refs": [
+    "PRD:#4_1",
+    "PRD:#4_3",
+    "PRD:#4_4",
+    "PRD:#5",
+    "PRD:#9",
+    "Persona:#site-manager",
+    "Segment:#smb-contractor"
+  ]
+}

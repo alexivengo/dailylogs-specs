@@ -1,0 +1,871 @@
+{
+  "version": "1.0.0",
+  "meta": {},
+  "cjm": [
+    {
+      "id": "awareness",
+      "title": "Осознание проблемы и поиск решения",
+      "personas": [
+        "site-manager"
+      ],
+      "segments": [
+        "smb-contractor"
+      ],
+      "touchpoints": [
+        "3rd_party.app_store.search",
+        "social.word_of_mouth",
+        "web.search.engine"
+      ],
+      "emotions": [
+        "надежда на простое офлайн-решение",
+        "раздражение от бумажной рутины",
+        "скепсис к «тяжёлым» приложениям"
+      ],
+      "expectations": [
+        "быстро понять ценность (≤20 сек)",
+        "прозрачность цены",
+        "явное подтверждение офлайн-режима"
+      ],
+      "barriers": [
+        {
+          "type": "understanding",
+          "desc": "Сложно отличить простое офлайн-решение от перегруженных enterprise-инструментов.",
+          "severity": "medium",
+          "confidence": "medium",
+          "refs": [
+            "PRD:#Resume",
+            "Persona:#site-manager",
+            "Segment:#smb-contractor"
+          ]
+        },
+        {
+          "type": "trust",
+          "desc": "Сомнения в надёжности и долгосрочной поддержке продукта.",
+          "severity": "medium",
+          "confidence": "medium",
+          "refs": [
+            "Persona:#site-manager"
+          ]
+        },
+        {
+          "type": "cost",
+          "desc": "Опасения скрытых платежей и дорогой подписки для небольшой команды.",
+          "severity": "low",
+          "confidence": "low",
+          "refs": [
+            "Segment:#smb-contractor"
+          ]
+        }
+      ],
+      "opportunities": [
+        {
+          "type": "strategic",
+          "desc": "ASO по офлайн-ключам и сниппеты про офлайн на листинге.",
+          "effort": "medium",
+          "impact": "high",
+          "confidence": "medium",
+          "rationale": "Соответствует поисковому интенту и дифференцирует продукт в категории.",
+          "model": "ICE",
+          "components": {
+            "impact": 4,
+            "confidence": 3,
+            "ease": 3
+          },
+          "score": 36,
+          "refs": [
+            "Persona:#site-manager"
+          ]
+        },
+        {
+          "type": "strategic",
+          "desc": "Контент-маркетинг на профильных блогах/коммьюнити (офлайн, простота).",
+          "effort": "medium",
+          "impact": "medium",
+          "confidence": "medium",
+          "rationale": "Формирует доверие и приводит трафик более высокой релевантности.",
+          "model": "ICE",
+          "components": {
+            "impact": 4,
+            "confidence": 3,
+            "ease": 3
+          },
+          "score": 36,
+          "refs": [
+            "Segment:#smb-contractor"
+          ]
+        }
+      ],
+      "moment_of_truth": {
+        "is_mot": false,
+        "why": "Этап проблемного поиска; критические моменты наступают при первом опыте использования."
+      },
+      "metrics": {
+        "leading": [
+          {
+            "name": "Просмотры листинга из поиска",
+            "type": "leading",
+            "definition": "Количество просмотров страницы приложения в App Store, пришедших из органического поиска/рефералов.",
+            "unit": "count",
+            "kpi_ref": "PRD:#11",
+            "refs": [
+              "PRD:#Resume"
+            ]
+          }
+        ],
+        "lagging": [
+          {
+            "name": "Установки по каналам",
+            "type": "lagging",
+            "definition": "Число первых установок, атрибуцированных по источнику трафика.",
+            "unit": "count",
+            "kpi_ref": "PRD:#11"
+          }
+        ]
+      },
+      "refs": [
+        "PRD:#Resume",
+        "Persona:#site-manager",
+        "Segment:#smb-contractor"
+      ]
+    },
+    {
+      "id": "evaluation-acquisition",
+      "title": "Оценка листинга и установка",
+      "personas": [
+        "site-manager"
+      ],
+      "segments": [
+        "smb-contractor"
+      ],
+      "touchpoints": [
+        "3rd_party.app_store.install",
+        "3rd_party.app_store.listing",
+        "3rd_party.app_store.reviews",
+        "3rd_party.app_store.screenshots"
+      ],
+      "emotions": [
+        "облегчение от чистого UI",
+        "придирчивый просмотр деталей",
+        "тревога о «подводных камнях»"
+      ],
+      "expectations": [
+        "ясное описание без жаргона",
+        "понятный прайс и условия",
+        "явная демонстрация офлайн-режима"
+      ],
+      "barriers": [
+        {
+          "type": "understanding",
+          "desc": "Перегруженный/жаргонный текст листинга — трудно быстро понять ценность.",
+          "severity": "high",
+          "confidence": "high",
+          "refs": [
+            "PRD:#7"
+          ]
+        },
+        {
+          "type": "trust",
+          "desc": "Низкий объём/рейтинг отзывов снижает доверие.",
+          "severity": "high",
+          "confidence": "medium",
+          "refs": [
+            "Persona:#site-manager"
+          ]
+        },
+        {
+          "type": "time",
+          "desc": "Медленная загрузка приложения при слабой связи/большом размере бандла.",
+          "severity": "high",
+          "confidence": "high",
+          "refs": [
+            "PRD:#5",
+            "Segment:#smb-contractor"
+          ]
+        }
+      ],
+      "opportunities": [
+        {
+          "type": "quick_win",
+          "desc": "Скриншоты/видео с видимым офлайн-индикатором и статусами дней.",
+          "effort": "low",
+          "impact": "high",
+          "confidence": "high",
+          "rationale": "Мгновенно закрывает главный вопрос: работает ли без сети.",
+          "model": "ICE",
+          "components": {
+            "impact": 5,
+            "confidence": 4,
+            "ease": 4
+          },
+          "score": 80,
+          "refs": [
+            "PRD:#8",
+            "PRD:#4_2",
+            "PRD:#9"
+          ]
+        },
+        {
+          "type": "quick_win",
+          "desc": "Оптимизация размера приложения/ассетов для ускорения загрузки.",
+          "effort": "low",
+          "impact": "high",
+          "confidence": "high",
+          "rationale": "Снижает барьер времени в полевых условиях.",
+          "model": "ICE",
+          "components": {
+            "impact": 4,
+            "confidence": 4,
+            "ease": 4
+          },
+          "score": 64,
+          "refs": [
+            "PRD:#5"
+          ]
+        },
+        {
+          "type": "strategic",
+          "desc": "Лендинг с прозрачной ценой и FAQ, ссылка из листинга.",
+          "effort": "low",
+          "impact": "medium",
+          "confidence": "high",
+          "rationale": "Устраняет опасения стоимости и возвратов.",
+          "model": "ICE",
+          "components": {
+            "impact": 3,
+            "confidence": 4,
+            "ease": 4
+          },
+          "score": 48,
+          "refs": [
+            "Segment:#smb-contractor"
+          ]
+        }
+      ],
+      "moment_of_truth": {
+        "is_mot": false,
+        "why": "Решение об установке важно, но ключевая проверка ценности происходит в онбординге."
+      },
+      "metrics": {
+        "leading": [
+          {
+            "name": "Вовлечённость ассетами листинга",
+            "type": "leading",
+            "definition": "Доля просмотров, в которых был запуск видео/скролл галереи скриншотов.",
+            "unit": "percentage",
+            "kpi_ref": "PRD:#11"
+          },
+          {
+            "name": "Стартов загрузки",
+            "type": "leading",
+            "definition": "Количество нажатий на «Загрузить/Установить».",
+            "unit": "count"
+          }
+        ],
+        "lagging": [
+          {
+            "name": "Конверсия листинга в установку",
+            "type": "lagging",
+            "definition": "Доля пользователей, установивших приложение после просмотра листинга.",
+            "unit": "percentage",
+            "kpi_ref": "PRD:#11"
+          }
+        ]
+      },
+      "refs": [
+        "PRD:#7",
+        "PRD:#8",
+        "PRD:#5",
+        "PRD:#9",
+        "Persona:#site-manager",
+        "Segment:#smb-contractor"
+      ]
+    },
+    {
+      "id": "onboarding-first-project",
+      "title": "Первый запуск и создание проекта",
+      "personas": [
+        "site-manager"
+      ],
+      "segments": [
+        "smb-contractor"
+      ],
+      "touchpoints": [
+        "mobile.app.first_launch",
+        "mobile.app.project_create",
+        "mobile.app.ui_tipkit",
+        "mobile.app.welcome"
+      ],
+      "emotions": [
+        "надежда на быстрый старт",
+        "облегчение при минимуме полей",
+        "тревога из-за длинной настройки"
+      ],
+      "expectations": [
+        "минимум обязательных полей",
+        "понятный следующий шаг на пустых экранах",
+        "создание проекта ≤1–2 минут"
+      ],
+      "barriers": [
+        {
+          "type": "friction",
+          "desc": "Перегруженная форма создания проекта увеличивает когнитивную нагрузку.",
+          "severity": "high",
+          "confidence": "high",
+          "refs": [
+            "PRD:#4_1"
+          ]
+        },
+        {
+          "type": "time",
+          "desc": "Длинный и неотключаемый туториал отнимает время.",
+          "severity": "medium",
+          "confidence": "medium",
+          "refs": [
+            "Persona:#site-manager"
+          ]
+        },
+        {
+          "type": "understanding",
+          "desc": "Пустой первый экран без явного CTA к созданию проекта.",
+          "severity": "high",
+          "confidence": "high",
+          "refs": [
+            "PRD:#7"
+          ]
+        }
+      ],
+      "opportunities": [
+        {
+          "type": "quick_win",
+          "desc": "TipKit-подсказки в пустых состояниях вместо блокирующего туториала.",
+          "effort": "low",
+          "impact": "high",
+          "confidence": "high",
+          "rationale": "Обучает «в моменте», ускоряет активацию.",
+          "model": "ICE",
+          "components": {
+            "impact": 5,
+            "confidence": 4,
+            "ease": 5
+          },
+          "score": 100,
+          "refs": [
+            "PRD:#7"
+          ]
+        },
+        {
+          "type": "strategic",
+          "desc": "Создание «проекта по имени» — остальные поля позже в дашборде.",
+          "effort": "medium",
+          "impact": "high",
+          "confidence": "medium",
+          "rationale": "Резко снижает трение и time-to-value.",
+          "model": "ICE",
+          "components": {
+            "impact": 5,
+            "confidence": 4,
+            "ease": 4
+          },
+          "score": 80,
+          "refs": [
+            "PRD:#4_1"
+          ]
+        }
+      ],
+      "moment_of_truth": {
+        "is_mot": true,
+        "why": "Первый успешный проект подтверждает ценность и предотвращает ранний churn.",
+        "key_metric": "Onboarding Completion Rate",
+        "risk_if_failed": "Ранний отказ, отрицательный отзыв.",
+        "test_method": "A/B: минимальная vs. полная форма проекта."
+      },
+      "metrics": {
+        "leading": [
+          {
+            "name": "Time to First Project",
+            "type": "leading",
+            "definition": "Среднее время от первого запуска до сохранения первого проекта.",
+            "unit": "seconds",
+            "kpi_ref": "PRD:#11",
+            "refs": [
+              "PRD:#4_1"
+            ]
+          }
+        ],
+        "lagging": [
+          {
+            "name": "Onboarding Completion Rate",
+            "type": "lagging",
+            "definition": "Доля новых пользователей, создавших первый проект.",
+            "unit": "percentage",
+            "kpi_ref": "PRD:#11"
+          }
+        ]
+      },
+      "refs": [
+        "PRD:#4_1",
+        "PRD:#7",
+        "Persona:#site-manager",
+        "Segment:#smb-contractor"
+      ]
+    },
+    {
+      "id": "daily-logging",
+      "title": "Ежедневный ввод (ядро, guardrail)",
+      "personas": [
+        "site-manager"
+      ],
+      "segments": [
+        "smb-contractor"
+      ],
+      "touchpoints": [
+        "mobile.app.camera_capture",
+        "mobile.app.daily_log_create",
+        "mobile.app.daily_log_view",
+        "mobile.app.documents_attach"
+      ],
+      "emotions": [
+        "удовлетворение от «с первого раза»",
+        "усталость/спешка в поле",
+        "уверенность при быстрых повторах"
+      ],
+      "expectations": [
+        "крупные элементы управления",
+        "минимум ввода текста",
+        "быстрые повторы и шаблоны"
+      ],
+      "barriers": [
+        {
+          "type": "friction",
+          "desc": "Слишком много шагов для повторяющихся записей.",
+          "severity": "high",
+          "confidence": "high",
+          "refs": [
+            "PRD:#4_2"
+          ]
+        },
+        {
+          "type": "time",
+          "desc": "Ручной ввод погоды без сети замедляет закрытие дня.",
+          "severity": "high",
+          "confidence": "high",
+          "refs": [
+            "PRD:#4_2",
+            "PRD:#8"
+          ]
+        },
+        {
+          "type": "risk",
+          "desc": "Опасения потери данных при сбое в офлайне до синхронизации.",
+          "severity": "medium",
+          "confidence": "medium",
+          "refs": [
+            "PRD:#8"
+          ]
+        }
+      ],
+      "opportunities": [
+        {
+          "type": "quick_win",
+          "desc": "«Copy to another day» + «Save & add another» в редакторе записей.",
+          "effort": "low",
+          "impact": "high",
+          "confidence": "high",
+          "rationale": "Сокращает время ввода в частых сценариях.",
+          "model": "ICE",
+          "components": {
+            "impact": 5,
+            "confidence": 4,
+            "ease": 5
+          },
+          "score": 100,
+          "refs": [
+            "PRD:#4_2"
+          ]
+        },
+        {
+          "type": "quick_win",
+          "desc": "Базовые офлайн-аннотации фото (рамка/стрелка/текст).",
+          "effort": "low",
+          "impact": "medium",
+          "confidence": "high",
+          "rationale": "Повышает информативность отчёта без лишних шагов.",
+          "model": "ICE",
+          "components": {
+            "impact": 3,
+            "confidence": 4,
+            "ease": 5
+          },
+          "score": 60,
+          "refs": [
+            "PRD:#4_4"
+          ]
+        },
+        {
+          "type": "strategic",
+          "desc": "«Наборы дня» — шаблоны типовых записей (например, «Заливка бетона»).",
+          "effort": "medium",
+          "impact": "high",
+          "confidence": "medium",
+          "rationale": "Оптимизирует целые рабочие сценарии, а не отдельные записи.",
+          "model": "ICE",
+          "components": {
+            "impact": 5,
+            "confidence": 4,
+            "ease": 3
+          },
+          "score": 60,
+          "refs": [
+            "PRD:#4_2"
+          ]
+        }
+      ],
+      "moment_of_truth": {
+        "is_mot": false,
+        "why": "Критический guardrail для удержания и прохождения к финальному результату."
+      },
+      "metrics": {
+        "leading": [
+          {
+            "name": "Entry Addition Time",
+            "type": "leading",
+            "definition": "Среднее время создания одной записи журнала.",
+            "unit": "seconds",
+            "kpi_ref": "PRD:#11",
+            "refs": [
+              "PRD:#4_2"
+            ]
+          }
+        ],
+        "lagging": [
+          {
+            "name": "Доля дней с журналом",
+            "type": "lagging",
+            "definition": "Процент календарных рабочих дней, в которых есть записи.",
+            "unit": "percentage",
+            "kpi_ref": "PRD:#11"
+          }
+        ]
+      },
+      "refs": [
+        "PRD:#4_2",
+        "PRD:#4_4",
+        "PRD:#8",
+        "Persona:#site-manager",
+        "Segment:#smb-contractor"
+      ]
+    },
+    {
+      "id": "reporting-signoff",
+      "title": "Превью → подпись → экспорт отчёта",
+      "personas": [
+        "site-manager"
+      ],
+      "segments": [
+        "smb-contractor"
+      ],
+      "touchpoints": [
+        "email.compose_send",
+        "mobile.app.export_share",
+        "mobile.app.report_preview",
+        "mobile.app.report_sign",
+        "sms.compose_send"
+      ],
+      "emotions": [
+        "облегчение после отправки",
+        "тревога за полноту и вид отчёта",
+        "уверенность при блокировке дня"
+      ],
+      "expectations": [
+        "профессиональный PDF/A-2u + checksum",
+        "быстрый шаринг через системный лист",
+        "прозрачные статусы «день/подпись/блокировка»"
+      ],
+      "barriers": [
+        {
+          "type": "trust",
+          "desc": "Сомнения в «официальности»/качестве итогового PDF.",
+          "severity": "high",
+          "confidence": "high",
+          "refs": [
+            "PRD:#9",
+            "PRD:#4_2"
+          ]
+        },
+        {
+          "type": "friction",
+          "desc": "Лишние шаги в цепочке превью → подпись → экспорт.",
+          "severity": "medium",
+          "confidence": "medium",
+          "refs": [
+            "PRD:#4_2"
+          ]
+        },
+        {
+          "type": "risk",
+          "desc": "Ошибка, обнаруженная после блокировки дня, требует обходного рабочего процесса.",
+          "severity": "medium",
+          "confidence": "medium",
+          "refs": [
+            "PRD:#9"
+          ]
+        }
+      ],
+      "opportunities": [
+        {
+          "type": "quick_win",
+          "desc": "Интеграция iOS Share Sheet в превью отчёта.",
+          "effort": "low",
+          "impact": "high",
+          "confidence": "high",
+          "rationale": "Ускоряет и упрощает распространение отчёта.",
+          "model": "ICE",
+          "components": {
+            "impact": 4,
+            "confidence": 4,
+            "ease": 5
+          },
+          "score": 80,
+          "refs": [
+            "PRD:#4_2"
+          ]
+        },
+        {
+          "type": "quick_win",
+          "desc": "Быстрый экшен «Share Last Report» на дашборде проекта.",
+          "effort": "low",
+          "impact": "medium",
+          "confidence": "high",
+          "rationale": "Частая повторная задача — одно касание.",
+          "model": "ICE",
+          "components": {
+            "impact": 3,
+            "confidence": 4,
+            "ease": 4
+          },
+          "score": 48,
+          "refs": [
+            "Persona:#site-manager"
+          ]
+        },
+        {
+          "type": "strategic",
+          "desc": "Опциональное брендирование PDF (логотип компании) при сохранении соответствия PDF/A-2u.",
+          "effort": "medium",
+          "impact": "high",
+          "confidence": "medium",
+          "rationale": "Повышает воспринимаемую ценность и профессионализм.",
+          "model": "ICE",
+          "components": {
+            "impact": 4,
+            "confidence": 3,
+            "ease": 3
+          },
+          "score": 36,
+          "refs": [
+            "Segment:#smb-contractor"
+          ]
+        }
+      ],
+      "moment_of_truth": {
+        "is_mot": true,
+        "why": "«Работа сделана»: ключевой артефакт для комплаенса и биллинга.",
+        "key_metric": "Time to Report",
+        "risk_if_failed": "Ручные костыли, эскалации, churn.",
+        "test_method": "E2E-замер по шагам + юзабилити-сессии."
+      },
+      "metrics": {
+        "leading": [
+          {
+            "name": "Доля дней с превью отчёта",
+            "type": "leading",
+            "definition": "Процент активных рабочих дней, для которых пользователь открывал превью отчёта.",
+            "unit": "percentage"
+          }
+        ],
+        "lagging": [
+          {
+            "name": "Time to Report",
+            "type": "lagging",
+            "definition": "Среднее время от последней записи в день до успешного экспорта отчёта.",
+            "unit": "minutes",
+            "kpi_ref": "PRD:#11"
+          },
+          {
+            "name": "Export Success / Error Rate",
+            "type": "lagging",
+            "definition": "Доля успешных экспортов и доля экспортов с ошибкой.",
+            "unit": "percentage",
+            "kpi_ref": "PRD:#11"
+          },
+          {
+            "name": "% подписанных дней",
+            "type": "lagging",
+            "definition": "Процент дней, помеченных как «подписанные/заблокированные».",
+            "unit": "percentage",
+            "kpi_ref": "PRD:#11"
+          }
+        ]
+      },
+      "refs": [
+        "PRD:#4_2",
+        "PRD:#9",
+        "PRD:#11",
+        "Persona:#site-manager",
+        "Segment:#smb-contractor"
+      ]
+    },
+    {
+      "id": "retention-advocacy",
+      "title": "Регулярное использование и рекомендации",
+      "personas": [
+        "site-manager"
+      ],
+      "segments": [
+        "smb-contractor"
+      ],
+      "touchpoints": [
+        "3rd_party.app_store.reviews",
+        "mobile.app.documents",
+        "mobile.app.gallery",
+        "mobile.app.project_list",
+        "social.word_of_mouth"
+      ],
+      "emotions": [
+        "организованность и контроль",
+        "уверенность в инструменте",
+        "ожидание аккуратных пост-MVP улучшений"
+      ],
+      "expectations": [
+        "стабильная производительность при росте данных",
+        "удобный поиск и фильтры",
+        "лёгкое шеринговое продвижение среди коллег"
+      ],
+      "barriers": [
+        {
+          "type": "friction",
+          "desc": "Деградация производительности при большом числе проектов/записей.",
+          "severity": "high",
+          "confidence": "medium",
+          "refs": [
+            "PRD:#5"
+          ]
+        },
+        {
+          "type": "trust",
+          "desc": "Риск серьёзного бага/потери данных подрывает уверенность.",
+          "severity": "high",
+          "confidence": "medium",
+          "refs": [
+            "PRD:#9"
+          ]
+        },
+        {
+          "type": "cost",
+          "desc": "Негативная реакция на изменение цены/модели монетизации.",
+          "severity": "high",
+          "confidence": "low",
+          "refs": [
+            "Segment:#smb-contractor"
+          ]
+        }
+      ],
+      "opportunities": [
+        {
+          "type": "quick_win",
+          "desc": "Усилить фильтры/поиск в Галерее и Документах.",
+          "effort": "low",
+          "impact": "medium",
+          "confidence": "high",
+          "rationale": "Сокращает время поиска артефактов при накоплении данных.",
+          "model": "ICE",
+          "components": {
+            "impact": 3,
+            "confidence": 4,
+            "ease": 5
+          },
+          "score": 60,
+          "refs": [
+            "PRD:#4_3",
+            "PRD:#4_4"
+          ]
+        },
+        {
+          "type": "strategic",
+          "desc": "Глобальный поиск/кросс-проектный дашборд.",
+          "effort": "high",
+          "impact": "high",
+          "confidence": "low",
+          "rationale": "Поддерживает масштабирование использования на портфеле проектов.",
+          "model": "ICE",
+          "components": {
+            "impact": 4,
+            "confidence": 3,
+            "ease": 2
+          },
+          "score": 24,
+          "refs": [
+            "PRD:#4_1"
+          ]
+        },
+        {
+          "type": "strategic",
+          "desc": "Лёгкий реферал-шеринг («поделиться приложением с коллегой»).",
+          "effort": "medium",
+          "impact": "medium",
+          "confidence": "medium",
+          "rationale": "Конвертирует позитивный опыт в органический рост.",
+          "model": "ICE",
+          "components": {
+            "impact": 3,
+            "confidence": 3,
+            "ease": 4
+          },
+          "score": 36,
+          "refs": [
+            "Segment:#smb-contractor"
+          ]
+        }
+      ],
+      "moment_of_truth": {
+        "is_mot": false,
+        "why": "Этап поддержания ценности и органического роста."
+      },
+      "metrics": {
+        "leading": [
+          {
+            "name": "Частота сессий в неделю",
+            "type": "leading",
+            "definition": "Среднее число сессий на пользователя в неделю.",
+            "unit": "count",
+            "kpi_ref": "PRD:#11"
+          }
+        ],
+        "lagging": [
+          {
+            "name": "Retention D30",
+            "type": "lagging",
+            "definition": "Доля пользователей, вернувшихся в течение 30 дней с первой сессии.",
+            "unit": "percentage",
+            "kpi_ref": "PRD:#11"
+          },
+          {
+            "name": "Оценка в сторе / NPS",
+            "type": "lagging",
+            "definition": "Средний рейтинг в App Store и/или NPS.",
+            "unit": "score"
+          }
+        ]
+      },
+      "refs": [
+        "PRD:#4_1",
+        "PRD:#4_3",
+        "PRD:#4_4",
+        "PRD:#5",
+        "PRD:#9",
+        "Persona:#site-manager",
+        "Segment:#smb-contractor"
+      ]
+    }
+  ]
+}

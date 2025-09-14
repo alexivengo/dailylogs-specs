@@ -1,0 +1,11 @@
+{
+  "id": "11",
+  "title": "Аналитика и телеметрия",
+  "desc": "os.Logger для тех. событий; продуктовые метрики: время до отчёта, % подписанных дней, ошибки экспорта.",
+  "scope": "mvp",
+  "requirements": [
+    "os.Logger для storage/export/capture/navigation",
+    "% подписанных дней; Time to Report; Export Success/Error",
+    "Без сторонних SDK аналитики в MVP"
+  ]
+}

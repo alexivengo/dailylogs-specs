@@ -1,0 +1,11 @@
+[
+  "Is signer_name required alongside a drawn signature for legal sufficiency",
+  "Do we support Dynamic Type through largest sizes (e.g., XXXL) across all forms and calendars",
+  "What timeout, retry, and backoff do we use for weather fetch, and what are the minimum offline fields for manual entry",
+  "What SLO do we target for report generation with many photos, and what are the file naming and localization rules",
+  "What is the policy for pre-filling on save-and-add-another, and which fields auto-carry to the next entry or day",
+  "Which locales are in scope for MVP and what is the fallback language policy",
+  "What minimum tap target size do we guarantee for dense lists and calendars (e.g., at least 44pt)",
+  "What are offline media retention and storage-pressure behaviors (limits, warnings, purge policy)",
+  "What standard indicator language and visuals do we use for online, offline, and queued states"
+]

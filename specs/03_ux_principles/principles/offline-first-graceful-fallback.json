@@ -1,0 +1,43 @@
+{
+  "id": "offline-first-graceful-fallback",
+  "title": "Offline is a first-class mode with graceful fallback",
+  "rationale": "Core flows must not block on network; auto-detect connectivity, accept manual inputs, queue work locally, and clearly signal status",
+  "example": "When online, weather can auto-populate; when offline, the app accepts manual values and confirms local save with later sync",
+  "priority": "high",
+  "refs": [
+    "CJM:#daily-logging",
+    "HIG:#Feedback",
+    "PRD:#8",
+    "UserFlow:#check-network-for-weather"
+  ],
+  "antipatterns": [
+    {
+      "name": "Blocking core flows on network availability",
+      "why_harmful": "Prevents field progress and forces error loops",
+      "severity": "high",
+      "impact_area": [
+        "error_handling",
+        "offline_reliability",
+        "state_management"
+      ],
+      "refs": [
+        "PRD:#8",
+        "UserFlow:#check-network-for-weather"
+      ]
+    },
+    {
+      "name": "Displaying network-dependent spinners or loaders",
+      "why_harmful": "Encourages waiting on the network instead of progressing offline",
+      "severity": "high",
+      "impact_area": [
+        "feedback",
+        "offline_reliability",
+        "performance"
+      ],
+      "refs": [
+        "HIG:#Feedback",
+        "PRD:#8"
+      ]
+    }
+  ]
+}

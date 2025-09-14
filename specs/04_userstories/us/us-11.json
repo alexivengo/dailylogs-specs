@@ -1,0 +1,53 @@
+{
+  "story_id": "us-11",
+  "epic_id": "epic-3",
+  "role": "руководитель стройплощадки",
+  "capability": "альтернативные форматы экспорта (CSV)",
+  "value": "делиться табличными данными",
+  "priority": "low",
+  "status": "proposed",
+  "acceptance_criteria": [
+    "Given меню форматов When выбираю CSV Then генерируется и сохраняется CSV (FLOW:#export-generate; PRD:#4_2)",
+    "Given VoiceOver When открыт выбор формата Then корректные озвучки (PRD:#10)"
+  ],
+  "metrics": {
+    "leading": [
+      {
+        "name": "CSV usage rate",
+        "kpi_ref": "PRD:#11"
+      }
+    ],
+    "lagging": [
+      {
+        "name": "Export Success/Error Rate",
+        "kpi_ref": "PRD:#11"
+      }
+    ]
+  },
+  "nfr": {
+    "performance": "Генерация CSV ≤2 с",
+    "localization": "Региональные разделители/кодировки"
+  },
+  "dependencies": {
+    "blocked_by": [],
+    "relates_to": []
+  },
+  "risks": [],
+  "refs": [
+    "PRD:#4_2",
+    "PRD:#10",
+    "PRD:#11",
+    "FLOW:#export-generate"
+  ],
+  "affects_mot": false,
+  "mot_refs": [],
+  "analytics_events": [
+    "export_options_view",
+    "export_process_started"
+  ],
+  "analytics_owner": "Product",
+  "analytics_pii": false,
+  "story_points": 2,
+  "estimate_confidence": "medium",
+  "assumptions": []
+}

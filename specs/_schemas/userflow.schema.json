@@ -1,0 +1,19 @@
+{
+  "$id": "userflow.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["version", "modules"],
+  "properties": {
+    "version": {"type": "string"},
+    "modules": {
+      "type": "object",
+      "required": ["analytics", "data_dictionary"],
+      "properties": {
+        "nodes": {"type": "array", "items": {"type": "string"}},
+        "edges": {"type": "array", "items": {"type": "string"}},
+        "analytics": {"type": "string"},
+        "data_dictionary": {"type": "string"}
+      }
+    }
+  }
+}

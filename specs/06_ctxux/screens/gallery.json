@@ -1,0 +1,38 @@
+{
+  "$schema": "../../_schemas/ctxux_screen.schema.json",
+  "id": "gallery",
+  "title": "Галерея вложений",
+  "desc": "Экран просмотра и пакетного прикрепления фото к записям, с обработкой разрешений камеры.",
+  "local_principles": [
+    {
+      "id": "fast-primary-action",
+      "title": "Быстрое первичное действие",
+      "rationale": "Основной CTA — быстрое прикрепление фотографий к текущему дню.",
+      "acceptance": [
+        "Кнопка прикрепления доступна в первом фокусе",
+        "Пакетное выделение работает с озвучиванием количества выбранных элементов"
+      ],
+      "telemetry": [
+        "gallery_bulk_attach",
+        "photo_captured"
+      ],
+      "related_principles": [
+        "one-screen-one-action",
+        "offline-first-graceful-fallback"
+      ],
+      "global_principle_ids": [
+        "one-screen-one-action",
+        "offline-first-graceful-fallback"
+      ],
+      "user_story_ids": ["us-13"]
+    }
+  ],
+  "refs": {
+    "UserStory": ["us-21"],
+    "HIG": ["camera", "photo-gallery"],
+    "Wireframes": ["Figma:DL-Gallery-v3"],
+    "DesignSystem": ["Grid", "Toolbar"],
+    "GlobalPrinciple": ["one-screen-one-action", "offline-first-graceful-fallback"],
+    "UserFlow": ["gallery", "capture-photo", "camera-permission", "camera-permission-error"]
+  }
+}

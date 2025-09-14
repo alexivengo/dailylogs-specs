@@ -1,0 +1,71 @@
+{
+  "story_id": "us-13",
+  "epic_id": "epic-4",
+  "role": "руководитель стройплощадки",
+  "capability": "реестр документов с поиском/фильтрами и офлайн-доступом",
+  "value": "быстро находить нужную документацию",
+  "priority": "medium",
+  "status": "proposed",
+  "acceptance_criteria": [
+    "Given дашборд When перехожу в «Документы» Then вижу список по категориям (PRD:#4_3)",
+    "Given поиск/фильтр When ввожу запрос/тег Then список обновляется локально <1 с при 1000 доков (PRD:#5)",
+    "Given офлайн When открываю «Документы» Then доступны ранее загруженные файлы (PRD:#8)"
+  ],
+  "metrics": {
+    "leading": [
+      {
+        "name": "Documents view",
+        "kpi_ref": "PRD:#11"
+      },
+      {
+        "name": "Documents search",
+        "kpi_ref": "PRD:#11"
+      }
+    ],
+    "lagging": [
+      {
+        "name": "Retention D30 [ASSUMPTION]",
+        "kpi_ref": "PRD:#11"
+      }
+    ]
+  },
+  "nfr": {
+    "performance": "Поиск <1 с при 1000 документов",
+    "security_privacy": "NSFileProtectionComplete",
+    "accessibility": "Озвучки списков и фильтров"
+  },
+  "dependencies": {
+    "blocked_by": [],
+    "relates_to": [
+      "us-6"
+    ]
+  },
+  "risks": [
+    {
+      "desc": "Деградация при большом объёме",
+      "severity": "medium",
+      "refs": [
+        "PRD:#5"
+      ]
+    }
+  ],
+  "refs": [
+    "PRD:#4_3",
+    "PRD:#5",
+    "PRD:#8",
+    "PRD:#11"
+  ],
+  "affects_mot": false,
+  "mot_refs": [],
+  "analytics_events": [
+    "documents_view",
+    "documents_search"
+  ],
+  "analytics_owner": "Product",
+  "analytics_pii": false,
+  "story_points": 3,
+  "estimate_confidence": "medium",
+  "assumptions": [
+    "[ASSUMPTION] Таксономия категорий согласуется с ПТО."
+  ]
+}

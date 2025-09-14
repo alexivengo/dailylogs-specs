@@ -1,0 +1,1819 @@
+{
+  "version": "1.1.0",
+  "meta": {},
+  "user_flow": [
+    {
+      "id": "app-launch",
+      "type": "system",
+      "desc": "Инициализация приложения, проверка локального стора (SwiftData), определение наличия проектов и статуса сети.",
+      "inputs": [],
+      "outputs": [
+        "has_projects",
+        "is_online"
+      ],
+      "edges": [
+        {
+          "id": "e-app-start-to-empty",
+          "action": "initiate",
+          "target": "projects-empty",
+          "guard": "has_projects == false",
+          "analytics": [
+            "app_launch"
+          ],
+          "refs": [
+            "PRD:#5",
+            "PRD:#7",
+            "PRD:#8",
+            "CJM:#onboarding-first-project"
+          ]
+        }
+      ],
+      "system_events": [
+        "loading",
+        "offline_check"
+      ],
+      "a11y": {
+        "role": "system",
+        "labels": [],
+        "focus_order": [],
+        "keyboard": "N/A",
+        "announcements": "Запуск DailyLogs…",
+        "live_region": "polite"
+      },
+      "analytics": [
+        "app_launch"
+      ],
+      "refs": [
+        "PRD:#5",
+        "PRD:#7",
+        "PRD:#8",
+        "CJM:#onboarding-first-project"
+      ]
+    },
+    {
+      "id": "success-done",
+      "type": "terminator",
+      "result": "success",
+      "desc": "Отчёт успешно экспортирован/поделен. День подписан и заблокирован.",
+      "inputs": [],
+      "outputs": [],
+      "edges": [],
+      "a11y": {
+        "role": "system",
+        "labels": [],
+        "focus_order": [],
+        "keyboard": "N/A",
+        "announcements": "Отчёт успешно отправлен.",
+        "live_region": "polite"
+      },
+      "analytics": [
+        "flow_success"
+      ],
+      "refs": [
+        "PRD:#11",
+        "CJM:#reporting-signoff"
+      ]
+    },
+    {
+      "id": "cancel-out",
+      "type": "terminator",
+      "result": "cancel",
+      "desc": "Пользователь отменил действие и вышел из потока.",
+      "inputs": [],
+      "outputs": [],
+      "edges": [],
+      "a11y": {
+        "role": "system",
+        "labels": [],
+        "focus_order": [],
+        "keyboard": "N/A",
+        "announcements": "Действие отменено.",
+        "live_region": "polite"
+      },
+      "analytics": [
+        "flow_cancel"
+      ],
+      "refs": [
+        "PRD:#7",
+        "CJM:#daily-logging"
+      ]
+    },
+    {
+      "id": "daily-calendar",
+      "type": "screen",
+      "desc": "Компактный календарь с индикаторами статуса дня и кнопкой «Сегодня».",
+      "inputs": [
+        "project_id"
+      ],
+      "outputs": [
+        "selected_date",
+        "day_date"
+      ],
+      "edges": [
+        {
+          "id": "e-cal-select-today",
+          "action": "select_today",
+          "target": "day-entries-decision",
+          "effects": [
+            "ensure_day_record"
+          ],
+          "analytics": [
+            "open_today"
+          ],
+          "refs": [
+            "PRD:#4_2",
+            "CJM:#daily-logging"
+          ]
+        },
+        {
+          "id": "e-cal-future-date",
+          "action": "select_date",
+          "target": "future-date-error",
+          "guard": "selected_date > today",
+          "refs": [
+            "PRD:#4_2",
+            "CJM:#daily-logging"
+          ]
+        }
+      ],
+      "errors": [
+        {
+          "id": "err-future-date",
+          "type": "validation",
+          "desc": "Выбрана будущая дата. Действие заблокировано.",
+          "recovery": "Сообщить и вернуть к календарю.",
+          "refs": [
+            "PRD:#4_2"
+          ]
+        }
+      ],
+      "a11y": {
+        "role": "grid",
+        "labels": [
+          "Календарь",
+          "Сегодня"
+        ],
+        "focus_order": [
+          "calendar_grid",
+          "today_button"
+        ],
+        "keyboard": "Стрелки — перемещение по датам; Enter — выбрать",
+        "announcements": "Дата выбрана.",
+        "live_region": "polite"
+      },
+      "analytics": [
+        "daily_calendar_view"
+      ],
+      "refs": [
+        "PRD:#4_2",
+        "CJM:#daily-logging"
+      ]
+    },
+    {
+      "id": "day-entries-decision",
+      "type": "decision",
+      "desc": "Определяет, пустой ли день или уже содержит записи.",
+      "inputs": [
+        "selected_date"
+      ],
+      "outputs": [],
+      "edges": [
+        {
+          "id": "e-day-state-empty",
+          "action": "proceed",
+          "target": "day-log-empty",
+          "guard": "entries_count == 0",
+          "refs": [
+            "PRD:#4_2",
+            "CJM:#daily-logging"
+          ]
+        },
+        {
+          "id": "e-day-state-populated",
+          "action": "proceed",
+          "target": "day-log-populated",
+          "guard": "entries_count > 0",
+          "refs": [
+            "PRD:#4_2",
+            "CJM:#daily-logging"
+          ]
+        }
+      ],
+      "decision_policy": {
+        "mutually_exclusive": true,
+        "exhaustive": true,
+        "default_edge_id": "e-day-state-empty"
+      },
+      "a11y": {
+        "role": "system",
+        "labels": [],
+        "focus_order": [],
+        "keyboard": "N/A",
+        "announcements": "Определение состояния дня…",
+        "live_region": "polite"
+      },
+      "analytics": [],
+      "refs": [
+        "PRD:#4_2",
+        "CJM:#daily-logging"
+      ]
+    },
+    {
+      "id": "day-log-empty",
+      "type": "screen",
+      "desc": "Пустой день: подсказки и CTA «Добавить запись», «Погода».",
+      "inputs": [
+        "selected_date",
+        "project_id"
+      ],
+      "outputs": [
+        "day_date"
+      ],
+      "edges": [
+        {
+          "id": "e-day-add-entry-empty",
+          "action": "tap_add_entry",
+          "target": "entry-editor",
+          "analytics": [
+            "tap_add_entry"
+          ],
+          "refs": [
+            "PRD:#4_2",
+            "CJM:#daily-logging"
+          ]
+        },
+        {
+          "id": "e-weather-manage-empty",
+          "action": "manage_weather",
+          "target": "check-network-for-weather",
+          "refs": [
+            "PRD:#8",
+            "PRD:#4_2",
+            "CJM:#daily-logging"
+          ]
+        }
+      ],
+      "a11y": {
+        "role": "main",
+        "labels": [
+          "Добавить запись",
+          "Погода"
+        ],
+        "focus_order": [
+          "fab_add",
+          "weather_button"
+        ],
+        "keyboard": "Tab к кнопкам; Enter активирует",
+        "announcements": "День пуст. Добавьте первую запись.",
+        "live_region": "polite"
+      },
+      "analytics": [
+        "day_log_view"
+      ],
+      "refs": [
+        "PRD:#4_2",
+        "PRD:#8",
+        "CJM:#daily-logging"
+      ]
+    },
+    {
+      "id": "day-log-populated",
+      "type": "screen",
+      "desc": "День с записями: список по группам, быстрые действия, переход к превью отчёта.",
+      "inputs": [
+        "selected_date",
+        "project_id"
+      ],
+      "outputs": [
+        "day_date"
+      ],
+      "edges": [
+        {
+          "id": "e-day-add-entry-populated",
+          "action": "tap_add_entry",
+          "target": "entry-editor",
+          "analytics": [
+            "tap_add_entry"
+          ],
+          "refs": [
+            "PRD:#4_2",
+            "CJM:#daily-logging"
+          ]
+        },
+        {
+          "id": "e-day-open-preview",
+          "action": "open_report_preview",
+          "target": "report-preview",
+          "analytics": [
+            "report_preview_view"
+          ],
+          "refs": [
+            "PRD:#4_2",
+            "CJM:#reporting-signoff"
+          ]
+        },
+        {
+          "id": "e-weather-manage-populated",
+          "action": "manage_weather",
+          "target": "check-network-for-weather",
+          "refs": [
+            "PRD:#8",
+            "PRD:#4_2",
+            "CJM:#daily-logging"
+          ]
+        }
+      ],
+      "a11y": {
+        "role": "main",
+        "labels": [
+          "Список записей",
+          "Предпросмотр отчёта"
+        ],
+        "focus_order": [
+          "entries_list",
+          "preview_button"
+        ],
+        "keyboard": "Стрелки — навигация по списку",
+        "announcements": "Загружены записи дня.",
+        "live_region": "polite"
+      },
+      "analytics": [
+        "day_log_view"
+      ],
+      "refs": [
+        "PRD:#4_2",
+        "PRD:#8",
+        "CJM:#reporting-signoff"
+      ]
+    },
+    {
+      "id": "documents-view",
+      "type": "screen",
+      "desc": "Список документов проекта с поиском и офлайн-кэшем (provisional).",
+      "inputs": [
+        "project_id"
+      ],
+      "outputs": [],
+      "edges": [
+        {
+          "id": "e-docs-back",
+          "action": "back",
+          "target": "project-dashboard",
+          "refs": [
+            "PRD:#4_3",
+            "CJM:#retention-advocacy"
+          ]
+        }
+      ],
+      "a11y": {
+        "role": "main",
+        "labels": [
+          "Документы"
+        ],
+        "focus_order": [],
+        "keyboard": "Стрелки — навигация; Enter — открыть",
+        "announcements": "Открыт список документов.",
+        "live_region": "polite"
+      },
+      "analytics": [
+        "documents_search"
+      ],
+      "refs": [
+        "PRD:#4_3",
+        "PRD:#5",
+        "PRD:#8",
+        "CJM:#retention-advocacy"
+      ]
+    },
+    {
+      "id": "entry-editor",
+      "type": "screen",
+      "desc": "Форма записи: тип/интервалы/кол-во/заметки/вложения. Быстрые режимы: «Сохранить и добавить ещё», «Копировать из истории».",
+      "inputs": [
+        "selected_date"
+      ],
+      "outputs": [
+        "entry_data",
+        "entry_type"
+      ],
+      "edges": [
+        {
+          "id": "e-entry-attach-photo",
+          "action": "attach_photo",
+          "target": "camera-permission",
+          "refs": [
+            "PRD:#4_4",
+            "PRD:#9",
+            "CJM:#daily-logging"
+          ]
+        },
+        {
+          "id": "e-entry-submit",
+          "action": "tap_save_entry",
+          "target": "save-entry",
+          "effects": [
+            "normalize_entry",
+            "validate_entry"
+          ],
+          "analytics": [
+            "entry_create_attempt"
+          ],
+          "refs": [
+            "PRD:#4_2",
+            "CJM:#daily-logging"
+          ]
+        },
+        {
+          "id": "e-save-and-add-another",
+          "action": "save_and_add_another",
+          "target": "save-entry",
+          "effects": [
+            "mark_prefill_policy[type,work_package,tags,time_ranges]"
+          ],
+          "analytics": [
+            "entry_create_attempt"
+          ],
+          "refs": [
+            "CJM:#daily-logging",
+            "PRD:#4_2"
+          ]
+        }
+      ],
+      "errors": [
+        {
+          "id": "err-entry-required",
+          "type": "validation",
+          "desc": "Не заполнены обязательные поля записи.",
+          "recovery": "Подсветить поля, вернуть фокус.",
+          "refs": [
+            "PRD:#4_2"
+          ]
+        }
+      ],
+      "system_events": [],
+      "a11y": {
+        "role": "form",
+        "labels": [
+          "Тип записи",
+          "Сохранить",
+          "Сохранить и добавить ещё",
+          "Прикрепить фото"
+        ],
+        "focus_order": [
+          "fields",
+          "save_button",
+          "save_and_add_button",
+          "attach_button"
+        ],
+        "keyboard": "Return — сохранить; Cmd+S — сохранить",
+        "announcements": "Редактор записи.",
+        "live_region": "assertive"
+      },
+      "analytics": [
+        "entry_editor_view"
+      ],
+      "refs": [
+        "PRD:#4_2",
+        "PRD:#4_4",
+        "CJM:#daily-logging"
+      ]
+    },
+    {
+      "id": "save-entry",
+      "type": "system",
+      "desc": "Сохранение записи в SwiftData. Валидация и одно атомарное сохранение на действие.",
+      "inputs": [
+        "entry_data"
+      ],
+      "outputs": [
+        "entry_id",
+        "source"
+      ],
+      "edges": [
+        {
+          "id": "e-save-entry-success",
+          "action": "handle_success",
+          "target": "day-log-populated",
+          "analytics": [
+            "entry_saved"
+          ],
+          "refs": [
+            "PRD:#4_2",
+            "PRD:#5",
+            "CJM:#daily-logging"
+          ]
+        },
+        {
+          "id": "e-save-entry-validation",
+          "action": "handle_validation_error",
+          "target": "entry-editor",
+          "refs": [
+            "PRD:#4_2",
+            "CJM:#daily-logging"
+          ]
+        },
+        {
+          "id": "e-save-entry-system-error",
+          "action": "handle_error",
+          "target": "error-entry-save",
+          "refs": [
+            "PRD:#5",
+            "CJM:#daily-logging"
+          ]
+        }
+      ],
+      "system_events": [
+        "loading"
+      ],
+      "a11y": {
+        "role": "system",
+        "labels": [],
+        "focus_order": [],
+        "keyboard": "N/A",
+        "announcements": "Сохраняем запись…",
+        "live_region": "polite"
+      },
+      "analytics": [
+        "entry_saved"
+      ],
+      "refs": [
+        "PRD:#4_2",
+        "PRD:#5",
+        "CJM:#daily-logging"
+      ]
+    },
+    {
+      "id": "error-entry-save",
+      "type": "error",
+      "desc": "Системная ошибка сохранения записи (I/O). Предложить повтор или отмену.",
+      "inputs": [
+        "error_code"
+      ],
+      "outputs": [],
+      "edges": [
+        {
+          "id": "e-entry-retry",
+          "action": "tap_retry",
+          "target": "save-entry",
+          "retry_policy": {
+            "max_attempts": 3,
+            "backoff": "exponential",
+            "base_ms": 1000
+          },
+          "analytics": [
+            "error_entry_save"
+          ],
+          "refs": [
+            "PRD:#5",
+            "CJM:#daily-logging"
+          ]
+        },
+        {
+          "id": "e-entry-cancel",
+          "action": "tap_cancel",
+          "target": "day-log-populated",
+          "refs": [
+            "PRD:#4_2",
+            "CJM:#daily-logging"
+          ]
+        }
+      ],
+      "a11y": {
+        "role": "alertdialog",
+        "labels": [
+          "Повторить",
+          "Отмена"
+        ],
+        "focus_order": [
+          "message",
+          "retry_button",
+          "cancel_button"
+        ],
+        "keyboard": "Tab по кнопкам; Enter активирует",
+        "announcements": "Не удалось сохранить запись.",
+        "live_region": "assertive"
+      },
+      "analytics": [
+        "error_entry_save"
+      ],
+      "refs": [
+        "PRD:#5",
+        "CJM:#daily-logging"
+      ]
+    },
+    {
+      "id": "report-preview",
+      "type": "screen",
+      "desc": "Предпросмотр PDF/A-2u отчёта с чек-листом готовности. Подпись доступна из этого экрана.",
+      "inputs": [
+        "selected_date",
+        "project_id"
+      ],
+      "outputs": [
+        "day_status",
+        "report_preview"
+      ],
+      "edges": [
+        {
+          "id": "e-preview-tap-sign",
+          "action": "tap_sign",
+          "target": "report-sign",
+          "analytics": [
+            "tap_sign"
+          ],
+          "refs": [
+            "PRD:#9",
+            "CJM:#reporting-signoff"
+          ]
+        }
+      ],
+      "system_events": [
+        "loading"
+      ],
+      "a11y": {
+        "role": "document",
+        "labels": [
+          "Подписать"
+        ],
+        "focus_order": [
+          "preview",
+          "sign_button"
+        ],
+        "keyboard": "Tab к кнопке «Подписать», Enter — подтвердить",
+        "announcements": "Готов превью отчёта.",
+        "live_region": "polite"
+      },
+      "analytics": [
+        "report_preview_view"
+      ],
+      "refs": [
+        "PRD:#9",
+        "CJM:#reporting-signoff"
+      ]
+    },
+    {
+      "id": "report-sign",
+      "type": "screen",
+      "desc": "Экран подписи: полотно для росписи и подтверждение. Можно ввести ФИО [ASSUMPTION].",
+      "inputs": [
+        "report_preview"
+      ],
+      "outputs": [
+        "signature_blob",
+        "signer_name"
+      ],
+      "edges": [
+        {
+          "id": "e-sign-confirm",
+          "action": "confirm_signature",
+          "target": "lock-day",
+          "refs": [
+            "PRD:#9",
+            "CJM:#reporting-signoff"
+          ]
+        }
+      ],
+      "a11y": {
+        "role": "form",
+        "labels": [
+          "Поле подписи",
+          "Подтвердить подпись"
+        ],
+        "focus_order": [
+          "signature_canvas",
+          "confirm_button"
+        ],
+        "keyboard": "Enter — подтвердить; Esc — отменить",
+        "announcements": "Подписано.",
+        "live_region": "assertive"
+      },
+      "analytics": [
+        "tap_sign"
+      ],
+      "refs": [
+        "PRD:#9",
+        "CJM:#reporting-signoff"
+      ]
+    },
+    {
+      "id": "lock-day",
+      "type": "system",
+      "desc": "Финализация дня: вычисление checksum, установка статуса locked (read-only).",
+      "inputs": [
+        "signature_blob",
+        "selected_date",
+        "project_id"
+      ],
+      "outputs": [
+        "signed_pdf_checksum",
+        "signed_at"
+      ],
+      "edges": [
+        {
+          "id": "e-lock-success",
+          "action": "handle_success",
+          "target": "report-preview-signed",
+          "analytics": [
+            "report_signed"
+          ],
+          "refs": [
+            "PRD:#9",
+            "CJM:#reporting-signoff"
+          ]
+        },
+        {
+          "id": "e-lock-failure",
+          "action": "handle_error",
+          "target": "report-preview",
+          "refs": [
+            "PRD:#9",
+            "CJM:#reporting-signoff"
+          ]
+        }
+      ],
+      "system_events": [
+        "loading"
+      ],
+      "a11y": {
+        "role": "system",
+        "labels": [],
+        "focus_order": [],
+        "keyboard": "N/A",
+        "announcements": "День заблокирован.",
+        "live_region": "polite"
+      },
+      "analytics": [
+        "report_signed"
+      ],
+      "refs": [
+        "PRD:#9",
+        "CJM:#reporting-signoff"
+      ]
+    },
+    {
+      "id": "report-preview-signed",
+      "type": "screen",
+      "desc": "Предпросмотр подписанного отчёта. Доступен быстрый экспорт.",
+      "inputs": [
+        "signed_pdf_checksum",
+        "selected_date",
+        "project_id"
+      ],
+      "outputs": [],
+      "edges": [
+        {
+          "id": "e-signed-export-pdf",
+          "action": "open_export",
+          "target": "export-decision",
+          "refs": [
+            "PRD:#9",
+            "PRD:#4_2",
+            "CJM:#reporting-signoff"
+          ]
+        }
+      ],
+      "a11y": {
+        "role": "document",
+        "labels": [
+          "Экспорт"
+        ],
+        "focus_order": [
+          "preview",
+          "export_button"
+        ],
+        "keyboard": "Tab к кнопке «Экспорт», Enter — открыть",
+        "announcements": "Отчёт подписан.",
+        "live_region": "polite"
+      },
+      "analytics": [
+        "report_preview_signed_view"
+      ],
+      "refs": [
+        "PRD:#9",
+        "CJM:#reporting-signoff"
+      ]
+    },
+    {
+      "id": "export-decision",
+      "type": "decision",
+      "desc": "Выбор формата и канала экспорта: PDF/A-2u (по умолчанию) или другой формат; либо отмена.",
+      "inputs": [
+        "signed_pdf_checksum"
+      ],
+      "outputs": [
+        "export_format",
+        "export_dest"
+      ],
+      "edges": [
+        {
+          "id": "e-export-format-pdf",
+          "action": "choose_pdf",
+          "target": "export-generate",
+          "guard": "export_format == \"pdf_a_2u\"",
+          "refs": [
+            "PRD:#4_2",
+            "PRD:#9",
+            "CJM:#reporting-signoff"
+          ]
+        },
+        {
+          "id": "e-export-format-other",
+          "action": "choose_other_format",
+          "target": "export-generate",
+          "refs": [
+            "PRD:#4_2",
+            "CJM:#reporting-signoff"
+          ]
+        },
+        {
+          "id": "e-export-cancel",
+          "action": "tap_cancel",
+          "target": "report-preview-signed",
+          "refs": [
+            "PRD:#7",
+            "CJM:#reporting-signoff"
+          ]
+        }
+      ],
+      "a11y": {
+        "role": "system",
+        "labels": [],
+        "focus_order": [],
+        "keyboard": "Стрелки — выбор формата; Enter — подтвердить",
+        "announcements": "Опции экспорта.",
+        "live_region": "polite"
+      },
+      "analytics": [
+        "export_options_view"
+      ],
+      "refs": [
+        "PRD:#4_2",
+        "PRD:#9",
+        "CJM:#reporting-signoff"
+      ]
+    },
+    {
+      "id": "export-generate",
+      "type": "system",
+      "desc": "Генерация файла выбранного формата и вызов iOS Share Sheet. Обработка таймаутов и low storage.",
+      "inputs": [
+        "export_format",
+        "selected_date",
+        "project_id"
+      ],
+      "outputs": [
+        "file_name"
+      ],
+      "edges": [
+        {
+          "id": "e-export-success",
+          "action": "handle_success",
+          "target": "success-done",
+          "analytics": [
+            "report_exported"
+          ],
+          "refs": [
+            "PRD:#4_2",
+            "PRD:#9",
+            "CJM:#reporting-signoff"
+          ]
+        },
+        {
+          "id": "e-export-error",
+          "action": "handle_error",
+          "target": "export-error",
+          "refs": [
+            "PRD:#9",
+            "CJM:#reporting-signoff"
+          ]
+        }
+      ],
+      "system_events": [
+        "loading",
+        "timeout",
+        "retry"
+      ],
+      "a11y": {
+        "role": "system",
+        "labels": [],
+        "focus_order": [],
+        "keyboard": "N/A",
+        "announcements": "Генерация файла…",
+        "live_region": "polite"
+      },
+      "analytics": [
+        "export_process_started"
+      ],
+      "refs": [
+        "PRD:#4_2",
+        "PRD:#9",
+        "CJM:#reporting-signoff"
+      ]
+    },
+    {
+      "id": "export-error",
+      "type": "error",
+      "desc": "Ошибка при экспорте/шеринге (включая недостаток памяти).",
+      "inputs": [
+        "error_code"
+      ],
+      "outputs": [
+        "error_code"
+      ],
+      "edges": [
+        {
+          "id": "e-export-retry",
+          "action": "tap_retry",
+          "target": "export-generate",
+          "retry_policy": {
+            "max_attempts": 3,
+            "backoff": "fixed",
+            "base_ms": 1500
+          },
+          "analytics": [
+            "export_retry"
+          ],
+          "refs": [
+            "PRD:#9",
+            "CJM:#reporting-signoff"
+          ]
+        },
+        {
+          "id": "e-export-abort",
+          "action": "tap_cancel",
+          "target": "report-preview-signed",
+          "analytics": [
+            "export_abort"
+          ],
+          "refs": [
+            "PRD:#9",
+            "PRD:#7",
+            "CJM:#reporting-signoff"
+          ]
+        }
+      ],
+      "a11y": {
+        "role": "alertdialog",
+        "labels": [
+          "Повторить",
+          "Отмена"
+        ],
+        "focus_order": [
+          "message",
+          "retry_button",
+          "cancel_button"
+        ],
+        "keyboard": "Tab по кнопкам; Enter активирует",
+        "announcements": "Ошибка экспорта.",
+        "live_region": "assertive"
+      },
+      "analytics": [
+        "export_failed"
+      ],
+      "refs": [
+        "PRD:#9",
+        "CJM:#reporting-signoff"
+      ]
+    },
+    {
+      "id": "camera-permission",
+      "type": "decision",
+      "desc": "Проверка статуса доступа к камере для съёмки фото.",
+      "inputs": [],
+      "outputs": [
+        "permission_status"
+      ],
+      "edges": [
+        {
+          "id": "e-cam-granted",
+          "action": "granted",
+          "target": "capture-photo",
+          "guard": "permission_status == \"granted\"",
+          "refs": [
+            "PRD:#9",
+            "CJM:#daily-logging"
+          ]
+        },
+        {
+          "id": "e-cam-denied",
+          "action": "denied",
+          "target": "camera-permission-error",
+          "guard": "permission_status == \"denied\"",
+          "refs": [
+            "PRD:#9",
+            "CJM:#daily-logging"
+          ]
+        }
+      ],
+      "system_events": [
+        "permission_prompt"
+      ],
+      "a11y": {
+        "role": "system",
+        "labels": [],
+        "focus_order": [],
+        "keyboard": "N/A",
+        "announcements": "Требуется доступ к камере.",
+        "live_region": "polite"
+      },
+      "analytics": [
+        "permission_check_camera"
+      ],
+      "refs": [
+        "PRD:#9",
+        "CJM:#daily-logging"
+      ]
+    },
+    {
+      "id": "capture-photo",
+      "type": "system",
+      "desc": "Запуск камеры, захват фото и сохранение офлайн. Автопривязка к черновику записи.",
+      "inputs": [],
+      "outputs": [
+        "photo_id"
+      ],
+      "edges": [
+        {
+          "id": "e-photo-success",
+          "action": "handle_success",
+          "target": "entry-editor",
+          "effects": [
+            "attach_photo_to_entry"
+          ],
+          "analytics": [
+            "photo_captured"
+          ],
+          "refs": [
+            "PRD:#4_4",
+            "CJM:#daily-logging"
+          ]
+        }
+      ],
+      "system_events": [
+        "loading"
+      ],
+      "a11y": {
+        "role": "system",
+        "labels": [],
+        "focus_order": [],
+        "keyboard": "N/A",
+        "announcements": "Фото сохранено.",
+        "live_region": "polite"
+      },
+      "analytics": [
+        "photo_captured"
+      ],
+      "refs": [
+        "PRD:#4_4",
+        "CJM:#daily-logging"
+      ]
+    },
+    {
+      "id": "camera-permission-error",
+      "type": "error",
+      "desc": "Доступ к камере отклонён. Предложить открыть Настройки или продолжить без фото.",
+      "inputs": [],
+      "outputs": [],
+      "edges": [
+        {
+          "id": "e-open-settings",
+          "action": "open_settings",
+          "target": "entry-editor",
+          "analytics": [
+            "open_settings_camera"
+          ],
+          "refs": [
+            "PRD:#9",
+            "CJM:#daily-logging"
+          ]
+        },
+        {
+          "id": "e-continue-without",
+          "action": "continue_without_photo",
+          "target": "entry-editor",
+          "analytics": [
+            "continue_without_photo"
+          ],
+          "refs": [
+            "PRD:#9",
+            "CJM:#daily-logging"
+          ]
+        }
+      ],
+      "a11y": {
+        "role": "alertdialog",
+        "labels": [
+          "Открыть Настройки",
+          "Продолжить без фото"
+        ],
+        "focus_order": [
+          "message",
+          "open_settings_button",
+          "continue_button"
+        ],
+        "keyboard": "Tab по опциям; Enter активирует",
+        "announcements": "Доступ к камере запрещён.",
+        "live_region": "assertive"
+      },
+      "analytics": [
+        "camera_permission_error_view"
+      ],
+      "refs": [
+        "PRD:#9",
+        "CJM:#daily-logging"
+      ]
+    },
+    {
+      "id": "gallery",
+      "type": "screen",
+      "desc": "Галерея с группировкой по дням и массовыми действиями (provisional).",
+      "inputs": [
+        "project_id"
+      ],
+      "outputs": [],
+      "edges": [
+        {
+          "id": "e-gallery-back",
+          "action": "back",
+          "target": "project-dashboard",
+          "refs": [
+            "PRD:#4_4",
+            "CJM:#daily-logging"
+          ]
+        }
+      ],
+      "a11y": {
+        "role": "main",
+        "labels": [
+          "Галерея"
+        ],
+        "focus_order": [],
+        "keyboard": "Стрелки — навигация; Enter — выбрать",
+        "announcements": "Открыта галерея.",
+        "live_region": "polite"
+      },
+      "analytics": [
+        "gallery_bulk_attach"
+      ],
+      "refs": [
+        "PRD:#4_4",
+        "PRD:#11",
+        "CJM:#daily-logging"
+      ]
+    },
+    {
+      "id": "save-project",
+      "type": "system",
+      "desc": "Проверка и сохранение проекта в SwiftData; атомарное сохранение, контекст @MainActor.",
+      "inputs": [
+        "project_data"
+      ],
+      "outputs": [
+        "project_id"
+      ],
+      "edges": [
+        {
+          "id": "e-save-proj-success",
+          "action": "handle_success",
+          "target": "project-dashboard",
+          "effects": [
+            "create project_record",
+            "set current_project_id"
+          ],
+          "analytics": [
+            "project_saved"
+          ],
+          "refs": [
+            "PRD:#4_1",
+            "PRD:#5",
+            "CJM:#onboarding-first-project"
+          ]
+        },
+        {
+          "id": "e-save-proj-failure",
+          "action": "handle_error",
+          "target": "error-save",
+          "refs": [
+            "PRD:#5",
+            "CJM:#onboarding-first-project"
+          ]
+        }
+      ],
+      "system_events": [
+        "loading",
+        "retry"
+      ],
+      "a11y": {
+        "role": "system",
+        "labels": [],
+        "focus_order": [],
+        "keyboard": "N/A",
+        "announcements": "Сохраняем проект…",
+        "live_region": "polite"
+      },
+      "analytics": [
+        "project_saved"
+      ],
+      "refs": [
+        "PRD:#4_1",
+        "PRD:#5",
+        "CJM:#onboarding-first-project"
+      ]
+    },
+    {
+      "id": "error-save",
+      "type": "error",
+      "desc": "Сбой сохранения проекта (например, I/O/хранилище). Предложить повтор или отмену.",
+      "inputs": [
+        "error_code"
+      ],
+      "outputs": [],
+      "edges": [
+        {
+          "id": "e-save-retry",
+          "action": "tap_retry",
+          "target": "save-project",
+          "retry_policy": {
+            "max_attempts": 3,
+            "backoff": "exponential",
+            "base_ms": 1000
+          },
+          "analytics": [
+            "error_project_save"
+          ],
+          "refs": [
+            "PRD:#5",
+            "CJM:#onboarding-first-project"
+          ]
+        },
+        {
+          "id": "e-save-cancel",
+          "action": "tap_cancel",
+          "target": "cancel-out",
+          "refs": [
+            "PRD:#7",
+            "CJM:#onboarding-first-project"
+          ]
+        }
+      ],
+      "system_events": [
+        "retry"
+      ],
+      "a11y": {
+        "role": "alertdialog",
+        "labels": [
+          "Ошибка сохранения",
+          "Повторить",
+          "Отмена"
+        ],
+        "focus_order": [
+          "message",
+          "retry_button",
+          "cancel_button"
+        ],
+        "keyboard": "Tab по кнопкам; Enter активирует",
+        "announcements": "Не удалось сохранить проект.",
+        "live_region": "assertive"
+      },
+      "analytics": [
+        "error_project_save"
+      ],
+      "refs": [
+        "PRD:#5",
+        "PRD:#7",
+        "CJM:#onboarding-first-project"
+      ]
+    },
+    {
+      "id": "future-date-error",
+      "type": "error",
+      "desc": "Показ предупреждения при попытке выбрать будущую дату.",
+      "inputs": [
+        "selected_date"
+      ],
+      "outputs": [],
+      "edges": [],
+      "a11y": {
+        "role": "alert",
+        "labels": [
+          "Нельзя выбрать будущую дату"
+        ],
+        "focus_order": [
+          "message"
+        ],
+        "keyboard": "Esc — закрыть",
+        "announcements": "Будущие даты недоступны.",
+        "live_region": "assertive"
+      },
+      "analytics": [],
+      "refs": [
+        "PRD:#4_2",
+        "CJM:#daily-logging"
+      ]
+    },
+    {
+      "id": "check-network-for-weather",
+      "type": "decision",
+      "desc": "Проверка сети для автоматического снимка погоды либо переход к ручному вводу.",
+      "inputs": [],
+      "outputs": [],
+      "edges": [
+        {
+          "id": "e-net-available",
+          "action": "proceed",
+          "target": "fetch-weather",
+          "guard": "is_online == true",
+          "refs": [
+            "PRD:#8",
+            "CJM:#daily-logging"
+          ]
+        },
+        {
+          "id": "e-net-offline",
+          "action": "fallback",
+          "target": "manual-weather",
+          "guard": "is_online == false",
+          "refs": [
+            "PRD:#8",
+            "CJM:#daily-logging"
+          ]
+        }
+      ],
+      "decision_policy": {
+        "mutually_exclusive": true,
+        "exhaustive": true,
+        "default_edge_id": "e-net-offline"
+      },
+      "system_events": [
+        "offline_check"
+      ],
+      "a11y": {
+        "role": "system",
+        "labels": [],
+        "focus_order": [],
+        "keyboard": "N/A",
+        "announcements": "Проверка сети для погоды…",
+        "live_region": "polite"
+      },
+      "analytics": [
+        "weather_check"
+      ],
+      "refs": [
+        "PRD:#8",
+        "CJM:#daily-logging"
+      ]
+    },
+    {
+      "id": "projects-empty",
+      "type": "screen",
+      "desc": "Пустой список проектов с TipKit и CTA «Создать проект». Кратко объясняет следующий шаг.",
+      "inputs": [],
+      "outputs": [
+        "project_location"
+      ],
+      "edges": [
+        {
+          "id": "e-empty-create",
+          "action": "tap_create_project",
+          "target": "project-create",
+          "analytics": [
+            "empty_state_shown"
+          ],
+          "refs": [
+            "PRD:#4_1",
+            "PRD:#7",
+            "CJM:#onboarding-first-project"
+          ]
+        }
+      ],
+      "a11y": {
+        "role": "main",
+        "labels": [
+          "Создать проект",
+          "Подсказка TipKit"
+        ],
+        "focus_order": [
+          "tip",
+          "primary_cta"
+        ],
+        "keyboard": "Tab к кнопке «Создать проект», Enter активирует",
+        "announcements": "Нет проектов. Нажмите «Создать проект».",
+        "live_region": "polite"
+      },
+      "analytics": [
+        "empty_state_shown"
+      ],
+      "refs": [
+        "PRD:#4_1",
+        "PRD:#7",
+        "CJM:#onboarding-first-project"
+      ]
+    },
+    {
+      "id": "project-create",
+      "type": "screen",
+      "desc": "Минимальная форма создания проекта: обязательное поле «Название проекта». Остальные поля — позже в дашборде.",
+      "inputs": [
+        "project_name"
+      ],
+      "outputs": [
+        "project_data",
+        "project_name"
+      ],
+      "edges": [
+        {
+          "id": "e-create-submit",
+          "action": "submit_form",
+          "target": "save-project",
+          "guard": "len(project_name) > 0",
+          "analytics": [
+            "project_create_attempt"
+          ],
+          "refs": [
+            "PRD:#4_1",
+            "CJM:#onboarding-first-project"
+          ]
+        },
+        {
+          "id": "e-create-cancel",
+          "action": "tap_cancel",
+          "target": "cancel-out",
+          "refs": [
+            "PRD:#7",
+            "CJM:#onboarding-first-project"
+          ]
+        }
+      ],
+      "errors": [
+        {
+          "id": "err-project-name-required",
+          "type": "validation",
+          "desc": "Пользователь нажал «Сохранить» без названия проекта.",
+          "recovery": "Показать inline-ошибку и вернуть фокус в поле.",
+          "refs": [
+            "PRD:#4_1"
+          ]
+        }
+      ],
+      "a11y": {
+        "role": "form",
+        "labels": [
+          "Название проекта",
+          "Сохранить",
+          "Отмена"
+        ],
+        "focus_order": [
+          "name_field",
+          "save_button",
+          "cancel_button"
+        ],
+        "keyboard": "Return — сохранить; Esc — отменить",
+        "announcements": "Введите название проекта.",
+        "live_region": "assertive"
+      },
+      "analytics": [
+        "project_create_view"
+      ],
+      "refs": [
+        "PRD:#4_1",
+        "CJM:#onboarding-first-project"
+      ]
+    },
+    {
+      "id": "project-dashboard",
+      "type": "screen",
+      "desc": "Дашборд проекта с быстрыми ссылками на модули. Основной CTA — Журнал работ.",
+      "inputs": [
+        "project_id"
+      ],
+      "outputs": [],
+      "edges": [
+        {
+          "id": "e-dash-open-daily",
+          "action": "open_daily_logs",
+          "target": "daily-calendar",
+          "analytics": [
+            "project_dashboard_view"
+          ],
+          "refs": [
+            "PRD:#4_1",
+            "PRD:#4_2",
+            "CJM:#daily-logging"
+          ]
+        },
+        {
+          "id": "e-dash-open-documents",
+          "action": "open_documents",
+          "target": "documents-view",
+          "refs": [
+            "PRD:#4_3",
+            "PRD:#5",
+            "PRD:#8",
+            "CJM:#retention-advocacy"
+          ]
+        },
+        {
+          "id": "e-dash-open-gallery",
+          "action": "open_gallery",
+          "target": "gallery",
+          "refs": [
+            "PRD:#4_4",
+            "PRD:#11",
+            "CJM:#daily-logging"
+          ]
+        }
+      ],
+      "a11y": {
+        "role": "main",
+        "labels": [
+          "Журнал работ"
+        ],
+        "focus_order": [
+          "title",
+          "daily_logs_cta"
+        ],
+        "keyboard": "Tab к ссылкам; Enter открывает",
+        "announcements": "Открыт дашборд проекта.",
+        "live_region": "polite"
+      },
+      "analytics": [
+        "project_dashboard_view"
+      ],
+      "refs": [
+        "PRD:#4_1",
+        "PRD:#4_2",
+        "CJM:#daily-logging"
+      ]
+    },
+    {
+      "id": "fetch-weather",
+      "type": "system",
+      "desc": "Автозаполнение погоды через сеть (URLSession). В случае сбоя — остаётся ручной ввод.",
+      "inputs": [
+        "selected_date",
+        "project_location"
+      ],
+      "outputs": [
+        "weather_data",
+        "weather_temp_c",
+        "weather_wind_ms",
+        "weather_precip_mm",
+        "weather_provider",
+        "weather_source"
+      ],
+      "edges": [
+        {
+          "id": "e-weather-success",
+          "action": "handle_success",
+          "target": "day-log-populated",
+          "effects": [
+            "set_weather_auto"
+          ],
+          "analytics": [
+            "weather_fetched"
+          ],
+          "refs": [
+            "PRD:#8",
+            "CJM:#daily-logging"
+          ]
+        },
+        {
+          "id": "e-weather-fail",
+          "action": "handle_error",
+          "target": "day-log-populated",
+          "analytics": [
+            "weather_fetched"
+          ],
+          "timeout_ms": 8000,
+          "refs": [
+            "PRD:#8",
+            "CJM:#daily-logging"
+          ]
+        }
+      ],
+      "system_events": [
+        "loading",
+        "timeout",
+        "retry"
+      ],
+      "a11y": {
+        "role": "system",
+        "labels": [],
+        "focus_order": [],
+        "keyboard": "N/A",
+        "announcements": "Получаем погоду…",
+        "live_region": "polite"
+      },
+      "analytics": [
+        "weather_fetched"
+      ],
+      "refs": [
+        "PRD:#8",
+        "CJM:#daily-logging"
+      ]
+    },
+    {
+      "id": "manual-weather",
+      "type": "screen",
+      "desc": "Экран ручного ввода погоды: температура, ветер, осадки. Данные сохраняются в день.",
+      "inputs": [],
+      "outputs": [
+        "weather_manual",
+        "weather_temp_c",
+        "weather_wind_ms",
+        "weather_precip_mm",
+        "weather_source"
+      ],
+      "edges": [
+        {
+          "id": "e-weather-submit",
+          "action": "submit",
+          "target": "day-log-populated",
+          "effects": [
+            "set_weather_manual"
+          ],
+          "analytics": [
+            "manual_weather_input"
+          ],
+          "refs": [
+            "PRD:#4_2",
+            "PRD:#8",
+            "CJM:#daily-logging"
+          ]
+        }
+      ],
+      "a11y": {
+        "role": "form",
+        "labels": [
+          "Температура",
+          "Ветер",
+          "Осадки",
+          "Сохранить"
+        ],
+        "focus_order": [
+          "temp_field",
+          "wind_field",
+          "precip_field",
+          "save_button"
+        ],
+        "keyboard": "Return — отправить",
+        "announcements": "Введите погоду вручную.",
+        "live_region": "polite"
+      },
+      "analytics": [
+        "manual_weather_input"
+      ],
+      "refs": [
+        "PRD:#4_2",
+        "PRD:#8",
+        "CJM:#daily-logging"
+      ]
+    }
+  ],
+  "data_dictionary": [
+    {
+      "name": "day_date",
+      "coverage": "required"
+    },
+    {
+      "name": "day_status",
+      "coverage": "required"
+    },
+    {
+      "name": "entry_data",
+      "coverage": "required"
+    },
+    {
+      "name": "entry_id",
+      "coverage": "required"
+    },
+    {
+      "name": "entry_type",
+      "coverage": "required"
+    },
+    {
+      "name": "entries_count",
+      "coverage": "optional"
+    },
+    {
+      "name": "error_code",
+      "coverage": "required"
+    },
+    {
+      "name": "export_dest",
+      "coverage": "required"
+    },
+    {
+      "name": "export_format",
+      "coverage": "required"
+    },
+    {
+      "name": "file_name",
+      "coverage": "required"
+    },
+    {
+      "name": "has_projects",
+      "coverage": "required"
+    },
+    {
+      "name": "is_online",
+      "coverage": "required"
+    },
+    {
+      "name": "permission_status",
+      "coverage": "required"
+    },
+    {
+      "name": "photo_id",
+      "coverage": "required"
+    },
+    {
+      "name": "project_data",
+      "coverage": "required"
+    },
+    {
+      "name": "project_id",
+      "coverage": "required"
+    },
+    {
+      "name": "project_location",
+      "coverage": "required"
+    },
+    {
+      "name": "project_name",
+      "coverage": "required"
+    },
+    {
+      "name": "report_preview",
+      "coverage": "required"
+    },
+    {
+      "name": "selected_date",
+      "coverage": "required"
+    },
+    {
+      "name": "signature_blob",
+      "coverage": "required"
+    },
+    {
+      "name": "signed_at",
+      "coverage": "required"
+    },
+    {
+      "name": "signed_pdf_checksum",
+      "coverage": "required"
+    },
+    {
+      "name": "signer_name",
+      "coverage": "required"
+    },
+    {
+      "name": "source",
+      "coverage": "required"
+    },
+    {
+      "name": "weather_data",
+      "coverage": "required"
+    },
+    {
+      "name": "weather_manual",
+      "coverage": "required"
+    },
+    {
+      "name": "weather_precip_mm",
+      "coverage": "required"
+    },
+    {
+      "name": "weather_provider",
+      "coverage": "required"
+    },
+    {
+      "name": "weather_source",
+      "coverage": "required"
+    },
+    {
+      "name": "weather_temp_c",
+      "coverage": "required"
+    },
+    {
+      "name": "weather_wind_ms",
+      "coverage": "required"
+    },
+    {
+      "name": "temperatureC",
+      "coverage": "optional"
+    },
+    {
+      "name": "condition",
+      "coverage": "optional"
+    },
+    {
+      "name": "iso",
+      "coverage": "optional"
+    },
+    {
+      "name": "isLocked",
+      "coverage": "optional"
+    }
+  ]
+}

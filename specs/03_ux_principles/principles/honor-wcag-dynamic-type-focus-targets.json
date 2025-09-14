@@ -1,0 +1,46 @@
+{
+  "id": "honor-wcag-dynamic-type-focus-targets",
+  "title": "Honor WCAG AA, Dynamic Type, focus order, and target sizes",
+  "rationale": "Outdoor use and accessibility needs demand robust legibility and operability, improving accuracy and speed for everyone",
+  "example": "Forms maintain at least 44pt tap targets, valid focus order, scalable type, and sufficient contrast for bright conditions",
+  "priority": "medium",
+  "refs": [
+    "HIG:#Controls",
+    "HIG:#Typography",
+    "PRD:#10",
+    "WCAG:#1-4-3",
+    "WCAG:#1-4-4",
+    "WCAG:#2-4-3",
+    "WCAG:#2-5-5"
+  ],
+  "antipatterns": [
+    {
+      "name": "Insufficient contrast or ignoring Dynamic Type",
+      "why_harmful": "Reduces readability and excludes users",
+      "severity": "high",
+      "impact_area": [
+        "accessibility",
+        "adaptive_layout"
+      ],
+      "refs": [
+        "HIG:#Typography",
+        "PRD:#10",
+        "WCAG:#1-4-3",
+        "WCAG:#1-4-4"
+      ]
+    },
+    {
+      "name": "Using placeholders instead of labels",
+      "why_harmful": "Labels vanish on input, harming comprehension and accessibility",
+      "severity": "medium",
+      "impact_area": [
+        "accessibility",
+        "forms"
+      ],
+      "refs": [
+        "HIG:#Forms",
+        "WCAG:#3-3-2"
+      ]
+    }
+  ]
+}

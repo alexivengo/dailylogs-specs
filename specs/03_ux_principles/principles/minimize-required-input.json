@@ -1,0 +1,42 @@
+{
+  "id": "minimize-required-input",
+  "title": "Minimize required input to reach value fast",
+  "rationale": "Lowering initial data burden accelerates Time-to-First-Project and activation; defer noncritical fields and support efficient repetition",
+  "example": "Create a project with essential minimum and accelerate routine input with repeat-friendly actions such as save-and-add-another or copy previous details",
+  "priority": "high",
+  "refs": [
+    "CJM:#onboarding-first-project",
+    "HIG:#Forms",
+    "PRD:#4_1",
+    "WCAG:#3-3-2"
+  ],
+  "antipatterns": [
+    {
+      "name": "Overloaded project creation form",
+      "why_harmful": "Cognitive overload delays activation and increases abandonment",
+      "severity": "high",
+      "impact_area": [
+        "data_entry",
+        "forms"
+      ],
+      "refs": [
+        "CJM:#onboarding-first-project",
+        "HIG:#Forms",
+        "PRD:#4_1"
+      ]
+    },
+    {
+      "name": "Too many steps for repetitive entries",
+      "why_harmful": "Inflates effort for routine logs and harms flow",
+      "severity": "high",
+      "impact_area": [
+        "data_entry",
+        "forms"
+      ],
+      "refs": [
+        "CJM:#daily-logging",
+        "PRD:#4_2"
+      ]
+    }
+  ]
+}

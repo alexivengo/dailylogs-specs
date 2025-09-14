@@ -1,0 +1,57 @@
+{
+  "$id": "hig_story_candidates.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["story_id", "candidates"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "story_id": {"type": "string", "pattern": "^us-[0-9]+$"},
+    "title": {"type": "string"},
+    "role": {"type": "string"},
+    "value": {"type": "string"},
+    "core_actions": {"type": "array", "items": {"type": "string"}},
+    "candidates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["action", "pattern_id", "title", "swiftui_primitives", "scores", "refs"],
+        "properties": {
+          "action": {"type": "string"},
+          "pattern_id": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+          "title": {"type": "string"},
+          "hig_sections": {"type": "array", "items": {"type": "string"}},
+          "swiftui_primitives": {"type": "array", "items": {"type": "string"}},
+          "pros": {"type": "array", "items": {"type": "string"}},
+          "cons": {"type": "array", "items": {"type": "string"}},
+          "accessibility_notes": {"type": "array", "items": {"type": "string"}},
+          "common_mistakes": {"type": "array", "items": {"type": "string"}},
+          "scores": {
+            "type": "object",
+            "required": ["fit", "load", "consistency", "accessibility", "risk", "total"],
+            "properties": {
+              "fit": {"type": "integer"},
+              "load": {"type": "integer"},
+              "consistency": {"type": "integer"},
+              "accessibility": {"type": "integer"},
+              "risk": {"type": "integer"},
+              "total": {"type": "integer"}
+            }
+          },
+          "refs": {
+            "type": "object",
+            "required": ["prd_ids", "cjm_ids", "flow_nodes", "user_story_id"],
+            "properties": {
+              "prd_ids": {"type": "array", "items": {"type": "string"}},
+              "cjm_ids": {"type": "array", "items": {"type": "string"}},
+              "flow_nodes": {"type": "array", "items": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"}},
+              "user_story_id": {"type": "string", "pattern": "^us-[0-9]+$"}
+            }
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "recommendation": {"type": "object"}
+  },
+  "additionalProperties": false
+}

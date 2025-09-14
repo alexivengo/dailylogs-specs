@@ -1,0 +1,63 @@
+{
+  "$schema": "../_schemas/hig_candidates.schema.json",
+  "version": "1.0.0",
+  "governing_rules": {
+    "native_first": true,
+    "swiftui_only": true,
+    "ios_min": "18.0",
+    "design_axioms": [
+      "Prevent, don’t punish",
+      "One screen, one action",
+      "Offline-first augments network; do not block on fetch",
+      "Accessibility as a constraint (Dynamic Type, 44pt, VO order)"
+    ]
+  },
+  "source_files": [
+    "00_PRD_v1.json",
+    "01_CJM_v1.json",
+    "02_UserFlow_v1.json",
+    "04_UserStories_v1.json",
+    "03_Global_UX_Principles_v1.json"
+  ],
+  "stories": {
+    "us-2": {
+      "path": "stories/us-2/candidates.json"
+    },
+    "us-1": {
+      "path": "stories/us-1/candidates.json"
+    },
+    "us-18": {
+      "path": "stories/us-18/candidates.json"
+    },
+    "us-12": {
+      "path": "stories/us-12/candidates.json"
+    },
+    "us-4": {
+      "path": "stories/us-4/candidates.json"
+    },
+    "us-5": {
+      "path": "stories/us-5/candidates.json"
+    },
+    "us-9": {
+      "path": "stories/us-9/candidates.json"
+    },
+    "us-10": {
+      "path": "stories/us-10/candidates.json"
+    },
+    "us-11": {
+      "path": "stories/us-11/candidates.json"
+    },
+    "us-13": {
+      "path": "stories/us-13/candidates.json"
+    },
+    "us-14": {
+      "path": "stories/us-14/candidates.json"
+    },
+    "us-15": {
+      "path": "stories/us-15/candidates.json"
+    },
+    "us-16": {
+      "path": "stories/us-16/candidates.json"
+    }
+  }
+}

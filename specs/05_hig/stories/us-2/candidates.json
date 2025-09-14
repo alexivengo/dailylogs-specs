@@ -1,0 +1,183 @@
+{
+  "$schema": "../../_schemas/hig_story_candidates.schema.json",
+  "story_id": "us-2",
+  "title": "ясный CTA на пустом экране проектов",
+  "role": "новый пользователь",
+  "value": "сразу понять, как начать",
+  "core_actions": [
+    "Display empty state with single CTA"
+  ],
+  "candidates": [
+    {
+      "action": "Display empty state CTA",
+      "pattern_id": "content-unavailable-view",
+      "title": "ContentUnavailableView + primary CTA",
+      "hig_sections": [
+        "Onboarding > Empty States"
+      ],
+      "swiftui_primitives": [
+        "ContentUnavailableView",
+        "Button",
+        "TipKit (optional)"
+      ],
+      "pros": [
+        "Semantic empty-state layout",
+        "Pairs cleanly with a single CTA",
+        "Good default VO grouping"
+      ],
+      "cons": [
+        "Less brand flexibility"
+      ],
+      "accessibility_notes": [
+        "Ensure VO order: title → hint → CTA",
+        "Maintain 44pt targets and contrast"
+      ],
+      "common_mistakes": [
+        "Multiple primary CTAs",
+        "Verbose copy"
+      ],
+      "scores": {
+        "fit": 5,
+        "load": 5,
+        "consistency": 5,
+        "accessibility": 5,
+        "risk": 5,
+        "total": 25
+      },
+      "refs": {
+        "prd_ids": [
+          "7",
+          "10",
+          "11"
+        ],
+        "cjm_ids": [
+          "onboarding-first-project"
+        ],
+        "flow_nodes": [
+          "projects-empty",
+          "project-create"
+        ],
+        "user_story_id": "us-2"
+      }
+    },
+    {
+      "action": "Display empty state CTA",
+      "pattern_id": "vstack-empty",
+      "title": "VStack + Text/Image + Button",
+      "hig_sections": [
+        "Layout & Organization"
+      ],
+      "swiftui_primitives": [
+        "VStack",
+        "Text",
+        "Image",
+        "Button"
+      ],
+      "pros": [
+        "Full control & easy theming"
+      ],
+      "cons": [
+        "Manual a11y and spacing",
+        "Easy to overdo copy"
+      ],
+      "accessibility_notes": [
+        "Assign heading role; 44pt; clear labels"
+      ],
+      "common_mistakes": [
+        "Missing accessibilityLabel on image"
+      ],
+      "scores": {
+        "fit": 5,
+        "load": 4,
+        "consistency": 4,
+        "accessibility": 4,
+        "risk": 4,
+        "total": 21
+      },
+      "refs": {
+        "prd_ids": [
+          "7",
+          "10",
+          "11"
+        ],
+        "cjm_ids": [
+          "onboarding-first-project"
+        ],
+        "flow_nodes": [
+          "projects-empty",
+          "project-create"
+        ],
+        "user_story_id": "us-2"
+      }
+    },
+    {
+      "action": "Contextual education",
+      "pattern_id": "tipkit-inline",
+      "title": "TipKit inline tip next to CTA",
+      "hig_sections": [
+        "Onboarding > Educating People"
+      ],
+      "swiftui_primitives": [
+        "TipKit"
+      ],
+      "pros": [
+        "Non-blocking guidance",
+        "Dismissible"
+      ],
+      "cons": [
+        "iOS 17+",
+        "Tips may be ignored"
+      ],
+      "accessibility_notes": [
+        "Use polite live region; tip must be focusable"
+      ],
+      "common_mistakes": [
+        "Overusing tips → fatigue"
+      ],
+      "scores": {
+        "fit": 4,
+        "load": 4,
+        "consistency": 5,
+        "accessibility": 5,
+        "risk": 4,
+        "total": 22
+      },
+      "refs": {
+        "prd_ids": [
+          "7",
+          "10",
+          "11"
+        ],
+        "cjm_ids": [
+          "onboarding-first-project"
+        ],
+        "flow_nodes": [
+          "projects-empty",
+          "project-create"
+        ],
+        "user_story_id": "us-2"
+      }
+    }
+  ],
+  "recommendation": {
+    "best_fit": [
+      "content-unavailable-view"
+    ],
+    "rationale": "Semantic native empty state with single primary CTA; TipKit optional for contextual nudge.",
+    "refs": {
+      "prd_ids": [
+        "7",
+        "10",
+        "11"
+      ],
+      "cjm_ids": [
+        "onboarding-first-project"
+      ],
+      "flow_nodes": [
+        "projects-empty",
+        "project-create"
+      ],
+      "user_story_id": "us-2"
+    }
+  }
+}

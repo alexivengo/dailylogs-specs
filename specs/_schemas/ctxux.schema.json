@@ -1,0 +1,17 @@
+{
+  "$id": "ctxux.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["version", "meta", "screens"],
+  "properties": {
+    "version": {"type": "string"},
+    "meta": {
+      "type": "object",
+      "properties": {
+        "context": {"type": "array", "items": {"type": "string"}}
+      },
+      "required": ["context"]
+    },
+    "screens": {"type": "array", "items": {"type": "string"}}
+  }
+}

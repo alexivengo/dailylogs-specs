@@ -1,0 +1,31 @@
+{
+  "$id": "user_story_item.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["story_id", "epic_id", "role", "capability", "value", "priority", "status", "acceptance_criteria"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "story_id": {"type": "string", "pattern": "^us-[0-9]+$"},
+    "epic_id": {"type": "string", "pattern": "^epic-[0-9]+$"},
+    "role": {"type": "string"},
+    "capability": {"type": "string"},
+    "value": {"type": "string"},
+    "priority": {"type": "string", "enum": ["low", "medium", "high"]},
+    "status": {"type": "string"},
+    "acceptance_criteria": {"type": "array", "items": {"type": "string"}},
+    "metrics": {"type": "object"},
+    "nfr": {"type": "object"},
+    "dependencies": {"type": "object"},
+    "risks": {"type": "array", "items": {"type": "object"}},
+    "refs": {"type": "array", "items": {"type": "string"}},
+    "affects_mot": {"type": "boolean"},
+    "mot_refs": {"type": "array", "items": {"type": "string"}},
+    "analytics_events": {"type": "array", "items": {"type": "string", "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"}},
+    "analytics_owner": {"type": "string"},
+    "analytics_pii": {"type": "boolean"},
+    "story_points": {"type": ["integer", "number"]},
+    "estimate_confidence": {"type": "string"},
+    "assumptions": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": true
+}

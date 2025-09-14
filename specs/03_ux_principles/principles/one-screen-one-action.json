@@ -1,0 +1,39 @@
+{
+  "id": "one-screen-one-action",
+  "title": "One screen — one key action",
+  "rationale": "Under time pressure, a single dominant goal per screen reduces cognitive load and navigation errors while preserving the shortest happy path",
+  "example": "Project Dashboard surfaces one primary CTA to continue daily work; secondary actions are visually subordinate",
+  "priority": "high",
+  "refs": [
+    "CJM:#daily-logging",
+    "HIG:#Navigation",
+    "PRD:#7"
+  ],
+  "antipatterns": [
+    {
+      "name": "Combining unrelated tasks on one screen",
+      "why_harmful": "Fragments attention and increases error risk in field use",
+      "severity": "high",
+      "impact_area": [
+        "information_architecture",
+        "navigation"
+      ],
+      "refs": [
+        "HIG:#Navigation",
+        "PRD:#7"
+      ]
+    },
+    {
+      "name": "Hiding the primary action behind menus",
+      "why_harmful": "Slows time-to-action and obscures intent",
+      "severity": "medium",
+      "impact_area": [
+        "content",
+        "navigation"
+      ],
+      "refs": [
+        "HIG:#Navigation"
+      ]
+    }
+  ]
+}

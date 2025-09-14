@@ -1,0 +1,16 @@
+{
+  "$id": "ux_principle.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["id", "title"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "id": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+    "title": {"type": "string"},
+    "rationale": {"type": "string"},
+    "example": {"type": "string"},
+    "priority": {"type": "string", "enum": ["low", "medium", "high"]},
+    "antipatterns": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": true
+}

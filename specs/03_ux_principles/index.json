@@ -1,0 +1,9 @@
+{
+  "version": "1.0.0",
+  "principles": [],
+  "aliases": "./aliases.json",
+  "antipatterns_registry": "./antipatterns_registry.json",
+  "conflicts": "./conflicts.json",
+  "open_questions": "./open_questions.json",
+  "acceptance_checklist": "./acceptance_checklist.json"
+}

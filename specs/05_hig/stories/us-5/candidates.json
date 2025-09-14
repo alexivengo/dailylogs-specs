@@ -1,0 +1,123 @@
+{
+  "$schema": "../../_schemas/hig_story_candidates.schema.json",
+  "story_id": "us-5",
+  "title": "автоподстановка погоды онлайн и ручной ввод офлайн",
+  "role": "руководитель стройплощадки",
+  "value": "закрывать день без блокеров",
+  "core_actions": [
+    "Auto-fetch weather non-blocking",
+    "Manual form fallback"
+  ],
+  "candidates": [
+    {
+      "action": "Auto-fetch",
+      "pattern_id": "task-progress",
+      "title": "Task-driven fetch with inline ProgressView and timeout",
+      "hig_sections": [
+        "Feedback > Progress Indicators"
+      ],
+      "swiftui_primitives": [
+        "Task",
+        "ProgressView",
+        "Text"
+      ],
+      "pros": [
+        "Non-blocking; visible status; timeout-friendly"
+      ],
+      "cons": [
+        "Spinner fatigue if long"
+      ],
+      "accessibility_notes": [
+        "Announce start/timeout; role='status'"
+      ],
+      "common_mistakes": [
+        "No timeout → hang state"
+      ],
+      "scores": {
+        "fit": 5,
+        "load": 4,
+        "consistency": 5,
+        "accessibility": 4,
+        "risk": 4,
+        "total": 22
+      },
+      "refs": {
+        "prd_ids": [
+          "8",
+          "11"
+        ],
+        "cjm_ids": [],
+        "flow_nodes": [
+          "check-network-for-weather",
+          "fetch-weather"
+        ],
+        "user_story_id": "us-5"
+      }
+    },
+    {
+      "action": "Fallback manual",
+      "pattern_id": "inline-weather-form",
+      "title": "Inline form when offline/timeout",
+      "hig_sections": [
+        "Controls > Forms",
+        "Controls > Pickers"
+      ],
+      "swiftui_primitives": [
+        "Form",
+        "TextField",
+        "Picker"
+      ],
+      "pros": [
+        "Keeps user in flow; works offline"
+      ],
+      "cons": [
+        "Unit localization & validation work"
+      ],
+      "accessibility_notes": [
+        "Use LabeledContent; numeric keyboards; avoid color-only cues"
+      ],
+      "common_mistakes": [
+        "Overpacked form"
+      ],
+      "scores": {
+        "fit": 5,
+        "load": 5,
+        "consistency": 5,
+        "accessibility": 5,
+        "risk": 4,
+        "total": 24
+      },
+      "refs": {
+        "prd_ids": [
+          "8",
+          "11"
+        ],
+        "cjm_ids": [],
+        "flow_nodes": [
+          "manual-weather"
+        ],
+        "user_story_id": "us-5"
+      }
+    }
+  ],
+  "recommendation": {
+    "best_fit": [
+      "task-progress",
+      "inline-weather-form"
+    ],
+    "rationale": "Do not block on network; inline fallback ensures closure.",
+    "refs": {
+      "prd_ids": [
+        "8",
+        "11"
+      ],
+      "cjm_ids": [],
+      "flow_nodes": [
+        "check-network-for-weather",
+        "fetch-weather",
+        "manual-weather"
+      ],
+      "user_story_id": "us-5"
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "$id": "data_dictionary.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["version", "entities"],
+  "properties": {
+    "version": {"type": "string"},
+    "entities": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "properties": {
+            "type": "object",
+            "additionalProperties": {"type": ["string", "object", "number", "boolean"]}
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "extracted_keys": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {"type": "string"},
+          {
+            "type": "object",
+            "required": ["name"],
+            "properties": {
+              "name": {"type": "string"},
+              "coverage": {"type": "string", "enum": ["required", "optional"]}
+            },
+            "additionalProperties": false
+          }
+        ]
+      }
+    }
+  },
+  "additionalProperties": false
+}

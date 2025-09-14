@@ -1,0 +1,9 @@
+[
+  "3–7 principles, each ≤1 sentence (no trailing period)",
+  "Each principle has priority and 1–2 explicit antipatterns",
+  "Antipatterns include severity, impact_area (enum), and refs (PRD/CJM/UserFlow/HIG/WCAG)",
+  "Registry is de-duplicated and deterministically sorted (severity → name) and presented in a scannable structure",
+  "Examples illustrate outcomes, not prescribe implementations",
+  "Locking and integrity patterns are explicit (immutability after lock; auditable correction path)",
+  "Markdown and JSON counts and IDs are consistent"
+]

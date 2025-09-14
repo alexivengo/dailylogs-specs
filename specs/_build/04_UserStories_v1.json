@@ -1,0 +1,1158 @@
+{
+  "version": "1.0.0",
+  "meta": {},
+  "epics": [
+    {
+      "epic_id": "epic-1",
+      "title": "Онбординг и первый проект",
+      "desc": "Быстрый старт: пустое состояние → создание проекта → устойчивые ошибки."
+    },
+    {
+      "epic_id": "epic-2",
+      "title": "Ядро «Журнал работ» + календарь",
+      "desc": "Быстрый ввод, повторы, погода, медиа, выбор даты (календарь включён)."
+    },
+    {
+      "epic_id": "epic-3",
+      "title": "Превью, подпись и экспорт (MoT)",
+      "desc": "Предпросмотр → подпись → блокировка → экспорт. Юридическая неизменяемость."
+    },
+    {
+      "epic_id": "epic-4",
+      "title": "Документы",
+      "desc": "Реестр документов проекта, поиск/фильтры, офлайн-просмотр."
+    },
+    {
+      "epic_id": "epic-5",
+      "title": "Галерея",
+      "desc": "Фото/видео альбом, группировка по дням, массовые операции."
+    },
+    {
+      "epic_id": "epic-6",
+      "title": "Доступность и локализация",
+      "desc": "WCAG AA, Dynamic Type, порядок фокуса, локализация UI/отчётов."
+    },
+    {
+      "epic_id": "epic-7",
+      "title": "Аналитика и телеметрия",
+      "desc": "Стандартизированные события без PII; KPI из PRD."
+    }
+  ],
+  "stories": [
+    {
+      "story_id": "us-1",
+      "epic_id": "epic-1",
+      "role": "руководитель стройплощадки",
+      "capability": "создать первый проект по минимальному набору полей",
+      "value": "быстро начать работу и увидеть ценность",
+      "priority": "high",
+      "status": "proposed",
+      "acceptance_criteria": [
+        "Given пустой список проектов When нажимаю «Создать проект» Then открывается форма с обязательным «Название» (FLOW:#project-create; PRD:#4_1)",
+        "Given форма валидна When жму «Сохранить» Then проект сохраняется офлайн и открывается дашборд (FLOW:#save-project; PRD:#8)",
+        "Given первый запуск When пустое состояние Then вижу CTA и TipKit вместо блокирующего туториала (PRD:#7; CJM:#onboarding-first-project)"
+      ],
+      "metrics": {
+        "leading": [
+          {
+            "name": "Time to First Project",
+            "kpi_ref": "PRD:#11"
+          }
+        ],
+        "lagging": [
+          {
+            "name": "Onboarding Completion Rate",
+            "kpi_ref": "PRD:#11"
+          }
+        ]
+      },
+      "nfr": {
+        "performance": "Локальный save проекта ≤500 мс",
+        "security_privacy": "SwiftData, NSFileProtectionComplete",
+        "accessibility": "Корректные labels и порядок фокуса формы",
+        "localization": "Локализованные строки формы"
+      },
+      "dependencies": {
+        "blocked_by": [],
+        "relates_to": [
+          "us-18"
+        ]
+      },
+      "risks": [],
+      "refs": [
+        "PRD:#4_1",
+        "PRD:#7",
+        "PRD:#8",
+        "PRD:#11",
+        "CJM:#onboarding-first-project",
+        "FLOW:#project-create",
+        "FLOW:#save-project"
+      ],
+      "affects_mot": true,
+      "mot_refs": [
+        "CJM:#onboarding-first-project"
+      ],
+      "analytics_events": [
+        "project_create_view",
+        "project_saved",
+        "empty_state_shown"
+      ],
+      "analytics_owner": "Product",
+      "analytics_pii": false,
+      "story_points": 3,
+      "estimate_confidence": "medium",
+      "assumptions": [
+        "[ASSUMPTION] Дополнительные поля можно заполнить позже."
+      ]
+    },
+    {
+      "story_id": "us-10",
+      "epic_id": "epic-3",
+      "role": "руководитель стройплощадки",
+      "capability": "экспорт подписанного отчёта через iOS Share Sheet с ретраями",
+      "value": "быстро отправить отчёт",
+      "priority": "high",
+      "status": "proposed",
+      "acceptance_criteria": [
+        "Given подписанный отчёт When открываю «Экспорт» Then вижу PDF/A-2u по умолчанию и системные каналы (FLOW:#export-decision; PRD:#4_2, PRD:#9)",
+        "Given генерация When таймаут Then до 3 ретраев с backoff и понятным диalogом (FLOW:#export-generate, FLOW:#export-error; PRD:#9)",
+        "Given отмена When нажимаю «Отмена» Then возвращаюсь в превью подписанного отчёта (FLOW:#report-preview-signed; PRD:#9)"
+      ],
+      "metrics": {
+        "leading": [
+          {
+            "name": "Export Options View",
+            "kpi_ref": "PRD:#11"
+          },
+          {
+            "name": "Export Retry Rate",
+            "kpi_ref": "PRD:#11"
+          }
+        ],
+        "lagging": [
+          {
+            "name": "Export Success/Error Rate",
+            "kpi_ref": "PRD:#11"
+          },
+          {
+            "name": "Time to Report",
+            "kpi_ref": "PRD:#11"
+          }
+        ]
+      },
+      "nfr": {
+        "performance": "Генерация + Share Sheet ≤2 с",
+        "security_privacy": "Без PII",
+        "accessibility": "Озвучки диалогов ошибок"
+      },
+      "dependencies": {
+        "blocked_by": [],
+        "relates_to": []
+      },
+      "risks": [
+        {
+          "desc": "OOM при генерации больших PDF",
+          "severity": "medium",
+          "refs": [
+            "PRD:#9"
+          ]
+        }
+      ],
+      "refs": [
+        "PRD:#4_2",
+        "PRD:#9",
+        "PRD:#11",
+        "CJM:#reporting-signoff",
+        "FLOW:#export-decision",
+        "FLOW:#export-generate",
+        "FLOW:#export-error",
+        "FLOW:#report-preview-signed"
+      ],
+      "affects_mot": true,
+      "mot_refs": [
+        "CJM:#reporting-signoff"
+      ],
+      "analytics_events": [
+        "export_options_view",
+        "export_process_started",
+        "report_exported",
+        "export_failed",
+        "export_retry",
+        "export_abort"
+      ],
+      "analytics_owner": "Product",
+      "analytics_pii": false,
+      "story_points": 3,
+      "estimate_confidence": "high",
+      "assumptions": []
+    },
+    {
+      "story_id": "us-11",
+      "epic_id": "epic-3",
+      "role": "руководитель стройплощадки",
+      "capability": "альтернативные форматы экспорта (CSV)",
+      "value": "делиться табличными данными",
+      "priority": "low",
+      "status": "proposed",
+      "acceptance_criteria": [
+        "Given меню форматов When выбираю CSV Then генерируется и сохраняется CSV (FLOW:#export-generate; PRD:#4_2)",
+        "Given VoiceOver When открыт выбор формата Then корректные озвучки (PRD:#10)"
+      ],
+      "metrics": {
+        "leading": [
+          {
+            "name": "CSV usage rate",
+            "kpi_ref": "PRD:#11"
+          }
+        ],
+        "lagging": [
+          {
+            "name": "Export Success/Error Rate",
+            "kpi_ref": "PRD:#11"
+          }
+        ]
+      },
+      "nfr": {
+        "performance": "Генерация CSV ≤2 с",
+        "localization": "Региональные разделители/кодировки"
+      },
+      "dependencies": {
+        "blocked_by": [],
+        "relates_to": []
+      },
+      "risks": [],
+      "refs": [
+        "PRD:#4_2",
+        "PRD:#10",
+        "PRD:#11",
+        "FLOW:#export-generate"
+      ],
+      "affects_mot": false,
+      "mot_refs": [],
+      "analytics_events": [
+        "export_options_view",
+        "export_process_started"
+      ],
+      "analytics_owner": "Product",
+      "analytics_pii": false,
+      "story_points": 2,
+      "estimate_confidence": "medium",
+      "assumptions": []
+    },
+    {
+      "story_id": "us-12",
+      "epic_id": "epic-2",
+      "role": "руководитель стройплощадки",
+      "capability": "выбирать дату с запретом будущих",
+      "value": "фиксировать записи только за допустимые дни",
+      "priority": "high",
+      "status": "proposed",
+      "acceptance_criteria": [
+        "Given календарь открыт When выбираю «Сегодня» Then перехожу к списку записей за сегодня (FLOW:#daily-calendar; PRD:#4_2)",
+        "Given попытка будущей даты When подтверждаю Then вижу «Будущие даты недоступны», остаюсь в календаре (FLOW:#future-date-error; PRD:#4_2)",
+        "Given офлайн When выбираю дату Then переход работает без сети (PRD:#8)",
+        "Given VoiceOver When навигирую Then grid-role, стрелочная навигация, assertive «Дата выбрана» (PRD:#10)"
+      ],
+      "metrics": {
+        "leading": [
+          {
+            "name": "Daily Calendar View",
+            "kpi_ref": "PRD:#11"
+          },
+          {
+            "name": "Open Today",
+            "kpi_ref": "PRD:#11"
+          }
+        ],
+        "lagging": [
+          {
+            "name": "Доля дней с журналом",
+            "kpi_ref": "PRD:#11"
+          }
+        ]
+      },
+      "nfr": {
+        "performance": "Загрузка календаря ≤0.5 с",
+        "accessibility": "Grid, клавиатурная навигация, assertive объявления",
+        "localization": "Локальные форматы дат"
+      },
+      "dependencies": {
+        "blocked_by": [],
+        "relates_to": [
+          "us-4",
+          "us-8"
+        ]
+      },
+      "risks": [
+        {
+          "desc": "Конфликт с будущим планированием",
+          "severity": "medium",
+          "refs": [
+            "PRD:#4_2"
+          ]
+        }
+      ],
+      "refs": [
+        "PRD:#4_2",
+        "PRD:#8",
+        "PRD:#10",
+        "PRD:#11",
+        "CJM:#daily-logging",
+        "FLOW:#daily-calendar",
+        "FLOW:#future-date-error"
+      ],
+      "affects_mot": false,
+      "mot_refs": [],
+      "analytics_events": [
+        "daily_calendar_view",
+        "open_today"
+      ],
+      "analytics_owner": "Product",
+      "analytics_pii": false,
+      "story_points": 5,
+      "estimate_confidence": "medium",
+      "assumptions": []
+    },
+    {
+      "story_id": "us-13",
+      "epic_id": "epic-4",
+      "role": "руководитель стройплощадки",
+      "capability": "реестр документов с поиском/фильтрами и офлайн-доступом",
+      "value": "быстро находить нужную документацию",
+      "priority": "medium",
+      "status": "proposed",
+      "acceptance_criteria": [
+        "Given дашборд When перехожу в «Документы» Then вижу список по категориям (PRD:#4_3)",
+        "Given поиск/фильтр When ввожу запрос/тег Then список обновляется локально <1 с при 1000 доков (PRD:#5)",
+        "Given офлайн When открываю «Документы» Then доступны ранее загруженные файлы (PRD:#8)"
+      ],
+      "metrics": {
+        "leading": [
+          {
+            "name": "Documents view",
+            "kpi_ref": "PRD:#11"
+          },
+          {
+            "name": "Documents search",
+            "kpi_ref": "PRD:#11"
+          }
+        ],
+        "lagging": [
+          {
+            "name": "Retention D30 [ASSUMPTION]",
+            "kpi_ref": "PRD:#11"
+          }
+        ]
+      },
+      "nfr": {
+        "performance": "Поиск <1 с при 1000 документов",
+        "security_privacy": "NSFileProtectionComplete",
+        "accessibility": "Озвучки списков и фильтров"
+      },
+      "dependencies": {
+        "blocked_by": [],
+        "relates_to": [
+          "us-6"
+        ]
+      },
+      "risks": [
+        {
+          "desc": "Деградация при большом объёме",
+          "severity": "medium",
+          "refs": [
+            "PRD:#5"
+          ]
+        }
+      ],
+      "refs": [
+        "PRD:#4_3",
+        "PRD:#5",
+        "PRD:#8",
+        "PRD:#11"
+      ],
+      "affects_mot": false,
+      "mot_refs": [],
+      "analytics_events": [
+        "documents_view",
+        "documents_search"
+      ],
+      "analytics_owner": "Product",
+      "analytics_pii": false,
+      "story_points": 3,
+      "estimate_confidence": "medium",
+      "assumptions": [
+        "[ASSUMPTION] Таксономия категорий согласуется с ПТО."
+      ]
+    },
+    {
+      "story_id": "us-14",
+      "epic_id": "epic-5",
+      "role": "руководитель стройплощадки",
+      "capability": "галерею с группировкой по дням и массовыми действиями",
+      "value": "отслеживать прогресс и быстро прикреплять медиа",
+      "priority": "medium",
+      "status": "proposed",
+      "acceptance_criteria": [
+        "Given дашборд When открываю «Галерея» Then вижу альбом, сгруппированный по датам (PRD:#4_4)",
+        "Given фильтр When выбираю дату Then показываются фото этого дня",
+        "Given множественный выбор When жму «Добавить к отчёту» Then выбранные фото прикрепляются к выбранному дню"
+      ],
+      "metrics": {
+        "leading": [
+          {
+            "name": "Gallery views",
+            "kpi_ref": "PRD:#11"
+          },
+          {
+            "name": "Bulk attach rate",
+            "kpi_ref": "PRD:#11"
+          }
+        ],
+        "lagging": [
+          {
+            "name": "Time to Report",
+            "kpi_ref": "PRD:#11"
+          }
+        ]
+      },
+      "nfr": {
+        "performance": "Плавная прокрутка/загрузка миниатюр",
+        "security_privacy": "Защита медиафайлов в покое",
+        "accessibility": "Доступность выбора и множественного выбора"
+      },
+      "dependencies": {
+        "blocked_by": [],
+        "relates_to": [
+          "us-6",
+          "us-10"
+        ]
+      },
+      "risks": [
+        {
+          "desc": "Рост размера бандла/кеша",
+          "severity": "medium",
+          "refs": []
+        }
+      ],
+      "refs": [
+        "PRD:#4_4",
+        "PRD:#11"
+      ],
+      "affects_mot": false,
+      "mot_refs": [],
+      "analytics_events": [
+        "gallery_view",
+        "gallery_bulk_attach"
+      ],
+      "analytics_owner": "Product",
+      "analytics_pii": false,
+      "story_points": 3,
+      "estimate_confidence": "medium",
+      "assumptions": []
+    },
+    {
+      "story_id": "us-15",
+      "epic_id": "epic-6",
+      "role": "любой пользователь (в т.ч. с нарушениями зрения)",
+      "capability": "корректные a11y-паттерны (VoiceOver/клавиатура/DT)",
+      "value": "эффективно пользоваться приложением",
+      "priority": "medium",
+      "status": "proposed",
+      "acceptance_criteria": [
+        "Given диалог ошибки When открыт Then роль alertdialog, фокус на сообщении, live_region=assertive (FLOW:#error-entry-save; PRD:#10)",
+        "Given экран подписи When активен Then порядок фокуса: canvas → Confirm (FLOW:#report-sign; PRD:#10)",
+        "Given Dynamic Type When увеличен шрифт Then тексты не обрезаются, таргеты ≥44 pt (PRD:#10)"
+      ],
+      "metrics": {
+        "leading": [
+          {
+            "name": "A11y issues per release",
+            "kpi_ref": "PRD:#11"
+          }
+        ],
+        "lagging": [
+          {
+            "name": "Task success (a11y cohort)",
+            "kpi_ref": "PRD:#11"
+          }
+        ]
+      },
+      "nfr": {
+        "accessibility": "WCAG AA; порядок фокуса; контраст; Dynamic Type",
+        "localization": "RTL и выдерживание длин строк"
+      },
+      "dependencies": {
+        "blocked_by": [],
+        "relates_to": [
+          "us-4",
+          "us-9"
+        ]
+      },
+      "risks": [
+        {
+          "desc": "Регрессии фокуса",
+          "severity": "medium",
+          "refs": []
+        }
+      ],
+      "refs": [
+        "PRD:#10",
+        "PRD:#11",
+        "FLOW:#error-entry-save",
+        "FLOW:#report-sign"
+      ],
+      "affects_mot": false,
+      "mot_refs": [],
+      "analytics_events": [
+        "error_entry_save",
+        "tap_sign"
+      ],
+      "analytics_owner": "Product",
+      "analytics_pii": false,
+      "story_points": 3,
+      "estimate_confidence": "high",
+      "assumptions": []
+    },
+    {
+      "story_id": "us-16",
+      "epic_id": "epic-6",
+      "role": "руководитель стройплощадки",
+      "capability": "локализованные строки, форматы дат/единиц и шаблон имени файла",
+      "value": "отчёты и UI были понятны",
+      "priority": "low",
+      "status": "proposed",
+      "acceptance_criteria": [
+        "Given смена языка ОС When перезапускаю приложение Then UI и форматы локализованы без артефактов (PRD:#10)",
+        "Given экспорт When локализация включена Then имя файла формируется по шаблону [ASSUMPTION] report_<project>_<date>.pdf (FLOW:#export-generate; PRD:#9)"
+      ],
+      "metrics": {
+        "leading": [
+          {
+            "name": "Coverage of localized strings",
+            "kpi_ref": "PRD:#11"
+          }
+        ],
+        "lagging": [
+          {
+            "name": "NPS локализации",
+            "kpi_ref": "PRD:#11"
+          }
+        ]
+      },
+      "nfr": {
+        "security_privacy": "Без PII в имени файла",
+        "localization": "ICU/plurals; форматы дат/единиц по региону"
+      },
+      "dependencies": {
+        "blocked_by": [],
+        "relates_to": [
+          "us-10"
+        ]
+      },
+      "risks": [
+        {
+          "desc": "Неконсистентные форматы дат",
+          "severity": "low",
+          "refs": []
+        }
+      ],
+      "refs": [
+        "PRD:#10",
+        "PRD:#11",
+        "FLOW:#export-generate"
+      ],
+      "affects_mot": false,
+      "mot_refs": [],
+      "analytics_events": [
+        "export_process_started"
+      ],
+      "analytics_owner": "Product",
+      "analytics_pii": false,
+      "story_points": 2,
+      "estimate_confidence": "high",
+      "assumptions": [
+        "Шаблон имени файла и локализация метаданных согласуются."
+      ]
+    },
+    {
+      "story_id": "us-17",
+      "epic_id": "epic-7",
+      "role": "Product Team",
+      "capability": "события аналитики на ключевых шагах",
+      "value": "измерять Time to Report, % подписанных дней и ошибки экспорта",
+      "priority": "medium",
+      "status": "proposed",
+      "acceptance_criteria": [
+        "Given happy-path When выполняются шаги Then логируются app_launch, project_create_view, entry_saved, report_preview_view, tap_sign, report_signed, report_exported",
+        "Given ошибка экспорта When показан диалог Then логируются export_failed, export_retry, export_abort c (attempt, error_code)",
+        "Given пустое состояние When показано Then логируется empty_state_shown (PRD:#11)"
+      ],
+      "metrics": {
+        "leading": [
+          {
+            "name": "Instrumentation Coverage",
+            "kpi_ref": "PRD:#11"
+          }
+        ],
+        "lagging": [
+          {
+            "name": "Точность KPI-дашбордов",
+            "kpi_ref": "PRD:#11"
+          }
+        ]
+      },
+      "nfr": {
+        "performance": "Неблокирующее логирование",
+        "security_privacy": "Без сторонних SDK и без PII"
+      },
+      "dependencies": {
+        "blocked_by": [],
+        "relates_to": [
+          "us-1",
+          "us-4",
+          "us-9",
+          "us-10"
+        ]
+      },
+      "risks": [
+        {
+          "desc": "Избыточные логи → деградация производительности",
+          "severity": "medium",
+          "refs": []
+        }
+      ],
+      "refs": [
+        "PRD:#11",
+        "FLOW:#app-launch",
+        "FLOW:#report-preview",
+        "FLOW:#report-sign",
+        "FLOW:#lock-day",
+        "FLOW:#export-generate",
+        "FLOW:#export-error"
+      ],
+      "affects_mot": false,
+      "mot_refs": [],
+      "analytics_events": [
+        "app_launch",
+        "project_create_view",
+        "entry_saved",
+        "report_preview_view",
+        "tap_sign",
+        "report_signed",
+        "report_exported",
+        "export_failed",
+        "export_retry",
+        "export_abort",
+        "empty_state_shown"
+      ],
+      "analytics_owner": "Product",
+      "analytics_pii": false,
+      "story_points": 2,
+      "estimate_confidence": "high",
+      "assumptions": []
+    },
+    {
+      "story_id": "us-18",
+      "epic_id": "epic-1",
+      "role": "пользователь",
+      "capability": "понятную обработку ошибок при создании проекта (Retry/Отмена) с сохранением введённых данных",
+      "value": "не терять прогресс и быстро восстановиться",
+      "priority": "medium",
+      "status": "proposed",
+      "acceptance_criteria": [
+        "Given ошибка сохранения When показывается диалог Then есть «Повторить»/«Отмена», фокус на сообщении, live_region=assertive (FLOW:#error-save; PRD:#10)",
+        "Given жму «Повторить» When восстановилась возможность Then выполняется повторное сохранение с backoff; данные формы не теряются (PRD:#5)",
+        "Given жму «Отмена» When диалог закрыт Then остаюсь в редакторе с сохранёнными полями для ручной правки"
+      ],
+      "metrics": {
+        "leading": [
+          {
+            "name": "Save Error Recovery Rate",
+            "kpi_ref": "PRD:#11"
+          }
+        ],
+        "lagging": []
+      },
+      "nfr": {
+        "performance": "Повторная попытка в окне ≤5 с",
+        "security_privacy": "Без лишних логов ошибок/PII",
+        "accessibility": "Alertdialog с правильным фокусом и озвучкой"
+      },
+      "dependencies": {
+        "blocked_by": [],
+        "relates_to": []
+      },
+      "risks": [],
+      "refs": [
+        "FLOW:#error-save",
+        "PRD:#5",
+        "PRD:#10",
+        "PRD:#11"
+      ],
+      "affects_mot": false,
+      "mot_refs": [],
+      "analytics_events": [
+        "error_project_save",
+        "project_save_retry"
+      ],
+      "analytics_owner": "Product",
+      "analytics_pii": false,
+      "story_points": 2,
+      "estimate_confidence": "high",
+      "assumptions": []
+    },
+    {
+      "story_id": "us-2",
+      "epic_id": "epic-1",
+      "role": "новый пользователь",
+      "capability": "ясный CTA на пустом экране проектов",
+      "value": "сразу понять, как начать",
+      "priority": "high",
+      "status": "proposed",
+      "acceptance_criteria": [
+        "Given нет проектов When открываю приложение Then вижу пустое состояние с пояснением и CTA (FLOW:#projects-empty; PRD:#7)",
+        "Given пустой экран When нажимаю CTA Then открывается форма создания (FLOW:#project-create; PRD:#4_1)",
+        "Given VoiceOver When экран пуст Then объявляются: заголовок → подсказка → CTA; таргеты ≥44 pt (PRD:#10)"
+      ],
+      "metrics": {
+        "leading": [
+          {
+            "name": "Empty State CTR",
+            "kpi_ref": "PRD:#11"
+          }
+        ],
+        "lagging": [
+          {
+            "name": "Onboarding Completion Rate",
+            "kpi_ref": "PRD:#11"
+          }
+        ]
+      },
+      "nfr": {
+        "accessibility": "Контраст и поддержка Dynamic Type",
+        "localization": "Подсказки и CTA локализованы"
+      },
+      "dependencies": {
+        "blocked_by": [],
+        "relates_to": [
+          "us-1"
+        ]
+      },
+      "risks": [],
+      "refs": [
+        "PRD:#7",
+        "PRD:#10",
+        "PRD:#11",
+        "CJM:#onboarding-first-project",
+        "FLOW:#projects-empty",
+        "FLOW:#project-create"
+      ],
+      "affects_mot": true,
+      "mot_refs": [
+        "CJM:#onboarding-first-project"
+      ],
+      "analytics_events": [
+        "empty_state_shown",
+        "project_create_view"
+      ],
+      "analytics_owner": "Product",
+      "analytics_pii": false,
+      "story_points": 2,
+      "estimate_confidence": "high",
+      "assumptions": []
+    },
+    {
+      "story_id": "us-4",
+      "epic_id": "epic-2",
+      "role": "руководитель стройплощадки",
+      "capability": "«Сохранить и добавить ещё»",
+      "value": "ускорить ввод повторяющихся записей",
+      "priority": "high",
+      "status": "proposed",
+      "acceptance_criteria": [
+        "Given редактор записи When жму «Сохранить и добавить ещё» Then запись сохраняется офлайн и открывается новый пустой редактор (FLOW:#entry-editor, FLOW:#save-entry; PRD:#4_2)",
+        "Given включено предзаполнение When открывается новый редактор Then копируются [ASSUMPTION] тип работ/пакет; уникальные поля сбрасываются (PRD:#4_2)",
+        "Given ошибка сохранения When диалог Then доступны «Повторить/Отмена», озвучки корректны (FLOW:#error-entry-save; PRD:#10)"
+      ],
+      "metrics": {
+        "leading": [
+          {
+            "name": "Entry Addition Time",
+            "kpi_ref": "PRD:#11"
+          }
+        ],
+        "lagging": [
+          {
+            "name": "Доля дней с журналом",
+            "kpi_ref": "PRD:#11"
+          }
+        ]
+      },
+      "nfr": {
+        "performance": "Локальный save ≤200 мс",
+        "accessibility": "Порядок фокуса и читабельные ярлыки",
+        "localization": "Ошибки и подсказки локализованы"
+      },
+      "dependencies": {
+        "blocked_by": [],
+        "relates_to": []
+      },
+      "risks": [
+        {
+          "desc": "Потеря данных при сбое офлайн",
+          "severity": "high",
+          "refs": [
+            "PRD:#8"
+          ]
+        }
+      ],
+      "refs": [
+        "PRD:#4_2",
+        "PRD:#8",
+        "PRD:#10",
+        "PRD:#11",
+        "CJM:#daily-logging",
+        "FLOW:#entry-editor",
+        "FLOW:#save-entry",
+        "FLOW:#error-entry-save"
+      ],
+      "affects_mot": false,
+      "mot_refs": [],
+      "analytics_events": [
+        "entry_editor_view",
+        "entry_saved"
+      ],
+      "analytics_owner": "Product",
+      "analytics_pii": false,
+      "story_points": 5,
+      "estimate_confidence": "medium",
+      "assumptions": [
+        "Политика предзаполнения будет подтверждена."
+      ]
+    },
+    {
+      "story_id": "us-5",
+      "epic_id": "epic-2",
+      "role": "руководитель стройплощадки",
+      "capability": "автоподстановку погоды онлайн и ручной ввод офлайн",
+      "value": "закрывать день без блокеров",
+      "priority": "medium",
+      "status": "proposed",
+      "acceptance_criteria": [
+        "Given сеть есть When открываю «Сегодня» Then погода подтягивается автоматически (FLOW:#fetch-weather; PRD:#8)",
+        "Given офлайн/таймаут 8 с When не подтянулось Then переключаюсь на ручной ввод (FLOW:#manual-weather; PRD:#8)",
+        "Given VoiceOver When редактирую погоду Then озвучиваются названия/единицы (PRD:#10)"
+      ],
+      "metrics": {
+        "leading": [
+          {
+            "name": "Auto-weather share",
+            "kpi_ref": "PRD:#11"
+          }
+        ],
+        "lagging": [
+          {
+            "name": "Time to Report",
+            "kpi_ref": "PRD:#11"
+          }
+        ]
+      },
+      "nfr": {
+        "performance": "Fetch погоды ≤8 с",
+        "accessibility": "Подписи полей/единиц измерения",
+        "localization": "Единицы/форматы по региону"
+      },
+      "dependencies": {
+        "blocked_by": [],
+        "relates_to": []
+      },
+      "risks": [
+        {
+          "desc": "Нестабильность API погоды → требуется кеш/фолбек",
+          "severity": "medium",
+          "refs": [
+            "PRD:#8"
+          ]
+        }
+      ],
+      "refs": [
+        "PRD:#8",
+        "PRD:#10",
+        "PRD:#11",
+        "CJM:#daily-logging",
+        "FLOW:#check-network-for-weather",
+        "FLOW:#fetch-weather",
+        "FLOW:#manual-weather"
+      ],
+      "affects_mot": false,
+      "mot_refs": [],
+      "analytics_events": [
+        "weather_check",
+        "weather_fetched",
+        "manual_weather_input"
+      ],
+      "analytics_owner": "Product",
+      "analytics_pii": false,
+      "story_points": 3,
+      "estimate_confidence": "medium",
+      "assumptions": []
+    },
+    {
+      "story_id": "us-6",
+      "epic_id": "epic-2",
+      "role": "руководитель стройплощадки",
+      "capability": "прикреплять фото к записи",
+      "value": "визуально документировать прогресс/проблемы",
+      "priority": "medium",
+      "status": "proposed",
+      "acceptance_criteria": [
+        "Given разрешение выдано When нажимаю «Прикрепить фото» Then открывается камера; после подтверждения фото прикрепляется (FLOW:#capture-photo; PRD:#4_2)",
+        "Given фото прикреплено When просматриваю запись Then вижу миниатюру (FLOW:#entry-editor; PRD:#4_2)",
+        "Given слабая сеть When синхронизирую Then сохраняется локально с флагом для аплоада (PRD:#8)"
+      ],
+      "metrics": {
+        "leading": [
+          {
+            "name": "Photo attach rate",
+            "kpi_ref": "PRD:#11"
+          }
+        ],
+        "lagging": [
+          {
+            "name": "Time to Report",
+            "kpi_ref": "PRD:#11"
+          }
+        ]
+      },
+      "nfr": {
+        "performance": "Прикрепление неблокирующее",
+        "security_privacy": "Запрашивать минимум прав",
+        "accessibility": "Озвучки кнопок камеры и подтверждения"
+      },
+      "dependencies": {
+        "blocked_by": [],
+        "relates_to": [
+          "us-7",
+          "us-14"
+        ]
+      },
+      "risks": [],
+      "refs": [
+        "PRD:#4_2",
+        "PRD:#8",
+        "PRD:#11",
+        "FLOW:#entry-editor",
+        "FLOW:#capture-photo"
+      ],
+      "affects_mot": false,
+      "mot_refs": [],
+      "analytics_events": [
+        "photo_captured",
+        "entry_saved"
+      ],
+      "analytics_owner": "Product",
+      "analytics_pii": false,
+      "story_points": 3,
+      "estimate_confidence": "high",
+      "assumptions": []
+    },
+    {
+      "story_id": "us-7",
+      "epic_id": "epic-2",
+      "role": "пользователь, ранее отклонивший доступ к камере",
+      "capability": "инструкции и быстрый переход в Настройки для разблокировки фото",
+      "value": "разблокировать фото",
+      "priority": "medium",
+      "status": "proposed",
+      "acceptance_criteria": [
+        "Given отказ камеры When пытаюсь прикрепить фото Then вижу диалог с «Открыть Настройки» / «Продолжить без фото» (FLOW:#camera-permission-error; PRD:#9)",
+        "Given VoiceOver When открыт диалог Then корректные озвучки и фокус на сообщении (PRD:#10)"
+      ],
+      "metrics": {
+        "leading": [
+          {
+            "name": "Permission Grant Rate",
+            "kpi_ref": "PRD:#11"
+          }
+        ],
+        "lagging": [
+          {
+            "name": "Доля дней с журналом",
+            "kpi_ref": "PRD:#11"
+          }
+        ]
+      },
+      "nfr": {
+        "accessibility": "Alertdialog, live region, корректные ярлыки",
+        "localization": "Тексты/кнопки локализованы"
+      },
+      "dependencies": {
+        "blocked_by": [],
+        "relates_to": [
+          "us-6"
+        ]
+      },
+      "risks": [],
+      "refs": [
+        "PRD:#9",
+        "PRD:#10",
+        "PRD:#11",
+        "FLOW:#camera-permission-error"
+      ],
+      "affects_mot": false,
+      "mot_refs": [],
+      "analytics_events": [
+        "camera_permission_error_view",
+        "open_settings_camera",
+        "continue_without_photo"
+      ],
+      "analytics_owner": "Product",
+      "analytics_pii": false,
+      "story_points": 2,
+      "estimate_confidence": "high",
+      "assumptions": []
+    },
+    {
+      "story_id": "us-8",
+      "epic_id": "epic-2",
+      "role": "руководитель стройплощадки",
+      "capability": "копировать запись на другой день",
+      "value": "ускорить ввод повторяющихся работ",
+      "priority": "medium",
+      "status": "proposed",
+      "acceptance_criteria": [
+        "Given список When выбираю «Копировать на другую дату» Then создаётся копия на выбранный день (PRD:#4_2)",
+        "Given копирование When сохраняю Then операция атомарна, без перезаписи существующих (FLOW:#save-entry; PRD:#4_2)",
+        "Given VoiceOver When завершено Then объявление «Запись скопирована» (PRD:#10)"
+      ],
+      "metrics": {
+        "leading": [
+          {
+            "name": "Entry Addition Time",
+            "kpi_ref": "PRD:#11"
+          }
+        ],
+        "lagging": [
+          {
+            "name": "Доля дней с журналом",
+            "kpi_ref": "PRD:#11"
+          }
+        ]
+      },
+      "nfr": {
+        "performance": "Операция локальная и быстрая",
+        "accessibility": "Подтверждающее объявление"
+      },
+      "dependencies": {
+        "blocked_by": [],
+        "relates_to": []
+      },
+      "risks": [
+        {
+          "desc": "Дублирование ошибок в копиях",
+          "severity": "low",
+          "refs": []
+        }
+      ],
+      "refs": [
+        "PRD:#4_2",
+        "PRD:#10",
+        "PRD:#11",
+        "FLOW:#save-entry"
+      ],
+      "affects_mot": false,
+      "mot_refs": [],
+      "analytics_events": [
+        "entry_copy_to_day"
+      ],
+      "analytics_owner": "Product",
+      "analytics_pii": false,
+      "story_points": 3,
+      "estimate_confidence": "high",
+      "assumptions": []
+    },
+    {
+      "story_id": "us-9",
+      "epic_id": "epic-3",
+      "role": "руководитель стройплощадки",
+      "capability": "предпросмотр отчёта и подписание с блокировкой дня",
+      "value": "получить неизменяемый комплаенс-артефакт",
+      "priority": "high",
+      "status": "proposed",
+      "acceptance_criteria": [
+        "Given есть записи When открываю «Предпросмотр» Then генерируется PDF/A-2u с чек-листом (FLOW:#report-preview; PRD:#9)",
+        "Given подписываю When подтверждаю подпись Then день получает статус locked и checksum (FLOW:#report-sign, FLOW:#lock-day; PRD:#9)",
+        "Given день locked When открываю календарь/список Then редактирование недоступно, виден индикатор «Подписан» (FLOW:#report-preview-signed; PRD:#9)",
+        "Given VoiceOver When экран подписи активен Then фокус: canvas → Confirm (PRD:#10)"
+      ],
+      "metrics": {
+        "leading": [
+          {
+            "name": "Доля дней с превью",
+            "kpi_ref": "PRD:#11"
+          },
+          {
+            "name": "Доля дней, дошедших до подписи",
+            "kpi_ref": "PRD:#11"
+          }
+        ],
+        "lagging": [
+          {
+            "name": "% подписанных дней",
+            "kpi_ref": "PRD:#11"
+          },
+          {
+            "name": "Time to Report",
+            "kpi_ref": "PRD:#11"
+          }
+        ]
+      },
+      "nfr": {
+        "performance": "Блокировка ≤1 с",
+        "security_privacy": "Неизменяемость locked, checksum",
+        "accessibility": "Порядок фокуса и озвучки",
+        "localization": "Локализованные статусы/подписи"
+      },
+      "dependencies": {
+        "blocked_by": [],
+        "relates_to": []
+      },
+      "risks": [
+        {
+          "desc": "Ошибка после блокировки — нужна безопасная коррекция",
+          "severity": "high",
+          "refs": [
+            "CJM:#reporting-signoff"
+          ]
+        }
+      ],
+      "refs": [
+        "PRD:#9",
+        "PRD:#10",
+        "PRD:#11",
+        "CJM:#reporting-signoff",
+        "FLOW:#report-preview",
+        "FLOW:#report-sign",
+        "FLOW:#lock-day",
+        "FLOW:#report-preview-signed"
+      ],
+      "affects_mot": true,
+      "mot_refs": [
+        "CJM:#reporting-signoff"
+      ],
+      "analytics_events": [
+        "report_preview_view",
+        "tap_sign",
+        "report_signed",
+        "report_preview_signed_view"
+      ],
+      "analytics_owner": "Product",
+      "analytics_pii": false,
+      "story_points": 5,
+      "estimate_confidence": "medium",
+      "assumptions": [
+        "[ASSUMPTION] ФИО подписанта хранится в отчёте."
+      ]
+    }
+  ]
+}

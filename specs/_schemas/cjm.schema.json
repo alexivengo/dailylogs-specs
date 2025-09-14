@@ -1,0 +1,13 @@
+{
+  "$id": "cjm.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["version", "stages"],
+  "properties": {
+    "version": {"type": "string"},
+    "stages": {
+      "type": "array",
+      "items": {"type": "string"}
+    }
+  }
+}
