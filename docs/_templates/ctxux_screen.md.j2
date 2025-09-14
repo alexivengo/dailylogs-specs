@@ -1,0 +1,33 @@
+# Contextual UX: {{ screen.id }}
+
+{{ screen.title or '' }}
+
+{% if screen.desc %}
+{{ screen.desc }}
+{% endif %}
+
+{% if screen.local_principles %}
+## Local Principles
+{% for lp in screen.local_principles %}- **{{ lp.id }} — {{ lp.title }}**
+  - Rationale: {{ lp.rationale }}
+  - Acceptance:
+{% for a in lp.acceptance %}    - {{ a }}
+{% endfor %}
+  - Telemetry:
+{% for t in lp.telemetry %}    - `{{ t }}`
+{% endfor %}
+  - Global: {{ ", ".join(lp.global_principle_ids or []) }}
+  - Stories: {{ ", ".join(lp.user_story_ids or []) }}
+{% endfor %}
+{% endif %}
+
+{% if screen.refs %}
+## Refs
+{% for k, vals in screen.refs.items() %}- **{{ k }}**:
+{% for v in vals %}  - {{ v }}
+{% endfor %}
+{% endfor %}
+{% endif %}
+
+---
+✏️ Edit source: {{ edit_href }}

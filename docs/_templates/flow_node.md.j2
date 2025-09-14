@@ -1,0 +1,46 @@
+# Flow Node: {{ node.id }}
+
+Type: `{{ node.type }}`
+
+{% if node.desc %}
+{{ node.desc }}
+{% endif %}
+
+{% if node.inputs %}
+## Inputs
+{% for i in node.inputs %}- `{{ i }}`
+{% endfor %}
+{% endif %}
+
+{% if node.outputs %}
+## Outputs
+{% for o in node.outputs %}- `{{ o }}`
+{% endfor %}
+{% endif %}
+
+{% if node.edges %}
+## Outgoing Edges
+{% for e in node.edges %}- **{{ e.id }}** — action: `{{ e.action }}` → target: `{{ e.target }}`{% if e.guard %} (guard: `{{ e.guard }}`){% endif %}
+{% endfor %}
+{% endif %}
+
+{% if node.errors %}
+## Errors
+{% for err in node.errors %}- `{{ err.id }}` — {{ err.desc }}
+{% endfor %}
+{% endif %}
+
+{% if node.analytics %}
+## Analytics
+{% for ev in node.analytics %}- `{{ ev }}`
+{% endfor %}
+{% endif %}
+
+{% if node.refs %}
+## Refs
+{% for r in node.refs %}- {{ r }}
+{% endfor %}
+{% endif %}
+
+---
+✏️ Edit source: {{ edit_href }}

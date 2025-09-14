@@ -1,0 +1,17 @@
+# SpecHub Overview
+
+- Sections (PRD): {{ prd_sections }}
+- Stages (CJM): {{ cjm_stages }}
+- User Flow nodes: {{ flow_nodes }}
+- Stories: {{ stories }}
+- Contextual UX screens: {{ ctxux_screens }}
+
+{% if has_graph %}
+## Coverage Landscape
+
+![Coverage](./_media/coverage.svg)
+{% endif %}
+
+## How to edit sources
+
+Use the ✏️ Edit source links on each page section to jump to the corresponding modular JSON in `specs/`.

@@ -1,0 +1,30 @@
+# PRD Section: {{ section.id or section.section_id }}
+
+{{ section.title or section.name or '' }}
+
+{% if section.goals %}
+## Goals
+{% for g in section.goals %}- {{ g }}
+{% endfor %}
+{% endif %}
+
+{% if section.metrics %}
+## Metrics
+{% for m in section.metrics %}- {{ m }}
+{% endfor %}
+{% endif %}
+
+{% if section.acceptance %}
+## Acceptance
+{% for a in section.acceptance %}- {{ a }}
+{% endfor %}
+{% endif %}
+
+{% if section.refs %}
+## Refs
+{% for r in section.refs %}- {{ r }}
+{% endfor %}
+{% endif %}
+
+---
+✏️ Edit source: {{ edit_href }}

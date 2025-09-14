@@ -1,0 +1,86 @@
+name: Build and Deploy SpecHub
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y graphviz
+
+      - name: Build specs artifacts
+        run: |
+          python3 specs/_build/build.py
+
+      - name: Validate trace
+        run: |
+          python3 trace_validator.py
+
+      - name: Install Python deps (generator)
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install mkdocs mkdocs-material jinja2 pydot graphviz markdownify
+
+      - name: Generate SpecHub docs
+        run: |
+          python3 docs/generate_docs.py
+
+      - name: Build MkDocs site
+        run: |
+          mkdocs build --strict
+
+      - name: Upload site artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: site
+
+      - name: Upload diagrams
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: diagrams
+          path: docs/_media/*.svg
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './site'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

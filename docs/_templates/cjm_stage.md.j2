@@ -1,0 +1,28 @@
+# CJM Stage: {{ stage.id or stage.stage_id }}
+
+{{ stage.title or stage.name or '' }}
+
+{% if stage.desc %}
+{{ stage.desc }}
+{% endif %}
+
+{% if stage.barriers %}
+## Barriers
+{% for b in stage.barriers %}- {{ b }}
+{% endfor %}
+{% endif %}
+
+{% if stage.opportunities %}
+## Opportunities
+{% for o in stage.opportunities %}- {{ o }}
+{% endfor %}
+{% endif %}
+
+{% if stage.metrics %}
+## Metrics
+{% for m in stage.metrics %}- {{ m }}
+{% endfor %}
+{% endif %}
+
+---
+✏️ Edit source: {{ edit_href }}

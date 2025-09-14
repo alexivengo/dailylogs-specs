@@ -1,0 +1,23 @@
+# Global UX Principle: {{ principle.id or principle.principle_id }}
+
+{{ principle.title or '' }}
+
+{% if principle.rationale %}
+## Rationale
+{{ principle.rationale }}
+{% endif %}
+
+{% if principle.examples %}
+## Examples
+{% for ex in principle.examples %}- {{ ex }}
+{% endfor %}
+{% endif %}
+
+{% if principle.related or principle.related_principles %}
+## Related
+{% for r in (principle.related or principle.related_principles) %}- {{ r }}
+{% endfor %}
+{% endif %}
+
+---
+✏️ Edit source: {{ edit_href }}

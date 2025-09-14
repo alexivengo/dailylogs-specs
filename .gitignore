@@ -1,0 +1,12 @@
+# Build outputs
+site/
+
+# Python
+*.pyc
+__pycache__/
+
+# Virtualenv
+.venv/
+
+# macOS
+.DS_Store

@@ -1,0 +1,107 @@
+site_name: SpecHub
+site_description: Specification Hub
+theme:
+  name: material
+  language: en
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - content.code.copy
+    - search.suggest
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+plugins:
+  - search
+markdown_extensions:
+  - admonition
+  - toc:
+      permalink: true
+extra:
+  generator: spechub
+# We add custom 'Edit source' links inside pages instead of using edit_uri
+nav:
+  - Overview: index.md
+  - Orphans: orphans.md
+  - Coverage:
+      - flow_ctxux: coverage/flow_ctxux.md
+      - prd_stories: coverage/prd_stories.md
+  - User Flow:
+      - Overview: flow/overview.md
+      - app-launch: flow/nodes/app-launch.md
+      - camera-permission-error: flow/nodes/camera-permission-error.md
+      - camera-permission: flow/nodes/camera-permission.md
+      - cancel-out: flow/nodes/cancel-out.md
+      - capture-photo: flow/nodes/capture-photo.md
+      - check-network-for-weather: flow/nodes/check-network-for-weather.md
+      - daily-calendar: flow/nodes/daily-calendar.md
+      - day-entries-decision: flow/nodes/day-entries-decision.md
+      - day-log-empty: flow/nodes/day-log-empty.md
+      - day-log-populated: flow/nodes/day-log-populated.md
+      - documents-view: flow/nodes/documents-view.md
+      - entry-editor: flow/nodes/entry-editor.md
+      - error-entry-save: flow/nodes/error-entry-save.md
+      - error-save: flow/nodes/error-save.md
+      - export-decision: flow/nodes/export-decision.md
+      - export-error: flow/nodes/export-error.md
+      - export-generate: flow/nodes/export-generate.md
+      - fetch-weather: flow/nodes/fetch-weather.md
+      - future-date-error: flow/nodes/future-date-error.md
+      - gallery: flow/nodes/gallery.md
+      - lock-day: flow/nodes/lock-day.md
+      - manual-weather: flow/nodes/manual-weather.md
+      - project-create: flow/nodes/project-create.md
+      - project-dashboard: flow/nodes/project-dashboard.md
+      - projects-empty: flow/nodes/projects-empty.md
+      - report-preview-signed: flow/nodes/report-preview-signed.md
+      - report-preview: flow/nodes/report-preview.md
+      - report-sign: flow/nodes/report-sign.md
+      - save-entry: flow/nodes/save-entry.md
+      - save-project: flow/nodes/save-project.md
+      - success-done: flow/nodes/success-done.md
+  - User Stories:
+      - us-1: stories/us-1.md
+      - us-10: stories/us-10.md
+      - us-11: stories/us-11.md
+      - us-12: stories/us-12.md
+      - us-13: stories/us-13.md
+      - us-14: stories/us-14.md
+      - us-15: stories/us-15.md
+      - us-16: stories/us-16.md
+      - us-17: stories/us-17.md
+      - us-18: stories/us-18.md
+      - us-2: stories/us-2.md
+      - us-4: stories/us-4.md
+      - us-5: stories/us-5.md
+      - us-6: stories/us-6.md
+      - us-7: stories/us-7.md
+      - us-8: stories/us-8.md
+      - us-9: stories/us-9.md
+  - Global UX Principles:
+      - explicit-status-signature-locking: ux/explicit-status-signature-locking.md
+      - guide-and-request-in-the-moment: ux/guide-and-request-in-the-moment.md
+      - honor-wcag-dynamic-type-focus-targets: ux/honor-wcag-dynamic-type-focus-targets.md
+      - minimize-required-input: ux/minimize-required-input.md
+      - offline-first-graceful-fallback: ux/offline-first-graceful-fallback.md
+      - one-screen-one-action: ux/one-screen-one-action.md
+  - Contextual UX:
+      - documents-view: ctxux/documents-view.md
+      - export-decision: ctxux/export-decision.md
+      - gallery: ctxux/gallery.md
+      - manual-weather: ctxux/manual-weather.md
+      - projects-empty: ctxux/projects-empty.md
+  - HIG Patterns:
+      - us-1: hig/us-1.md
+      - us-10: hig/us-10.md
+      - us-11: hig/us-11.md
+      - us-12: hig/us-12.md
+      - us-13: hig/us-13.md
+      - us-14: hig/us-14.md
+      - us-15: hig/us-15.md
+      - us-16: hig/us-16.md
+      - us-18: hig/us-18.md
+      - us-2: hig/us-2.md
+      - us-4: hig/us-4.md
+      - us-5: hig/us-5.md
+      - us-9: hig/us-9.md

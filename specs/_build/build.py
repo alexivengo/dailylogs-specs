@@ -773,6 +773,150 @@ def summarize_status():
     return msgs
 
 
+# --------------------------
+# Graph export (SpecHub)
+# --------------------------
+def safe_read(path: Path) -> dict:
+    try:
+        return read_json(path)
+    except Exception:
+        return {}
+
+
+def write_graph():
+    """Export a consolidated graph to specs/_build/graph.json.
+
+    Node types: PRD, CJM, FLOW_NODE, FLOW_EDGE, STORY, HIG, UX, CTXUX, ANALYTICS, DD
+    Edges (type): influences, maps_to, covered_by, selects, applies_to, emits, used_in
+    """
+    prd = safe_read(OUT / "00_PRD_v1.json")
+    cjm = safe_read(OUT / "01_CJM_v1.json")
+    uf = safe_read(OUT / "02_UserFlow_v1.json")
+    ux = safe_read(OUT / "03_Global_UX_Principles_v1.json")
+    us = safe_read(OUT / "04_UserStories_v1.json")
+    hig = safe_read(OUT / "05_HIG_Pattern_selection_v1.json")
+    ctx = safe_read(OUT / "06_Contextual_UX_Guidelines_v1.json")
+
+    nodes: List[dict] = []
+    edges: List[dict] = []
+
+    # PRD nodes
+    prd_titles: Dict[str, str] = {}
+    for sec in (prd.get("prd", []) or prd.get("sections", []) or []):
+        sid = sec.get("id")
+        if not sid:
+            continue
+        prd_titles[sid] = sec.get("title") or f"PRD {sid}"
+        nodes.append({"id": f"prd:{sid}", "type": "PRD", "title": prd_titles[sid]})
+
+    # CJM nodes
+    cjm_titles: Dict[str, str] = {}
+    for st in (cjm.get("cjm", []) or cjm.get("stages", []) or []):
+        cid = st.get("id")
+        if not cid:
+            continue
+        cjm_titles[cid] = st.get("title") or cid
+        nodes.append({"id": f"cjm:{cid}", "type": "CJM", "title": cjm_titles[cid]})
+
+    # UserFlow nodes and edges
+    flow_nodes: Dict[str, dict] = {}
+    for n in uf.get("user_flow", []) or []:
+        nid = n.get("id")
+        if not nid:
+            continue
+        flow_nodes[nid] = n
+        nodes.append({"id": f"flow:node:{nid}", "type": "FLOW_NODE", "title": nid})
+        # analytics at node level
+        for ev in n.get("analytics", []) or []:
+            nodes.append({"id": f"analytics:event:{ev}", "type": "ANALYTICS", "title": ev})
+            edges.append({"from": f"flow:node:{nid}", "to": f"analytics:event:{ev}", "type": "emits"})
+        # refs PRD/CJM influence/maps_to
+        for ref in n.get("refs", []) or []:
+            if isinstance(ref, str) and ref.startswith("PRD:#"):
+                rid = ref.split("PRD:#", 1)[1]
+                edges.append({"from": f"prd:{rid}", "to": f"cjm:{rid}", "type": "influences"})  # will fix via CJM ref below
+            if isinstance(ref, str) and ref.startswith("CJM:#"):
+                cid = ref.split("CJM:#", 1)[1]
+                edges.append({"from": f"cjm:{cid}", "to": f"flow:node:{nid}", "type": "maps_to"})
+        # node outputs → DD used_in
+        for outk in n.get("outputs", []) or []:
+            if isinstance(outk, str):
+                nodes.append({"id": f"dd:{outk}", "type": "DD", "title": outk})
+                edges.append({"from": f"dd:{outk}", "to": f"flow:node:{nid}", "type": "used_in"})
+        # edges from node
+        for e in n.get("edges", []) or []:
+            eid = e.get("id") or f"{nid}->{e.get('target')}"
+            tgt = e.get("target")
+            nodes.append({"id": f"flow:edge:{nid}:{eid}", "type": "FLOW_EDGE", "title": eid,
+                          "data": {"from_node": nid, "to_node": tgt}})
+            if tgt:
+                edges.append({"from": f"flow:node:{nid}", "to": f"flow:node:{tgt}", "type": "maps_to"})
+            for ev in e.get("analytics", []) or []:
+                nodes.append({"id": f"analytics:event:{ev}", "type": "ANALYTICS", "title": ev})
+                edges.append({"from": f"flow:node:{nid}", "to": f"analytics:event:{ev}", "type": "emits"})
+
+    # PRD→CJM influences via co-occurrence in flow node refs
+    # Build co-occurrence map
+    for n in uf.get("user_flow", []) or []:
+        prds = [ref.split("PRD:#", 1)[1] for ref in (n.get("refs", []) or []) if isinstance(ref, str) and ref.startswith("PRD:#")]
+        cjms = [ref.split("CJM:#", 1)[1] for ref in (n.get("refs", []) or []) if isinstance(ref, str) and ref.startswith("CJM:#")]
+        for rid in prds:
+            for cid in cjms:
+                edges.append({"from": f"prd:{rid}", "to": f"cjm:{cid}", "type": "influences"})
+
+    # User Stories
+    us_titles: Dict[str, str] = {}
+    for s in us.get("stories", []) or []:
+        sid = s.get("story_id")
+        if not sid:
+            continue
+        title = s.get("capability") or s.get("title") or sid
+        us_titles[sid] = title
+        nodes.append({"id": f"story:{sid}", "type": "STORY", "title": title})
+        # refs/AC FLOW:#node → covered_by
+        texts: List[str] = []
+        texts.extend(s.get("refs", []) or [])
+        texts.extend(s.get("acceptance_criteria", []) or [])
+        for text in texts:
+            if not isinstance(text, str):
+                continue
+            tokens = [t for t in text.replace(";", " ").replace(",", " ").split() if t.startswith("FLOW:#")]
+            for t in tokens:
+                node = t.split("FLOW:#", 1)[1].strip().strip(")].")
+                if node:
+                    edges.append({"from": f"flow:node:{node}", "to": f"story:{sid}", "type": "covered_by"})
+
+    # HIG candidates per story
+    for hs in hig.get("stories", []) or []:
+        sid = hs.get("story_id")
+        for c in hs.get("candidates", []) or []:
+            pid = c.get("pattern_id")
+            if not pid:
+                continue
+            hid = f"hig:{sid}:candidate:{pid}"
+            nodes.append({"id": hid, "type": "HIG", "title": c.get("title") or pid})
+            edges.append({"from": f"story:{sid}", "to": hid, "type": "selects"})
+
+    # UX principles and CtxUX screens mapping via local_principles
+    ux_ids: Set[str] = set(p.get("id") for p in ux.get("principles", []) or [])
+    for screen in ctx.get("screens", []) or []:
+        sid = screen.get("id")
+        if not sid:
+            continue
+        nodes.append({"id": f"ctxux:screen:{sid}", "type": "CTXUX", "title": screen.get("title") or sid})
+        for lp in screen.get("local_principles", []) or []:
+            for gp in lp.get("global_principle_ids", []) or []:
+                if gp in ux_ids:
+                    nodes.append({"id": f"ux:principle:{gp}", "type": "UX", "title": gp})
+                    edges.append({"from": f"ux:principle:{gp}", "to": f"ctxux:screen:{sid}", "type": "applies_to"})
+        # Map UserFlow refs to CTXUX screen
+        for fn in (screen.get("refs", {}).get("UserFlow", []) or []):
+            if fn in flow_nodes:
+                edges.append({"from": f"flow:node:{fn}", "to": f"ctxux:screen:{sid}", "type": "maps_to"})
+
+    write_json(OUT / "graph.json", {"nodes": nodes, "edges": edges})
+
+
 def main():
     ensure_out()
     lock = read_ids_lock()
@@ -795,6 +939,9 @@ def main():
     us_assembled = read_json(OUT / "04_UserStories_v1.json") if (OUT / "04_UserStories_v1.json").exists() else None
     if write_hig_monolith(uf_assembled, us_assembled):
         wrote.append("05_HIG_Pattern_selection_v1.json")
+
+    # Export consolidated graph for SpecHub diagrams
+    write_graph()
 
     # Persist updated IDs lock
     write_ids_lock(lock)
