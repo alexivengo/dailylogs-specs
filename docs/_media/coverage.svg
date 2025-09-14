@@ -47,7 +47,7 @@
 <!-- prd__Resume -->
 <g id="node1" class="node">
 <title>prd__Resume</title>
-<g id="a_node1"><a xlink:href="prd/Resume.md" xlink:title="Резюме (Executive Summary)">
+<g id="a_node1"><a xlink:title="Резюме (Executive Summary)">
 <ellipse fill="none" stroke="black" cx="422.45" cy="-1514.58" rx="126.08" ry="18"/>
 <text xml:space="preserve" text-anchor="middle" x="422.45" y="-1509.53" font-family="Times,serif" font-size="14.00">Резюме (Executive Summary)</text>
 </a>
@@ -56,7 +56,7 @@
 <!-- prd__4_1 -->
 <g id="node2" class="node">
 <title>prd__4_1</title>
-<g id="a_node2"><a xlink:href="prd/4_1.md" xlink:title="Модуль: Проекты">
+<g id="a_node2"><a xlink:title="Модуль: Проекты">
 <ellipse fill="none" stroke="black" cx="422.45" cy="-2054.58" rx="82.57" ry="18"/>
 <text xml:space="preserve" text-anchor="middle" x="422.45" y="-2049.53" font-family="Times,serif" font-size="14.00">Модуль: Проекты</text>
 </a>
@@ -65,7 +65,7 @@
 <!-- cjm__onboarding&#45;first&#45;project -->
 <g id="node14" class="node">
 <title>cjm__onboarding&#45;first&#45;project</title>
-<g id="a_node14"><a xlink:href="cjm/onboarding-first-project.md" xlink:title="Первый запуск и создание проекта">
+<g id="a_node14"><a xlink:title="Первый запуск и создание проекта">
 <ellipse fill="none" stroke="black" cx="893.54" cy="-1972.58" rx="150.64" ry="18"/>
 <text xml:space="preserve" text-anchor="middle" x="893.54" y="-1967.53" font-family="Times,serif" font-size="14.00">Первый запуск и создание проекта</text>
 </a>
@@ -95,7 +95,7 @@
 <!-- cjm__daily&#45;logging -->
 <g id="node15" class="node">
 <title>cjm__daily&#45;logging</title>
-<g id="a_node15"><a xlink:href="cjm/daily-logging.md" xlink:title="Ежедневный ввод (ядро, guardrail)">
+<g id="a_node15"><a xlink:title="Ежедневный ввод (ядро, guardrail)">
 <ellipse fill="none" stroke="black" cx="893.54" cy="-1864.58" rx="149.11" ry="18"/>
 <text xml:space="preserve" text-anchor="middle" x="893.54" y="-1859.53" font-family="Times,serif" font-size="14.00">Ежедневный ввод (ядро, guardrail)</text>
 </a>
@@ -145,7 +145,7 @@
 <!-- prd__4_2 -->
 <g id="node3" class="node">
 <title>prd__4_2</title>
-<g id="a_node3"><a xlink:href="prd/4_2.md" xlink:title="Модуль: Журнал работ (Daily Logs)">
+<g id="a_node3"><a xlink:title="Модуль: Журнал работ (Daily Logs)">
 <ellipse fill="none" stroke="black" cx="422.45" cy="-1892.58" rx="153.2" ry="18"/>
 <text xml:space="preserve" text-anchor="middle" x="422.45" y="-1887.53" font-family="Times,serif" font-size="14.00">Модуль: Журнал работ (Daily Logs)</text>
 </a>
@@ -210,7 +210,7 @@
 <!-- cjm__reporting&#45;signoff -->
 <g id="node16" class="node">
 <title>cjm__reporting&#45;signoff</title>
-<g id="a_node16"><a xlink:href="cjm/reporting-signoff.md" xlink:title="Превью → подпись → экспорт отчёта">
+<g id="a_node16"><a xlink:title="Превью → подпись → экспорт отчёта">
 <ellipse fill="none" stroke="black" cx="893.54" cy="-1810.58" rx="164.97" ry="18"/>
 <text xml:space="preserve" text-anchor="middle" x="893.54" y="-1805.53" font-family="Times,serif" font-size="14.00">Превью → подпись → экспорт отчёта</text>
 </a>
@@ -323,7 +323,7 @@
 <!-- prd__4_3 -->
 <g id="node4" class="node">
 <title>prd__4_3</title>
-<g id="a_node4"><a xlink:href="prd/4_3.md" xlink:title="Модуль: Документы">
+<g id="a_node4"><a xlink:title="Модуль: Документы">
 <ellipse fill="none" stroke="black" cx="422.45" cy="-1946.58" rx="93.83" ry="18"/>
 <text xml:space="preserve" text-anchor="middle" x="422.45" y="-1941.53" font-family="Times,serif" font-size="14.00">Модуль: Документы</text>
 </a>
@@ -332,7 +332,7 @@
 <!-- cjm__retention&#45;advocacy -->
 <g id="node17" class="node">
 <title>cjm__retention&#45;advocacy</title>
-<g id="a_node17"><a xlink:href="cjm/retention-advocacy.md" xlink:title="Регулярное использование и рекомендации">
+<g id="a_node17"><a xlink:title="Регулярное использование и рекомендации">
 <ellipse fill="none" stroke="black" cx="893.54" cy="-1918.58" rx="185.96" ry="18"/>
 <text xml:space="preserve" text-anchor="middle" x="893.54" y="-1913.53" font-family="Times,serif" font-size="14.00">Регулярное использование и рекомендации</text>
 </a>
@@ -361,7 +361,7 @@
 <!-- prd__4_4 -->
 <g id="node5" class="node">
 <title>prd__4_4</title>
-<g id="a_node5"><a xlink:href="prd/4_4.md" xlink:title="Модуль: Галерея">
+<g id="a_node5"><a xlink:title="Модуль: Галерея">
 <ellipse fill="none" stroke="black" cx="422.45" cy="-1838.58" rx="78.99" ry="18"/>
 <text xml:space="preserve" text-anchor="middle" x="422.45" y="-1833.53" font-family="Times,serif" font-size="14.00">Модуль: Галерея</text>
 </a>
@@ -418,7 +418,7 @@
 <!-- prd__5 -->
 <g id="node6" class="node">
 <title>prd__5</title>
-<g id="a_node6"><a xlink:href="prd/5.md" xlink:title="Нефункциональные требования и стандарты">
+<g id="a_node6"><a xlink:title="Нефункциональные требования и стандарты">
 <ellipse fill="none" stroke="black" cx="422.45" cy="-1784.58" rx="191.08" ry="18"/>
 <text xml:space="preserve" text-anchor="middle" x="422.45" y="-1779.53" font-family="Times,serif" font-size="14.00">Нефункциональные требования и стандарты</text>
 </a>
@@ -517,7 +517,7 @@
 <!-- prd__7 -->
 <g id="node7" class="node">
 <title>prd__7</title>
-<g id="a_node7"><a xlink:href="prd/7.md" xlink:title="Навигация и UX">
+<g id="a_node7"><a xlink:title="Навигация и UX">
 <ellipse fill="none" stroke="black" cx="422.45" cy="-1730.58" rx="77.97" ry="18"/>
 <text xml:space="preserve" text-anchor="middle" x="422.45" y="-1725.53" font-family="Times,serif" font-size="14.00">Навигация и UX</text>
 </a>
@@ -588,7 +588,7 @@
 <!-- prd__8 -->
 <g id="node8" class="node">
 <title>prd__8</title>
-<g id="a_node8"><a xlink:href="prd/8.md" xlink:title="Офлайн‑поведение">
+<g id="a_node8"><a xlink:title="Офлайн‑поведение">
 <ellipse fill="none" stroke="black" cx="422.45" cy="-1676.58" rx="93.83" ry="18"/>
 <text xml:space="preserve" text-anchor="middle" x="422.45" y="-1671.53" font-family="Times,serif" font-size="14.00">Офлайн‑поведение</text>
 </a>
@@ -701,7 +701,7 @@
 <!-- prd__9 -->
 <g id="node9" class="node">
 <title>prd__9</title>
-<g id="a_node9"><a xlink:href="prd/9.md" xlink:title="Безопасность и приватность">
+<g id="a_node9"><a xlink:title="Безопасность и приватность">
 <ellipse fill="none" stroke="black" cx="422.45" cy="-1622.58" rx="127.1" ry="18"/>
 <text xml:space="preserve" text-anchor="middle" x="422.45" y="-1617.53" font-family="Times,serif" font-size="14.00">Безопасность и приватность</text>
 </a>
@@ -842,7 +842,7 @@
 <!-- prd__10 -->
 <g id="node10" class="node">
 <title>prd__10</title>
-<g id="a_node10"><a xlink:href="prd/10.md" xlink:title="Локализация, доступность, дизайн‑система">
+<g id="a_node10"><a xlink:title="Локализация, доступность, дизайн‑система">
 <ellipse fill="none" stroke="black" cx="422.45" cy="-2000.58" rx="193.63" ry="18"/>
 <text xml:space="preserve" text-anchor="middle" x="422.45" y="-1995.53" font-family="Times,serif" font-size="14.00">Локализация, доступность, дизайн‑система</text>
 </a>
@@ -851,7 +851,7 @@
 <!-- prd__11 -->
 <g id="node11" class="node">
 <title>prd__11</title>
-<g id="a_node11"><a xlink:href="prd/11.md" xlink:title="Аналитика и телеметрия">
+<g id="a_node11"><a xlink:title="Аналитика и телеметрия">
 <ellipse fill="none" stroke="black" cx="422.45" cy="-1568.58" rx="110.21" ry="18"/>
 <text xml:space="preserve" text-anchor="middle" x="422.45" y="-1563.53" font-family="Times,serif" font-size="14.00">Аналитика и телеметрия</text>
 </a>
@@ -894,7 +894,7 @@
 <!-- cjm__awareness -->
 <g id="node12" class="node">
 <title>cjm__awareness</title>
-<g id="a_node12"><a xlink:href="cjm/awareness.md" xlink:title="Осознание проблемы и поиск решения">
+<g id="a_node12"><a xlink:title="Осознание проблемы и поиск решения">
 <ellipse fill="none" stroke="black" cx="893.54" cy="-1702.58" rx="167.53" ry="18"/>
 <text xml:space="preserve" text-anchor="middle" x="893.54" y="-1697.53" font-family="Times,serif" font-size="14.00">Осознание проблемы и поиск решения</text>
 </a>
@@ -903,7 +903,7 @@
 <!-- cjm__evaluation&#45;acquisition -->
 <g id="node13" class="node">
 <title>cjm__evaluation&#45;acquisition</title>
-<g id="a_node13"><a xlink:href="cjm/evaluation-acquisition.md" xlink:title="Оценка листинга и установка">
+<g id="a_node13"><a xlink:title="Оценка листинга и установка">
 <ellipse fill="none" stroke="black" cx="893.54" cy="-1756.58" rx="129.66" ry="18"/>
 <text xml:space="preserve" text-anchor="middle" x="893.54" y="-1751.53" font-family="Times,serif" font-size="14.00">Оценка листинга и установка</text>
 </a>
