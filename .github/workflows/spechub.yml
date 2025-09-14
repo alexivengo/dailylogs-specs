@@ -31,9 +31,10 @@ jobs:
         run: |
           python3 specs/_build/build.py
 
-      - name: Validate trace
+      - name: Validate traces and set schema badge
         run: |
           python3 trace_validator.py
+          if [ $? -eq 0 ]; then echo "SPECHUB_SCHEMA_STATUS=ok" >> $GITHUB_ENV; else echo "SPECHUB_SCHEMA_STATUS=failed" >> $GITHUB_ENV; fi
 
       - name: Install Python deps (generator)
         run: |
@@ -53,6 +54,7 @@ jobs:
           docker run --rm -v "$PWD/site":/site ghcr.io/lycheeverse/lychee:latest \
             --offline \
             --no-progress \
+            --timeout 10 \
             --verbose \
             "/site/**/*.html"
 
@@ -61,6 +63,7 @@ jobs:
         run: |
           docker run --rm -v "$PWD/site":/site ghcr.io/lycheeverse/lychee:latest \
             --no-progress \
+            --timeout 10 \
             --verbose \
             --exclude "https://json-schema.org,https://github.com" \
             "/site/**/*.html"

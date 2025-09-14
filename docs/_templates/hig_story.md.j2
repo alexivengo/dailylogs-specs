@@ -1,4 +1,16 @@
-# HIG Patterns for {{ hig_story.story_id }}
+# HIG Patterns for {{ hig_story.story_id }} <button class="copy-link" aria-label="Copy page link" onclick="window.spechubCopyLink && window.spechubCopyLink()">🔗 Copy link</button>
+
+<p class="badges">
+  <span class="badge version">v{{ version }}</span>
+  <span class="badge build">{{ build_info.timestamp }} · <a href="{{ REPO_URL }}/commit/{{ build_info.git_sha }}" target="_blank" rel="noopener" class="sha">{{ build_info.git_sha }}</a></span>
+  {% if schema_ok is sameas true %}
+  <span class="badge schema ok">Schema OK</span>
+  {% elif schema_ok is sameas false %}
+  <span class="badge schema failed">Schema failed</span>
+  {% else %}
+  <span class="badge schema unknown">Schema unknown</span>
+  {% endif %}
+</p>
 
 {{ hig_story.title or '' }}
 
