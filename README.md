@@ -34,6 +34,30 @@ python3 specs/_build/build.py && python3 trace_validator.py
 - `05_HIG_Pattern_selection_v1.json`
 - `06_Contextual_UX_Guidelines_v1.json`
 
+## Локальный запуск SpecHub (портал)
+
+Требуется: graphviz, Python venv.
+
+```bash
+python3 -m venv .venv
+. .venv/bin/activate
+pip install mkdocs mkdocs-material jinja2 pydot graphviz markdownify
+python3 specs/_build/build.py
+python3 trace_validator.py
+python3 docs/generate_docs.py
+mkdocs serve
+```
+
+Откройте http://127.0.0.1:8000 — на главной будут обе диаграммы.
+
+## Источники vs Артефакты
+
+- Источники спецификаций: `specs/**`
+- Артефакты монолитов: `specs/_build/*.json`
+- Генерируемая документация: `docs/**`, диаграммы: `docs/_media/*.svg`
+
+В страницах добавлены ссылки "✏️ Edit source" на соответствующие файлы под `specs/**`.
+
 ## Что проверяет валидатор
 - Согласованность ссылок между PRD/CJM/UserFlow/UserStories/UX/CTXUX.
 - Guard-выражения в рёбрах User Flow: только допустимые операторы, строковые литералы в кавычках.
