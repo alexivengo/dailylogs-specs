@@ -48,6 +48,29 @@ jobs:
         run: |
           mkdocs build --strict
 
+      - name: Link check (internal only)
+        run: |
+          docker run --rm -v "$PWD/site":/site ghcr.io/lycheeverse/lychee:latest \
+            --offline \
+            --no-progress \
+            --verbose \
+            "/site/**/*.html"
+
+      - name: Link check (external; warnings only)
+        continue-on-error: true
+        run: |
+          docker run --rm -v "$PWD/site":/site ghcr.io/lycheeverse/lychee:latest \
+            --no-progress \
+            --verbose \
+            --exclude "https://json-schema.org,https://github.com" \
+            "/site/**/*.html"
+
+      - name: Markdown lint (warnings only)
+        continue-on-error: true
+        run: |
+          npm -g i markdownlint-cli2
+          markdownlint-cli2 "docs/**/*.md"
+
       - name: Upload site artifact
         if: always()
         uses: actions/upload-artifact@v4

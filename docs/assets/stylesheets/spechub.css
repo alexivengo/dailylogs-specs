@@ -1,0 +1,23 @@
+:root{
+  --badge-bg:#E0E7FF; --badge-fg:#1E3A8A;
+  --ok-bg:#DCFCE7; --ok-fg:#166534;
+  --fail-bg:#FEE2E2; --fail-fg:#991B1B;
+  --unk-bg:#E5E7EB; --unk-fg:#374151;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --badge-bg:#312E81; --badge-fg:#E0E7FF;
+    --ok-bg:#064E3B; --ok-fg:#A7F3D0;
+    --fail-bg:#7F1D1D; --fail-fg:#FECACA;
+    --unk-bg:#374151; --unk-fg:#E5E7EB;
+  }
+}
+.badges{ display:flex; gap:.5rem; align-items:center; margin:.25rem 0 1rem; flex-wrap:wrap; }
+.badge{ padding:.15rem .5rem; border-radius:999px; font-size:.85em; background:var(--badge-bg); color:var(--badge-fg); }
+.badge.build a.sha{ color:inherit; text-decoration:underline; }
+.badge.schema.ok{ background:var(--ok-bg); color:var(--ok-fg); }
+.badge.schema.failed{ background:var(--fail-bg); color:var(--fail-fg); }
+.badge.schema.unknown{ background:var(--unk-bg); color:var(--unk-fg); }
+.copy-link{ margin-left:.5rem; padding:.2rem .5rem; border-radius:.375rem; border:1px solid transparent; background:transparent; cursor:pointer; }
+.copy-link:focus{ outline:2px solid #6366F1; outline-offset:2px; }
+img, svg{ max-width:100%; height:auto; }

@@ -20,6 +20,7 @@ import sys
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 import subprocess
+import datetime
 
 # Third-party
 from jinja2 import Environment, FileSystemLoader, select_autoescape
@@ -151,10 +152,20 @@ def jinja_env() -> Environment:
         lstrip_blocks=True,
     )
     env.filters["slugify"] = slugify
+    # Expose repo globals to templates
+    env.globals["REPO_URL"] = REPO_URL
+    env.globals["REPO_BRANCH"] = REPO_BRANCH
     return env
 
 
 # ---------- Rendering helpers ----------
+def get_build_info() -> Dict[str, str]:
+    ts = datetime.datetime.utcnow().replace(microsecond=0).isoformat() + "Z"
+    try:
+        sha = subprocess.check_output(["git", "rev-parse", "--short", "HEAD"], cwd=str(ROOT)).decode().strip()
+    except Exception:
+        sha = "unknown"
+    return {"timestamp": ts, "git_sha": sha}
 
 def write_file(path: Path, content: str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -170,6 +181,8 @@ def render_index(env: Environment, artifacts: Dict[str, Any], graph: Dict[str, A
     flow_nodes = len(artifacts.get("flow", {}).get("user_flow", []))
     stories = len(artifacts.get("stories", {}).get("stories", []))
     ctxux_screens = len(artifacts.get("ctxux", {}).get("screens", []))
+
+    bi = get_build_info()
 
     content = tmpl.render(
         prd_sections=prd_sections,
@@ -187,8 +200,11 @@ def render_index(env: Environment, artifacts: Dict[str, Any], graph: Dict[str, A
             "ux": artifacts.get("ux", {}).get("version"),
             "ctxux": artifacts.get("ctxux", {}).get("version"),
         },
+        build_info=bi,
     )
     write_file(DOCS_DIR / "index.md", content)
+    # Persist build info for footer injection
+    write_file(DOCS_DIR / "assets" / "build.json", json.dumps(bi))
 
 
 def render_prd(env: Environment, prd: Dict[str, Any], graph: Dict[str, Any]) -> None:
@@ -200,7 +216,9 @@ def render_prd(env: Environment, prd: Dict[str, Any], graph: Dict[str, Any]) -> 
         sec_id = section.get("id") or section.get("section_id") or "unknown"
         path = DOCS_DIR / "prd" / f"{slugify(str(sec_id))}.md"
         edit_href = edit_link(f"specs/00_prd/sections/{sec_id}.json")
-        content = tmpl.render(section=section, edit_href=edit_href, version=prd_version)
+        schema_status = os.environ.get("SPECHUB_SCHEMA_STATUS", "unknown").lower()
+        schema_ok = True if schema_status == "ok" else False if schema_status == "failed" else None
+        content = tmpl.render(section=section, edit_href=edit_href, version=prd_version, build_info=get_build_info(), schema_ok=schema_ok)
         write_file(path, content)
 
 
@@ -213,7 +231,9 @@ def render_cjm(env: Environment, cjm: Dict[str, Any], graph: Dict[str, Any]) -> 
         st_id = stage.get("id") or stage.get("stage_id") or "unknown"
         path = DOCS_DIR / "cjm" / f"{slugify(str(st_id))}.md"
         edit_href = edit_link(f"specs/01_cjm/stages/{st_id}.json")
-        content = tmpl.render(stage=stage, edit_href=edit_href, version=cjm_version)
+        schema_status = os.environ.get("SPECHUB_SCHEMA_STATUS", "unknown").lower()
+        schema_ok = True if schema_status == "ok" else False if schema_status == "failed" else None
+        content = tmpl.render(stage=stage, edit_href=edit_href, version=cjm_version, build_info=get_build_info(), schema_ok=schema_ok)
         write_file(path, content)
 
 
@@ -234,7 +254,9 @@ def render_flow(env: Environment, flow: Dict[str, Any], graph: Dict[str, Any]) -
         # For edit link, map by type if needed. Node definitions live in specs/02_userflow/nodes/<domain>.json
         # We cannot always derive the domain file; provide folder link as fallback
         edit_href = edit_link("specs/02_userflow/nodes/")
-        content = tmpl.render(node=node, edit_href=edit_href, version=flow_version)
+        schema_status = os.environ.get("SPECHUB_SCHEMA_STATUS", "unknown").lower()
+        schema_ok = True if schema_status == "ok" else False if schema_status == "failed" else None
+        content = tmpl.render(node=node, edit_href=edit_href, version=flow_version, build_info=get_build_info(), schema_ok=schema_ok)
         write_file(path, content)
 
 
@@ -249,7 +271,9 @@ def render_stories(env: Environment, stories: Dict[str, Any], graph: Dict[str, A
             continue
         path = DOCS_DIR / "stories" / f"{slugify(sid)}.md"
         edit_href = edit_link(f"specs/04_userstories/us/{sid}.json")
-        content = tmpl.render(story=story, edit_href=edit_href, version=us_version)
+        schema_status = os.environ.get("SPECHUB_SCHEMA_STATUS", "unknown").lower()
+        schema_ok = True if schema_status == "ok" else False if schema_status == "failed" else None
+        content = tmpl.render(story=story, edit_href=edit_href, version=us_version, build_info=get_build_info(), schema_ok=schema_ok)
         write_file(path, content)
 
 
@@ -264,7 +288,9 @@ def render_ux(env: Environment, ux: Dict[str, Any], graph: Dict[str, Any]) -> No
             continue
         path = DOCS_DIR / "ux" / f"{slugify(pid)}.md"
         edit_href = edit_link(f"specs/03_ux_principles/principles/{pid}.json")
-        content = tmpl.render(principle=principle, edit_href=edit_href, version=ux_version)
+        schema_status = os.environ.get("SPECHUB_SCHEMA_STATUS", "unknown").lower()
+        schema_ok = True if schema_status == "ok" else False if schema_status == "failed" else None
+        content = tmpl.render(principle=principle, edit_href=edit_href, version=ux_version, build_info=get_build_info(), schema_ok=schema_ok)
         write_file(path, content)
 
 
@@ -279,7 +305,9 @@ def render_ctxux(env: Environment, ctxux: Dict[str, Any], graph: Dict[str, Any])
             continue
         path = DOCS_DIR / "ctxux" / f"{slugify(sid)}.md"
         edit_href = edit_link(f"specs/06_ctxux/screens/{sid}.json")
-        content = tmpl.render(screen=screen, edit_href=edit_href, version=ctxux_version)
+        schema_status = os.environ.get("SPECHUB_SCHEMA_STATUS", "unknown").lower()
+        schema_ok = True if schema_status == "ok" else False if schema_status == "failed" else None
+        content = tmpl.render(screen=screen, edit_href=edit_href, version=ctxux_version, build_info=get_build_info(), schema_ok=schema_ok)
         write_file(path, content)
 
 
@@ -300,7 +328,9 @@ def render_hig(env: Environment, hig: Dict[str, Any], graph: Dict[str, Any]) -> 
             continue
         path = DOCS_DIR / "hig" / f"{slugify(sid)}.md"
         edit_href = edit_link(f"specs/05_hig/stories/{sid}/candidates.json")
-        content = tmpl.render(hig_story=story, edit_href=edit_href, version=hig_version)
+        schema_status = os.environ.get("SPECHUB_SCHEMA_STATUS", "unknown").lower()
+        schema_ok = True if schema_status == "ok" else False if schema_status == "failed" else None
+        content = tmpl.render(hig_story=story, edit_href=edit_href, version=hig_version, build_info=get_build_info(), schema_ok=schema_ok)
         write_file(path, content)
 
 
@@ -315,7 +345,8 @@ def render_userflow_svg(flow: Dict[str, Any]) -> None:
         nid = node.get("id")
         ntype = node.get("type", "node")
         label = f"{nid}\n({ntype})"
-        url = f"./flow/nodes/{slugify(nid)}/"
+        doc_path = DOCS_DIR / "flow" / "nodes" / f"{slugify(nid)}.md"
+        url = f"./flow/nodes/{slugify(nid)}.md" if doc_path.exists() else None
         shape = {
             "screen": "box",
             "system": "ellipse",
@@ -323,7 +354,10 @@ def render_userflow_svg(flow: Dict[str, Any]) -> None:
             "error": "octagon",
             "terminator": "oval",
         }.get(ntype, "box")
-        graph.add_node(pydot.Node(nid, label=label, shape=shape, URL=url, target="_self"))
+        kwargs = {"label": label, "shape": shape, "tooltip": label}
+        if url:
+            kwargs.update({"URL": url})
+        graph.add_node(pydot.Node(nid, **kwargs))
     # Add edges
     node_index = {n.get("id"): n for n in flow.get("user_flow", [])}
     for n in flow.get("user_flow", []):
@@ -333,7 +367,7 @@ def render_userflow_svg(flow: Dict[str, Any]) -> None:
             if not tgt:
                 continue
             elabel = e.get("action") or e.get("id") or ""
-            graph.add_edge(pydot.Edge(src, tgt, label=elabel))
+            graph.add_edge(pydot.Edge(src, tgt, label=elabel, tooltip=elabel))
     MEDIA_DIR.mkdir(parents=True, exist_ok=True)
     graph.write_svg(str(MEDIA_DIR / "userflow.svg"))
 
@@ -389,7 +423,13 @@ def render_coverage_svg(graph_data: Dict[str, Any]) -> None:
         for n in nodes_in_cluster:
             nid = n.get("id")
             label = n.get("title") or nid
-            sg.add_node(pydot.Node(safe_id(nid), label=label, URL=node_url_for_coverage(n)))
+            # compute URL and only set if file exists
+            url_rel = node_url_for_coverage(n)
+            exists = (DOCS_DIR / url_rel).exists()
+            kwargs = {"label": label, "tooltip": label}
+            if exists:
+                kwargs["URL"] = url_rel
+            sg.add_node(pydot.Node(safe_id(nid), **kwargs))
         g.add_subgraph(sg)
 
     # Edges
@@ -559,6 +599,8 @@ def build_nav() -> str:
 
 def write_mkdocs_yaml() -> None:
     mkdocs_path = ROOT / "mkdocs.yml"
+    bi = get_build_info()
+    cache_bust = bi.get("git_sha", "dev")
     base = f"""
 site_name: SpecHub
 site_description: Specification Hub
@@ -568,6 +610,8 @@ theme:
   features:
     - navigation.instant
     - navigation.tracking
+    - navigation.tabs
+    - navigation.indexes
     - content.code.copy
     - search.suggest
   palette:
@@ -583,6 +627,10 @@ markdown_extensions:
 extra:
   generator: spechub
 # We add custom 'Edit source' links inside pages instead of using edit_uri
+extra_javascript:
+  - assets/javascripts/spechub.js?v={cache_bust}
+extra_css:
+  - assets/stylesheets/spechub.css?v={cache_bust}
 {build_nav()}""".lstrip()
     write_file(mkdocs_path, base)
 
