@@ -8,7 +8,10 @@
 
 ## Coverage Landscape
 
-![Coverage](./_media/coverage.svg)
+<figure class="graph">
+  <object type="image/svg+xml" data="./_media/coverage.svg" id="coverage-object" aria-label="Coverage diagram"></object>
+  <figcaption>Relations across PRD, CJM, Flow, Stories, HIG, CtxUX</figcaption>
+</figure>
 
 ## How to edit sources
 

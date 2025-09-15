@@ -13,6 +13,19 @@
   <span class="badge schema unknown">Schema unknown</span>
   {% endif %}
 </p>
+{% include "_header_meta.j2" %}
+
+{% if xlinks %}
+## Related
+{% if xlinks.flow and xlinks.flow|length %}
+Flow nodes:
+{% for c in xlinks.flow %}<span class="chip">{% if c.href %}[`{{ c.label }}`]({{ c.href }}){% else %}`{{ c.label }}`{% endif %}</span>{% endfor %}
+{% endif %}
+{% if xlinks.stories and xlinks.stories|length %}
+Stories:
+{% for c in xlinks.stories %}<span class="chip">{% if c.href %}[{{ c.label }}]({{ c.href }}){% else %}{{ c.label }}{% endif %}</span>{% endfor %}
+{% endif %}
+{% endif %}
 {% if screen.desc %}
 {{ screen.desc }}
 {% endif %}
@@ -40,5 +53,4 @@
 {% endfor %}
 {% endif %}
 
----
-✏️ Edit source: {{ edit_href }}
+{% include "_footer_meta.j2" %}

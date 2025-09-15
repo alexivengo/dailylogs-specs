@@ -9,7 +9,11 @@
 {% if has_graph %}
 ## Coverage Landscape
 
-![Coverage](./_media/coverage.svg)
+<figure class="graph">
+  <object type="image/svg+xml" data="./_media/coverage.svg" id="coverage-object" aria-label="Coverage diagram"></object>
+  <div><button class="zoom-reset" aria-label="Reset zoom" onclick="window.spechubResetView && window.spechubResetView('coverage-object')">Reset view</button></div>
+  <figcaption>Relations across PRD, CJM, Flow, Stories, HIG, CtxUX</figcaption>
+</figure>
 {% endif %}
 
 ## How to edit sources

@@ -33,6 +33,14 @@ except Exception:
     def md(s: str) -> str:
         return s
 
+def page_exists(rel_path: str) -> bool:
+    return (DOCS_DIR / rel_path).exists()
+
+def chip(rel_path: Optional[str], label: str) -> Dict[str, Optional[str]]:
+    if rel_path and page_exists(rel_path):
+        return {"label": label, "href": rel_path}
+    return {"label": label, "href": None}
+
 ROOT = Path(__file__).resolve().parents[1]
 BUILD_DIR = ROOT / "specs" / "_build"
 DOCS_DIR = ROOT / "docs"
@@ -217,9 +225,16 @@ def render_prd(env: Environment, prd: Dict[str, Any], graph: Dict[str, Any]) -> 
         sec_id = section.get("id") or section.get("section_id") or "unknown"
         path = DOCS_DIR / "prd" / f"{slugify(str(sec_id))}.md"
         edit_href = edit_link(f"specs/00_prd/sections/{sec_id}.json")
+        # Cross-links from PRD section
+        prd_nid = f"prd:{sec_id}"
+        story_ids = [s.split(":",1)[1] for s in _connected(graph, prd_nid, "story:")]
+        flow_nodes = [n.split(":",2)[2] for n in _connected(graph, prd_nid, "flow:node:")]
+        story_chips = [{"label": st, "href": f"../stories/{slugify(st)}.md"} for st in story_ids if page_exists(f"stories/{slugify(st)}.md")]
+        flow_chips = [{"label": fn, "href": f"../flow/nodes/{slugify(fn)}.md"} for fn in flow_nodes if page_exists(f"flow/nodes/{slugify(fn)}.md")]
+        xlinks = {"stories": story_chips, "flow": flow_chips}
         schema_status = os.environ.get("SPECHUB_SCHEMA_STATUS", "unknown").lower()
         schema_ok = True if schema_status == "ok" else False if schema_status == "failed" else None
-        content = tmpl.render(section=section, edit_href=edit_href, version=prd_version, build_info=get_build_info(), schema_ok=schema_ok)
+        content = tmpl.render(section=section, edit_href=edit_href, version=prd_version, build_info=get_build_info(), schema_ok=schema_ok, xlinks=xlinks)
         write_file(path, content)
 
 
@@ -232,17 +247,30 @@ def render_cjm(env: Environment, cjm: Dict[str, Any], graph: Dict[str, Any]) -> 
         st_id = stage.get("id") or stage.get("stage_id") or "unknown"
         path = DOCS_DIR / "cjm" / f"{slugify(str(st_id))}.md"
         edit_href = edit_link(f"specs/01_cjm/stages/{st_id}.json")
+        # Cross-links
+        cjm_nid = f"cjm:{st_id}"
+        story_ids = [s.split(":",1)[1] for s in _connected(graph, cjm_nid, "story:")]
+        flow_nodes = [n.split(":",2)[2] for n in _connected(graph, cjm_nid, "flow:node:")]
+        story_chips = [{"label": st, "href": f"../stories/{slugify(st)}.md"} for st in story_ids if page_exists(f"stories/{slugify(st)}.md")]
+        flow_chips = [{"label": fn, "href": f"../flow/nodes/{slugify(fn)}.md"} for fn in flow_nodes if page_exists(f"flow/nodes/{slugify(fn)}.md")]
+        xlinks = {"stories": story_chips, "flow": flow_chips}
         schema_status = os.environ.get("SPECHUB_SCHEMA_STATUS", "unknown").lower()
         schema_ok = True if schema_status == "ok" else False if schema_status == "failed" else None
-        content = tmpl.render(stage=stage, edit_href=edit_href, version=cjm_version, build_info=get_build_info(), schema_ok=schema_ok)
+        content = tmpl.render(stage=stage, edit_href=edit_href, version=cjm_version, build_info=get_build_info(), schema_ok=schema_ok, xlinks=xlinks)
         write_file(path, content)
 
 
 def render_flow(env: Environment, flow: Dict[str, Any], graph: Dict[str, Any]) -> None:
     if not flow:
         return
-    # Overview page placeholder
-    overview = "# User Flow\n\n![User Flow](../_media/userflow.svg)\n"
+    # Overview page with embeddable SVG (object) for pan/zoom
+    overview = (
+        "# User Flow\n\n"
+        "<figure class=\"graph\">\n"
+        "  <object type=\"image/svg+xml\" data=\"../_media/userflow.svg\" id=\"userflow-object\" aria-label=\"User Flow diagram\"></object>\n"
+        "  <div><button class=\"zoom-reset\" aria-label=\"Reset zoom\" onclick=\"window.spechubResetView && window.spechubResetView('userflow-object')\">Reset view</button></div>\n"
+        "</figure>\n"
+    )
     write_file(DOCS_DIR / "flow" / "overview.md", overview)
 
     tmpl = env.get_template("flow_node.md.j2")
@@ -255,9 +283,20 @@ def render_flow(env: Environment, flow: Dict[str, Any], graph: Dict[str, Any]) -
         # For edit link, map by type if needed. Node definitions live in specs/02_userflow/nodes/<domain>.json
         # We cannot always derive the domain file; provide folder link as fallback
         edit_href = edit_link("specs/02_userflow/nodes/")
+        # Cross-links (relative to docs/flow/nodes/<node>.md)
+        nid = f"flow:node:{node_id}"
+        prd_ids = [p.split(":",1)[1] for p in _connected(graph, nid, "prd:")]
+        cjm_ids = [c.split(":",1)[1] for c in _connected(graph, nid, "cjm:")]
+        story_ids = [s.split(":",1)[1] for s in _connected(graph, nid, "story:")]
+        ctx_screens = [n.split(":",2)[2] for n in _connected(graph, nid, "ctxux:screen:")]
+        prd_chips = [{"label": pid, "href": f"../../prd/{slugify(pid)}.md"} for pid in prd_ids if page_exists(f"prd/{slugify(pid)}.md")]
+        cjm_chips = [{"label": cid, "href": f"../../cjm/{slugify(cid)}.md"} for cid in cjm_ids if page_exists(f"cjm/{slugify(cid)}.md")]
+        story_chips = [{"label": st, "href": f"../../stories/{slugify(st)}.md"} for st in story_ids if page_exists(f"stories/{slugify(st)}.md")]
+        ctx_chips = [{"label": cs, "href": f"../../ctxux/{slugify(cs)}.md"} for cs in ctx_screens if page_exists(f"ctxux/{slugify(cs)}.md")]
+        xlinks = {"prd": prd_chips, "cjm": cjm_chips, "stories": story_chips, "ctxux": ctx_chips}
         schema_status = os.environ.get("SPECHUB_SCHEMA_STATUS", "unknown").lower()
         schema_ok = True if schema_status == "ok" else False if schema_status == "failed" else None
-        content = tmpl.render(node=node, edit_href=edit_href, version=flow_version, build_info=get_build_info(), schema_ok=schema_ok)
+        content = tmpl.render(node=node, edit_href=edit_href, version=flow_version, build_info=get_build_info(), schema_ok=schema_ok, xlinks=xlinks)
         write_file(path, content)
 
 
@@ -272,9 +311,21 @@ def render_stories(env: Environment, stories: Dict[str, Any], graph: Dict[str, A
             continue
         path = DOCS_DIR / "stories" / f"{slugify(sid)}.md"
         edit_href = edit_link(f"specs/04_userstories/us/{sid}.json")
+        # Cross-links (relative to docs/stories/<sid>.md)
+        story_nid = f"story:{sid}"
+        prd_ids = [p.split(":",1)[1] for p in _connected(graph, story_nid, "prd:")]
+        cjm_ids = [c.split(":",1)[1] for c in _connected(graph, story_nid, "cjm:")]
+        flow_nodes = [n.split(":",2)[2] for n in _connected(graph, story_nid, "flow:node:")]
+        ctx_screens = [n.split(":",2)[2] for n in _connected(graph, story_nid, "ctxux:screen:")]
+        prd_chips = [{"label": pid, "href": f"../prd/{slugify(pid)}.md"} for pid in prd_ids if page_exists(f"prd/{slugify(pid)}.md")]
+        cjm_chips = [{"label": cid, "href": f"../cjm/{slugify(cid)}.md"} for cid in cjm_ids if page_exists(f"cjm/{slugify(cid)}.md")]
+        flow_chips = [{"label": fn, "href": f"../flow/nodes/{slugify(fn)}.md"} for fn in flow_nodes if page_exists(f"flow/nodes/{slugify(fn)}.md")]
+        ctx_chips = [{"label": cs, "href": f"../ctxux/{slugify(cs)}.md"} for cs in ctx_screens if page_exists(f"ctxux/{slugify(cs)}.md")]
+        hig_href = f"../hig/{slugify(sid)}.md" if page_exists(f"hig/{slugify(sid)}.md") else None
+        xlinks = {"prd": prd_chips, "cjm": cjm_chips, "flow": flow_chips, "ctxux": ctx_chips, "hig": {"label": "HIG", "href": hig_href}}
         schema_status = os.environ.get("SPECHUB_SCHEMA_STATUS", "unknown").lower()
         schema_ok = True if schema_status == "ok" else False if schema_status == "failed" else None
-        content = tmpl.render(story=story, edit_href=edit_href, version=us_version, build_info=get_build_info(), schema_ok=schema_ok)
+        content = tmpl.render(story=story, edit_href=edit_href, version=us_version, build_info=get_build_info(), schema_ok=schema_ok, xlinks=xlinks)
         write_file(path, content)
 
 
@@ -306,9 +357,16 @@ def render_ctxux(env: Environment, ctxux: Dict[str, Any], graph: Dict[str, Any])
             continue
         path = DOCS_DIR / "ctxux" / f"{slugify(sid)}.md"
         edit_href = edit_link(f"specs/06_ctxux/screens/{sid}.json")
+        # Cross-links
+        nid = f"ctxux:screen:{sid}"
+        flow_nodes = [n.split(":",2)[2] for n in _connected(graph, nid, "flow:node:")]
+        story_ids = [s.split(":",1)[1] for s in _connected(graph, nid, "story:")]
+        flow_chips = [{"label": fn, "href": f"../flow/nodes/{slugify(fn)}.md"} for fn in flow_nodes if page_exists(f"flow/nodes/{slugify(fn)}.md")]
+        story_chips = [{"label": st, "href": f"../stories/{slugify(st)}.md"} for st in story_ids if page_exists(f"stories/{slugify(st)}.md")]
+        xlinks = {"flow": flow_chips, "stories": story_chips}
         schema_status = os.environ.get("SPECHUB_SCHEMA_STATUS", "unknown").lower()
         schema_ok = True if schema_status == "ok" else False if schema_status == "failed" else None
-        content = tmpl.render(screen=screen, edit_href=edit_href, version=ctxux_version, build_info=get_build_info(), schema_ok=schema_ok)
+        content = tmpl.render(screen=screen, edit_href=edit_href, version=ctxux_version, build_info=get_build_info(), schema_ok=schema_ok, xlinks=xlinks)
         write_file(path, content)
 
 
@@ -335,12 +393,38 @@ def render_hig(env: Environment, hig: Dict[str, Any], graph: Dict[str, Any]) -> 
         write_file(path, content)
 
 
-# ---------- Diagram rendering ----------
 
 def render_userflow_svg(flow: Dict[str, Any]) -> None:
     if not flow:
         return
-    graph = pydot.Dot(graph_type="digraph", rankdir="LR", splines="spline", overlap="false")
+    graph = pydot.Dot(
+        graph_type="digraph",
+        rankdir="LR",
+        bgcolor="white",
+        fontname="Inter",
+        fontsize="12",
+        splines="true",
+        overlap="false",
+        concentrate="true",
+        nodesep="0.35",
+        ranksep="0.45",
+    )
+    graph.set_node_defaults(
+        shape="box",
+        style="rounded,filled",
+        fillcolor="#F6F8FA",
+        color="#D0D7DE",
+        fontname="Inter",
+        fontsize="12",
+    )
+    graph.set_edge_defaults(color="#8B949E", arrowsize="0.7", penwidth="1.1")
+
+    # Domain clusters
+    domains = ["projects", "daily", "weather", "export", "documents", "gallery"]
+    clusters: Dict[str, pydot.Subgraph] = {}
+    for d in domains:
+        clusters[d] = pydot.Subgraph(name=f"cluster_{d}", label=d.title(), color="#D0D7DE")
+
     # Add nodes
     for node in flow.get("user_flow", []):
         nid = node.get("id")
@@ -348,17 +432,23 @@ def render_userflow_svg(flow: Dict[str, Any]) -> None:
         label = f"{nid}\n({ntype})"
         doc_path = DOCS_DIR / "flow" / "nodes" / f"{slugify(nid)}.md"
         url = f"./flow/nodes/{slugify(nid)}.md" if doc_path.exists() else None
-        shape = {
-            "screen": "box",
-            "system": "ellipse",
-            "decision": "diamond",
-            "error": "octagon",
-            "terminator": "oval",
-        }.get(ntype, "box")
+        shape = {"screen": "box", "system": "ellipse", "decision": "diamond"}.get(ntype, "box")
         kwargs = {"label": label, "shape": shape, "tooltip": label}
         if url:
-            kwargs.update({"URL": url})
-        graph.add_node(pydot.Node(nid, **kwargs))
+            kwargs["URL"] = url
+        node_obj = pydot.Node(nid, **kwargs)
+        # Assign to cluster if prefix matches
+        bucket = next((d for d in domains if nid and nid.startswith(d + "-")), None)
+        if bucket:
+            clusters[bucket].add_node(node_obj)
+        else:
+            graph.add_node(node_obj)
+
+    # Attach clusters with nodes
+    for sg in clusters.values():
+        if sg.get_nodes():
+            graph.add_subgraph(sg)
+
     # Add edges
     node_index = {n.get("id"): n for n in flow.get("user_flow", [])}
     for n in flow.get("user_flow", []):
@@ -369,13 +459,28 @@ def render_userflow_svg(flow: Dict[str, Any]) -> None:
                 continue
             elabel = e.get("action") or e.get("id") or ""
             graph.add_edge(pydot.Edge(src, tgt, label=elabel, tooltip=elabel))
+
+    # Legend cluster
+    legend = pydot.Subgraph(name="cluster_legend", label="Legend", color="#D0D7DE")
+    legend.add_node(pydot.Node(
+        "legend_node",
+        label="Node types: box(screen) / ellipse(system) / diamond(decision)\nEdge label = action",
+        shape="note",
+        fillcolor="#FFFFFF",
+        style="filled",
+    ))
+    graph.add_subgraph(legend)
     MEDIA_DIR.mkdir(parents=True, exist_ok=True)
     graph.write_svg(str(MEDIA_DIR / "userflow.svg"))
 
 
 def render_coverage_svg(graph_data: Dict[str, Any]) -> None:
-    # Simple clustered landscape placeholder for MVP
-    g = pydot.Dot(graph_type="digraph", rankdir="LR", compound="true", concentrate="true")
+    # Clustered coverage diagram with styling
+    g = pydot.Dot(graph_type="digraph", rankdir="LR", compound="true", concentrate="true",
+                  bgcolor="white", fontname="Inter", fontsize="12", nodesep="0.35", ranksep="0.45")
+    g.set_node_defaults(shape="box", style="rounded,filled", fillcolor="#F6F8FA",
+                        color="#D0D7DE", fontname="Inter", fontsize="12")
+    g.set_edge_defaults(color="#8B949E", arrowsize="0.7", penwidth="1.1")
 
     clusters = {
         "PRD": [],
@@ -574,32 +679,54 @@ def build_nav() -> str:
         cov = sorted([p.name for p in (DOCS_DIR / "coverage").glob("*.md")])
         if cov:
             lines.append("  - Coverage:")
-            for f in cov:
-                name = os.path.splitext(f)[0]
-                lines.append(f"      - {name}: coverage/{f}")
-
-    def section(title: str, rel: str, dir_path: Path):
-        files = list_md(dir_path)
-        if not files:
-            return
-        lines.append(f"  - {title}:")
-        for fname in files:
-            name = os.path.splitext(fname)[0]
-            lines.append(f"      - {name}: {rel}/{fname}")
-
-    section("PRD", "prd", DOCS_DIR / "prd")
-    section("CJM", "cjm", DOCS_DIR / "cjm")
+            for name in cov:
+                title = os.path.splitext(name)[0].replace("_", " ")
+                lines.append(f"      - {title}: coverage/{name}")
     # Flow overview first
     if (DOCS_DIR / "flow" / "overview.md").exists():
         lines.append("  - User Flow:")
         lines.append("      - Overview: flow/overview.md")
-        for fname in list_md(DOCS_DIR / "flow" / "nodes"):
+        if (DOCS_DIR / "flow" / "index.md").exists():
+            lines.append("      - Index: flow/index.md")
+        # Nodes subgroup
+        node_files = list_md(DOCS_DIR / "flow" / "nodes")
+        if node_files:
+            lines.append("      - Nodes:")
+            for fname in node_files:
+                name = os.path.splitext(fname)[0]
+                lines.append(f"          - {name}: flow/nodes/{fname}")
+    # nested helper to add sections with optional Index
+    def section(title: str, rel: str, dir_path: Path):
+        files = list_md(dir_path)
+        has_index = (dir_path / "index.md").exists()
+        if not files and not has_index:
+            return
+        lines.append(f"  - {title}:")
+        if has_index:
+            lines.append(f"      - Index: {rel}/index.md")
+        for fname in files:
             name = os.path.splitext(fname)[0]
-            lines.append(f"      - {name}: flow/nodes/{fname}")
-    section("User Stories", "stories", DOCS_DIR / "stories")
-    section("Global UX Principles", "ux", DOCS_DIR / "ux")
-    section("Contextual UX", "ctxux", DOCS_DIR / "ctxux")
-    section("HIG Patterns", "hig", DOCS_DIR / "hig")
+            lines.append(f"      - {name}: {rel}/{fname}")
+
+    # Generic sections with 'by ID' subgroup
+    def section_with_group(title: str, rel: str, dir_path: Path, group_label: str = "by ID"):
+        files = list_md(dir_path)
+        has_index = (dir_path / "index.md").exists()
+        if not files and not has_index:
+            return
+        lines.append(f"  - {title}:")
+        if has_index:
+            lines.append(f"      - Index: {rel}/index.md")
+        if files:
+            lines.append(f"      - {group_label}:")
+            for fname in files:
+                name = os.path.splitext(fname)[0]
+                lines.append(f"          - {name}: {rel}/{fname}")
+
+    section_with_group("User Stories", "stories", DOCS_DIR / "stories")
+    section_with_group("Global UX Principles", "ux", DOCS_DIR / "ux")
+    section_with_group("Contextual UX", "ctxux", DOCS_DIR / "ctxux")
+    section_with_group("HIG Patterns", "hig", DOCS_DIR / "hig")
 
     return "\n".join(lines) + "\n"
 
@@ -614,12 +741,14 @@ site_url: https://alexivengo.github.io/dailylogs-specs/
 site_description: Specification Hub
 theme:
   name: material
-  language: en
+  language: ru
   features:
     - navigation.instant
     - navigation.tracking
+    - navigation.top
     - navigation.tabs
     - navigation.indexes
+    - toc.integrate
     - content.code.copy
     - search.suggest
   palette:
@@ -627,7 +756,9 @@ theme:
       primary: indigo
       accent: indigo
 plugins:
-  - search
+  - search:
+      lang: [ru, en]
+      separator: '[\\s_/\\-]+'
 markdown_extensions:
   - admonition
   - toc:
@@ -636,11 +767,163 @@ extra:
   generator: spechub
 # We add custom 'Edit source' links inside pages instead of using edit_uri
 extra_javascript:
+  - assets/javascripts/spechub.zoom.js?v={cache_bust}
   - assets/javascripts/spechub.js?v={cache_bust}
 extra_css:
   - assets/stylesheets/spechub.css?v={cache_bust}
 {build_nav()}""".lstrip()
     write_file(mkdocs_path, base)
+
+
+# ---------- Index pages ----------
+
+def _edges(graph: Dict[str, Any]) -> List[Dict[str, Any]]:
+    return graph.get("edges", []) or []
+
+def _connected(graph: Dict[str, Any], node_id: str, prefix: str) -> List[str]:
+    out: set[str] = set()
+    for e in _edges(graph):
+        f = e.get("from"); t = e.get("to")
+        if not f or not t: continue
+        if f == node_id and t.startswith(prefix):
+            out.add(t)
+        if t == node_id and f.startswith(prefix):
+            out.add(f)
+    return sorted(out)
+
+def render_stories_index(artifacts: Dict[str, Any], graph: Dict[str, Any]) -> None:
+    data = artifacts.get("stories", {})
+    stories = data.get("stories", []) or []
+    lines: List[str] = []
+    lines.append("# User Stories\n")
+    lines.append("| ID | Название | PRD | CJM | Flow | HIG | CtxUX |")
+    lines.append("|---|---|---|---|---|---|---|")
+    for s in stories:
+        sid = s.get("story_id")
+        if not sid: 
+            continue
+        title = s.get("title", "")
+        story_nid = f"story:{sid}"
+        prd_ids = [p.split(":",1)[1] for p in _connected(graph, story_nid, "prd:")]
+        cjm_ids = [c.split(":",1)[1] for c in _connected(graph, story_nid, "cjm:")]
+        flow_nodes = [n.split(":",2)[2] for n in _connected(graph, story_nid, "flow:node:")]
+        ctx_screens = [n.split(":",2)[2] for n in _connected(graph, story_nid, "ctxux:screen:")]
+        prd_cell = ", ".join(f"[{p}](../prd/{slugify(p)}.md)" for p in prd_ids) or "—"
+        cjm_cell = ", ".join(f"[{c}](../cjm/{slugify(c)}.md)" for c in cjm_ids) or "—"
+        if flow_nodes:
+            flow_links = " ".join(f"[`{n}`](../flow/nodes/{slugify(n)}.md)" for n in flow_nodes[:6])
+            if len(flow_nodes) > 6:
+                flow_links += f" +{len(flow_nodes)-6}"
+        else:
+            flow_links = "—"
+        hig_link = f"[кандидаты](../hig/{slugify(sid)}.md)" if (DOCS_DIR/"hig"/f"{slugify(sid)}.md").exists() else "—"
+        ctx_cell = f"[{len(ctx_screens)}](../ctxux/index.md#by-story-{slugify(sid)})" if ctx_screens else "—"
+        lines.append(f"| [{sid}]({slugify(sid)}.md) | {title} | {prd_cell} | {cjm_cell} | {flow_links} | {hig_link} | {ctx_cell} |")
+    write_file(DOCS_DIR/"stories"/"index.md", "\n".join(lines)+"\n")
+
+def render_prd_index(artifacts: Dict[str, Any], graph: Dict[str, Any]) -> None:
+    prd = artifacts.get("prd", {})
+    sections = prd.get("sections", []) or prd.get("prd", []) or []
+    lines: List[str] = []
+    lines.append("# PRD\n")
+    lines.append("| Раздел | Цели | Stories | Flow | Ссылки |")
+    lines.append("|---|---|---:|---:|---|")
+    for sec in sections:
+        sid = sec.get("id") or sec.get("section_id")
+        if not sid: continue
+        goals = "; ".join((sec.get("goals") or [])[:2])
+        prd_nid = f"prd:{sid}"
+        stories = [n.split(":",1)[1] for n in _connected(graph, prd_nid, "story:")]
+        flow_nodes = [n.split(":",2)[2] for n in _connected(graph, prd_nid, "flow:node:")]
+        link = f"[страница]({slugify(str(sid))}.md)"
+        lines.append(f"| {sid} | {goals or '—'} | {len(stories)} | {len(flow_nodes)} | {link} |")
+    write_file(DOCS_DIR/"prd"/"index.md", "\n".join(lines)+"\n")
+
+def render_flow_index(artifacts: Dict[str, Any], graph: Dict[str, Any]) -> None:
+    flow = artifacts.get("flow", {})
+    nodes = flow.get("user_flow", []) or []
+    lines: List[str] = []
+    lines.append("# User Flow\n")
+    lines.append("| Узел | Тип | Исходящие | Аналитика | Refs |")
+    lines.append("|---|---|---:|---|---|")
+    for n in nodes:
+        nid = n.get("id"); ntype = n.get("type", "node")
+        if not nid: continue
+        outc = len(n.get("edges", []) or [])
+        analytics = ", ".join(n.get("analytics", []) or n.get("telemetry", []) or []) or "—"
+        refs_prd = [p.split(":",1)[1] for p in _connected(graph, f"flow:node:{nid}", "prd:")]
+        refs_cjm = [c.split(":",1)[1] for c in _connected(graph, f"flow:node:{nid}", "cjm:")]
+        refs = []
+        if refs_prd:
+            refs.append("PRD: " + ", ".join(f"[{p}](../prd/{slugify(p)}.md)" for p in refs_prd))
+        if refs_cjm:
+            refs.append("CJM: " + ", ".join(f"[{c}](../cjm/{slugify(c)}.md)" for c in refs_cjm))
+        ref_cell = "; ".join(refs) or "—"
+        lines.append(f"| [{nid}]({ 'nodes/'+slugify(nid)+'.md' }) | {ntype} | {outc} | {analytics} | {ref_cell} |")
+    write_file(DOCS_DIR/"flow"/"index.md", "\n".join(lines)+"\n")
+
+def render_ctxux_index(artifacts: Dict[str, Any], graph: Dict[str, Any]) -> None:
+    ctx = artifacts.get("ctxux", {})
+    screens = ctx.get("screens", []) or []
+    lines: List[str] = []
+    lines.append("# Contextual UX\n")
+    lines.append("| Экран | Local principles | Telemetry | Flow |")
+    lines.append("|---|---:|---|---|")
+    # Aggregate story->screens for anchors
+    by_story: Dict[str, List[str]] = {}
+    for s in screens:
+        sid = s.get("id"); 
+        if not sid: continue
+        lcount = len(s.get("local_principles", []) or [])
+        telemetry = ", ".join(s.get("telemetry", []) or []) or "—"
+        flow_nodes = [n.split(":",2)[2] for n in _connected(graph, f"ctxux:screen:{sid}", "flow:node:")]
+        flow_cell = ", ".join(f"[`{n}`](../flow/nodes/{slugify(n)}.md)" for n in flow_nodes) or "—"
+        lines.append(f"| [{sid}]({slugify(sid)}.md) | {lcount} | {telemetry} | {flow_cell} |")
+        # collect story links for anchor section
+        for st in _connected(graph, f"ctxux:screen:{sid}", "story:"):
+            story_id = st.split(":",1)[1]
+            by_story.setdefault(story_id, []).append(sid)
+    # Anchors by story
+    if by_story:
+        lines.append("\n## По сториз\n")
+        for st, scrs in sorted(by_story.items()):
+            lines.append(f"<a id=\"by-story-{slugify(st)}\"></a>")
+            lines.append(f"### {st}")
+            for sc in sorted(scrs):
+                lines.append(f"- [{sc}](./{slugify(sc)}.md)")
+    write_file(DOCS_DIR/"ctxux"/"index.md", "\n".join(lines)+"\n")
+
+def render_hig_index(artifacts: Dict[str, Any], graph: Dict[str, Any]) -> None:
+    hig = artifacts.get("hig", {})
+    stories = hig.get("stories", []) or []
+    lines: List[str] = []
+    lines.append("# HIG Patterns\n")
+    lines.append("| Story | Паттерны | Recommendation | Ссылки |")
+    lines.append("|---|---:|---|---|")
+    for s in stories:
+        sid = s.get("story_id")
+        if not sid: continue
+        cand = s.get("candidates", []) or []
+        rec = (s.get("recommendation", {}) or {}).get("pattern_id", "—")
+        link = f"[страница]({slugify(sid)}.md)" if (DOCS_DIR/"hig"/f"{slugify(sid)}.md").exists() else "—"
+        lines.append(f"| {sid} | {len(cand)} | {rec} | {link} |")
+    write_file(DOCS_DIR/"hig"/"index.md", "\n".join(lines)+"\n")
+
+def render_ux_index(artifacts: Dict[str, Any], graph: Dict[str, Any]) -> None:
+    ux = artifacts.get("ux", {})
+    principles = ux.get("principles", []) or ux.get("global_principles", []) or []
+    lines: List[str] = []
+    lines.append("# Global UX Principles\n")
+    lines.append("| ID | Title | Examples | Ссылки |")
+    lines.append("|---|---|---:|---|")
+    for p in principles:
+        pid = p.get("id") or p.get("principle_id")
+        if not pid: continue
+        title = p.get("title", "")
+        ex_count = len(p.get("examples", []) or [])
+        link = f"[страница]({slugify(pid)}.md)"
+        lines.append(f"| {pid} | {title} | {ex_count} | {link} |")
+    write_file(DOCS_DIR/"ux"/"index.md", "\n".join(lines)+"\n")
 
 
 def main() -> int:
@@ -674,6 +957,17 @@ def main() -> int:
         render_coverage_matrices(artifacts, graph)
     except Exception as e:
         print(f"[WARN] extras generation failed: {e}")
+
+    # Index pages
+    try:
+        render_stories_index(artifacts, graph)
+        render_prd_index(artifacts, graph)
+        render_flow_index(artifacts, graph)
+        render_ctxux_index(artifacts, graph)
+        render_hig_index(artifacts, graph)
+        render_ux_index(artifacts, graph)
+    except Exception as e:
+        print(f"[WARN] indexes generation failed: {e}")
 
     # mkdocs.yml
     write_mkdocs_yaml()

@@ -1,0 +1,3294 @@
+{
+  "nodes": [
+    {
+      "id": "prd:Resume",
+      "type": "PRD",
+      "title": "Резюме (Executive Summary)"
+    },
+    {
+      "id": "prd:4_1",
+      "type": "PRD",
+      "title": "Модуль: Проекты"
+    },
+    {
+      "id": "prd:4_2",
+      "type": "PRD",
+      "title": "Модуль: Журнал работ (Daily Logs)"
+    },
+    {
+      "id": "prd:4_3",
+      "type": "PRD",
+      "title": "Модуль: Документы"
+    },
+    {
+      "id": "prd:4_4",
+      "type": "PRD",
+      "title": "Модуль: Галерея"
+    },
+    {
+      "id": "prd:5",
+      "type": "PRD",
+      "title": "Нефункциональные требования и стандарты"
+    },
+    {
+      "id": "prd:7",
+      "type": "PRD",
+      "title": "Навигация и UX"
+    },
+    {
+      "id": "prd:8",
+      "type": "PRD",
+      "title": "Офлайн‑поведение"
+    },
+    {
+      "id": "prd:9",
+      "type": "PRD",
+      "title": "Безопасность и приватность"
+    },
+    {
+      "id": "prd:10",
+      "type": "PRD",
+      "title": "Локализация, доступность, дизайн‑система"
+    },
+    {
+      "id": "prd:11",
+      "type": "PRD",
+      "title": "Аналитика и телеметрия"
+    },
+    {
+      "id": "cjm:awareness",
+      "type": "CJM",
+      "title": "Осознание проблемы и поиск решения"
+    },
+    {
+      "id": "cjm:evaluation-acquisition",
+      "type": "CJM",
+      "title": "Оценка листинга и установка"
+    },
+    {
+      "id": "cjm:onboarding-first-project",
+      "type": "CJM",
+      "title": "Первый запуск и создание проекта"
+    },
+    {
+      "id": "cjm:daily-logging",
+      "type": "CJM",
+      "title": "Ежедневный ввод (ядро, guardrail)"
+    },
+    {
+      "id": "cjm:reporting-signoff",
+      "type": "CJM",
+      "title": "Превью → подпись → экспорт отчёта"
+    },
+    {
+      "id": "cjm:retention-advocacy",
+      "type": "CJM",
+      "title": "Регулярное использование и рекомендации"
+    },
+    {
+      "id": "flow:node:app-launch",
+      "type": "FLOW_NODE",
+      "title": "app-launch"
+    },
+    {
+      "id": "analytics:event:app_launch",
+      "type": "ANALYTICS",
+      "title": "app_launch"
+    },
+    {
+      "id": "dd:has_projects",
+      "type": "DD",
+      "title": "has_projects"
+    },
+    {
+      "id": "dd:is_online",
+      "type": "DD",
+      "title": "is_online"
+    },
+    {
+      "id": "flow:edge:app-launch:e-app-start-to-empty",
+      "type": "FLOW_EDGE",
+      "title": "e-app-start-to-empty",
+      "data": {
+        "from_node": "app-launch",
+        "to_node": "projects-empty"
+      }
+    },
+    {
+      "id": "analytics:event:app_launch",
+      "type": "ANALYTICS",
+      "title": "app_launch"
+    },
+    {
+      "id": "flow:node:success-done",
+      "type": "FLOW_NODE",
+      "title": "success-done"
+    },
+    {
+      "id": "analytics:event:flow_success",
+      "type": "ANALYTICS",
+      "title": "flow_success"
+    },
+    {
+      "id": "flow:node:cancel-out",
+      "type": "FLOW_NODE",
+      "title": "cancel-out"
+    },
+    {
+      "id": "analytics:event:flow_cancel",
+      "type": "ANALYTICS",
+      "title": "flow_cancel"
+    },
+    {
+      "id": "flow:node:daily-calendar",
+      "type": "FLOW_NODE",
+      "title": "daily-calendar"
+    },
+    {
+      "id": "analytics:event:daily_calendar_view",
+      "type": "ANALYTICS",
+      "title": "daily_calendar_view"
+    },
+    {
+      "id": "dd:selected_date",
+      "type": "DD",
+      "title": "selected_date"
+    },
+    {
+      "id": "dd:day_date",
+      "type": "DD",
+      "title": "day_date"
+    },
+    {
+      "id": "flow:edge:daily-calendar:e-cal-select-today",
+      "type": "FLOW_EDGE",
+      "title": "e-cal-select-today",
+      "data": {
+        "from_node": "daily-calendar",
+        "to_node": "day-entries-decision"
+      }
+    },
+    {
+      "id": "analytics:event:open_today",
+      "type": "ANALYTICS",
+      "title": "open_today"
+    },
+    {
+      "id": "flow:edge:daily-calendar:e-cal-future-date",
+      "type": "FLOW_EDGE",
+      "title": "e-cal-future-date",
+      "data": {
+        "from_node": "daily-calendar",
+        "to_node": "future-date-error"
+      }
+    },
+    {
+      "id": "flow:node:day-entries-decision",
+      "type": "FLOW_NODE",
+      "title": "day-entries-decision"
+    },
+    {
+      "id": "flow:edge:day-entries-decision:e-day-state-empty",
+      "type": "FLOW_EDGE",
+      "title": "e-day-state-empty",
+      "data": {
+        "from_node": "day-entries-decision",
+        "to_node": "day-log-empty"
+      }
+    },
+    {
+      "id": "flow:edge:day-entries-decision:e-day-state-populated",
+      "type": "FLOW_EDGE",
+      "title": "e-day-state-populated",
+      "data": {
+        "from_node": "day-entries-decision",
+        "to_node": "day-log-populated"
+      }
+    },
+    {
+      "id": "flow:node:day-log-empty",
+      "type": "FLOW_NODE",
+      "title": "day-log-empty"
+    },
+    {
+      "id": "analytics:event:day_log_view",
+      "type": "ANALYTICS",
+      "title": "day_log_view"
+    },
+    {
+      "id": "dd:day_date",
+      "type": "DD",
+      "title": "day_date"
+    },
+    {
+      "id": "flow:edge:day-log-empty:e-day-add-entry-empty",
+      "type": "FLOW_EDGE",
+      "title": "e-day-add-entry-empty",
+      "data": {
+        "from_node": "day-log-empty",
+        "to_node": "entry-editor"
+      }
+    },
+    {
+      "id": "analytics:event:tap_add_entry",
+      "type": "ANALYTICS",
+      "title": "tap_add_entry"
+    },
+    {
+      "id": "flow:edge:day-log-empty:e-weather-manage-empty",
+      "type": "FLOW_EDGE",
+      "title": "e-weather-manage-empty",
+      "data": {
+        "from_node": "day-log-empty",
+        "to_node": "check-network-for-weather"
+      }
+    },
+    {
+      "id": "flow:node:day-log-populated",
+      "type": "FLOW_NODE",
+      "title": "day-log-populated"
+    },
+    {
+      "id": "analytics:event:day_log_view",
+      "type": "ANALYTICS",
+      "title": "day_log_view"
+    },
+    {
+      "id": "dd:day_date",
+      "type": "DD",
+      "title": "day_date"
+    },
+    {
+      "id": "flow:edge:day-log-populated:e-day-add-entry-populated",
+      "type": "FLOW_EDGE",
+      "title": "e-day-add-entry-populated",
+      "data": {
+        "from_node": "day-log-populated",
+        "to_node": "entry-editor"
+      }
+    },
+    {
+      "id": "analytics:event:tap_add_entry",
+      "type": "ANALYTICS",
+      "title": "tap_add_entry"
+    },
+    {
+      "id": "flow:edge:day-log-populated:e-day-open-preview",
+      "type": "FLOW_EDGE",
+      "title": "e-day-open-preview",
+      "data": {
+        "from_node": "day-log-populated",
+        "to_node": "report-preview"
+      }
+    },
+    {
+      "id": "analytics:event:report_preview_view",
+      "type": "ANALYTICS",
+      "title": "report_preview_view"
+    },
+    {
+      "id": "flow:edge:day-log-populated:e-weather-manage-populated",
+      "type": "FLOW_EDGE",
+      "title": "e-weather-manage-populated",
+      "data": {
+        "from_node": "day-log-populated",
+        "to_node": "check-network-for-weather"
+      }
+    },
+    {
+      "id": "flow:node:documents-view",
+      "type": "FLOW_NODE",
+      "title": "documents-view"
+    },
+    {
+      "id": "analytics:event:documents_search",
+      "type": "ANALYTICS",
+      "title": "documents_search"
+    },
+    {
+      "id": "flow:edge:documents-view:e-docs-back",
+      "type": "FLOW_EDGE",
+      "title": "e-docs-back",
+      "data": {
+        "from_node": "documents-view",
+        "to_node": "project-dashboard"
+      }
+    },
+    {
+      "id": "flow:node:entry-editor",
+      "type": "FLOW_NODE",
+      "title": "entry-editor"
+    },
+    {
+      "id": "analytics:event:entry_editor_view",
+      "type": "ANALYTICS",
+      "title": "entry_editor_view"
+    },
+    {
+      "id": "dd:entry_data",
+      "type": "DD",
+      "title": "entry_data"
+    },
+    {
+      "id": "dd:entry_type",
+      "type": "DD",
+      "title": "entry_type"
+    },
+    {
+      "id": "flow:edge:entry-editor:e-entry-attach-photo",
+      "type": "FLOW_EDGE",
+      "title": "e-entry-attach-photo",
+      "data": {
+        "from_node": "entry-editor",
+        "to_node": "camera-permission"
+      }
+    },
+    {
+      "id": "flow:edge:entry-editor:e-entry-submit",
+      "type": "FLOW_EDGE",
+      "title": "e-entry-submit",
+      "data": {
+        "from_node": "entry-editor",
+        "to_node": "save-entry"
+      }
+    },
+    {
+      "id": "analytics:event:entry_create_attempt",
+      "type": "ANALYTICS",
+      "title": "entry_create_attempt"
+    },
+    {
+      "id": "flow:edge:entry-editor:e-save-and-add-another",
+      "type": "FLOW_EDGE",
+      "title": "e-save-and-add-another",
+      "data": {
+        "from_node": "entry-editor",
+        "to_node": "save-entry"
+      }
+    },
+    {
+      "id": "analytics:event:entry_create_attempt",
+      "type": "ANALYTICS",
+      "title": "entry_create_attempt"
+    },
+    {
+      "id": "flow:node:save-entry",
+      "type": "FLOW_NODE",
+      "title": "save-entry"
+    },
+    {
+      "id": "analytics:event:entry_saved",
+      "type": "ANALYTICS",
+      "title": "entry_saved"
+    },
+    {
+      "id": "dd:entry_id",
+      "type": "DD",
+      "title": "entry_id"
+    },
+    {
+      "id": "dd:source",
+      "type": "DD",
+      "title": "source"
+    },
+    {
+      "id": "flow:edge:save-entry:e-save-entry-success",
+      "type": "FLOW_EDGE",
+      "title": "e-save-entry-success",
+      "data": {
+        "from_node": "save-entry",
+        "to_node": "day-log-populated"
+      }
+    },
+    {
+      "id": "analytics:event:entry_saved",
+      "type": "ANALYTICS",
+      "title": "entry_saved"
+    },
+    {
+      "id": "flow:edge:save-entry:e-save-entry-validation",
+      "type": "FLOW_EDGE",
+      "title": "e-save-entry-validation",
+      "data": {
+        "from_node": "save-entry",
+        "to_node": "entry-editor"
+      }
+    },
+    {
+      "id": "flow:edge:save-entry:e-save-entry-system-error",
+      "type": "FLOW_EDGE",
+      "title": "e-save-entry-system-error",
+      "data": {
+        "from_node": "save-entry",
+        "to_node": "error-entry-save"
+      }
+    },
+    {
+      "id": "flow:node:error-entry-save",
+      "type": "FLOW_NODE",
+      "title": "error-entry-save"
+    },
+    {
+      "id": "analytics:event:error_entry_save",
+      "type": "ANALYTICS",
+      "title": "error_entry_save"
+    },
+    {
+      "id": "flow:edge:error-entry-save:e-entry-retry",
+      "type": "FLOW_EDGE",
+      "title": "e-entry-retry",
+      "data": {
+        "from_node": "error-entry-save",
+        "to_node": "save-entry"
+      }
+    },
+    {
+      "id": "analytics:event:error_entry_save",
+      "type": "ANALYTICS",
+      "title": "error_entry_save"
+    },
+    {
+      "id": "flow:edge:error-entry-save:e-entry-cancel",
+      "type": "FLOW_EDGE",
+      "title": "e-entry-cancel",
+      "data": {
+        "from_node": "error-entry-save",
+        "to_node": "day-log-populated"
+      }
+    },
+    {
+      "id": "flow:node:report-preview",
+      "type": "FLOW_NODE",
+      "title": "report-preview"
+    },
+    {
+      "id": "analytics:event:report_preview_view",
+      "type": "ANALYTICS",
+      "title": "report_preview_view"
+    },
+    {
+      "id": "dd:day_status",
+      "type": "DD",
+      "title": "day_status"
+    },
+    {
+      "id": "dd:report_preview",
+      "type": "DD",
+      "title": "report_preview"
+    },
+    {
+      "id": "flow:edge:report-preview:e-preview-tap-sign",
+      "type": "FLOW_EDGE",
+      "title": "e-preview-tap-sign",
+      "data": {
+        "from_node": "report-preview",
+        "to_node": "report-sign"
+      }
+    },
+    {
+      "id": "analytics:event:tap_sign",
+      "type": "ANALYTICS",
+      "title": "tap_sign"
+    },
+    {
+      "id": "flow:node:report-sign",
+      "type": "FLOW_NODE",
+      "title": "report-sign"
+    },
+    {
+      "id": "analytics:event:tap_sign",
+      "type": "ANALYTICS",
+      "title": "tap_sign"
+    },
+    {
+      "id": "dd:signature_blob",
+      "type": "DD",
+      "title": "signature_blob"
+    },
+    {
+      "id": "dd:signer_name",
+      "type": "DD",
+      "title": "signer_name"
+    },
+    {
+      "id": "flow:edge:report-sign:e-sign-confirm",
+      "type": "FLOW_EDGE",
+      "title": "e-sign-confirm",
+      "data": {
+        "from_node": "report-sign",
+        "to_node": "lock-day"
+      }
+    },
+    {
+      "id": "flow:node:lock-day",
+      "type": "FLOW_NODE",
+      "title": "lock-day"
+    },
+    {
+      "id": "analytics:event:report_signed",
+      "type": "ANALYTICS",
+      "title": "report_signed"
+    },
+    {
+      "id": "dd:signed_pdf_checksum",
+      "type": "DD",
+      "title": "signed_pdf_checksum"
+    },
+    {
+      "id": "dd:signed_at",
+      "type": "DD",
+      "title": "signed_at"
+    },
+    {
+      "id": "flow:edge:lock-day:e-lock-success",
+      "type": "FLOW_EDGE",
+      "title": "e-lock-success",
+      "data": {
+        "from_node": "lock-day",
+        "to_node": "report-preview-signed"
+      }
+    },
+    {
+      "id": "analytics:event:report_signed",
+      "type": "ANALYTICS",
+      "title": "report_signed"
+    },
+    {
+      "id": "flow:edge:lock-day:e-lock-failure",
+      "type": "FLOW_EDGE",
+      "title": "e-lock-failure",
+      "data": {
+        "from_node": "lock-day",
+        "to_node": "report-preview"
+      }
+    },
+    {
+      "id": "flow:node:report-preview-signed",
+      "type": "FLOW_NODE",
+      "title": "report-preview-signed"
+    },
+    {
+      "id": "analytics:event:report_preview_signed_view",
+      "type": "ANALYTICS",
+      "title": "report_preview_signed_view"
+    },
+    {
+      "id": "flow:edge:report-preview-signed:e-signed-export-pdf",
+      "type": "FLOW_EDGE",
+      "title": "e-signed-export-pdf",
+      "data": {
+        "from_node": "report-preview-signed",
+        "to_node": "export-decision"
+      }
+    },
+    {
+      "id": "flow:node:export-decision",
+      "type": "FLOW_NODE",
+      "title": "export-decision"
+    },
+    {
+      "id": "analytics:event:export_options_view",
+      "type": "ANALYTICS",
+      "title": "export_options_view"
+    },
+    {
+      "id": "dd:export_format",
+      "type": "DD",
+      "title": "export_format"
+    },
+    {
+      "id": "dd:export_dest",
+      "type": "DD",
+      "title": "export_dest"
+    },
+    {
+      "id": "flow:edge:export-decision:e-export-format-pdf",
+      "type": "FLOW_EDGE",
+      "title": "e-export-format-pdf",
+      "data": {
+        "from_node": "export-decision",
+        "to_node": "export-generate"
+      }
+    },
+    {
+      "id": "flow:edge:export-decision:e-export-format-other",
+      "type": "FLOW_EDGE",
+      "title": "e-export-format-other",
+      "data": {
+        "from_node": "export-decision",
+        "to_node": "export-generate"
+      }
+    },
+    {
+      "id": "flow:edge:export-decision:e-export-cancel",
+      "type": "FLOW_EDGE",
+      "title": "e-export-cancel",
+      "data": {
+        "from_node": "export-decision",
+        "to_node": "report-preview-signed"
+      }
+    },
+    {
+      "id": "flow:node:export-generate",
+      "type": "FLOW_NODE",
+      "title": "export-generate"
+    },
+    {
+      "id": "analytics:event:export_process_started",
+      "type": "ANALYTICS",
+      "title": "export_process_started"
+    },
+    {
+      "id": "dd:file_name",
+      "type": "DD",
+      "title": "file_name"
+    },
+    {
+      "id": "flow:edge:export-generate:e-export-success",
+      "type": "FLOW_EDGE",
+      "title": "e-export-success",
+      "data": {
+        "from_node": "export-generate",
+        "to_node": "success-done"
+      }
+    },
+    {
+      "id": "analytics:event:report_exported",
+      "type": "ANALYTICS",
+      "title": "report_exported"
+    },
+    {
+      "id": "flow:edge:export-generate:e-export-error",
+      "type": "FLOW_EDGE",
+      "title": "e-export-error",
+      "data": {
+        "from_node": "export-generate",
+        "to_node": "export-error"
+      }
+    },
+    {
+      "id": "flow:node:export-error",
+      "type": "FLOW_NODE",
+      "title": "export-error"
+    },
+    {
+      "id": "analytics:event:export_failed",
+      "type": "ANALYTICS",
+      "title": "export_failed"
+    },
+    {
+      "id": "dd:error_code",
+      "type": "DD",
+      "title": "error_code"
+    },
+    {
+      "id": "flow:edge:export-error:e-export-retry",
+      "type": "FLOW_EDGE",
+      "title": "e-export-retry",
+      "data": {
+        "from_node": "export-error",
+        "to_node": "export-generate"
+      }
+    },
+    {
+      "id": "analytics:event:export_retry",
+      "type": "ANALYTICS",
+      "title": "export_retry"
+    },
+    {
+      "id": "flow:edge:export-error:e-export-abort",
+      "type": "FLOW_EDGE",
+      "title": "e-export-abort",
+      "data": {
+        "from_node": "export-error",
+        "to_node": "report-preview-signed"
+      }
+    },
+    {
+      "id": "analytics:event:export_abort",
+      "type": "ANALYTICS",
+      "title": "export_abort"
+    },
+    {
+      "id": "flow:node:camera-permission",
+      "type": "FLOW_NODE",
+      "title": "camera-permission"
+    },
+    {
+      "id": "analytics:event:permission_check_camera",
+      "type": "ANALYTICS",
+      "title": "permission_check_camera"
+    },
+    {
+      "id": "dd:permission_status",
+      "type": "DD",
+      "title": "permission_status"
+    },
+    {
+      "id": "flow:edge:camera-permission:e-cam-granted",
+      "type": "FLOW_EDGE",
+      "title": "e-cam-granted",
+      "data": {
+        "from_node": "camera-permission",
+        "to_node": "capture-photo"
+      }
+    },
+    {
+      "id": "flow:edge:camera-permission:e-cam-denied",
+      "type": "FLOW_EDGE",
+      "title": "e-cam-denied",
+      "data": {
+        "from_node": "camera-permission",
+        "to_node": "camera-permission-error"
+      }
+    },
+    {
+      "id": "flow:node:capture-photo",
+      "type": "FLOW_NODE",
+      "title": "capture-photo"
+    },
+    {
+      "id": "analytics:event:photo_captured",
+      "type": "ANALYTICS",
+      "title": "photo_captured"
+    },
+    {
+      "id": "dd:photo_id",
+      "type": "DD",
+      "title": "photo_id"
+    },
+    {
+      "id": "flow:edge:capture-photo:e-photo-success",
+      "type": "FLOW_EDGE",
+      "title": "e-photo-success",
+      "data": {
+        "from_node": "capture-photo",
+        "to_node": "entry-editor"
+      }
+    },
+    {
+      "id": "analytics:event:photo_captured",
+      "type": "ANALYTICS",
+      "title": "photo_captured"
+    },
+    {
+      "id": "flow:node:camera-permission-error",
+      "type": "FLOW_NODE",
+      "title": "camera-permission-error"
+    },
+    {
+      "id": "analytics:event:camera_permission_error_view",
+      "type": "ANALYTICS",
+      "title": "camera_permission_error_view"
+    },
+    {
+      "id": "flow:edge:camera-permission-error:e-open-settings",
+      "type": "FLOW_EDGE",
+      "title": "e-open-settings",
+      "data": {
+        "from_node": "camera-permission-error",
+        "to_node": "entry-editor"
+      }
+    },
+    {
+      "id": "analytics:event:open_settings_camera",
+      "type": "ANALYTICS",
+      "title": "open_settings_camera"
+    },
+    {
+      "id": "flow:edge:camera-permission-error:e-continue-without",
+      "type": "FLOW_EDGE",
+      "title": "e-continue-without",
+      "data": {
+        "from_node": "camera-permission-error",
+        "to_node": "entry-editor"
+      }
+    },
+    {
+      "id": "analytics:event:continue_without_photo",
+      "type": "ANALYTICS",
+      "title": "continue_without_photo"
+    },
+    {
+      "id": "flow:node:gallery",
+      "type": "FLOW_NODE",
+      "title": "gallery"
+    },
+    {
+      "id": "analytics:event:gallery_bulk_attach",
+      "type": "ANALYTICS",
+      "title": "gallery_bulk_attach"
+    },
+    {
+      "id": "flow:edge:gallery:e-gallery-back",
+      "type": "FLOW_EDGE",
+      "title": "e-gallery-back",
+      "data": {
+        "from_node": "gallery",
+        "to_node": "project-dashboard"
+      }
+    },
+    {
+      "id": "flow:node:save-project",
+      "type": "FLOW_NODE",
+      "title": "save-project"
+    },
+    {
+      "id": "analytics:event:project_saved",
+      "type": "ANALYTICS",
+      "title": "project_saved"
+    },
+    {
+      "id": "dd:project_id",
+      "type": "DD",
+      "title": "project_id"
+    },
+    {
+      "id": "flow:edge:save-project:e-save-proj-success",
+      "type": "FLOW_EDGE",
+      "title": "e-save-proj-success",
+      "data": {
+        "from_node": "save-project",
+        "to_node": "project-dashboard"
+      }
+    },
+    {
+      "id": "analytics:event:project_saved",
+      "type": "ANALYTICS",
+      "title": "project_saved"
+    },
+    {
+      "id": "flow:edge:save-project:e-save-proj-failure",
+      "type": "FLOW_EDGE",
+      "title": "e-save-proj-failure",
+      "data": {
+        "from_node": "save-project",
+        "to_node": "error-save"
+      }
+    },
+    {
+      "id": "flow:node:error-save",
+      "type": "FLOW_NODE",
+      "title": "error-save"
+    },
+    {
+      "id": "analytics:event:error_project_save",
+      "type": "ANALYTICS",
+      "title": "error_project_save"
+    },
+    {
+      "id": "flow:edge:error-save:e-save-retry",
+      "type": "FLOW_EDGE",
+      "title": "e-save-retry",
+      "data": {
+        "from_node": "error-save",
+        "to_node": "save-project"
+      }
+    },
+    {
+      "id": "analytics:event:error_project_save",
+      "type": "ANALYTICS",
+      "title": "error_project_save"
+    },
+    {
+      "id": "flow:edge:error-save:e-save-cancel",
+      "type": "FLOW_EDGE",
+      "title": "e-save-cancel",
+      "data": {
+        "from_node": "error-save",
+        "to_node": "cancel-out"
+      }
+    },
+    {
+      "id": "flow:node:future-date-error",
+      "type": "FLOW_NODE",
+      "title": "future-date-error"
+    },
+    {
+      "id": "flow:node:check-network-for-weather",
+      "type": "FLOW_NODE",
+      "title": "check-network-for-weather"
+    },
+    {
+      "id": "analytics:event:weather_check",
+      "type": "ANALYTICS",
+      "title": "weather_check"
+    },
+    {
+      "id": "flow:edge:check-network-for-weather:e-net-available",
+      "type": "FLOW_EDGE",
+      "title": "e-net-available",
+      "data": {
+        "from_node": "check-network-for-weather",
+        "to_node": "fetch-weather"
+      }
+    },
+    {
+      "id": "flow:edge:check-network-for-weather:e-net-offline",
+      "type": "FLOW_EDGE",
+      "title": "e-net-offline",
+      "data": {
+        "from_node": "check-network-for-weather",
+        "to_node": "manual-weather"
+      }
+    },
+    {
+      "id": "flow:node:projects-empty",
+      "type": "FLOW_NODE",
+      "title": "projects-empty"
+    },
+    {
+      "id": "analytics:event:empty_state_shown",
+      "type": "ANALYTICS",
+      "title": "empty_state_shown"
+    },
+    {
+      "id": "dd:project_location",
+      "type": "DD",
+      "title": "project_location"
+    },
+    {
+      "id": "flow:edge:projects-empty:e-empty-create",
+      "type": "FLOW_EDGE",
+      "title": "e-empty-create",
+      "data": {
+        "from_node": "projects-empty",
+        "to_node": "project-create"
+      }
+    },
+    {
+      "id": "analytics:event:empty_state_shown",
+      "type": "ANALYTICS",
+      "title": "empty_state_shown"
+    },
+    {
+      "id": "flow:node:project-create",
+      "type": "FLOW_NODE",
+      "title": "project-create"
+    },
+    {
+      "id": "analytics:event:project_create_view",
+      "type": "ANALYTICS",
+      "title": "project_create_view"
+    },
+    {
+      "id": "dd:project_data",
+      "type": "DD",
+      "title": "project_data"
+    },
+    {
+      "id": "dd:project_name",
+      "type": "DD",
+      "title": "project_name"
+    },
+    {
+      "id": "flow:edge:project-create:e-create-submit",
+      "type": "FLOW_EDGE",
+      "title": "e-create-submit",
+      "data": {
+        "from_node": "project-create",
+        "to_node": "save-project"
+      }
+    },
+    {
+      "id": "analytics:event:project_create_attempt",
+      "type": "ANALYTICS",
+      "title": "project_create_attempt"
+    },
+    {
+      "id": "flow:edge:project-create:e-create-cancel",
+      "type": "FLOW_EDGE",
+      "title": "e-create-cancel",
+      "data": {
+        "from_node": "project-create",
+        "to_node": "cancel-out"
+      }
+    },
+    {
+      "id": "flow:node:project-dashboard",
+      "type": "FLOW_NODE",
+      "title": "project-dashboard"
+    },
+    {
+      "id": "analytics:event:project_dashboard_view",
+      "type": "ANALYTICS",
+      "title": "project_dashboard_view"
+    },
+    {
+      "id": "flow:edge:project-dashboard:e-dash-open-daily",
+      "type": "FLOW_EDGE",
+      "title": "e-dash-open-daily",
+      "data": {
+        "from_node": "project-dashboard",
+        "to_node": "daily-calendar"
+      }
+    },
+    {
+      "id": "analytics:event:project_dashboard_view",
+      "type": "ANALYTICS",
+      "title": "project_dashboard_view"
+    },
+    {
+      "id": "flow:edge:project-dashboard:e-dash-open-documents",
+      "type": "FLOW_EDGE",
+      "title": "e-dash-open-documents",
+      "data": {
+        "from_node": "project-dashboard",
+        "to_node": "documents-view"
+      }
+    },
+    {
+      "id": "flow:edge:project-dashboard:e-dash-open-gallery",
+      "type": "FLOW_EDGE",
+      "title": "e-dash-open-gallery",
+      "data": {
+        "from_node": "project-dashboard",
+        "to_node": "gallery"
+      }
+    },
+    {
+      "id": "flow:node:fetch-weather",
+      "type": "FLOW_NODE",
+      "title": "fetch-weather"
+    },
+    {
+      "id": "analytics:event:weather_fetched",
+      "type": "ANALYTICS",
+      "title": "weather_fetched"
+    },
+    {
+      "id": "dd:weather_data",
+      "type": "DD",
+      "title": "weather_data"
+    },
+    {
+      "id": "dd:weather_temp_c",
+      "type": "DD",
+      "title": "weather_temp_c"
+    },
+    {
+      "id": "dd:weather_wind_ms",
+      "type": "DD",
+      "title": "weather_wind_ms"
+    },
+    {
+      "id": "dd:weather_precip_mm",
+      "type": "DD",
+      "title": "weather_precip_mm"
+    },
+    {
+      "id": "dd:weather_provider",
+      "type": "DD",
+      "title": "weather_provider"
+    },
+    {
+      "id": "dd:weather_source",
+      "type": "DD",
+      "title": "weather_source"
+    },
+    {
+      "id": "flow:edge:fetch-weather:e-weather-success",
+      "type": "FLOW_EDGE",
+      "title": "e-weather-success",
+      "data": {
+        "from_node": "fetch-weather",
+        "to_node": "day-log-populated"
+      }
+    },
+    {
+      "id": "analytics:event:weather_fetched",
+      "type": "ANALYTICS",
+      "title": "weather_fetched"
+    },
+    {
+      "id": "flow:edge:fetch-weather:e-weather-fail",
+      "type": "FLOW_EDGE",
+      "title": "e-weather-fail",
+      "data": {
+        "from_node": "fetch-weather",
+        "to_node": "day-log-populated"
+      }
+    },
+    {
+      "id": "analytics:event:weather_fetched",
+      "type": "ANALYTICS",
+      "title": "weather_fetched"
+    },
+    {
+      "id": "flow:node:manual-weather",
+      "type": "FLOW_NODE",
+      "title": "manual-weather"
+    },
+    {
+      "id": "analytics:event:manual_weather_input",
+      "type": "ANALYTICS",
+      "title": "manual_weather_input"
+    },
+    {
+      "id": "dd:weather_manual",
+      "type": "DD",
+      "title": "weather_manual"
+    },
+    {
+      "id": "dd:weather_temp_c",
+      "type": "DD",
+      "title": "weather_temp_c"
+    },
+    {
+      "id": "dd:weather_wind_ms",
+      "type": "DD",
+      "title": "weather_wind_ms"
+    },
+    {
+      "id": "dd:weather_precip_mm",
+      "type": "DD",
+      "title": "weather_precip_mm"
+    },
+    {
+      "id": "dd:weather_source",
+      "type": "DD",
+      "title": "weather_source"
+    },
+    {
+      "id": "flow:edge:manual-weather:e-weather-submit",
+      "type": "FLOW_EDGE",
+      "title": "e-weather-submit",
+      "data": {
+        "from_node": "manual-weather",
+        "to_node": "day-log-populated"
+      }
+    },
+    {
+      "id": "analytics:event:manual_weather_input",
+      "type": "ANALYTICS",
+      "title": "manual_weather_input"
+    },
+    {
+      "id": "story:us-1",
+      "type": "STORY",
+      "title": "создать первый проект по минимальному набору полей"
+    },
+    {
+      "id": "story:us-10",
+      "type": "STORY",
+      "title": "экспорт подписанного отчёта через iOS Share Sheet с ретраями"
+    },
+    {
+      "id": "story:us-11",
+      "type": "STORY",
+      "title": "альтернативные форматы экспорта (CSV)"
+    },
+    {
+      "id": "story:us-12",
+      "type": "STORY",
+      "title": "выбирать дату с запретом будущих"
+    },
+    {
+      "id": "story:us-13",
+      "type": "STORY",
+      "title": "реестр документов с поиском/фильтрами и офлайн-доступом"
+    },
+    {
+      "id": "story:us-14",
+      "type": "STORY",
+      "title": "галерею с группировкой по дням и массовыми действиями"
+    },
+    {
+      "id": "story:us-15",
+      "type": "STORY",
+      "title": "корректные a11y-паттерны (VoiceOver/клавиатура/DT)"
+    },
+    {
+      "id": "story:us-16",
+      "type": "STORY",
+      "title": "локализованные строки, форматы дат/единиц и шаблон имени файла"
+    },
+    {
+      "id": "story:us-17",
+      "type": "STORY",
+      "title": "события аналитики на ключевых шагах"
+    },
+    {
+      "id": "story:us-18",
+      "type": "STORY",
+      "title": "понятную обработку ошибок при создании проекта (Retry/Отмена) с сохранением введённых данных"
+    },
+    {
+      "id": "story:us-2",
+      "type": "STORY",
+      "title": "ясный CTA на пустом экране проектов"
+    },
+    {
+      "id": "story:us-4",
+      "type": "STORY",
+      "title": "«Сохранить и добавить ещё»"
+    },
+    {
+      "id": "story:us-5",
+      "type": "STORY",
+      "title": "автоподстановку погоды онлайн и ручной ввод офлайн"
+    },
+    {
+      "id": "story:us-6",
+      "type": "STORY",
+      "title": "прикреплять фото к записи"
+    },
+    {
+      "id": "story:us-7",
+      "type": "STORY",
+      "title": "инструкции и быстрый переход в Настройки для разблокировки фото"
+    },
+    {
+      "id": "story:us-8",
+      "type": "STORY",
+      "title": "копировать запись на другой день"
+    },
+    {
+      "id": "story:us-9",
+      "type": "STORY",
+      "title": "предпросмотр отчёта и подписание с блокировкой дня"
+    },
+    {
+      "id": "hig:us-2:candidate:content-unavailable-view",
+      "type": "HIG",
+      "title": "ContentUnavailableView + primary CTA"
+    },
+    {
+      "id": "hig:us-2:candidate:vstack-empty",
+      "type": "HIG",
+      "title": "VStack + Text/Image + Button"
+    },
+    {
+      "id": "hig:us-2:candidate:tipkit-inline",
+      "type": "HIG",
+      "title": "TipKit inline tip next to CTA"
+    },
+    {
+      "id": "hig:us-1:candidate:sheet-create",
+      "type": "HIG",
+      "title": "Present creation form in a sheet"
+    },
+    {
+      "id": "hig:us-1:candidate:nav-push-create",
+      "type": "HIG",
+      "title": "Navigation push to creation view"
+    },
+    {
+      "id": "hig:us-1:candidate:form-minimal",
+      "type": "HIG",
+      "title": "Form with single required TextField & Save"
+    },
+    {
+      "id": "hig:us-18:candidate:alert-retry-cancel",
+      "type": "HIG",
+      "title": "Alert with Retry/Cancel, state preserved"
+    },
+    {
+      "id": "hig:us-18:candidate:confirmation-dialog",
+      "type": "HIG",
+      "title": "Confirmation dialog with options"
+    },
+    {
+      "id": "hig:us-12:candidate:datepicker-graphical",
+      "type": "HIG",
+      "title": "Graphical DatePicker with Today control, limited to valid range"
+    },
+    {
+      "id": "hig:us-12:candidate:list-dates",
+      "type": "HIG",
+      "title": "List of dates with Today shortcut"
+    },
+    {
+      "id": "hig:us-12:candidate:disable-range",
+      "type": "HIG",
+      "title": "Disable future dates via `in:` on DatePicker"
+    },
+    {
+      "id": "hig:us-4:candidate:form-save-add",
+      "type": "HIG",
+      "title": "Form with explicit 'Save & Add Another' primary action"
+    },
+    {
+      "id": "hig:us-4:candidate:menu-save",
+      "type": "HIG",
+      "title": "Menu containing Save and Save & Add Another"
+    },
+    {
+      "id": "hig:us-4:candidate:alert-entry-retry",
+      "type": "HIG",
+      "title": "Alert with Retry/Cancel on entry save failure"
+    },
+    {
+      "id": "hig:us-5:candidate:task-progress",
+      "type": "HIG",
+      "title": "Task-driven fetch with inline ProgressView and timeout"
+    },
+    {
+      "id": "hig:us-5:candidate:inline-weather-form",
+      "type": "HIG",
+      "title": "Inline form when offline/timeout"
+    },
+    {
+      "id": "hig:us-9:candidate:pdfkit-preview",
+      "type": "HIG",
+      "title": "PDFKit PDFView preview"
+    },
+    {
+      "id": "hig:us-9:candidate:canvas-signature",
+      "type": "HIG",
+      "title": "Signature canvas with Clear & Confirm"
+    },
+    {
+      "id": "hig:us-9:candidate:alert-destructive-lock",
+      "type": "HIG",
+      "title": "Alert with destructive 'Lock Day'"
+    },
+    {
+      "id": "hig:us-10:candidate:sharelink",
+      "type": "HIG",
+      "title": "ShareLink to invoke Share Sheet"
+    },
+    {
+      "id": "hig:us-10:candidate:picker-menu-format",
+      "type": "HIG",
+      "title": "Picker inside Menu to choose format (PDF/CSV)"
+    },
+    {
+      "id": "hig:us-10:candidate:progress-alert-retry",
+      "type": "HIG",
+      "title": "ProgressView and Alert with retry/backoff"
+    },
+    {
+      "id": "hig:us-11:candidate:picker-menu-format",
+      "type": "HIG",
+      "title": "Picker inside Menu"
+    },
+    {
+      "id": "hig:us-11:candidate:segmented-pick",
+      "type": "HIG",
+      "title": "Segmented Picker for 2–3 formats"
+    },
+    {
+      "id": "hig:us-13:candidate:list-searchable",
+      "type": "HIG",
+      "title": "List with .searchable and Section headers"
+    },
+    {
+      "id": "hig:us-13:candidate:local-cache-list",
+      "type": "HIG",
+      "title": "Open cached docs offline; Lazy list"
+    },
+    {
+      "id": "hig:us-14:candidate:grid-sectioned",
+      "type": "HIG",
+      "title": "LazyVGrid with Section per day"
+    },
+    {
+      "id": "hig:us-14:candidate:multi-selection-edit-mode",
+      "type": "HIG",
+      "title": "Multi-selection via selection + edit mode"
+    },
+    {
+      "id": "hig:us-15:candidate:alert-focus",
+      "type": "HIG",
+      "title": "Alert with explicit focus & assertive live region"
+    },
+    {
+      "id": "hig:us-15:candidate:dynamic-type-44pt",
+      "type": "HIG",
+      "title": "System typography + min 44pt targets"
+    },
+    {
+      "id": "hig:us-16:candidate:string-localized",
+      "type": "HIG",
+      "title": "String(localized:) + FormatStyle/Date.FormatStyle"
+    },
+    {
+      "id": "hig:us-16:candidate:export-filename",
+      "type": "HIG",
+      "title": "Sanitized filename template using Date.FormatStyle"
+    },
+    {
+      "id": "ctxux:screen:documents-view",
+      "type": "CTXUX",
+      "title": "Просмотр документов"
+    },
+    {
+      "id": "ux:principle:one-screen-one-action",
+      "type": "UX",
+      "title": "one-screen-one-action"
+    },
+    {
+      "id": "ux:principle:minimize-required-input",
+      "type": "UX",
+      "title": "minimize-required-input"
+    },
+    {
+      "id": "ctxux:screen:export-decision",
+      "type": "CTXUX",
+      "title": "Выбор формата экспорта"
+    },
+    {
+      "id": "ux:principle:one-screen-one-action",
+      "type": "UX",
+      "title": "one-screen-one-action"
+    },
+    {
+      "id": "ux:principle:explicit-status-signature-locking",
+      "type": "UX",
+      "title": "explicit-status-signature-locking"
+    },
+    {
+      "id": "ctxux:screen:gallery",
+      "type": "CTXUX",
+      "title": "Галерея вложений"
+    },
+    {
+      "id": "ux:principle:one-screen-one-action",
+      "type": "UX",
+      "title": "one-screen-one-action"
+    },
+    {
+      "id": "ux:principle:offline-first-graceful-fallback",
+      "type": "UX",
+      "title": "offline-first-graceful-fallback"
+    },
+    {
+      "id": "ctxux:screen:manual-weather",
+      "type": "CTXUX",
+      "title": "Ручной ввод погоды"
+    },
+    {
+      "id": "ux:principle:minimize-required-input",
+      "type": "UX",
+      "title": "minimize-required-input"
+    },
+    {
+      "id": "ux:principle:offline-first-graceful-fallback",
+      "type": "UX",
+      "title": "offline-first-graceful-fallback"
+    },
+    {
+      "id": "ctxux:screen:projects-empty",
+      "type": "CTXUX",
+      "title": "Пустой список проектов"
+    },
+    {
+      "id": "ux:principle:one-screen-one-action",
+      "type": "UX",
+      "title": "one-screen-one-action"
+    },
+    {
+      "id": "ux:principle:guide-and-request-in-the-moment",
+      "type": "UX",
+      "title": "guide-and-request-in-the-moment"
+    }
+  ],
+  "edges": [
+    {
+      "from": "flow:node:app-launch",
+      "to": "analytics:event:app_launch",
+      "type": "emits"
+    },
+    {
+      "from": "prd:5",
+      "to": "cjm:5",
+      "type": "influences"
+    },
+    {
+      "from": "prd:7",
+      "to": "cjm:7",
+      "type": "influences"
+    },
+    {
+      "from": "prd:8",
+      "to": "cjm:8",
+      "type": "influences"
+    },
+    {
+      "from": "cjm:onboarding-first-project",
+      "to": "flow:node:app-launch",
+      "type": "maps_to"
+    },
+    {
+      "from": "dd:has_projects",
+      "to": "flow:node:app-launch",
+      "type": "used_in"
+    },
+    {
+      "from": "dd:is_online",
+      "to": "flow:node:app-launch",
+      "type": "used_in"
+    },
+    {
+      "from": "flow:node:app-launch",
+      "to": "flow:node:projects-empty",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:app-launch",
+      "to": "analytics:event:app_launch",
+      "type": "emits"
+    },
+    {
+      "from": "flow:node:success-done",
+      "to": "analytics:event:flow_success",
+      "type": "emits"
+    },
+    {
+      "from": "prd:11",
+      "to": "cjm:11",
+      "type": "influences"
+    },
+    {
+      "from": "cjm:reporting-signoff",
+      "to": "flow:node:success-done",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:cancel-out",
+      "to": "analytics:event:flow_cancel",
+      "type": "emits"
+    },
+    {
+      "from": "prd:7",
+      "to": "cjm:7",
+      "type": "influences"
+    },
+    {
+      "from": "cjm:daily-logging",
+      "to": "flow:node:cancel-out",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:daily-calendar",
+      "to": "analytics:event:daily_calendar_view",
+      "type": "emits"
+    },
+    {
+      "from": "prd:4_2",
+      "to": "cjm:4_2",
+      "type": "influences"
+    },
+    {
+      "from": "cjm:daily-logging",
+      "to": "flow:node:daily-calendar",
+      "type": "maps_to"
+    },
+    {
+      "from": "dd:selected_date",
+      "to": "flow:node:daily-calendar",
+      "type": "used_in"
+    },
+    {
+      "from": "dd:day_date",
+      "to": "flow:node:daily-calendar",
+      "type": "used_in"
+    },
+    {
+      "from": "flow:node:daily-calendar",
+      "to": "flow:node:day-entries-decision",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:daily-calendar",
+      "to": "analytics:event:open_today",
+      "type": "emits"
+    },
+    {
+      "from": "flow:node:daily-calendar",
+      "to": "flow:node:future-date-error",
+      "type": "maps_to"
+    },
+    {
+      "from": "prd:4_2",
+      "to": "cjm:4_2",
+      "type": "influences"
+    },
+    {
+      "from": "cjm:daily-logging",
+      "to": "flow:node:day-entries-decision",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:day-entries-decision",
+      "to": "flow:node:day-log-empty",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:day-entries-decision",
+      "to": "flow:node:day-log-populated",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:day-log-empty",
+      "to": "analytics:event:day_log_view",
+      "type": "emits"
+    },
+    {
+      "from": "prd:4_2",
+      "to": "cjm:4_2",
+      "type": "influences"
+    },
+    {
+      "from": "prd:8",
+      "to": "cjm:8",
+      "type": "influences"
+    },
+    {
+      "from": "cjm:daily-logging",
+      "to": "flow:node:day-log-empty",
+      "type": "maps_to"
+    },
+    {
+      "from": "dd:day_date",
+      "to": "flow:node:day-log-empty",
+      "type": "used_in"
+    },
+    {
+      "from": "flow:node:day-log-empty",
+      "to": "flow:node:entry-editor",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:day-log-empty",
+      "to": "analytics:event:tap_add_entry",
+      "type": "emits"
+    },
+    {
+      "from": "flow:node:day-log-empty",
+      "to": "flow:node:check-network-for-weather",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:day-log-populated",
+      "to": "analytics:event:day_log_view",
+      "type": "emits"
+    },
+    {
+      "from": "prd:4_2",
+      "to": "cjm:4_2",
+      "type": "influences"
+    },
+    {
+      "from": "prd:8",
+      "to": "cjm:8",
+      "type": "influences"
+    },
+    {
+      "from": "cjm:reporting-signoff",
+      "to": "flow:node:day-log-populated",
+      "type": "maps_to"
+    },
+    {
+      "from": "dd:day_date",
+      "to": "flow:node:day-log-populated",
+      "type": "used_in"
+    },
+    {
+      "from": "flow:node:day-log-populated",
+      "to": "flow:node:entry-editor",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:day-log-populated",
+      "to": "analytics:event:tap_add_entry",
+      "type": "emits"
+    },
+    {
+      "from": "flow:node:day-log-populated",
+      "to": "flow:node:report-preview",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:day-log-populated",
+      "to": "analytics:event:report_preview_view",
+      "type": "emits"
+    },
+    {
+      "from": "flow:node:day-log-populated",
+      "to": "flow:node:check-network-for-weather",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:documents-view",
+      "to": "analytics:event:documents_search",
+      "type": "emits"
+    },
+    {
+      "from": "prd:4_3",
+      "to": "cjm:4_3",
+      "type": "influences"
+    },
+    {
+      "from": "prd:5",
+      "to": "cjm:5",
+      "type": "influences"
+    },
+    {
+      "from": "prd:8",
+      "to": "cjm:8",
+      "type": "influences"
+    },
+    {
+      "from": "cjm:retention-advocacy",
+      "to": "flow:node:documents-view",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:documents-view",
+      "to": "flow:node:project-dashboard",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:entry-editor",
+      "to": "analytics:event:entry_editor_view",
+      "type": "emits"
+    },
+    {
+      "from": "prd:4_2",
+      "to": "cjm:4_2",
+      "type": "influences"
+    },
+    {
+      "from": "prd:4_4",
+      "to": "cjm:4_4",
+      "type": "influences"
+    },
+    {
+      "from": "cjm:daily-logging",
+      "to": "flow:node:entry-editor",
+      "type": "maps_to"
+    },
+    {
+      "from": "dd:entry_data",
+      "to": "flow:node:entry-editor",
+      "type": "used_in"
+    },
+    {
+      "from": "dd:entry_type",
+      "to": "flow:node:entry-editor",
+      "type": "used_in"
+    },
+    {
+      "from": "flow:node:entry-editor",
+      "to": "flow:node:camera-permission",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:entry-editor",
+      "to": "flow:node:save-entry",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:entry-editor",
+      "to": "analytics:event:entry_create_attempt",
+      "type": "emits"
+    },
+    {
+      "from": "flow:node:entry-editor",
+      "to": "flow:node:save-entry",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:entry-editor",
+      "to": "analytics:event:entry_create_attempt",
+      "type": "emits"
+    },
+    {
+      "from": "flow:node:save-entry",
+      "to": "analytics:event:entry_saved",
+      "type": "emits"
+    },
+    {
+      "from": "prd:4_2",
+      "to": "cjm:4_2",
+      "type": "influences"
+    },
+    {
+      "from": "prd:5",
+      "to": "cjm:5",
+      "type": "influences"
+    },
+    {
+      "from": "cjm:daily-logging",
+      "to": "flow:node:save-entry",
+      "type": "maps_to"
+    },
+    {
+      "from": "dd:entry_id",
+      "to": "flow:node:save-entry",
+      "type": "used_in"
+    },
+    {
+      "from": "dd:source",
+      "to": "flow:node:save-entry",
+      "type": "used_in"
+    },
+    {
+      "from": "flow:node:save-entry",
+      "to": "flow:node:day-log-populated",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:save-entry",
+      "to": "analytics:event:entry_saved",
+      "type": "emits"
+    },
+    {
+      "from": "flow:node:save-entry",
+      "to": "flow:node:entry-editor",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:save-entry",
+      "to": "flow:node:error-entry-save",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:error-entry-save",
+      "to": "analytics:event:error_entry_save",
+      "type": "emits"
+    },
+    {
+      "from": "prd:5",
+      "to": "cjm:5",
+      "type": "influences"
+    },
+    {
+      "from": "cjm:daily-logging",
+      "to": "flow:node:error-entry-save",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:error-entry-save",
+      "to": "flow:node:save-entry",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:error-entry-save",
+      "to": "analytics:event:error_entry_save",
+      "type": "emits"
+    },
+    {
+      "from": "flow:node:error-entry-save",
+      "to": "flow:node:day-log-populated",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:report-preview",
+      "to": "analytics:event:report_preview_view",
+      "type": "emits"
+    },
+    {
+      "from": "prd:9",
+      "to": "cjm:9",
+      "type": "influences"
+    },
+    {
+      "from": "cjm:reporting-signoff",
+      "to": "flow:node:report-preview",
+      "type": "maps_to"
+    },
+    {
+      "from": "dd:day_status",
+      "to": "flow:node:report-preview",
+      "type": "used_in"
+    },
+    {
+      "from": "dd:report_preview",
+      "to": "flow:node:report-preview",
+      "type": "used_in"
+    },
+    {
+      "from": "flow:node:report-preview",
+      "to": "flow:node:report-sign",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:report-preview",
+      "to": "analytics:event:tap_sign",
+      "type": "emits"
+    },
+    {
+      "from": "flow:node:report-sign",
+      "to": "analytics:event:tap_sign",
+      "type": "emits"
+    },
+    {
+      "from": "prd:9",
+      "to": "cjm:9",
+      "type": "influences"
+    },
+    {
+      "from": "cjm:reporting-signoff",
+      "to": "flow:node:report-sign",
+      "type": "maps_to"
+    },
+    {
+      "from": "dd:signature_blob",
+      "to": "flow:node:report-sign",
+      "type": "used_in"
+    },
+    {
+      "from": "dd:signer_name",
+      "to": "flow:node:report-sign",
+      "type": "used_in"
+    },
+    {
+      "from": "flow:node:report-sign",
+      "to": "flow:node:lock-day",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:lock-day",
+      "to": "analytics:event:report_signed",
+      "type": "emits"
+    },
+    {
+      "from": "prd:9",
+      "to": "cjm:9",
+      "type": "influences"
+    },
+    {
+      "from": "cjm:reporting-signoff",
+      "to": "flow:node:lock-day",
+      "type": "maps_to"
+    },
+    {
+      "from": "dd:signed_pdf_checksum",
+      "to": "flow:node:lock-day",
+      "type": "used_in"
+    },
+    {
+      "from": "dd:signed_at",
+      "to": "flow:node:lock-day",
+      "type": "used_in"
+    },
+    {
+      "from": "flow:node:lock-day",
+      "to": "flow:node:report-preview-signed",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:lock-day",
+      "to": "analytics:event:report_signed",
+      "type": "emits"
+    },
+    {
+      "from": "flow:node:lock-day",
+      "to": "flow:node:report-preview",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:report-preview-signed",
+      "to": "analytics:event:report_preview_signed_view",
+      "type": "emits"
+    },
+    {
+      "from": "prd:9",
+      "to": "cjm:9",
+      "type": "influences"
+    },
+    {
+      "from": "cjm:reporting-signoff",
+      "to": "flow:node:report-preview-signed",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:report-preview-signed",
+      "to": "flow:node:export-decision",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:export-decision",
+      "to": "analytics:event:export_options_view",
+      "type": "emits"
+    },
+    {
+      "from": "prd:4_2",
+      "to": "cjm:4_2",
+      "type": "influences"
+    },
+    {
+      "from": "prd:9",
+      "to": "cjm:9",
+      "type": "influences"
+    },
+    {
+      "from": "cjm:reporting-signoff",
+      "to": "flow:node:export-decision",
+      "type": "maps_to"
+    },
+    {
+      "from": "dd:export_format",
+      "to": "flow:node:export-decision",
+      "type": "used_in"
+    },
+    {
+      "from": "dd:export_dest",
+      "to": "flow:node:export-decision",
+      "type": "used_in"
+    },
+    {
+      "from": "flow:node:export-decision",
+      "to": "flow:node:export-generate",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:export-decision",
+      "to": "flow:node:export-generate",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:export-decision",
+      "to": "flow:node:report-preview-signed",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:export-generate",
+      "to": "analytics:event:export_process_started",
+      "type": "emits"
+    },
+    {
+      "from": "prd:4_2",
+      "to": "cjm:4_2",
+      "type": "influences"
+    },
+    {
+      "from": "prd:9",
+      "to": "cjm:9",
+      "type": "influences"
+    },
+    {
+      "from": "cjm:reporting-signoff",
+      "to": "flow:node:export-generate",
+      "type": "maps_to"
+    },
+    {
+      "from": "dd:file_name",
+      "to": "flow:node:export-generate",
+      "type": "used_in"
+    },
+    {
+      "from": "flow:node:export-generate",
+      "to": "flow:node:success-done",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:export-generate",
+      "to": "analytics:event:report_exported",
+      "type": "emits"
+    },
+    {
+      "from": "flow:node:export-generate",
+      "to": "flow:node:export-error",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:export-error",
+      "to": "analytics:event:export_failed",
+      "type": "emits"
+    },
+    {
+      "from": "prd:9",
+      "to": "cjm:9",
+      "type": "influences"
+    },
+    {
+      "from": "cjm:reporting-signoff",
+      "to": "flow:node:export-error",
+      "type": "maps_to"
+    },
+    {
+      "from": "dd:error_code",
+      "to": "flow:node:export-error",
+      "type": "used_in"
+    },
+    {
+      "from": "flow:node:export-error",
+      "to": "flow:node:export-generate",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:export-error",
+      "to": "analytics:event:export_retry",
+      "type": "emits"
+    },
+    {
+      "from": "flow:node:export-error",
+      "to": "flow:node:report-preview-signed",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:export-error",
+      "to": "analytics:event:export_abort",
+      "type": "emits"
+    },
+    {
+      "from": "flow:node:camera-permission",
+      "to": "analytics:event:permission_check_camera",
+      "type": "emits"
+    },
+    {
+      "from": "prd:9",
+      "to": "cjm:9",
+      "type": "influences"
+    },
+    {
+      "from": "cjm:daily-logging",
+      "to": "flow:node:camera-permission",
+      "type": "maps_to"
+    },
+    {
+      "from": "dd:permission_status",
+      "to": "flow:node:camera-permission",
+      "type": "used_in"
+    },
+    {
+      "from": "flow:node:camera-permission",
+      "to": "flow:node:capture-photo",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:camera-permission",
+      "to": "flow:node:camera-permission-error",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:capture-photo",
+      "to": "analytics:event:photo_captured",
+      "type": "emits"
+    },
+    {
+      "from": "prd:4_4",
+      "to": "cjm:4_4",
+      "type": "influences"
+    },
+    {
+      "from": "cjm:daily-logging",
+      "to": "flow:node:capture-photo",
+      "type": "maps_to"
+    },
+    {
+      "from": "dd:photo_id",
+      "to": "flow:node:capture-photo",
+      "type": "used_in"
+    },
+    {
+      "from": "flow:node:capture-photo",
+      "to": "flow:node:entry-editor",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:capture-photo",
+      "to": "analytics:event:photo_captured",
+      "type": "emits"
+    },
+    {
+      "from": "flow:node:camera-permission-error",
+      "to": "analytics:event:camera_permission_error_view",
+      "type": "emits"
+    },
+    {
+      "from": "prd:9",
+      "to": "cjm:9",
+      "type": "influences"
+    },
+    {
+      "from": "cjm:daily-logging",
+      "to": "flow:node:camera-permission-error",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:camera-permission-error",
+      "to": "flow:node:entry-editor",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:camera-permission-error",
+      "to": "analytics:event:open_settings_camera",
+      "type": "emits"
+    },
+    {
+      "from": "flow:node:camera-permission-error",
+      "to": "flow:node:entry-editor",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:camera-permission-error",
+      "to": "analytics:event:continue_without_photo",
+      "type": "emits"
+    },
+    {
+      "from": "flow:node:gallery",
+      "to": "analytics:event:gallery_bulk_attach",
+      "type": "emits"
+    },
+    {
+      "from": "prd:4_4",
+      "to": "cjm:4_4",
+      "type": "influences"
+    },
+    {
+      "from": "prd:11",
+      "to": "cjm:11",
+      "type": "influences"
+    },
+    {
+      "from": "cjm:daily-logging",
+      "to": "flow:node:gallery",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:gallery",
+      "to": "flow:node:project-dashboard",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:save-project",
+      "to": "analytics:event:project_saved",
+      "type": "emits"
+    },
+    {
+      "from": "prd:4_1",
+      "to": "cjm:4_1",
+      "type": "influences"
+    },
+    {
+      "from": "prd:5",
+      "to": "cjm:5",
+      "type": "influences"
+    },
+    {
+      "from": "cjm:onboarding-first-project",
+      "to": "flow:node:save-project",
+      "type": "maps_to"
+    },
+    {
+      "from": "dd:project_id",
+      "to": "flow:node:save-project",
+      "type": "used_in"
+    },
+    {
+      "from": "flow:node:save-project",
+      "to": "flow:node:project-dashboard",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:save-project",
+      "to": "analytics:event:project_saved",
+      "type": "emits"
+    },
+    {
+      "from": "flow:node:save-project",
+      "to": "flow:node:error-save",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:error-save",
+      "to": "analytics:event:error_project_save",
+      "type": "emits"
+    },
+    {
+      "from": "prd:5",
+      "to": "cjm:5",
+      "type": "influences"
+    },
+    {
+      "from": "prd:7",
+      "to": "cjm:7",
+      "type": "influences"
+    },
+    {
+      "from": "cjm:onboarding-first-project",
+      "to": "flow:node:error-save",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:error-save",
+      "to": "flow:node:save-project",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:error-save",
+      "to": "analytics:event:error_project_save",
+      "type": "emits"
+    },
+    {
+      "from": "flow:node:error-save",
+      "to": "flow:node:cancel-out",
+      "type": "maps_to"
+    },
+    {
+      "from": "prd:4_2",
+      "to": "cjm:4_2",
+      "type": "influences"
+    },
+    {
+      "from": "cjm:daily-logging",
+      "to": "flow:node:future-date-error",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:check-network-for-weather",
+      "to": "analytics:event:weather_check",
+      "type": "emits"
+    },
+    {
+      "from": "prd:8",
+      "to": "cjm:8",
+      "type": "influences"
+    },
+    {
+      "from": "cjm:daily-logging",
+      "to": "flow:node:check-network-for-weather",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:check-network-for-weather",
+      "to": "flow:node:fetch-weather",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:check-network-for-weather",
+      "to": "flow:node:manual-weather",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:projects-empty",
+      "to": "analytics:event:empty_state_shown",
+      "type": "emits"
+    },
+    {
+      "from": "prd:4_1",
+      "to": "cjm:4_1",
+      "type": "influences"
+    },
+    {
+      "from": "prd:7",
+      "to": "cjm:7",
+      "type": "influences"
+    },
+    {
+      "from": "cjm:onboarding-first-project",
+      "to": "flow:node:projects-empty",
+      "type": "maps_to"
+    },
+    {
+      "from": "dd:project_location",
+      "to": "flow:node:projects-empty",
+      "type": "used_in"
+    },
+    {
+      "from": "flow:node:projects-empty",
+      "to": "flow:node:project-create",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:projects-empty",
+      "to": "analytics:event:empty_state_shown",
+      "type": "emits"
+    },
+    {
+      "from": "flow:node:project-create",
+      "to": "analytics:event:project_create_view",
+      "type": "emits"
+    },
+    {
+      "from": "prd:4_1",
+      "to": "cjm:4_1",
+      "type": "influences"
+    },
+    {
+      "from": "cjm:onboarding-first-project",
+      "to": "flow:node:project-create",
+      "type": "maps_to"
+    },
+    {
+      "from": "dd:project_data",
+      "to": "flow:node:project-create",
+      "type": "used_in"
+    },
+    {
+      "from": "dd:project_name",
+      "to": "flow:node:project-create",
+      "type": "used_in"
+    },
+    {
+      "from": "flow:node:project-create",
+      "to": "flow:node:save-project",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:project-create",
+      "to": "analytics:event:project_create_attempt",
+      "type": "emits"
+    },
+    {
+      "from": "flow:node:project-create",
+      "to": "flow:node:cancel-out",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:project-dashboard",
+      "to": "analytics:event:project_dashboard_view",
+      "type": "emits"
+    },
+    {
+      "from": "prd:4_1",
+      "to": "cjm:4_1",
+      "type": "influences"
+    },
+    {
+      "from": "prd:4_2",
+      "to": "cjm:4_2",
+      "type": "influences"
+    },
+    {
+      "from": "cjm:daily-logging",
+      "to": "flow:node:project-dashboard",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:project-dashboard",
+      "to": "flow:node:daily-calendar",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:project-dashboard",
+      "to": "analytics:event:project_dashboard_view",
+      "type": "emits"
+    },
+    {
+      "from": "flow:node:project-dashboard",
+      "to": "flow:node:documents-view",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:project-dashboard",
+      "to": "flow:node:gallery",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:fetch-weather",
+      "to": "analytics:event:weather_fetched",
+      "type": "emits"
+    },
+    {
+      "from": "prd:8",
+      "to": "cjm:8",
+      "type": "influences"
+    },
+    {
+      "from": "cjm:daily-logging",
+      "to": "flow:node:fetch-weather",
+      "type": "maps_to"
+    },
+    {
+      "from": "dd:weather_data",
+      "to": "flow:node:fetch-weather",
+      "type": "used_in"
+    },
+    {
+      "from": "dd:weather_temp_c",
+      "to": "flow:node:fetch-weather",
+      "type": "used_in"
+    },
+    {
+      "from": "dd:weather_wind_ms",
+      "to": "flow:node:fetch-weather",
+      "type": "used_in"
+    },
+    {
+      "from": "dd:weather_precip_mm",
+      "to": "flow:node:fetch-weather",
+      "type": "used_in"
+    },
+    {
+      "from": "dd:weather_provider",
+      "to": "flow:node:fetch-weather",
+      "type": "used_in"
+    },
+    {
+      "from": "dd:weather_source",
+      "to": "flow:node:fetch-weather",
+      "type": "used_in"
+    },
+    {
+      "from": "flow:node:fetch-weather",
+      "to": "flow:node:day-log-populated",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:fetch-weather",
+      "to": "analytics:event:weather_fetched",
+      "type": "emits"
+    },
+    {
+      "from": "flow:node:fetch-weather",
+      "to": "flow:node:day-log-populated",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:fetch-weather",
+      "to": "analytics:event:weather_fetched",
+      "type": "emits"
+    },
+    {
+      "from": "flow:node:manual-weather",
+      "to": "analytics:event:manual_weather_input",
+      "type": "emits"
+    },
+    {
+      "from": "prd:4_2",
+      "to": "cjm:4_2",
+      "type": "influences"
+    },
+    {
+      "from": "prd:8",
+      "to": "cjm:8",
+      "type": "influences"
+    },
+    {
+      "from": "cjm:daily-logging",
+      "to": "flow:node:manual-weather",
+      "type": "maps_to"
+    },
+    {
+      "from": "dd:weather_manual",
+      "to": "flow:node:manual-weather",
+      "type": "used_in"
+    },
+    {
+      "from": "dd:weather_temp_c",
+      "to": "flow:node:manual-weather",
+      "type": "used_in"
+    },
+    {
+      "from": "dd:weather_wind_ms",
+      "to": "flow:node:manual-weather",
+      "type": "used_in"
+    },
+    {
+      "from": "dd:weather_precip_mm",
+      "to": "flow:node:manual-weather",
+      "type": "used_in"
+    },
+    {
+      "from": "dd:weather_source",
+      "to": "flow:node:manual-weather",
+      "type": "used_in"
+    },
+    {
+      "from": "flow:node:manual-weather",
+      "to": "flow:node:day-log-populated",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:manual-weather",
+      "to": "analytics:event:manual_weather_input",
+      "type": "emits"
+    },
+    {
+      "from": "prd:5",
+      "to": "cjm:onboarding-first-project",
+      "type": "influences"
+    },
+    {
+      "from": "prd:7",
+      "to": "cjm:onboarding-first-project",
+      "type": "influences"
+    },
+    {
+      "from": "prd:8",
+      "to": "cjm:onboarding-first-project",
+      "type": "influences"
+    },
+    {
+      "from": "prd:11",
+      "to": "cjm:reporting-signoff",
+      "type": "influences"
+    },
+    {
+      "from": "prd:7",
+      "to": "cjm:daily-logging",
+      "type": "influences"
+    },
+    {
+      "from": "prd:4_2",
+      "to": "cjm:daily-logging",
+      "type": "influences"
+    },
+    {
+      "from": "prd:4_2",
+      "to": "cjm:daily-logging",
+      "type": "influences"
+    },
+    {
+      "from": "prd:4_2",
+      "to": "cjm:daily-logging",
+      "type": "influences"
+    },
+    {
+      "from": "prd:8",
+      "to": "cjm:daily-logging",
+      "type": "influences"
+    },
+    {
+      "from": "prd:4_2",
+      "to": "cjm:reporting-signoff",
+      "type": "influences"
+    },
+    {
+      "from": "prd:8",
+      "to": "cjm:reporting-signoff",
+      "type": "influences"
+    },
+    {
+      "from": "prd:4_3",
+      "to": "cjm:retention-advocacy",
+      "type": "influences"
+    },
+    {
+      "from": "prd:5",
+      "to": "cjm:retention-advocacy",
+      "type": "influences"
+    },
+    {
+      "from": "prd:8",
+      "to": "cjm:retention-advocacy",
+      "type": "influences"
+    },
+    {
+      "from": "prd:4_2",
+      "to": "cjm:daily-logging",
+      "type": "influences"
+    },
+    {
+      "from": "prd:4_4",
+      "to": "cjm:daily-logging",
+      "type": "influences"
+    },
+    {
+      "from": "prd:4_2",
+      "to": "cjm:daily-logging",
+      "type": "influences"
+    },
+    {
+      "from": "prd:5",
+      "to": "cjm:daily-logging",
+      "type": "influences"
+    },
+    {
+      "from": "prd:5",
+      "to": "cjm:daily-logging",
+      "type": "influences"
+    },
+    {
+      "from": "prd:9",
+      "to": "cjm:reporting-signoff",
+      "type": "influences"
+    },
+    {
+      "from": "prd:9",
+      "to": "cjm:reporting-signoff",
+      "type": "influences"
+    },
+    {
+      "from": "prd:9",
+      "to": "cjm:reporting-signoff",
+      "type": "influences"
+    },
+    {
+      "from": "prd:9",
+      "to": "cjm:reporting-signoff",
+      "type": "influences"
+    },
+    {
+      "from": "prd:4_2",
+      "to": "cjm:reporting-signoff",
+      "type": "influences"
+    },
+    {
+      "from": "prd:9",
+      "to": "cjm:reporting-signoff",
+      "type": "influences"
+    },
+    {
+      "from": "prd:4_2",
+      "to": "cjm:reporting-signoff",
+      "type": "influences"
+    },
+    {
+      "from": "prd:9",
+      "to": "cjm:reporting-signoff",
+      "type": "influences"
+    },
+    {
+      "from": "prd:9",
+      "to": "cjm:reporting-signoff",
+      "type": "influences"
+    },
+    {
+      "from": "prd:9",
+      "to": "cjm:daily-logging",
+      "type": "influences"
+    },
+    {
+      "from": "prd:4_4",
+      "to": "cjm:daily-logging",
+      "type": "influences"
+    },
+    {
+      "from": "prd:9",
+      "to": "cjm:daily-logging",
+      "type": "influences"
+    },
+    {
+      "from": "prd:4_4",
+      "to": "cjm:daily-logging",
+      "type": "influences"
+    },
+    {
+      "from": "prd:11",
+      "to": "cjm:daily-logging",
+      "type": "influences"
+    },
+    {
+      "from": "prd:4_1",
+      "to": "cjm:onboarding-first-project",
+      "type": "influences"
+    },
+    {
+      "from": "prd:5",
+      "to": "cjm:onboarding-first-project",
+      "type": "influences"
+    },
+    {
+      "from": "prd:5",
+      "to": "cjm:onboarding-first-project",
+      "type": "influences"
+    },
+    {
+      "from": "prd:7",
+      "to": "cjm:onboarding-first-project",
+      "type": "influences"
+    },
+    {
+      "from": "prd:4_2",
+      "to": "cjm:daily-logging",
+      "type": "influences"
+    },
+    {
+      "from": "prd:8",
+      "to": "cjm:daily-logging",
+      "type": "influences"
+    },
+    {
+      "from": "prd:4_1",
+      "to": "cjm:onboarding-first-project",
+      "type": "influences"
+    },
+    {
+      "from": "prd:7",
+      "to": "cjm:onboarding-first-project",
+      "type": "influences"
+    },
+    {
+      "from": "prd:4_1",
+      "to": "cjm:onboarding-first-project",
+      "type": "influences"
+    },
+    {
+      "from": "prd:4_1",
+      "to": "cjm:daily-logging",
+      "type": "influences"
+    },
+    {
+      "from": "prd:4_2",
+      "to": "cjm:daily-logging",
+      "type": "influences"
+    },
+    {
+      "from": "prd:8",
+      "to": "cjm:daily-logging",
+      "type": "influences"
+    },
+    {
+      "from": "prd:4_2",
+      "to": "cjm:daily-logging",
+      "type": "influences"
+    },
+    {
+      "from": "prd:8",
+      "to": "cjm:daily-logging",
+      "type": "influences"
+    },
+    {
+      "from": "flow:node:project-create",
+      "to": "story:us-1",
+      "type": "covered_by"
+    },
+    {
+      "from": "flow:node:save-project",
+      "to": "story:us-1",
+      "type": "covered_by"
+    },
+    {
+      "from": "flow:node:export-decision",
+      "to": "story:us-10",
+      "type": "covered_by"
+    },
+    {
+      "from": "flow:node:export-generate",
+      "to": "story:us-10",
+      "type": "covered_by"
+    },
+    {
+      "from": "flow:node:export-error",
+      "to": "story:us-10",
+      "type": "covered_by"
+    },
+    {
+      "from": "flow:node:report-preview-signed",
+      "to": "story:us-10",
+      "type": "covered_by"
+    },
+    {
+      "from": "flow:node:export-error",
+      "to": "story:us-10",
+      "type": "covered_by"
+    },
+    {
+      "from": "flow:node:export-generate",
+      "to": "story:us-11",
+      "type": "covered_by"
+    },
+    {
+      "from": "flow:node:daily-calendar",
+      "to": "story:us-12",
+      "type": "covered_by"
+    },
+    {
+      "from": "flow:node:future-date-error",
+      "to": "story:us-12",
+      "type": "covered_by"
+    },
+    {
+      "from": "flow:node:error-entry-save",
+      "to": "story:us-15",
+      "type": "covered_by"
+    },
+    {
+      "from": "flow:node:report-sign",
+      "to": "story:us-15",
+      "type": "covered_by"
+    },
+    {
+      "from": "flow:node:export-generate",
+      "to": "story:us-16",
+      "type": "covered_by"
+    },
+    {
+      "from": "flow:node:app-launch",
+      "to": "story:us-17",
+      "type": "covered_by"
+    },
+    {
+      "from": "flow:node:report-preview",
+      "to": "story:us-17",
+      "type": "covered_by"
+    },
+    {
+      "from": "flow:node:report-sign",
+      "to": "story:us-17",
+      "type": "covered_by"
+    },
+    {
+      "from": "flow:node:lock-day",
+      "to": "story:us-17",
+      "type": "covered_by"
+    },
+    {
+      "from": "flow:node:export-generate",
+      "to": "story:us-17",
+      "type": "covered_by"
+    },
+    {
+      "from": "flow:node:export-error",
+      "to": "story:us-17",
+      "type": "covered_by"
+    },
+    {
+      "from": "flow:node:error-save",
+      "to": "story:us-18",
+      "type": "covered_by"
+    },
+    {
+      "from": "flow:node:projects-empty",
+      "to": "story:us-2",
+      "type": "covered_by"
+    },
+    {
+      "from": "flow:node:project-create",
+      "to": "story:us-2",
+      "type": "covered_by"
+    },
+    {
+      "from": "flow:node:entry-editor",
+      "to": "story:us-4",
+      "type": "covered_by"
+    },
+    {
+      "from": "flow:node:save-entry",
+      "to": "story:us-4",
+      "type": "covered_by"
+    },
+    {
+      "from": "flow:node:error-entry-save",
+      "to": "story:us-4",
+      "type": "covered_by"
+    },
+    {
+      "from": "flow:node:save-entry",
+      "to": "story:us-4",
+      "type": "covered_by"
+    },
+    {
+      "from": "flow:node:check-network-for-weather",
+      "to": "story:us-5",
+      "type": "covered_by"
+    },
+    {
+      "from": "flow:node:fetch-weather",
+      "to": "story:us-5",
+      "type": "covered_by"
+    },
+    {
+      "from": "flow:node:manual-weather",
+      "to": "story:us-5",
+      "type": "covered_by"
+    },
+    {
+      "from": "flow:node:entry-editor",
+      "to": "story:us-6",
+      "type": "covered_by"
+    },
+    {
+      "from": "flow:node:capture-photo",
+      "to": "story:us-6",
+      "type": "covered_by"
+    },
+    {
+      "from": "flow:node:camera-permission-error",
+      "to": "story:us-7",
+      "type": "covered_by"
+    },
+    {
+      "from": "flow:node:save-entry",
+      "to": "story:us-8",
+      "type": "covered_by"
+    },
+    {
+      "from": "flow:node:report-preview",
+      "to": "story:us-9",
+      "type": "covered_by"
+    },
+    {
+      "from": "flow:node:report-sign",
+      "to": "story:us-9",
+      "type": "covered_by"
+    },
+    {
+      "from": "flow:node:lock-day",
+      "to": "story:us-9",
+      "type": "covered_by"
+    },
+    {
+      "from": "flow:node:report-preview-signed",
+      "to": "story:us-9",
+      "type": "covered_by"
+    },
+    {
+      "from": "flow:node:lock-day",
+      "to": "story:us-9",
+      "type": "covered_by"
+    },
+    {
+      "from": "story:us-2",
+      "to": "hig:us-2:candidate:content-unavailable-view",
+      "type": "selects"
+    },
+    {
+      "from": "story:us-2",
+      "to": "hig:us-2:candidate:vstack-empty",
+      "type": "selects"
+    },
+    {
+      "from": "story:us-2",
+      "to": "hig:us-2:candidate:tipkit-inline",
+      "type": "selects"
+    },
+    {
+      "from": "story:us-1",
+      "to": "hig:us-1:candidate:sheet-create",
+      "type": "selects"
+    },
+    {
+      "from": "story:us-1",
+      "to": "hig:us-1:candidate:nav-push-create",
+      "type": "selects"
+    },
+    {
+      "from": "story:us-1",
+      "to": "hig:us-1:candidate:form-minimal",
+      "type": "selects"
+    },
+    {
+      "from": "story:us-18",
+      "to": "hig:us-18:candidate:alert-retry-cancel",
+      "type": "selects"
+    },
+    {
+      "from": "story:us-18",
+      "to": "hig:us-18:candidate:confirmation-dialog",
+      "type": "selects"
+    },
+    {
+      "from": "story:us-12",
+      "to": "hig:us-12:candidate:datepicker-graphical",
+      "type": "selects"
+    },
+    {
+      "from": "story:us-12",
+      "to": "hig:us-12:candidate:list-dates",
+      "type": "selects"
+    },
+    {
+      "from": "story:us-12",
+      "to": "hig:us-12:candidate:disable-range",
+      "type": "selects"
+    },
+    {
+      "from": "story:us-4",
+      "to": "hig:us-4:candidate:form-save-add",
+      "type": "selects"
+    },
+    {
+      "from": "story:us-4",
+      "to": "hig:us-4:candidate:menu-save",
+      "type": "selects"
+    },
+    {
+      "from": "story:us-4",
+      "to": "hig:us-4:candidate:alert-entry-retry",
+      "type": "selects"
+    },
+    {
+      "from": "story:us-5",
+      "to": "hig:us-5:candidate:task-progress",
+      "type": "selects"
+    },
+    {
+      "from": "story:us-5",
+      "to": "hig:us-5:candidate:inline-weather-form",
+      "type": "selects"
+    },
+    {
+      "from": "story:us-9",
+      "to": "hig:us-9:candidate:pdfkit-preview",
+      "type": "selects"
+    },
+    {
+      "from": "story:us-9",
+      "to": "hig:us-9:candidate:canvas-signature",
+      "type": "selects"
+    },
+    {
+      "from": "story:us-9",
+      "to": "hig:us-9:candidate:alert-destructive-lock",
+      "type": "selects"
+    },
+    {
+      "from": "story:us-10",
+      "to": "hig:us-10:candidate:sharelink",
+      "type": "selects"
+    },
+    {
+      "from": "story:us-10",
+      "to": "hig:us-10:candidate:picker-menu-format",
+      "type": "selects"
+    },
+    {
+      "from": "story:us-10",
+      "to": "hig:us-10:candidate:progress-alert-retry",
+      "type": "selects"
+    },
+    {
+      "from": "story:us-11",
+      "to": "hig:us-11:candidate:picker-menu-format",
+      "type": "selects"
+    },
+    {
+      "from": "story:us-11",
+      "to": "hig:us-11:candidate:segmented-pick",
+      "type": "selects"
+    },
+    {
+      "from": "story:us-13",
+      "to": "hig:us-13:candidate:list-searchable",
+      "type": "selects"
+    },
+    {
+      "from": "story:us-13",
+      "to": "hig:us-13:candidate:local-cache-list",
+      "type": "selects"
+    },
+    {
+      "from": "story:us-14",
+      "to": "hig:us-14:candidate:grid-sectioned",
+      "type": "selects"
+    },
+    {
+      "from": "story:us-14",
+      "to": "hig:us-14:candidate:multi-selection-edit-mode",
+      "type": "selects"
+    },
+    {
+      "from": "story:us-15",
+      "to": "hig:us-15:candidate:alert-focus",
+      "type": "selects"
+    },
+    {
+      "from": "story:us-15",
+      "to": "hig:us-15:candidate:dynamic-type-44pt",
+      "type": "selects"
+    },
+    {
+      "from": "story:us-16",
+      "to": "hig:us-16:candidate:string-localized",
+      "type": "selects"
+    },
+    {
+      "from": "story:us-16",
+      "to": "hig:us-16:candidate:export-filename",
+      "type": "selects"
+    },
+    {
+      "from": "ux:principle:one-screen-one-action",
+      "to": "ctxux:screen:documents-view",
+      "type": "applies_to"
+    },
+    {
+      "from": "ux:principle:minimize-required-input",
+      "to": "ctxux:screen:documents-view",
+      "type": "applies_to"
+    },
+    {
+      "from": "flow:node:documents-view",
+      "to": "ctxux:screen:documents-view",
+      "type": "maps_to"
+    },
+    {
+      "from": "ux:principle:one-screen-one-action",
+      "to": "ctxux:screen:export-decision",
+      "type": "applies_to"
+    },
+    {
+      "from": "ux:principle:explicit-status-signature-locking",
+      "to": "ctxux:screen:export-decision",
+      "type": "applies_to"
+    },
+    {
+      "from": "flow:node:export-decision",
+      "to": "ctxux:screen:export-decision",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:export-generate",
+      "to": "ctxux:screen:export-decision",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:report-preview-signed",
+      "to": "ctxux:screen:export-decision",
+      "type": "maps_to"
+    },
+    {
+      "from": "ux:principle:one-screen-one-action",
+      "to": "ctxux:screen:gallery",
+      "type": "applies_to"
+    },
+    {
+      "from": "ux:principle:offline-first-graceful-fallback",
+      "to": "ctxux:screen:gallery",
+      "type": "applies_to"
+    },
+    {
+      "from": "flow:node:gallery",
+      "to": "ctxux:screen:gallery",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:capture-photo",
+      "to": "ctxux:screen:gallery",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:camera-permission",
+      "to": "ctxux:screen:gallery",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:camera-permission-error",
+      "to": "ctxux:screen:gallery",
+      "type": "maps_to"
+    },
+    {
+      "from": "ux:principle:minimize-required-input",
+      "to": "ctxux:screen:manual-weather",
+      "type": "applies_to"
+    },
+    {
+      "from": "ux:principle:offline-first-graceful-fallback",
+      "to": "ctxux:screen:manual-weather",
+      "type": "applies_to"
+    },
+    {
+      "from": "flow:node:manual-weather",
+      "to": "ctxux:screen:manual-weather",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:check-network-for-weather",
+      "to": "ctxux:screen:manual-weather",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:fetch-weather",
+      "to": "ctxux:screen:manual-weather",
+      "type": "maps_to"
+    },
+    {
+      "from": "ux:principle:one-screen-one-action",
+      "to": "ctxux:screen:projects-empty",
+      "type": "applies_to"
+    },
+    {
+      "from": "ux:principle:guide-and-request-in-the-moment",
+      "to": "ctxux:screen:projects-empty",
+      "type": "applies_to"
+    },
+    {
+      "from": "flow:node:projects-empty",
+      "to": "ctxux:screen:projects-empty",
+      "type": "maps_to"
+    },
+    {
+      "from": "flow:node:project-create",
+      "to": "ctxux:screen:projects-empty",
+      "type": "maps_to"
+    }
+  ]
+}

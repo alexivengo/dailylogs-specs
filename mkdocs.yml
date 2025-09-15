@@ -1,13 +1,16 @@
 site_name: SpecHub
+site_url: https://alexivengo.github.io/dailylogs-specs/
 site_description: Specification Hub
 theme:
   name: material
-  language: en
+  language: ru
   features:
     - navigation.instant
     - navigation.tracking
+    - navigation.top
     - navigation.tabs
     - navigation.indexes
+    - toc.integrate
     - content.code.copy
     - search.suggest
   palette:
@@ -15,7 +18,9 @@ theme:
       primary: indigo
       accent: indigo
 plugins:
-  - search
+  - search:
+      lang: [ru, en]
+      separator: '[\s\-]+'
 markdown_extensions:
   - admonition
   - toc:
@@ -24,17 +29,18 @@ extra:
   generator: spechub
 # We add custom 'Edit source' links inside pages instead of using edit_uri
 extra_javascript:
-  - assets/javascripts/spechub.js?v=c109b0e
+  - assets/javascripts/spechub.js?v=8e5537c
 extra_css:
-  - assets/stylesheets/spechub.css?v=c109b0e
+  - assets/stylesheets/spechub.css?v=8e5537c
 nav:
   - Overview: index.md
   - Orphans: orphans.md
   - Coverage:
-      - flow_ctxux: coverage/flow_ctxux.md
-      - prd_stories: coverage/prd_stories.md
+      - flow ctxux: coverage/flow_ctxux.md
+      - prd stories: coverage/prd_stories.md
   - User Flow:
       - Overview: flow/overview.md
+      - Index: flow/index.md
       - app-launch: flow/nodes/app-launch.md
       - camera-permission-error: flow/nodes/camera-permission-error.md
       - camera-permission: flow/nodes/camera-permission.md
@@ -67,6 +73,7 @@ nav:
       - save-project: flow/nodes/save-project.md
       - success-done: flow/nodes/success-done.md
   - User Stories:
+      - Index: stories/index.md
       - us-1: stories/us-1.md
       - us-10: stories/us-10.md
       - us-11: stories/us-11.md
@@ -85,6 +92,7 @@ nav:
       - us-8: stories/us-8.md
       - us-9: stories/us-9.md
   - Global UX Principles:
+      - Index: ux/index.md
       - explicit-status-signature-locking: ux/explicit-status-signature-locking.md
       - guide-and-request-in-the-moment: ux/guide-and-request-in-the-moment.md
       - honor-wcag-dynamic-type-focus-targets: ux/honor-wcag-dynamic-type-focus-targets.md
@@ -92,12 +100,14 @@ nav:
       - offline-first-graceful-fallback: ux/offline-first-graceful-fallback.md
       - one-screen-one-action: ux/one-screen-one-action.md
   - Contextual UX:
+      - Index: ctxux/index.md
       - documents-view: ctxux/documents-view.md
       - export-decision: ctxux/export-decision.md
       - gallery: ctxux/gallery.md
       - manual-weather: ctxux/manual-weather.md
       - projects-empty: ctxux/projects-empty.md
   - HIG Patterns:
+      - Index: hig/index.md
       - us-1: hig/us-1.md
       - us-10: hig/us-10.md
       - us-11: hig/us-11.md
