@@ -11,9 +11,9 @@
 - none
 
 ## PRD with no outgoing influence
-- [prd:10](prd/10.md)
-- [prd:Resume](prd/Resume.md)
+- prd:10
+- prd:Resume
 
 ## CJM with no mapping to Flow
-- [cjm:awareness](cjm/awareness.md)
-- [cjm:evaluation-acquisition](cjm/evaluation-acquisition.md)
+- cjm:awareness
+- cjm:evaluation-acquisition

@@ -391,13 +391,13 @@ def render_coverage_svg(graph_data: Dict[str, Any]) -> None:
         nid = n.get("id", "")
         t = n.get("type")
         if t == "PRD" and nid.startswith("prd:"):
-            return f"prd/{nid.split(':', 1)[1]}.md"
+            return f"prd/{slugify(nid.split(':', 1)[1])}.md"
         if t == "CJM" and nid.startswith("cjm:"):
-            return f"cjm/{nid.split(':', 1)[1]}.md"
+            return f"cjm/{slugify(nid.split(':', 1)[1])}.md"
         if t == "FLOW_NODE" and nid.startswith("flow:node:"):
             return f"flow/nodes/{slugify(nid.split(':', 2)[2])}.md"
         if t == "STORY" and nid.startswith("story:"):
-            return f"stories/{nid.split(':', 1)[1]}.md"
+            return f"stories/{slugify(nid.split(':', 1)[1])}.md"
         if t == "HIG" and nid.startswith("hig:"):
             sid = nid.split(":", 2)[1]
             return f"hig/{sid}.md"
@@ -496,18 +496,24 @@ def render_orphans(env: Environment, graph: Dict[str, Any]) -> None:
             for nid in ids:
                 # map to URL similar to coverage
                 ntype = nid.split(":", 1)[0].upper()
-                url = "#"
+                # compute candidate URL using same mapping as coverage
                 if ntype == "STORY":
-                    url = f"stories/{nid.split(':',1)[1]}.md"
+                    url_rel = f"stories/{slugify(nid.split(':',1)[1])}.md"
                 elif ntype == "CTXUX":
-                    url = f"ctxux/{nid.split(':',2)[2]}.md"
+                    url_rel = f"ctxux/{nid.split(':',2)[2]}.md"
                 elif ntype == "FLOW":
-                    url = f"flow/nodes/{slugify(nid.split(':',2)[2])}.md"
+                    url_rel = f"flow/nodes/{slugify(nid.split(':',2)[2])}.md"
                 elif ntype == "PRD":
-                    url = f"prd/{nid.split(':',1)[1]}.md"
+                    url_rel = f"prd/{slugify(nid.split(':',1)[1])}.md"
                 elif ntype == "CJM":
-                    url = f"cjm/{nid.split(':',1)[1]}.md"
-                lines.append(f"- [{nid}]({url})")
+                    url_rel = f"cjm/{slugify(nid.split(':',1)[1])}.md"
+                else:
+                    url_rel = None
+                # only create link if file exists; otherwise render as plain text to satisfy mkdocs strict
+                if url_rel and (DOCS_DIR / url_rel).exists():
+                    lines.append(f"- [{nid}]({url_rel})")
+                else:
+                    lines.append(f"- {nid}")
         lines.append("")
     write_file(DOCS_DIR / "orphans.md", "\n".join(lines))
 
