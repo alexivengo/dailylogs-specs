@@ -2,7 +2,7 @@
 
 <p class="badges">
   <span class="badge version">v1.0.0</span>
-  <span class="badge build">2025-09-15T11:48:21Z · <a href="https://github.com/alexivengo/dailylogs-specs/commit/fb31dd8" target="_blank" rel="noopener" class="sha">fb31dd8</a></span>
+  <span class="badge build">2025-09-15T12:04:14Z · <a href="https://github.com/alexivengo/dailylogs-specs/commit/b310327" target="_blank" rel="noopener" class="sha">b310327</a></span>
   <span class="badge schema unknown">Schema unknown</span>
 </p>
 
@@ -97,4 +97,4 @@
 ✏️ Edit source: https://github.com/alexivengo/dailylogs-specs/blob/main/specs/05_hig/stories/us-9/candidates.json
 
 <p class="page-meta">
-  View in GitHub: <a href="https://github.com/alexivengo/dailylogs-specs/commit/fb31dd8" target="_blank" rel="noopener">@fb31dd8</a></p>
+  View in GitHub: <a href="https://github.com/alexivengo/dailylogs-specs/commit/b310327" target="_blank" rel="noopener">@b310327</a></p>

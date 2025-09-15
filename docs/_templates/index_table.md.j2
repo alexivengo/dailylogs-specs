@@ -2,8 +2,9 @@
 
 <div class="table-toolbar" data-table-id="{{ table_id }}">
   <input id="filter-{{ table_id }}" type="search" placeholder="{{ search_placeholder or 'Поиск…' }}" aria-label="Search in table {{ page_title }}" />
-  <button id="clear-{{ table_id }}" class="btn-clear" type="button">Clear filters</button>
-  <button id="export-{{ table_id }}" class="btn-export" type="button">Export CSV</button>
+  <button id="clear-{{ table_id }}" class="btn-clear" type="button" title="Clear filters">Clear filters</button>
+  <button id="copy-{{ table_id }}" class="btn-export" type="button" title="Copy filter link">Copy filter link</button>
+  <button id="export-{{ table_id }}" class="btn-export" type="button" title="Export visible rows to CSV">Export CSV</button>
   <div class="sr-only" aria-live="polite" id="live-{{ table_id }}"></div>
 </div>
 
@@ -11,7 +12,7 @@
   <thead>
     <tr>
     {% for col in columns %}
-      <th scope="col" data-type="{{ col.type or 'text' }}" tabindex="0" role="columnheader" aria-sort="none">{{ col.title }}</th>
+      <th scope="col" data-type="{{ col.type or 'text' }}" tabindex="0" role="columnheader" aria-sort="none" title="Enter/Space — sort">{{ col.title }}</th>
     {% endfor %}
     </tr>
   </thead>

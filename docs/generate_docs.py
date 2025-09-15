@@ -819,6 +819,8 @@ def _connected(graph: Dict[str, Any], node_id: str, prefix: str) -> List[str]:
 def render_stories_index(env: Environment, artifacts: Dict[str, Any], graph: Dict[str, Any]) -> None:
     data = artifacts.get("stories", {})
     stories = data.get("stories", []) or []
+    has_priority = any((s.get("priority") for s in stories))
+    has_status = any((s.get("status") for s in stories))
     rows = []
     for s in stories:
         sid = s.get("story_id");
@@ -830,14 +832,47 @@ def render_stories_index(env: Environment, artifacts: Dict[str, Any], graph: Dic
         cjm_ids = [c.split(":",1)[1] for c in _connected(graph, story_nid, "cjm:")]
         flow_nodes = [n.split(":",2)[2] for n in _connected(graph, story_nid, "flow:node:")]
         ctx_screens = [n.split(":",2)[2] for n in _connected(graph, story_nid, "ctxux:screen:")]
+        ux_principles = [n.split(":",2)[2] for n in _connected(graph, story_nid, "ux:principle:")]
         hig_exists = (DOCS_DIR/"hig"/f"{slugify(sid)}.md").exists()
-        # Cells HTML
-        prd_html = ", ".join(f"<a href=\"../prd/{slugify(p)}.md\">{p}</a>" for p in prd_ids[:5]) + (f" +{len(prd_ids)-5}" if len(prd_ids)>5 else "") or "—"
-        cjm_html = ", ".join(f"<a href=\"../cjm/{slugify(c)}.md\">{c}</a>" for c in cjm_ids[:5]) + (f" +{len(cjm_ids)-5}" if len(cjm_ids)>5 else "") or "—"
-        flow_html = ", ".join(f"<a href=\"../flow/nodes/{slugify(f)}.md\"><code>{f}</code></a>" for f in flow_nodes[:5]) + (f" +{len(flow_nodes)-5}" if len(flow_nodes)>5 else "") or "—"
+        met = s.get("metrics", {}) or {}
+        leading = len(met.get("leading", []) or [])
+        lagging = len(met.get("lagging", []) or [])
+        # Cells HTML with threshold for inline listing
+        TH = 20
+        if len(prd_ids) > TH:
+            prd_html = f"{TH} из {len(prd_ids)}"
+        else:
+            prd_html = ", ".join(f"<a href=\"../prd/{slugify(p)}.md\">{p}</a>" for p in prd_ids[:5]) or "—"
+        if len(cjm_ids) > TH:
+            cjm_html = f"{TH} из {len(cjm_ids)}"
+        else:
+            cjm_html = ", ".join(f"<a href=\"../cjm/{slugify(c)}.md\">{c}</a>" for c in cjm_ids[:5]) or "—"
+        if len(flow_nodes) > TH:
+            flow_html = f"{TH} из {len(flow_nodes)}"
+        else:
+            flow_html = ", ".join(f"<a href=\"../flow/nodes/{slugify(f)}.md\"><code>{f}</code></a>" for f in flow_nodes[:5]) or "—"
         hig_html = f"<a href=\"../hig/{slugify(sid)}.md\">yes</a>" if hig_exists else "—"
         ctx_html = f"<a href=\"../ctxux/index.md#by-story-{slugify(sid)}\">{len(ctx_screens)}</a>" if ctx_screens else "—"
         # Row
+        # Build cells dynamically with optional columns and dynamic title indices
+        cells: List[str] = []
+        title_map: Dict[int, str] = {}
+        cells.append(f"<a href=\"{slugify(sid)}.md\">{sid}</a>")  # 0
+        cells.append(title or "")  # 1
+        if has_priority:
+            pri = (s.get("priority") or "")
+            cells.append(pri)
+        if has_status:
+            stat = (s.get("status") or "").lower().replace(' ', '-')
+            label = (s.get("status") or "")
+            cells.append(f"<span class=\"badge status {slugify(stat)}\">{label}</span>")
+        i_prd = len(cells); cells.append(prd_html); title_map[i_prd] = ", ".join(prd_ids)
+        i_cjm = len(cells); cells.append(cjm_html); title_map[i_cjm] = ", ".join(cjm_ids)
+        i_flow = len(cells); cells.append(flow_html); title_map[i_flow] = ", ".join(flow_nodes)
+        cells.append(hig_html)
+        cells.append(ctx_html)
+        cells.append(f"{leading}/{lagging}")
+
         rows.append({
             "row_id": f"row-{slugify(sid)}",
             "data": {
@@ -848,25 +883,18 @@ def render_stories_index(env: Environment, artifacts: Dict[str, Any], graph: Dic
                 "ctxux": " ".join(slugify(c) for c in ctx_screens),
                 "ux": " ".join(slugify(u) for u in ux_principles),
             },
-            "cells": [
-                f"<a href=\"{slugify(sid)}.md\">{sid}</a>",
-                title or "",
-                prd_html,
-                cjm_html,
-                flow_html,
-                hig_html,
-                ctx_html,
-                f"{leading}/{lagging}",
-            ],
-            "titles": {
-                2: ", ".join(prd_ids[:5]),
-                3: ", ".join(cjm_ids[:5]),
-                4: ", ".join(flow_nodes[:5]),
-            }
+            "cells": cells,
+            "titles": title_map,
         })
-    columns = [
+    columns: List[Dict[str, str]] = [
         {"title": "ID", "type": "text"},
         {"title": "Название", "type": "text"},
+    ]
+    if has_priority:
+        columns.append({"title": "Priority", "type": "text"})
+    if has_status:
+        columns.append({"title": "Status", "type": "text"})
+    columns += [
         {"title": "PRD", "type": "text"},
         {"title": "CJM", "type": "text"},
         {"title": "Flow", "type": "text"},
@@ -909,9 +937,9 @@ def render_prd_index(env: Environment, artifacts: Dict[str, Any], graph: Dict[st
                 goals or "—",
                 str(len(story_ids)),
                 str(len(flow_nodes)),
-                (", ".join(f"<a href=\"../cjm/{slugify(c)}.md\">{c}</a>" for c in cjm_ids[:5]) + (f" +{len(cjm_ids)-5}" if len(cjm_ids)>5 else "")) or "—",
+                (("20 из "+str(len(cjm_ids))) if len(cjm_ids)>20 else (", ".join(f"<a href=\"../cjm/{slugify(c)}.md\">{c}</a>" for c in cjm_ids[:5]) or "—")),
             ],
-            "titles": {4: ", ".join(cjm_ids[:5])}
+            "titles": {4: ", ".join(cjm_ids)}
         })
     columns = [
         {"title": "Раздел", "type": "text"},
@@ -937,8 +965,15 @@ def render_flow_index(env: Environment, artifacts: Dict[str, Any], graph: Dict[s
         cjm_ids = [c.split(":",1)[1] for c in _connected(graph, f"flow:node:{nid}", "cjm:")]
         story_ids = [s.split(":",1)[1] for s in _connected(graph, f"flow:node:{nid}", "story:")]
         ctx_ids = [x.split(":",2)[2] for x in _connected(graph, f"flow:node:{nid}", "ctxux:screen:")]
-        prd_html = (", ".join(f"<a href=\"../prd/{slugify(p)}.md\">{p}</a>" for p in prd_ids[:5]) + (f" +{len(prd_ids)-5}" if len(prd_ids)>5 else "")) or "—"
-        cjm_html = (", ".join(f"<a href=\"../cjm/{slugify(c)}.md\">{c}</a>" for c in cjm_ids[:5]) + (f" +{len(cjm_ids)-5}" if len(cjm_ids)>5 else "")) or "—"
+        TH = 20
+        if len(prd_ids) > TH:
+            prd_html = f"{TH} из {len(prd_ids)}"
+        else:
+            prd_html = (", ".join(f"<a href=\"../prd/{slugify(p)}.md\">{p}</a>" for p in prd_ids[:5])) or "—"
+        if len(cjm_ids) > TH:
+            cjm_html = f"{TH} из {len(cjm_ids)}"
+        else:
+            cjm_html = (", ".join(f"<a href=\"../cjm/{slugify(c)}.md\">{c}</a>" for c in cjm_ids[:5])) or "—"
         rows.append({
             "row_id": f"row-{slugify(nid)}",
             "data": {
@@ -954,7 +989,7 @@ def render_flow_index(env: Environment, artifacts: Dict[str, Any], graph: Dict[s
                 cjm_html,
                 str(len(story_ids)),
             ],
-            "titles": {2: ", ".join(prd_ids[:5]), 3: ", ".join(cjm_ids[:5])}
+            "titles": {2: ", ".join(prd_ids), 3: ", ".join(cjm_ids)}
         })
     columns = [
         {"title": "Узел", "type": "text"},

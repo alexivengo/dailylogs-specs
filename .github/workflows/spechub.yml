@@ -90,9 +90,27 @@ jobs:
         uses: lycheeverse/lychee-action@v1
         continue-on-error: true
         with:
-          args: --offline --include-fragments --no-progress --timeout 10 --verbose ./site/stories/index.html ./site/prd/index.html ./site/flow/index.html
+          args: --offline --include-fragments --no-progress --timeout 10 --verbose ./site/stories/index.html ./site/prd/index.html ./site/flow/index.html ./site/ctxux/index.html ./site/hig/index.html ./site/ux/index.html
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Lighthouse (warn-only)
+        continue-on-error: true
+        run: |
+          npm -g i http-server
+          npx -y http-server site -p 8080 -s &
+          sleep 2
+          npm -g i lighthouse
+          lighthouse http://127.0.0.1:8080/ --output=json --output-path=./lh-home.json --only-categories=performance,accessibility --chrome-flags="--headless"
+          lighthouse http://127.0.0.1:8080/stories/index/ --output=json --output-path=./lh-stories.json --only-categories=performance,accessibility --chrome-flags="--headless"
+          sudo apt-get update && sudo apt-get install -y jq || true
+          for f in lh-home.json lh-stories.json; do \
+            P=$(jq '.categories.performance.score*100|floor' "$f"); \
+            A=$(jq '.categories.accessibility.score*100|floor' "$f"); \
+            echo "Lighthouse $f: performance=$P accessibility=$A"; \
+            if [ "$P" -lt 90 ]; then echo "::warning ::Performance below 90 in $f ($P)"; fi; \
+            if [ "$A" -lt 90 ]; then echo "::warning ::Accessibility below 90 in $f ($A)"; fi; \
+          done
 
       - name: Markdown lint (warnings only)
         continue-on-error: true

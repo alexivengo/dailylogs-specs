@@ -16,6 +16,11 @@
     });
     return out;
   }
+  function summarizeFilters(filters){
+    var parts = [];
+    Object.keys(filters).forEach(function(k){ if(filters[k] && filters[k].length){ parts.push(k+'='+filters[k].join(',')); }});
+    return parts.join('; ');
+  }
   function applyFilters(tbl, filters, searchValue){
     var rows = $all('tbody tr', tbl); var visible=0;
     var q = slug(searchValue||'');
@@ -36,7 +41,10 @@
       tr.style.display = ok ? '' : 'none';
       if(ok) visible++;
     });
-    var live = $('#live-'+tbl.id); if(live){ live.textContent = 'Rows: '+visible; }
+    var live = $('#live-'+tbl.id); if(live){
+      var summary = summarizeFilters(filters);
+      live.textContent = (summary?('Filters: '+summary+'. '):'') + 'Found: '+visible;
+    }
   }
   function sortTable(tbl, colIdx, type, dir){
     var tbody = $('tbody', tbl); if(!tbody) return;
@@ -72,11 +80,12 @@
       th.addEventListener('keydown', function(e){ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); th.click(); }});
     });
     // Filters
-    var fid = 'filter-'+tbl.id; var cid = 'clear-'+tbl.id; var eid = 'export-'+tbl.id;
-    var input = document.getElementById(fid); var clearBtn = document.getElementById(cid); var exportBtn=document.getElementById(eid);
+    var fid = 'filter-'+tbl.id; var cid = 'clear-'+tbl.id; var eid = 'export-'+tbl.id; var copyId='copy-'+tbl.id;
+    var input = document.getElementById(fid); var clearBtn = document.getElementById(cid); var exportBtn=document.getElementById(eid); var copyBtn=document.getElementById(copyId);
     function refresh(){ applyFilters(tbl, parseHashQuery(), input?input.value:''); }
     if(input){ input.addEventListener('input', function(){ refresh(); }); }
     if(clearBtn){ clearBtn.addEventListener('click', function(){ if(input) input.value=''; location.hash=''; refresh(); }); }
+    if(copyBtn){ copyBtn.addEventListener('click', function(){ try{ navigator.clipboard.writeText(location.href); }catch(e){} }); }
     if(exportBtn){ exportBtn.addEventListener('click', function(){
       var rows = $all('tbody tr', tbl).filter(function(tr){ return tr.style.display!== 'none'; });
       var csv = [];
@@ -110,6 +119,13 @@
     highlightAnchor();
     // If hash contains query at load, apply
     $all('table[data-table]').forEach(function(tbl){ var fid='filter-'+tbl.id; var input=document.getElementById(fid); applyFilters(tbl, parseHashQuery(), input?input.value:''); });
+    // '/' focuses the first search input
+    document.addEventListener('keydown', function(e){
+      if(e.key==='/' && !(e.target && (/input|textarea|select/i).test(e.target.tagName))){
+        e.preventDefault();
+        var inp = document.querySelector('.table-toolbar input[type="search"]'); if(inp){ inp.focus(); }
+      }
+    });
   }
   if(document.readyState!=='loading') init(); else document.addEventListener('DOMContentLoaded', init);
 })();
