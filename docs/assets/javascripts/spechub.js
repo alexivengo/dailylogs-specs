@@ -35,4 +35,57 @@
       live.textContent = msg;
     } catch(e) {}
   }
+
+  // Basic pan/zoom for embedded SVG via <object>
+  function initPanZoomForObject(objId){
+    var obj = document.getElementById(objId);
+    if(!obj) return;
+    if(obj.tagName.toLowerCase() !== 'object') return;
+    var setup = function(){
+      try{
+        var doc = obj.contentDocument; if(!doc) return;
+        var svg = doc.querySelector('svg'); if(!svg) return;
+        // Ensure viewBox
+        if(!svg.hasAttribute('viewBox')){
+          var w = parseFloat(svg.getAttribute('width'))||1000;
+          var h = parseFloat(svg.getAttribute('height'))||600;
+          svg.setAttribute('viewBox', '0 0 '+w+' '+h);
+        }
+        svg.setAttribute('preserveAspectRatio','xMidYMid meet');
+        var vb = svg.getAttribute('viewBox').split(/\s+/).map(parseFloat);
+        var state = { dragging:false, lastX:0, lastY:0, minScale:0.3, maxScale:8 };
+        function setViewBox(x,y,w,h){ svg.setAttribute('viewBox', [x,y,w,h].join(' ')); vb=[x,y,w,h]; }
+        function onWheel(e){
+          e.preventDefault();
+          var delta = e.deltaY < 0 ? -1 : 1;
+          var scale = (delta>0) ? 1.1 : 0.9;
+          var newW = Math.max(10, Math.min(vb[2]*scale, vb[2]/state.minScale*state.maxScale));
+          // Keep center on cursor
+          var pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY;
+          var ctm = svg.getScreenCTM().inverse();
+          var loc = pt.matrixTransform(ctm);
+          var k = newW / vb[2];
+          var newH = vb[3]*k;
+          var nx = loc.x - (loc.x - vb[0]) * k;
+          var ny = loc.y - (loc.y - vb[1]) * k;
+          setViewBox(nx, ny, newW, newH);
+        }
+        function onDown(e){ state.dragging=true; state.lastX=e.clientX; state.lastY=e.clientY; }
+        function onMove(e){ if(!state.dragging) return; var dx=e.clientX-state.lastX; var dy=e.clientY-state.lastY; state.lastX=e.clientX; state.lastY=e.clientY; setViewBox(vb[0]-dx, vb[1]-dy, vb[2], vb[3]); }
+        function onUp(){ state.dragging=false; }
+        svg.addEventListener('wheel', onWheel, {passive:false});
+        svg.addEventListener('mousedown', onDown);
+        svg.addEventListener('mousemove', onMove);
+        svg.addEventListener('mouseup', onUp);
+        svg.addEventListener('mouseleave', onUp);
+      }catch(e){}
+    };
+    if(obj.contentDocument && obj.contentDocument.readyState === 'complete') setup();
+    else obj.addEventListener('load', setup, { once:true });
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    initPanZoomForObject('userflow-object');
+    initPanZoomForObject('coverage-object');
+  });
 })();

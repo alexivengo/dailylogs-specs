@@ -13,6 +13,29 @@
   {% endif %}
 </p>
 
+✏️ Edit source: {{ edit_href }}
+
+{% if xlinks %}
+## Related
+{% if xlinks.prd and xlinks.prd|length %}
+PRD:
+{% for c in xlinks.prd %}<span class="chip">{% if c.href %}[{{ c.label }}]({{ c.href }}){% else %}{{ c.label }}{% endif %}</span>{% endfor %}
+{% endif %}
+{% if xlinks.cjm and xlinks.cjm|length %}
+CJM:
+{% for c in xlinks.cjm %}<span class="chip">{% if c.href %}[{{ c.label }}]({{ c.href }}){% else %}{{ c.label }}{% endif %}</span>{% endfor %}
+{% endif %}
+{% if xlinks.stories and xlinks.stories|length %}
+Stories:
+{% for c in xlinks.stories %}<span class="chip">{% if c.href %}[{{ c.label }}]({{ c.href }}){% else %}{{ c.label }}{% endif %}</span>{% endfor %}
+{% endif %}
+{% if xlinks.ctxux and xlinks.ctxux|length %}
+CtxUX:
+{% for c in xlinks.ctxux %}<span class="chip">{% if c.href %}[{{ c.label }}]({{ c.href }}){% else %}{{ c.label }}{% endif %}</span>{% endfor %}
+{% endif %}
+{% endif %}
+
+## Description
 Type: `{{ node.type }}`
 
 {% if node.desc %}

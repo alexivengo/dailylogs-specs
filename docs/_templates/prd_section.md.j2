@@ -14,6 +14,20 @@
   {% endif %}
 </p>
 
+✏️ Edit source: {{ edit_href }}
+
+{% if xlinks %}
+## Related
+{% if xlinks.stories and xlinks.stories|length %}
+Stories:
+{% for c in xlinks.stories %}<span class="chip">{% if c.href %}[{{ c.label }}]({{ c.href }}){% else %}{{ c.label }}{% endif %}</span>{% endfor %}
+{% endif %}
+{% if xlinks.flow and xlinks.flow|length %}
+Flow nodes:
+{% for c in xlinks.flow %}<span class="chip">{% if c.href %}[`{{ c.label }}`]({{ c.href }}){% else %}`{{ c.label }}`{% endif %}</span>{% endfor %}
+{% endif %}
+{% endif %}
+
 {% if section.goals %}
 ## Goals
 {% for g in section.goals %}- {{ g }}

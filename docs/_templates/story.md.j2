@@ -12,6 +12,31 @@
   {% endif %}
 </p>
 
+✏️ Edit source: {{ edit_href }}
+
+{% if xlinks %}
+## Related
+{% if xlinks.prd and xlinks.prd|length %}
+PRD:
+{% for c in xlinks.prd %}<span class="chip">{% if c.href %}[{{ c.label }}]({{ c.href }}){% else %}{{ c.label }}{% endif %}</span>{% endfor %}
+{% endif %}
+{% if xlinks.cjm and xlinks.cjm|length %}
+CJM:
+{% for c in xlinks.cjm %}<span class="chip">{% if c.href %}[{{ c.label }}]({{ c.href }}){% else %}{{ c.label }}{% endif %}</span>{% endfor %}
+{% endif %}
+{% if xlinks.flow and xlinks.flow|length %}
+Flow nodes:
+{% for c in xlinks.flow %}<span class="chip">{% if c.href %}[`{{ c.label }}`]({{ c.href }}){% else %}`{{ c.label }}`{% endif %}</span>{% endfor %}
+{% endif %}
+{% if xlinks.hig and xlinks.hig.href %}
+HIG: <span class="chip"><a href="{{ xlinks.hig.href }}">кандидаты</a></span>
+{% endif %}
+{% if xlinks.ctxux and xlinks.ctxux|length %}
+CtxUX:
+{% for c in xlinks.ctxux %}<span class="chip">{% if c.href %}[{{ c.label }}]({{ c.href }}){% else %}{{ c.label }}{% endif %}</span>{% endfor %}
+{% endif %}
+{% endif %}
+
 **Role:** {{ story.role }}  
 **Capability:** {{ story.capability }}  
 **Value:** {{ story.value }}  
