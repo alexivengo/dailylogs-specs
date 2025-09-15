@@ -12,7 +12,7 @@
 <!-- app&#45;launch -->
 <g id="node1" class="node">
 <title>app&#45;launch</title>
-<g id="a_node1"><a xlink:href="./flow/nodes/app-launch/" xlink:title="app&#45;launch\n(system)" target="_self">
+<g id="a_node1"><a xlink:href="./flow/nodes/app-launch.md" xlink:title="app&#45;launch&#10;(system)">
 <ellipse fill="none" stroke="black" cx="53.74" cy="-464.76" rx="53.74" ry="28.99"/>
 <text xml:space="preserve" text-anchor="middle" x="53.74" y="-467.96" font-family="Times,serif" font-size="14.00">app&#45;launch</text>
 <text xml:space="preserve" text-anchor="middle" x="53.74" y="-451.46" font-family="Times,serif" font-size="14.00">(system)</text>
@@ -22,7 +22,7 @@
 <!-- projects&#45;empty -->
 <g id="node27" class="node">
 <title>projects&#45;empty</title>
-<g id="a_node27"><a xlink:href="./flow/nodes/projects-empty/" xlink:title="projects&#45;empty\n(screen)" target="_self">
+<g id="a_node27"><a xlink:href="./flow/nodes/projects-empty.md" xlink:title="projects&#45;empty&#10;(screen)">
 <polygon fill="none" stroke="black" points="278.73,-485.26 180.98,-485.26 180.98,-444.26 278.73,-444.26 278.73,-485.26"/>
 <text xml:space="preserve" text-anchor="middle" x="229.86" y="-467.96" font-family="Times,serif" font-size="14.00">projects&#45;empty</text>
 <text xml:space="preserve" text-anchor="middle" x="229.86" y="-451.46" font-family="Times,serif" font-size="14.00">(screen)</text>
@@ -32,14 +32,17 @@
 <!-- app&#45;launch&#45;&gt;projects&#45;empty -->
 <g id="edge1" class="edge">
 <title>app&#45;launch&#45;&gt;projects&#45;empty</title>
+<g id="a_edge1"><a xlink:title="initiate">
 <path fill="none" stroke="black" d="M107.93,-464.76C127.32,-464.76 149.37,-464.76 169.29,-464.76"/>
 <polygon fill="black" stroke="black" points="169.22,-468.26 179.22,-464.76 169.22,-461.26 169.22,-468.26"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="144.23" y="-467.96" font-family="Times,serif" font-size="14.00">initiate</text>
 </g>
 <!-- success&#45;done -->
 <g id="node2" class="node">
 <title>success&#45;done</title>
-<g id="a_node2"><a xlink:href="./flow/nodes/success-done/" xlink:title="success&#45;done\n(terminator)" target="_self">
+<g id="a_node2"><a xlink:href="./flow/nodes/success-done.md" xlink:title="success&#45;done&#10;(terminator)">
 <ellipse fill="none" stroke="black" cx="4849.55" cy="-202.76" rx="61.7" ry="28.99"/>
 <text xml:space="preserve" text-anchor="middle" x="4849.55" y="-205.96" font-family="Times,serif" font-size="14.00">success&#45;done</text>
 <text xml:space="preserve" text-anchor="middle" x="4849.55" y="-189.46" font-family="Times,serif" font-size="14.00">(terminator)</text>
@@ -49,7 +52,7 @@
 <!-- cancel&#45;out -->
 <g id="node3" class="node">
 <title>cancel&#45;out</title>
-<g id="a_node3"><a xlink:href="./flow/nodes/cancel-out/" xlink:title="cancel&#45;out\n(terminator)" target="_self">
+<g id="a_node3"><a xlink:href="./flow/nodes/cancel-out.md" xlink:title="cancel&#45;out&#10;(terminator)">
 <ellipse fill="none" stroke="black" cx="1146.93" cy="-495.76" rx="57.98" ry="28.99"/>
 <text xml:space="preserve" text-anchor="middle" x="1146.93" y="-498.96" font-family="Times,serif" font-size="14.00">cancel&#45;out</text>
 <text xml:space="preserve" text-anchor="middle" x="1146.93" y="-482.46" font-family="Times,serif" font-size="14.00">(terminator)</text>
@@ -59,7 +62,7 @@
 <!-- daily&#45;calendar -->
 <g id="node4" class="node">
 <title>daily&#45;calendar</title>
-<g id="a_node4"><a xlink:href="./flow/nodes/daily-calendar/" xlink:title="daily&#45;calendar\n(screen)" target="_self">
+<g id="a_node4"><a xlink:href="./flow/nodes/daily-calendar.md" xlink:title="daily&#45;calendar&#10;(screen)">
 <polygon fill="none" stroke="black" points="1193.55,-437.26 1100.3,-437.26 1100.3,-396.26 1193.55,-396.26 1193.55,-437.26"/>
 <text xml:space="preserve" text-anchor="middle" x="1146.93" y="-419.96" font-family="Times,serif" font-size="14.00">daily&#45;calendar</text>
 <text xml:space="preserve" text-anchor="middle" x="1146.93" y="-403.46" font-family="Times,serif" font-size="14.00">(screen)</text>
@@ -69,7 +72,7 @@
 <!-- day&#45;entries&#45;decision -->
 <g id="node5" class="node">
 <title>day&#45;entries&#45;decision</title>
-<g id="a_node5"><a xlink:href="./flow/nodes/day-entries-decision/" xlink:title="day&#45;entries&#45;decision\n(decision)" target="_self">
+<g id="a_node5"><a xlink:href="./flow/nodes/day-entries-decision.md" xlink:title="day&#45;entries&#45;decision&#10;(decision)">
 <polygon fill="none" stroke="black" points="1433.91,-514.76 1308.41,-473.76 1433.91,-432.76 1559.41,-473.76 1433.91,-514.76"/>
 <text xml:space="preserve" text-anchor="middle" x="1433.91" y="-476.96" font-family="Times,serif" font-size="14.00">day&#45;entries&#45;decision</text>
 <text xml:space="preserve" text-anchor="middle" x="1433.91" y="-460.46" font-family="Times,serif" font-size="14.00">(decision)</text>
@@ -79,14 +82,17 @@
 <!-- daily&#45;calendar&#45;&gt;day&#45;entries&#45;decision -->
 <g id="edge2" class="edge">
 <title>daily&#45;calendar&#45;&gt;day&#45;entries&#45;decision</title>
+<g id="a_edge2"><a xlink:title="select_today">
 <path fill="none" stroke="black" d="M1194.03,-425.98C1234.38,-434.05 1294.14,-446 1343.79,-455.93"/>
 <polygon fill="black" stroke="black" points="1342.9,-459.32 1353.39,-457.85 1344.27,-452.46 1342.9,-459.32"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="1256.66" y="-446.75" font-family="Times,serif" font-size="14.00">select_today</text>
 </g>
 <!-- future&#45;date&#45;error -->
 <g id="node25" class="node">
 <title>future&#45;date&#45;error</title>
-<g id="a_node25"><a xlink:href="./flow/nodes/future-date-error/" xlink:title="future&#45;date&#45;error\n(error)" target="_self">
+<g id="a_node25"><a xlink:href="./flow/nodes/future-date-error.md" xlink:title="future&#45;date&#45;error&#10;(error)">
 <polygon fill="none" stroke="black" points="1515.04,-370.76 1515.04,-396.75 1467.52,-415.14 1400.31,-415.14 1352.78,-396.75 1352.78,-370.76 1400.31,-352.38 1467.52,-352.38 1515.04,-370.76"/>
 <text xml:space="preserve" text-anchor="middle" x="1433.91" y="-386.96" font-family="Times,serif" font-size="14.00">future&#45;date&#45;error</text>
 <text xml:space="preserve" text-anchor="middle" x="1433.91" y="-370.46" font-family="Times,serif" font-size="14.00">(error)</text>
@@ -96,14 +102,17 @@
 <!-- daily&#45;calendar&#45;&gt;future&#45;date&#45;error -->
 <g id="edge3" class="edge">
 <title>daily&#45;calendar&#45;&gt;future&#45;date&#45;error</title>
+<g id="a_edge3"><a xlink:title="select_date">
 <path fill="none" stroke="black" d="M1194.03,-411.42C1233.64,-406.83 1291.95,-400.08 1341.04,-394.39"/>
 <polygon fill="black" stroke="black" points="1341.3,-397.89 1350.83,-393.26 1340.49,-390.93 1341.3,-397.89"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="1256.66" y="-411.11" font-family="Times,serif" font-size="14.00">select_date</text>
 </g>
 <!-- day&#45;log&#45;empty -->
 <g id="node6" class="node">
 <title>day&#45;log&#45;empty</title>
-<g id="a_node6"><a xlink:href="./flow/nodes/day-log-empty/" xlink:title="day&#45;log&#45;empty\n(screen)" target="_self">
+<g id="a_node6"><a xlink:href="./flow/nodes/day-log-empty.md" xlink:title="day&#45;log&#45;empty&#10;(screen)">
 <polygon fill="none" stroke="black" points="1734.41,-364.26 1638.16,-364.26 1638.16,-323.26 1734.41,-323.26 1734.41,-364.26"/>
 <text xml:space="preserve" text-anchor="middle" x="1686.29" y="-346.96" font-family="Times,serif" font-size="14.00">day&#45;log&#45;empty</text>
 <text xml:space="preserve" text-anchor="middle" x="1686.29" y="-330.46" font-family="Times,serif" font-size="14.00">(screen)</text>
@@ -113,14 +122,17 @@
 <!-- day&#45;entries&#45;decision&#45;&gt;day&#45;log&#45;empty -->
 <g id="edge4" class="edge">
 <title>day&#45;entries&#45;decision&#45;&gt;day&#45;log&#45;empty</title>
+<g id="a_edge4"><a xlink:title="proceed">
 <path fill="none" stroke="black" d="M1494.8,-452.28C1515.63,-444.14 1538.89,-434.28 1559.41,-423.76 1589.82,-408.16 1622.33,-387.38 1646.69,-370.91"/>
 <polygon fill="black" stroke="black" points="1648.4,-373.98 1654.69,-365.45 1644.46,-368.2 1648.4,-373.98"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="1598.79" y="-415.34" font-family="Times,serif" font-size="14.00">proceed</text>
 </g>
 <!-- day&#45;log&#45;populated -->
 <g id="node7" class="node">
 <title>day&#45;log&#45;populated</title>
-<g id="a_node7"><a xlink:href="./flow/nodes/day-log-populated/" xlink:title="day&#45;log&#45;populated\n(screen)" target="_self">
+<g id="a_node7"><a xlink:href="./flow/nodes/day-log-populated.md" xlink:title="day&#45;log&#45;populated&#10;(screen)">
 <polygon fill="none" stroke="black" points="2901.8,-232.26 2786.8,-232.26 2786.8,-191.26 2901.8,-191.26 2901.8,-232.26"/>
 <text xml:space="preserve" text-anchor="middle" x="2844.3" y="-214.96" font-family="Times,serif" font-size="14.00">day&#45;log&#45;populated</text>
 <text xml:space="preserve" text-anchor="middle" x="2844.3" y="-198.46" font-family="Times,serif" font-size="14.00">(screen)</text>
@@ -130,14 +142,17 @@
 <!-- day&#45;entries&#45;decision&#45;&gt;day&#45;log&#45;populated -->
 <g id="edge5" class="edge">
 <title>day&#45;entries&#45;decision&#45;&gt;day&#45;log&#45;populated</title>
+<g id="a_edge5"><a xlink:title="proceed">
 <path fill="none" stroke="black" d="M1502.04,-492.93C1552.11,-505.55 1622.42,-519.76 1685.29,-519.76 1685.29,-519.76 1685.29,-519.76 2578.48,-519.76 2666.91,-519.76 2712.35,-529.82 2768.8,-461.76 2822.21,-397.38 2837.33,-295.77 2841.61,-244.15"/>
 <polygon fill="black" stroke="black" points="2845.1,-244.49 2842.34,-234.26 2838.12,-243.98 2845.1,-244.49"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="2010.29" y="-522.96" font-family="Times,serif" font-size="14.00">proceed</text>
 </g>
 <!-- entry&#45;editor -->
 <g id="node9" class="node">
 <title>entry&#45;editor</title>
-<g id="a_node9"><a xlink:href="./flow/nodes/entry-editor/" xlink:title="entry&#45;editor\n(screen)" target="_self">
+<g id="a_node9"><a xlink:href="./flow/nodes/entry-editor.md" xlink:title="entry&#45;editor&#10;(screen)">
 <polygon fill="none" stroke="black" points="1927.41,-364.26 1847.66,-364.26 1847.66,-323.26 1927.41,-323.26 1927.41,-364.26"/>
 <text xml:space="preserve" text-anchor="middle" x="1887.54" y="-346.96" font-family="Times,serif" font-size="14.00">entry&#45;editor</text>
 <text xml:space="preserve" text-anchor="middle" x="1887.54" y="-330.46" font-family="Times,serif" font-size="14.00">(screen)</text>
@@ -147,14 +162,17 @@
 <!-- day&#45;log&#45;empty&#45;&gt;entry&#45;editor -->
 <g id="edge6" class="edge">
 <title>day&#45;log&#45;empty&#45;&gt;entry&#45;editor</title>
+<g id="a_edge6"><a xlink:title="tap_add_entry">
 <path fill="none" stroke="black" d="M1734.76,-343.76C1765.28,-343.76 1804.89,-343.76 1835.99,-343.76"/>
 <polygon fill="black" stroke="black" points="1835.94,-347.26 1845.94,-343.76 1835.94,-340.26 1835.94,-347.26"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="1791.04" y="-346.96" font-family="Times,serif" font-size="14.00">tap_add_entry</text>
 </g>
 <!-- check&#45;network&#45;for&#45;weather -->
 <g id="node26" class="node">
 <title>check&#45;network&#45;for&#45;weather</title>
-<g id="a_node26"><a xlink:href="./flow/nodes/check-network-for-weather/" xlink:title="check&#45;network&#45;for&#45;weather\n(decision)" target="_self">
+<g id="a_node26"><a xlink:href="./flow/nodes/check-network-for-weather.md" xlink:title="check&#45;network&#45;for&#45;weather&#10;(decision)">
 <polygon fill="none" stroke="black" points="3217.05,-175.76 3053.3,-134.76 3217.05,-93.76 3380.8,-134.76 3217.05,-175.76"/>
 <text xml:space="preserve" text-anchor="middle" x="3217.05" y="-137.96" font-family="Times,serif" font-size="14.00">check&#45;network&#45;for&#45;weather</text>
 <text xml:space="preserve" text-anchor="middle" x="3217.05" y="-121.46" font-family="Times,serif" font-size="14.00">(decision)</text>
@@ -164,21 +182,27 @@
 <!-- day&#45;log&#45;empty&#45;&gt;check&#45;network&#45;for&#45;weather -->
 <g id="edge7" class="edge">
 <title>day&#45;log&#45;empty&#45;&gt;check&#45;network&#45;for&#45;weather</title>
+<g id="a_edge7"><a xlink:title="manage_weather">
 <path fill="none" stroke="black" d="M1692.35,-322.92C1708.72,-261.22 1766.26,-83.76 1886.54,-83.76 1886.54,-83.76 1886.54,-83.76 2845.3,-83.76 2937.85,-83.76 3042.19,-99.54 3116.54,-113.55"/>
 <polygon fill="black" stroke="black" points="3115.79,-116.97 3126.26,-115.41 3117.1,-110.09 3115.79,-116.97"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="2397.79" y="-86.96" font-family="Times,serif" font-size="14.00">manage_weather</text>
 </g>
 <!-- day&#45;log&#45;populated&#45;&gt;entry&#45;editor -->
 <g id="edge8" class="edge">
 <title>day&#45;log&#45;populated&#45;&gt;entry&#45;editor</title>
+<g id="a_edge8"><a xlink:title="tap_add_entry">
 <path fill="none" stroke="black" d="M2786.66,-195.29C2758.69,-187.72 2724.33,-179.22 2693.05,-173.76 2430.33,-127.88 2358.89,-135.94 2093.16,-158.76 2027.14,-164.42 1996.66,-136.74 1945.41,-178.76 1905.56,-211.43 1893.55,-273.53 1889.99,-311.52"/>
 <polygon fill="black" stroke="black" points="1886.5,-311.19 1889.22,-321.43 1893.48,-311.74 1886.5,-311.19"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="2397.79" y="-145.09" font-family="Times,serif" font-size="14.00">tap_add_entry</text>
 </g>
 <!-- report&#45;preview -->
 <g id="node12" class="node">
 <title>report&#45;preview</title>
-<g id="a_node12"><a xlink:href="./flow/nodes/report-preview/" xlink:title="report&#45;preview\n(screen)" target="_self">
+<g id="a_node12"><a xlink:href="./flow/nodes/report-preview.md" xlink:title="report&#45;preview&#10;(screen)">
 <polygon fill="none" stroke="black" points="3265.18,-287.26 3168.93,-287.26 3168.93,-246.26 3265.18,-246.26 3265.18,-287.26"/>
 <text xml:space="preserve" text-anchor="middle" x="3217.05" y="-269.96" font-family="Times,serif" font-size="14.00">report&#45;preview</text>
 <text xml:space="preserve" text-anchor="middle" x="3217.05" y="-253.46" font-family="Times,serif" font-size="14.00">(screen)</text>
@@ -188,21 +212,27 @@
 <!-- day&#45;log&#45;populated&#45;&gt;report&#45;preview -->
 <g id="edge9" class="edge">
 <title>day&#45;log&#45;populated&#45;&gt;report&#45;preview</title>
+<g id="a_edge9"><a xlink:title="open_report_preview">
 <path fill="none" stroke="black" d="M2902.2,-222.74C2908.14,-223.8 2914.09,-224.82 2919.8,-225.76 3002.01,-239.16 3097.51,-251.86 3157.37,-259.48"/>
 <polygon fill="black" stroke="black" points="3156.62,-262.92 3166.98,-260.7 3157.5,-255.97 3156.62,-262.92"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="2977.55" y="-246.11" font-family="Times,serif" font-size="14.00">open_report_preview</text>
 </g>
 <!-- day&#45;log&#45;populated&#45;&gt;check&#45;network&#45;for&#45;weather -->
 <g id="edge10" class="edge">
 <title>day&#45;log&#45;populated&#45;&gt;check&#45;network&#45;for&#45;weather</title>
+<g id="a_edge10"><a xlink:title="manage_weather">
 <path fill="none" stroke="black" d="M2891.61,-190.86C2900.82,-187.26 2910.51,-183.85 2919.8,-181.26 2974.11,-166.1 3035.48,-155.45 3088.23,-148.2"/>
 <polygon fill="black" stroke="black" points="3088.4,-151.71 3097.85,-146.9 3087.47,-144.77 3088.4,-151.71"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="2977.55" y="-184.46" font-family="Times,serif" font-size="14.00">manage_weather</text>
 </g>
 <!-- documents&#45;view -->
 <g id="node8" class="node">
 <title>documents&#45;view</title>
-<g id="a_node8"><a xlink:href="./flow/nodes/documents-view/" xlink:title="documents&#45;view\n(screen)" target="_self">
+<g id="a_node8"><a xlink:href="./flow/nodes/documents-view.md" xlink:title="documents&#45;view&#10;(screen)">
 <polygon fill="none" stroke="black" points="1199.93,-367.26 1093.93,-367.26 1093.93,-326.26 1199.93,-326.26 1199.93,-367.26"/>
 <text xml:space="preserve" text-anchor="middle" x="1146.93" y="-349.96" font-family="Times,serif" font-size="14.00">documents&#45;view</text>
 <text xml:space="preserve" text-anchor="middle" x="1146.93" y="-333.46" font-family="Times,serif" font-size="14.00">(screen)</text>
@@ -212,7 +242,7 @@
 <!-- project&#45;dashboard -->
 <g id="node29" class="node">
 <title>project&#45;dashboard</title>
-<g id="a_node29"><a xlink:href="./flow/nodes/project-dashboard/" xlink:title="project&#45;dashboard\n(screen)" target="_self">
+<g id="a_node29"><a xlink:href="./flow/nodes/project-dashboard.md" xlink:title="project&#45;dashboard&#10;(screen)">
 <polygon fill="none" stroke="black" points="960.7,-377.26 847.2,-377.26 847.2,-336.26 960.7,-336.26 960.7,-377.26"/>
 <text xml:space="preserve" text-anchor="middle" x="903.95" y="-359.96" font-family="Times,serif" font-size="14.00">project&#45;dashboard</text>
 <text xml:space="preserve" text-anchor="middle" x="903.95" y="-343.46" font-family="Times,serif" font-size="14.00">(screen)</text>
@@ -222,14 +252,17 @@
 <!-- documents&#45;view&#45;&gt;project&#45;dashboard -->
 <g id="edge11" class="edge">
 <title>documents&#45;view&#45;&gt;project&#45;dashboard</title>
+<g id="a_edge11"><a xlink:title="back">
 <path fill="none" stroke="black" d="M1093.78,-339.47C1060.71,-336 1017.07,-333.52 978.7,-338.26 976.53,-338.52 974.34,-338.83 972.14,-339.18"/>
 <polygon fill="black" stroke="black" points="971.76,-335.69 962.54,-340.9 973,-342.58 971.76,-335.69"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="1024.82" y="-341.46" font-family="Times,serif" font-size="14.00">back</text>
 </g>
 <!-- save&#45;entry -->
 <g id="node10" class="node">
 <title>save&#45;entry</title>
-<g id="a_node10"><a xlink:href="./flow/nodes/save-entry/" xlink:title="save&#45;entry\n(system)" target="_self">
+<g id="a_node10"><a xlink:href="./flow/nodes/save-entry.md" xlink:title="save&#45;entry&#10;(system)">
 <ellipse fill="none" stroke="black" cx="2213.41" cy="-437.76" rx="51.09" ry="28.99"/>
 <text xml:space="preserve" text-anchor="middle" x="2213.41" y="-440.96" font-family="Times,serif" font-size="14.00">save&#45;entry</text>
 <text xml:space="preserve" text-anchor="middle" x="2213.41" y="-424.46" font-family="Times,serif" font-size="14.00">(system)</text>
@@ -239,21 +272,27 @@
 <!-- entry&#45;editor&#45;&gt;save&#45;entry -->
 <g id="edge13" class="edge">
 <title>entry&#45;editor&#45;&gt;save&#45;entry</title>
+<g id="a_edge13"><a xlink:title="tap_save_entry">
 <path fill="none" stroke="black" d="M1921.33,-364.64C1929.01,-368.83 1937.31,-372.84 1945.41,-375.76 2000.55,-395.62 2018.05,-386.1 2075.16,-399.26 2102.24,-405.49 2131.98,-413.67 2156.82,-420.88"/>
 <polygon fill="black" stroke="black" points="2155.84,-424.23 2166.42,-423.69 2157.8,-417.52 2155.84,-424.23"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="2010.29" y="-402.46" font-family="Times,serif" font-size="14.00">tap_save_entry</text>
 </g>
 <!-- entry&#45;editor&#45;&gt;save&#45;entry -->
 <g id="edge14" class="edge">
 <title>entry&#45;editor&#45;&gt;save&#45;entry</title>
+<g id="a_edge14"><a xlink:title="save_and_add_another">
 <path fill="none" stroke="black" d="M1892.25,-364.3C1898.25,-390.79 1912.88,-435.79 1945.41,-455.76 2010.88,-495.94 2103.16,-476.71 2160.31,-458.05"/>
 <polygon fill="black" stroke="black" points="2161.12,-461.47 2169.47,-454.95 2158.87,-454.84 2161.12,-461.47"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="2010.29" y="-482.6" font-family="Times,serif" font-size="14.00">save_and_add_another</text>
 </g>
 <!-- camera&#45;permission -->
 <g id="node19" class="node">
 <title>camera&#45;permission</title>
-<g id="a_node19"><a xlink:href="./flow/nodes/camera-permission/" xlink:title="camera&#45;permission\n(decision)" target="_self">
+<g id="a_node19"><a xlink:href="./flow/nodes/camera-permission.md" xlink:title="camera&#45;permission&#10;(decision)">
 <polygon fill="none" stroke="black" points="2213.41,-285.76 2093.16,-244.76 2213.41,-203.76 2333.66,-244.76 2213.41,-285.76"/>
 <text xml:space="preserve" text-anchor="middle" x="2213.41" y="-247.96" font-family="Times,serif" font-size="14.00">camera&#45;permission</text>
 <text xml:space="preserve" text-anchor="middle" x="2213.41" y="-231.46" font-family="Times,serif" font-size="14.00">(decision)</text>
@@ -263,28 +302,37 @@
 <!-- entry&#45;editor&#45;&gt;camera&#45;permission -->
 <g id="edge12" class="edge">
 <title>entry&#45;editor&#45;&gt;camera&#45;permission</title>
+<g id="a_edge12"><a xlink:title="attach_photo">
 <path fill="none" stroke="black" d="M1905.65,-322.96C1915.99,-311.8 1930.11,-298.82 1945.41,-291.26 1991.1,-268.68 2045.93,-256.88 2093.98,-250.79"/>
 <polygon fill="black" stroke="black" points="2094.38,-254.26 2103.89,-249.61 2093.55,-247.31 2094.38,-254.26"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="2010.29" y="-294.46" font-family="Times,serif" font-size="14.00">attach_photo</text>
 </g>
 <!-- save&#45;entry&#45;&gt;day&#45;log&#45;populated -->
 <g id="edge15" class="edge">
 <title>save&#45;entry&#45;&gt;day&#45;log&#45;populated</title>
+<g id="a_edge15"><a xlink:title="handle_success">
 <path fill="none" stroke="black" d="M2263.27,-430.83C2381.34,-413.97 2673.93,-371.49 2693.05,-361.76 2748.74,-333.39 2796.58,-276.8 2822.53,-241.81"/>
 <polygon fill="black" stroke="black" points="2825.32,-243.93 2828.37,-233.78 2819.65,-239.81 2825.32,-243.93"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="2577.48" y="-404.03" font-family="Times,serif" font-size="14.00">handle_success</text>
 </g>
 <!-- save&#45;entry&#45;&gt;entry&#45;editor -->
 <g id="edge16" class="edge">
 <title>save&#45;entry&#45;&gt;entry&#45;editor</title>
+<g id="a_edge16"><a xlink:title="handle_validation_error">
 <path fill="none" stroke="black" d="M2162.16,-435.77C2090.1,-432.6 1963.98,-425.72 1945.41,-415.76 1928.02,-406.43 1914.15,-389.27 1904.45,-374.05"/>
 <polygon fill="black" stroke="black" points="1907.61,-372.5 1899.47,-365.72 1901.6,-376.1 1907.61,-372.5"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="2010.29" y="-434.3" font-family="Times,serif" font-size="14.00">handle_validation_error</text>
 </g>
 <!-- error&#45;entry&#45;save -->
 <g id="node11" class="node">
 <title>error&#45;entry&#45;save</title>
-<g id="a_node11"><a xlink:href="./flow/nodes/error-entry-save/" xlink:title="error&#45;entry&#45;save\n(error)" target="_self">
+<g id="a_node11"><a xlink:href="./flow/nodes/error-entry-save.md" xlink:title="error&#45;entry&#45;save&#10;(error)">
 <polygon fill="none" stroke="black" points="2656.31,-447.76 2656.31,-473.75 2610.14,-492.14 2544.83,-492.14 2498.65,-473.75 2498.65,-447.76 2544.83,-429.38 2610.14,-429.38 2656.31,-447.76"/>
 <text xml:space="preserve" text-anchor="middle" x="2577.48" y="-463.96" font-family="Times,serif" font-size="14.00">error&#45;entry&#45;save</text>
 <text xml:space="preserve" text-anchor="middle" x="2577.48" y="-447.46" font-family="Times,serif" font-size="14.00">(error)</text>
@@ -294,28 +342,37 @@
 <!-- save&#45;entry&#45;&gt;error&#45;entry&#45;save -->
 <g id="edge17" class="edge">
 <title>save&#45;entry&#45;&gt;error&#45;entry&#45;save</title>
+<g id="a_edge17"><a xlink:title="handle_error">
 <path fill="none" stroke="black" d="M2263.55,-444.51C2289.67,-447.84 2322.35,-451.59 2351.66,-453.76 2396.16,-457.04 2445.72,-458.78 2486.96,-459.71"/>
 <polygon fill="black" stroke="black" points="2486.78,-463.21 2496.85,-459.92 2486.93,-456.21 2486.78,-463.21"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="2397.79" y="-461.5" font-family="Times,serif" font-size="14.00">handle_error</text>
 </g>
 <!-- error&#45;entry&#45;save&#45;&gt;day&#45;log&#45;populated -->
 <g id="edge19" class="edge">
 <title>error&#45;entry&#45;save&#45;&gt;day&#45;log&#45;populated</title>
+<g id="a_edge19"><a xlink:title="tap_cancel">
 <path fill="none" stroke="black" d="M2656.8,-455.74C2694.67,-449.56 2738.39,-436.41 2768.8,-408.76 2816.65,-365.24 2833.94,-287.82 2840.06,-244.11"/>
 <polygon fill="black" stroke="black" points="2843.53,-244.6 2841.32,-234.24 2836.59,-243.72 2843.53,-244.6"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="2739.93" y="-444.04" font-family="Times,serif" font-size="14.00">tap_cancel</text>
 </g>
 <!-- error&#45;entry&#45;save&#45;&gt;save&#45;entry -->
 <g id="edge18" class="edge">
 <title>error&#45;entry&#45;save&#45;&gt;save&#45;entry</title>
+<g id="a_edge18"><a xlink:title="tap_retry">
 <path fill="none" stroke="black" d="M2507.75,-443.71C2487.34,-439.41 2464.84,-435.4 2443.91,-433.26 2387.08,-427.42 2321.94,-429.53 2275.61,-432.52"/>
 <polygon fill="black" stroke="black" points="2275.5,-429.02 2265.76,-433.19 2275.97,-436 2275.5,-429.02"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="2397.79" y="-436.46" font-family="Times,serif" font-size="14.00">tap_retry</text>
 </g>
 <!-- report&#45;sign -->
 <g id="node13" class="node">
 <title>report&#45;sign</title>
-<g id="a_node13"><a xlink:href="./flow/nodes/report-sign/" xlink:title="report&#45;sign\n(screen)" target="_self">
+<g id="a_node13"><a xlink:href="./flow/nodes/report-sign.md" xlink:title="report&#45;sign&#10;(screen)">
 <polygon fill="none" stroke="black" points="3563.99,-263.26 3488.74,-263.26 3488.74,-222.26 3563.99,-222.26 3563.99,-263.26"/>
 <text xml:space="preserve" text-anchor="middle" x="3526.37" y="-245.96" font-family="Times,serif" font-size="14.00">report&#45;sign</text>
 <text xml:space="preserve" text-anchor="middle" x="3526.37" y="-229.46" font-family="Times,serif" font-size="14.00">(screen)</text>
@@ -325,14 +382,17 @@
 <!-- report&#45;preview&#45;&gt;report&#45;sign -->
 <g id="edge20" class="edge">
 <title>report&#45;preview&#45;&gt;report&#45;sign</title>
+<g id="a_edge20"><a xlink:title="tap_sign">
 <path fill="none" stroke="black" d="M3265.4,-263.06C3322.89,-258.57 3419.33,-251.04 3477.2,-246.52"/>
 <polygon fill="black" stroke="black" points="3477.38,-250.01 3487.07,-245.75 3476.83,-243.04 3477.38,-250.01"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="3421.68" y="-255.81" font-family="Times,serif" font-size="14.00">tap_sign</text>
 </g>
 <!-- lock&#45;day -->
 <g id="node14" class="node">
 <title>lock&#45;day</title>
-<g id="a_node14"><a xlink:href="./flow/nodes/lock-day/" xlink:title="lock&#45;day\n(system)" target="_self">
+<g id="a_node14"><a xlink:href="./flow/nodes/lock-day.md" xlink:title="lock&#45;day&#10;(system)">
 <ellipse fill="none" stroke="black" cx="3770.66" cy="-282.76" rx="44.72" ry="28.99"/>
 <text xml:space="preserve" text-anchor="middle" x="3770.66" y="-285.96" font-family="Times,serif" font-size="14.00">lock&#45;day</text>
 <text xml:space="preserve" text-anchor="middle" x="3770.66" y="-269.46" font-family="Times,serif" font-size="14.00">(system)</text>
@@ -342,21 +402,27 @@
 <!-- report&#45;sign&#45;&gt;lock&#45;day -->
 <g id="edge21" class="edge">
 <title>report&#45;sign&#45;&gt;lock&#45;day</title>
+<g id="a_edge21"><a xlink:title="confirm_signature">
 <path fill="none" stroke="black" d="M3564.15,-247.39C3600.72,-252.18 3658.38,-260.21 3707.93,-269.26 3710.87,-269.79 3713.88,-270.36 3716.91,-270.96"/>
 <polygon fill="black" stroke="black" points="3715.92,-274.33 3726.42,-272.91 3717.32,-267.48 3715.92,-274.33"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="3658.06" y="-272.46" font-family="Times,serif" font-size="14.00">confirm_signature</text>
 </g>
 <!-- lock&#45;day&#45;&gt;report&#45;preview -->
 <g id="edge23" class="edge">
 <title>lock&#45;day&#45;&gt;report&#45;preview</title>
+<g id="a_edge23"><a xlink:title="handle_error">
 <path fill="none" stroke="black" d="M3725.83,-285.15C3719.82,-285.4 3713.73,-285.61 3707.93,-285.76 3663.61,-286.83 3652.51,-286.83 3608.18,-285.76 3490.51,-282.89 3353.04,-275.18 3276.73,-270.5"/>
 <polygon fill="black" stroke="black" points="3277.18,-267.03 3266.98,-269.9 3276.74,-274.01 3277.18,-267.03"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="3526.37" y="-288.33" font-family="Times,serif" font-size="14.00">handle_error</text>
 </g>
 <!-- report&#45;preview&#45;signed -->
 <g id="node15" class="node">
 <title>report&#45;preview&#45;signed</title>
-<g id="a_node15"><a xlink:href="./flow/nodes/report-preview-signed/" xlink:title="report&#45;preview&#45;signed\n(screen)" target="_self">
+<g id="a_node15"><a xlink:href="./flow/nodes/report-preview-signed.md" xlink:title="report&#45;preview&#45;signed&#10;(screen)">
 <polygon fill="none" stroke="black" points="4070.63,-303.26 3934.63,-303.26 3934.63,-262.26 4070.63,-262.26 4070.63,-303.26"/>
 <text xml:space="preserve" text-anchor="middle" x="4002.63" y="-285.96" font-family="Times,serif" font-size="14.00">report&#45;preview&#45;signed</text>
 <text xml:space="preserve" text-anchor="middle" x="4002.63" y="-269.46" font-family="Times,serif" font-size="14.00">(screen)</text>
@@ -366,14 +432,17 @@
 <!-- lock&#45;day&#45;&gt;report&#45;preview&#45;signed -->
 <g id="edge22" class="edge">
 <title>lock&#45;day&#45;&gt;report&#45;preview&#45;signed</title>
+<g id="a_edge22"><a xlink:title="handle_success">
 <path fill="none" stroke="black" d="M3815.73,-282.76C3845.97,-282.76 3886.96,-282.76 3922.75,-282.76"/>
 <polygon fill="black" stroke="black" points="3922.66,-286.26 3932.66,-282.76 3922.66,-279.26 3922.66,-286.26"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="3875.01" y="-285.96" font-family="Times,serif" font-size="14.00">handle_success</text>
 </g>
 <!-- export&#45;decision -->
 <g id="node16" class="node">
 <title>export&#45;decision</title>
-<g id="a_node16"><a xlink:href="./flow/nodes/export-decision/" xlink:title="export&#45;decision\n(decision)" target="_self">
+<g id="a_node16"><a xlink:href="./flow/nodes/export-decision.md" xlink:title="export&#45;decision&#10;(decision)">
 <polygon fill="none" stroke="black" points="4274.13,-284.76 4174.13,-243.76 4274.13,-202.76 4374.13,-243.76 4274.13,-284.76"/>
 <text xml:space="preserve" text-anchor="middle" x="4274.13" y="-246.96" font-family="Times,serif" font-size="14.00">export&#45;decision</text>
 <text xml:space="preserve" text-anchor="middle" x="4274.13" y="-230.46" font-family="Times,serif" font-size="14.00">(decision)</text>
@@ -383,21 +452,27 @@
 <!-- report&#45;preview&#45;signed&#45;&gt;export&#45;decision -->
 <g id="edge24" class="edge">
 <title>report&#45;preview&#45;signed&#45;&gt;export&#45;decision</title>
+<g id="a_edge24"><a xlink:title="open_export">
 <path fill="none" stroke="black" d="M4040.53,-261.94C4055.05,-254.86 4072.17,-247.83 4088.63,-244.26 4117.65,-237.95 4149.84,-236.15 4179.11,-236.41"/>
 <polygon fill="black" stroke="black" points="4179.02,-239.91 4189.08,-236.59 4179.14,-232.91 4179.02,-239.91"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="4122.38" y="-247.46" font-family="Times,serif" font-size="14.00">open_export</text>
 </g>
 <!-- export&#45;decision&#45;&gt;report&#45;preview&#45;signed -->
 <g id="edge27" class="edge">
 <title>export&#45;decision&#45;&gt;report&#45;preview&#45;signed</title>
+<g id="a_edge27"><a xlink:title="tap_cancel">
 <path fill="none" stroke="black" d="M4199.18,-254.51C4184.89,-256.59 4170.05,-258.74 4156.13,-260.76 4132.02,-264.25 4105.77,-268.04 4081.94,-271.47"/>
 <polygon fill="black" stroke="black" points="4081.72,-267.97 4072.32,-272.86 4082.72,-274.9 4081.72,-267.97"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="4122.38" y="-273.63" font-family="Times,serif" font-size="14.00">tap_cancel</text>
 </g>
 <!-- export&#45;generate -->
 <g id="node17" class="node">
 <title>export&#45;generate</title>
-<g id="a_node17"><a xlink:href="./flow/nodes/export-generate/" xlink:title="export&#45;generate\n(system)" target="_self">
+<g id="a_node17"><a xlink:href="./flow/nodes/export-generate.md" xlink:title="export&#45;generate&#10;(system)">
 <ellipse fill="none" stroke="black" cx="4596.87" cy="-242.76" rx="71.24" ry="28.99"/>
 <text xml:space="preserve" text-anchor="middle" x="4596.87" y="-245.96" font-family="Times,serif" font-size="14.00">export&#45;generate</text>
 <text xml:space="preserve" text-anchor="middle" x="4596.87" y="-229.46" font-family="Times,serif" font-size="14.00">(system)</text>
@@ -407,28 +482,37 @@
 <!-- export&#45;decision&#45;&gt;export&#45;generate -->
 <g id="edge25" class="edge">
 <title>export&#45;decision&#45;&gt;export&#45;generate</title>
+<g id="a_edge25"><a xlink:title="choose_pdf">
 <path fill="none" stroke="black" d="M4339.49,-229.11C4356.52,-225.86 4374.94,-222.89 4392.13,-221.26 4443.24,-216.39 4456.67,-215.14 4507.63,-221.26 4513.7,-221.98 4519.95,-222.98 4526.19,-224.16"/>
 <polygon fill="black" stroke="black" points="4525.4,-227.57 4535.89,-226.13 4526.79,-220.71 4525.4,-227.57"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="4449.88" y="-224.46" font-family="Times,serif" font-size="14.00">choose_pdf</text>
 </g>
 <!-- export&#45;decision&#45;&gt;export&#45;generate -->
 <g id="edge26" class="edge">
 <title>export&#45;decision&#45;&gt;export&#45;generate</title>
+<g id="a_edge26"><a xlink:title="choose_other_format">
 <path fill="none" stroke="black" d="M4374.42,-243.45C4419.17,-243.31 4471.37,-243.14 4513.85,-243.01"/>
 <polygon fill="black" stroke="black" points="4513.77,-246.51 4523.76,-242.98 4513.75,-239.51 4513.77,-246.51"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="4449.88" y="-246.57" font-family="Times,serif" font-size="14.00">choose_other_format</text>
 </g>
 <!-- export&#45;generate&#45;&gt;success&#45;done -->
 <g id="edge28" class="edge">
 <title>export&#45;generate&#45;&gt;success&#45;done</title>
+<g id="a_edge28"><a xlink:title="handle_success">
 <path fill="none" stroke="black" d="M4641.15,-219.75C4655.11,-213.47 4670.91,-207.5 4686.12,-204.26 4715.58,-197.97 4748.73,-196.66 4777.37,-197.28"/>
 <polygon fill="black" stroke="black" points="4776.9,-200.77 4787.01,-197.58 4777.12,-193.77 4776.9,-200.77"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="4727.74" y="-207.46" font-family="Times,serif" font-size="14.00">handle_success</text>
 </g>
 <!-- export&#45;error -->
 <g id="node18" class="node">
 <title>export&#45;error</title>
-<g id="a_node18"><a xlink:href="./flow/nodes/export-error/" xlink:title="export&#45;error\n(error)" target="_self">
+<g id="a_node18"><a xlink:href="./flow/nodes/export-error.md" xlink:title="export&#45;error&#10;(error)">
 <polygon fill="none" stroke="black" points="4911.74,-269.76 4911.74,-295.75 4875.31,-314.14 4823.79,-314.14 4787.37,-295.75 4787.37,-269.76 4823.79,-251.38 4875.31,-251.38 4911.74,-269.76"/>
 <text xml:space="preserve" text-anchor="middle" x="4849.55" y="-285.96" font-family="Times,serif" font-size="14.00">export&#45;error</text>
 <text xml:space="preserve" text-anchor="middle" x="4849.55" y="-269.46" font-family="Times,serif" font-size="14.00">(error)</text>
@@ -438,28 +522,37 @@
 <!-- export&#45;generate&#45;&gt;export&#45;error -->
 <g id="edge29" class="edge">
 <title>export&#45;generate&#45;&gt;export&#45;error</title>
+<g id="a_edge29"><a xlink:title="handle_error">
 <path fill="none" stroke="black" d="M4666.72,-236.48C4698.37,-235.34 4736.18,-236.46 4769.37,-244.26 4778.99,-246.52 4788.8,-250.09 4798.1,-254.17"/>
 <polygon fill="black" stroke="black" points="4796.42,-257.25 4806.96,-258.31 4799.38,-250.91 4796.42,-257.25"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="4727.74" y="-247.46" font-family="Times,serif" font-size="14.00">handle_error</text>
 </g>
 <!-- export&#45;error&#45;&gt;report&#45;preview&#45;signed -->
 <g id="edge31" class="edge">
 <title>export&#45;error&#45;&gt;report&#45;preview&#45;signed</title>
+<g id="a_edge31"><a xlink:title="tap_cancel">
 <path fill="none" stroke="black" d="M4787.24,-291.26C4781.21,-291.86 4775.17,-292.38 4769.37,-292.76 4733,-295.09 4286.41,-295.72 4174.13,-293.76 4136.12,-293.09 4126.58,-293.2 4088.63,-290.76 4086.56,-290.62 4084.46,-290.48 4082.34,-290.33"/>
 <polygon fill="black" stroke="black" points="4082.63,-286.84 4072.39,-289.57 4082.1,-293.82 4082.63,-286.84"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="4449.88" y="-298.13" font-family="Times,serif" font-size="14.00">tap_cancel</text>
 </g>
 <!-- export&#45;error&#45;&gt;export&#45;generate -->
 <g id="edge30" class="edge">
 <title>export&#45;error&#45;&gt;export&#45;generate</title>
+<g id="a_edge30"><a xlink:title="tap_retry">
 <path fill="none" stroke="black" d="M4787.08,-275.41C4756.64,-271.52 4719.36,-266.39 4686.12,-260.76 4681.3,-259.94 4676.35,-259.06 4671.37,-258.13"/>
 <polygon fill="black" stroke="black" points="4672.41,-254.77 4661.93,-256.34 4671.1,-261.64 4672.41,-254.77"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="4727.74" y="-275.84" font-family="Times,serif" font-size="14.00">tap_retry</text>
 </g>
 <!-- capture&#45;photo -->
 <g id="node20" class="node">
 <title>capture&#45;photo</title>
-<g id="a_node20"><a xlink:href="./flow/nodes/capture-photo/" xlink:title="capture&#45;photo\n(system)" target="_self">
+<g id="a_node20"><a xlink:href="./flow/nodes/capture-photo.md" xlink:title="capture&#45;photo&#10;(system)">
 <ellipse fill="none" stroke="black" cx="2577.48" cy="-211.76" rx="64.35" ry="28.99"/>
 <text xml:space="preserve" text-anchor="middle" x="2577.48" y="-214.96" font-family="Times,serif" font-size="14.00">capture&#45;photo</text>
 <text xml:space="preserve" text-anchor="middle" x="2577.48" y="-198.46" font-family="Times,serif" font-size="14.00">(system)</text>
@@ -469,14 +562,17 @@
 <!-- camera&#45;permission&#45;&gt;capture&#45;photo -->
 <g id="edge32" class="edge">
 <title>camera&#45;permission&#45;&gt;capture&#45;photo</title>
+<g id="a_edge32"><a xlink:title="granted">
 <path fill="none" stroke="black" d="M2309.54,-236.09C2370.01,-230.57 2447.13,-223.54 2502.91,-218.46"/>
 <polygon fill="black" stroke="black" points="2502.98,-221.97 2512.62,-217.58 2502.34,-215 2502.98,-221.97"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="2397.79" y="-235.38" font-family="Times,serif" font-size="14.00">granted</text>
 </g>
 <!-- camera&#45;permission&#45;error -->
 <g id="node21" class="node">
 <title>camera&#45;permission&#45;error</title>
-<g id="a_node21"><a xlink:href="./flow/nodes/camera-permission-error/" xlink:title="camera&#45;permission&#45;error\n(error)" target="_self">
+<g id="a_node21"><a xlink:href="./flow/nodes/camera-permission-error.md" xlink:title="camera&#45;permission&#45;error&#10;(error)">
 <polygon fill="none" stroke="black" points="2693.05,-308.76 2693.05,-334.75 2625.35,-353.14 2529.61,-353.14 2461.91,-334.75 2461.91,-308.76 2529.61,-290.38 2625.35,-290.38 2693.05,-308.76"/>
 <text xml:space="preserve" text-anchor="middle" x="2577.48" y="-324.96" font-family="Times,serif" font-size="14.00">camera&#45;permission&#45;error</text>
 <text xml:space="preserve" text-anchor="middle" x="2577.48" y="-308.46" font-family="Times,serif" font-size="14.00">(error)</text>
@@ -486,35 +582,47 @@
 <!-- camera&#45;permission&#45;&gt;camera&#45;permission&#45;error -->
 <g id="edge33" class="edge">
 <title>camera&#45;permission&#45;&gt;camera&#45;permission&#45;error</title>
+<g id="a_edge33"><a xlink:title="denied">
 <path fill="none" stroke="black" d="M2291.02,-259.75C2335.68,-268.63 2393.05,-280.25 2443.91,-291.26 2454.73,-293.6 2466.03,-296.1 2477.28,-298.63"/>
 <polygon fill="black" stroke="black" points="2476.48,-302.04 2487.01,-300.84 2478.03,-295.22 2476.48,-302.04"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="2397.79" y="-294.46" font-family="Times,serif" font-size="14.00">denied</text>
 </g>
 <!-- capture&#45;photo&#45;&gt;entry&#45;editor -->
 <g id="edge34" class="edge">
 <title>capture&#45;photo&#45;&gt;entry&#45;editor</title>
+<g id="a_edge34"><a xlink:title="handle_success">
 <path fill="none" stroke="black" d="M2520.94,-197.52C2430.2,-176.55 2245.04,-143.44 2093.16,-178.26 2022.05,-194.56 1999.35,-200.64 1945.41,-249.76 1926.17,-267.28 1911.28,-292.84 1901.57,-312.88"/>
 <polygon fill="black" stroke="black" points="1898.51,-311.15 1897.48,-321.7 1904.86,-314.1 1898.51,-311.15"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="2213.41" y="-181.46" font-family="Times,serif" font-size="14.00">handle_success</text>
 </g>
 <!-- camera&#45;permission&#45;error&#45;&gt;entry&#45;editor -->
 <g id="edge35" class="edge">
 <title>camera&#45;permission&#45;error&#45;&gt;entry&#45;editor</title>
+<g id="a_edge35"><a xlink:title="open_settings">
 <path fill="none" stroke="black" d="M2461.73,-324.98C2363.8,-327.79 2219.22,-332.05 2093.16,-336.26 2040.66,-338.01 1980.6,-340.23 1939.19,-341.81"/>
 <polygon fill="black" stroke="black" points="1939.13,-338.3 1929.27,-342.18 1939.4,-345.3 1939.13,-338.3"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="2213.41" y="-339.46" font-family="Times,serif" font-size="14.00">open_settings</text>
 </g>
 <!-- camera&#45;permission&#45;error&#45;&gt;entry&#45;editor -->
 <g id="edge36" class="edge">
 <title>camera&#45;permission&#45;error&#45;&gt;entry&#45;editor</title>
+<g id="a_edge36"><a xlink:title="continue_without_photo">
 <path fill="none" stroke="black" d="M2469.8,-337.37C2461.05,-338.55 2452.33,-339.69 2443.91,-340.76 2395.01,-346.92 2382.88,-350.08 2333.66,-352.76 2226.93,-358.55 2200.05,-353.48 2093.16,-352.76 2027.49,-352.31 2010.93,-355.22 1945.41,-350.76 1943.25,-350.61 1941.05,-350.44 1938.83,-350.24"/>
 <polygon fill="black" stroke="black" points="1939.45,-346.79 1929.15,-349.29 1938.76,-353.75 1939.45,-346.79"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="2213.41" y="-358.7" font-family="Times,serif" font-size="14.00">continue_without_photo</text>
 </g>
 <!-- gallery -->
 <g id="node22" class="node">
 <title>gallery</title>
-<g id="a_node22"><a xlink:href="./flow/nodes/gallery/" xlink:title="gallery\n(screen)" target="_self">
+<g id="a_node22"><a xlink:href="./flow/nodes/gallery.md" xlink:title="gallery&#10;(screen)">
 <polygon fill="none" stroke="black" points="1176.68,-298.26 1117.18,-298.26 1117.18,-257.26 1176.68,-257.26 1176.68,-298.26"/>
 <text xml:space="preserve" text-anchor="middle" x="1146.93" y="-280.96" font-family="Times,serif" font-size="14.00">gallery</text>
 <text xml:space="preserve" text-anchor="middle" x="1146.93" y="-264.46" font-family="Times,serif" font-size="14.00">(screen)</text>
@@ -524,14 +632,17 @@
 <!-- gallery&#45;&gt;project&#45;dashboard -->
 <g id="edge37" class="edge">
 <title>gallery&#45;&gt;project&#45;dashboard</title>
+<g id="a_edge37"><a xlink:title="back">
 <path fill="none" stroke="black" d="M1116.77,-281.65C1082.8,-286.79 1025.36,-297.34 978.7,-315.26 968.1,-319.32 957.18,-324.72 947.11,-330.26"/>
 <polygon fill="black" stroke="black" points="945.62,-327.08 938.66,-335.07 949.09,-333.16 945.62,-327.08"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="1024.82" y="-318.46" font-family="Times,serif" font-size="14.00">back</text>
 </g>
 <!-- save&#45;project -->
 <g id="node23" class="node">
 <title>save&#45;project</title>
-<g id="a_node23"><a xlink:href="./flow/nodes/save-project/" xlink:title="save&#45;project\n(system)" target="_self">
+<g id="a_node23"><a xlink:href="./flow/nodes/save-project.md" xlink:title="save&#45;project&#10;(system)">
 <ellipse fill="none" stroke="black" cx="669.96" cy="-505.76" rx="57.98" ry="28.99"/>
 <text xml:space="preserve" text-anchor="middle" x="669.96" y="-508.96" font-family="Times,serif" font-size="14.00">save&#45;project</text>
 <text xml:space="preserve" text-anchor="middle" x="669.96" y="-492.46" font-family="Times,serif" font-size="14.00">(system)</text>
@@ -541,7 +652,7 @@
 <!-- error&#45;save -->
 <g id="node24" class="node">
 <title>error&#45;save</title>
-<g id="a_node24"><a xlink:href="./flow/nodes/error-save/" xlink:title="error&#45;save\n(error)" target="_self">
+<g id="a_node24"><a xlink:href="./flow/nodes/error-save.md" xlink:title="error&#45;save&#10;(error)">
 <polygon fill="none" stroke="black" points="958.1,-494.76 958.1,-520.75 926.38,-539.14 881.52,-539.14 849.8,-520.75 849.8,-494.76 881.52,-476.38 926.38,-476.38 958.1,-494.76"/>
 <text xml:space="preserve" text-anchor="middle" x="903.95" y="-510.96" font-family="Times,serif" font-size="14.00">error&#45;save</text>
 <text xml:space="preserve" text-anchor="middle" x="903.95" y="-494.46" font-family="Times,serif" font-size="14.00">(error)</text>
@@ -551,35 +662,47 @@
 <!-- save&#45;project&#45;&gt;error&#45;save -->
 <g id="edge39" class="edge">
 <title>save&#45;project&#45;&gt;error&#45;save</title>
+<g id="a_edge39"><a xlink:title="handle_error">
 <path fill="none" stroke="black" d="M727.43,-500.33C733.67,-499.89 739.94,-499.52 745.95,-499.26 782.91,-497.66 792.26,-497.13 829.2,-499.26 832.17,-499.43 835.21,-499.64 838.27,-499.87"/>
 <polygon fill="black" stroke="black" points="837.66,-503.33 847.93,-500.73 838.27,-496.36 837.66,-503.33"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="787.57" y="-502.46" font-family="Times,serif" font-size="14.00">handle_error</text>
 </g>
 <!-- save&#45;project&#45;&gt;project&#45;dashboard -->
 <g id="edge38" class="edge">
 <title>save&#45;project&#45;&gt;project&#45;dashboard</title>
+<g id="a_edge38"><a xlink:title="handle_success">
 <path fill="none" stroke="black" d="M686.69,-477.87C699.98,-456.62 720.84,-428.06 745.95,-410.26 772.61,-391.35 806.49,-378.69 835.95,-370.46"/>
 <polygon fill="black" stroke="black" points="836.77,-373.86 845.53,-367.91 834.97,-367.1 836.77,-373.86"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="787.57" y="-413.46" font-family="Times,serif" font-size="14.00">handle_success</text>
 </g>
 <!-- error&#45;save&#45;&gt;cancel&#45;out -->
 <g id="edge41" class="edge">
 <title>error&#45;save&#45;&gt;cancel&#45;out</title>
+<g id="a_edge41"><a xlink:title="tap_cancel">
 <path fill="none" stroke="black" d="M958.43,-505.09C993.49,-503.35 1039.65,-501.05 1077.39,-499.17"/>
 <polygon fill="black" stroke="black" points="1077.49,-502.67 1087.3,-498.67 1077.14,-495.68 1077.49,-502.67"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="1024.82" y="-507.07" font-family="Times,serif" font-size="14.00">tap_cancel</text>
 </g>
 <!-- error&#45;save&#45;&gt;save&#45;project -->
 <g id="edge40" class="edge">
 <title>error&#45;save&#45;&gt;save&#45;project</title>
+<g id="a_edge40"><a xlink:title="tap_retry">
 <path fill="none" stroke="black" d="M849.43,-514.25C842.63,-514.87 835.75,-515.4 829.2,-515.76 792.25,-517.75 782.86,-518.21 745.95,-515.76 743.08,-515.57 740.16,-515.33 737.2,-515.07"/>
 <polygon fill="black" stroke="black" points="737.56,-511.59 727.26,-514.07 736.86,-518.55 737.56,-511.59"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="787.57" y="-520.63" font-family="Times,serif" font-size="14.00">tap_retry</text>
 </g>
 <!-- fetch&#45;weather -->
 <g id="node30" class="node">
 <title>fetch&#45;weather</title>
-<g id="a_node30"><a xlink:href="./flow/nodes/fetch-weather/" xlink:title="fetch&#45;weather\n(system)" target="_self">
+<g id="a_node30"><a xlink:href="./flow/nodes/fetch-weather.md" xlink:title="fetch&#45;weather&#10;(system)">
 <ellipse fill="none" stroke="black" cx="3526.37" cy="-58.76" rx="63.82" ry="28.99"/>
 <text xml:space="preserve" text-anchor="middle" x="3526.37" y="-61.96" font-family="Times,serif" font-size="14.00">fetch&#45;weather</text>
 <text xml:space="preserve" text-anchor="middle" x="3526.37" y="-45.46" font-family="Times,serif" font-size="14.00">(system)</text>
@@ -589,14 +712,17 @@
 <!-- check&#45;network&#45;for&#45;weather&#45;&gt;fetch&#45;weather -->
 <g id="edge42" class="edge">
 <title>check&#45;network&#45;for&#45;weather&#45;&gt;fetch&#45;weather</title>
+<g id="a_edge42"><a xlink:title="proceed">
 <path fill="none" stroke="black" d="M3300.81,-114.29C3350.25,-102.06 3412.22,-86.74 3458.53,-75.28"/>
 <polygon fill="black" stroke="black" points="3459.32,-78.7 3468.18,-72.9 3457.64,-71.9 3459.32,-78.7"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="3421.68" y="-93.15" font-family="Times,serif" font-size="14.00">proceed</text>
 </g>
 <!-- manual&#45;weather -->
 <g id="node31" class="node">
 <title>manual&#45;weather</title>
-<g id="a_node31"><a xlink:href="./flow/nodes/manual-weather/" xlink:title="manual&#45;weather\n(screen)" target="_self">
+<g id="a_node31"><a xlink:href="./flow/nodes/manual-weather.md" xlink:title="manual&#45;weather&#10;(screen)">
 <polygon fill="none" stroke="black" points="3578.24,-189.26 3474.49,-189.26 3474.49,-148.26 3578.24,-148.26 3578.24,-189.26"/>
 <text xml:space="preserve" text-anchor="middle" x="3526.37" y="-171.96" font-family="Times,serif" font-size="14.00">manual&#45;weather</text>
 <text xml:space="preserve" text-anchor="middle" x="3526.37" y="-155.46" font-family="Times,serif" font-size="14.00">(screen)</text>
@@ -606,14 +732,17 @@
 <!-- check&#45;network&#45;for&#45;weather&#45;&gt;manual&#45;weather -->
 <g id="edge43" class="edge">
 <title>check&#45;network&#45;for&#45;weather&#45;&gt;manual&#45;weather</title>
+<g id="a_edge43"><a xlink:title="fallback">
 <path fill="none" stroke="black" d="M3332.05,-147.37C3376.32,-152.27 3425.31,-157.69 3462.9,-161.84"/>
 <polygon fill="black" stroke="black" points="3462.35,-165.3 3472.67,-162.93 3463.12,-158.35 3462.35,-165.3"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="3421.68" y="-162.84" font-family="Times,serif" font-size="14.00">fallback</text>
 </g>
 <!-- project&#45;create -->
 <g id="node28" class="node">
 <title>project&#45;create</title>
-<g id="a_node28"><a xlink:href="./flow/nodes/project-create/" xlink:title="project&#45;create\n(screen)" target="_self">
+<g id="a_node28"><a xlink:href="./flow/nodes/project-create.md" xlink:title="project&#45;create&#10;(screen)">
 <polygon fill="none" stroke="black" points="504.73,-485.26 414.48,-485.26 414.48,-444.26 504.73,-444.26 504.73,-485.26"/>
 <text xml:space="preserve" text-anchor="middle" x="459.61" y="-467.96" font-family="Times,serif" font-size="14.00">project&#45;create</text>
 <text xml:space="preserve" text-anchor="middle" x="459.61" y="-451.46" font-family="Times,serif" font-size="14.00">(screen)</text>
@@ -623,64 +752,91 @@
 <!-- projects&#45;empty&#45;&gt;project&#45;create -->
 <g id="edge44" class="edge">
 <title>projects&#45;empty&#45;&gt;project&#45;create</title>
+<g id="a_edge44"><a xlink:title="tap_create_project">
 <path fill="none" stroke="black" d="M279.16,-464.76C315.36,-464.76 364.99,-464.76 402.88,-464.76"/>
 <polygon fill="black" stroke="black" points="402.72,-468.26 412.72,-464.76 402.72,-461.26 402.72,-468.26"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="346.61" y="-467.96" font-family="Times,serif" font-size="14.00">tap_create_project</text>
 </g>
 <!-- project&#45;create&#45;&gt;cancel&#45;out -->
 <g id="edge46" class="edge">
 <title>project&#45;create&#45;&gt;cancel&#45;out</title>
+<g id="a_edge46"><a xlink:title="tap_cancel">
 <path fill="none" stroke="black" d="M505.18,-462.88C592.68,-459.66 792.99,-454.65 960.7,-467.76 1000.93,-470.9 1045.67,-477.57 1081.1,-483.62"/>
 <polygon fill="black" stroke="black" points="1080.32,-487.03 1090.77,-485.29 1081.52,-480.14 1080.32,-487.03"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="787.57" y="-464.15" font-family="Times,serif" font-size="14.00">tap_cancel</text>
 </g>
 <!-- project&#45;create&#45;&gt;save&#45;project -->
 <g id="edge45" class="edge">
 <title>project&#45;create&#45;&gt;save&#45;project</title>
+<g id="a_edge45"><a xlink:title="submit_form">
 <path fill="none" stroke="black" d="M505.05,-473.5C534.02,-479.2 572.3,-486.74 604.59,-493.09"/>
 <polygon fill="black" stroke="black" points="603.76,-496.49 614.24,-494.99 605.11,-489.62 603.76,-496.49"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="558.36" y="-493.33" font-family="Times,serif" font-size="14.00">submit_form</text>
 </g>
 <!-- project&#45;dashboard&#45;&gt;daily&#45;calendar -->
 <g id="edge47" class="edge">
 <title>project&#45;dashboard&#45;&gt;daily&#45;calendar</title>
+<g id="a_edge47"><a xlink:title="open_daily_logs">
 <path fill="none" stroke="black" d="M960.84,-372.98C966.86,-374.63 972.9,-376.25 978.7,-377.76 1015.23,-387.21 1056.52,-396.85 1088.93,-404.18"/>
 <polygon fill="black" stroke="black" points="1088,-407.56 1098.52,-406.34 1089.54,-400.73 1088,-407.56"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="1024.82" y="-402.94" font-family="Times,serif" font-size="14.00">open_daily_logs</text>
 </g>
 <!-- project&#45;dashboard&#45;&gt;documents&#45;view -->
 <g id="edge48" class="edge">
 <title>project&#45;dashboard&#45;&gt;documents&#45;view</title>
+<g id="a_edge48"><a xlink:title="open_documents">
 <path fill="none" stroke="black" d="M961.08,-357.39C993.27,-357.43 1034.41,-356.92 1070.95,-354.76 1074.61,-354.54 1078.36,-354.27 1082.15,-353.97"/>
 <polygon fill="black" stroke="black" points="1082.37,-357.47 1092.03,-353.11 1081.77,-350.49 1082.37,-357.47"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="1024.82" y="-360.54" font-family="Times,serif" font-size="14.00">open_documents</text>
 </g>
 <!-- project&#45;dashboard&#45;&gt;gallery -->
 <g id="edge49" class="edge">
 <title>project&#45;dashboard&#45;&gt;gallery</title>
+<g id="a_edge49"><a xlink:title="open_gallery">
 <path fill="none" stroke="black" d="M915.51,-336.14C927.58,-315.12 949.49,-283.74 978.7,-270.26 1019.06,-251.63 1070.88,-257.94 1106.07,-266.03"/>
 <polygon fill="black" stroke="black" points="1104.86,-269.34 1115.4,-268.33 1106.53,-262.54 1104.86,-269.34"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="1024.82" y="-273.46" font-family="Times,serif" font-size="14.00">open_gallery</text>
 </g>
 <!-- fetch&#45;weather&#45;&gt;day&#45;log&#45;populated -->
 <g id="edge50" class="edge">
 <title>fetch&#45;weather&#45;&gt;day&#45;log&#45;populated</title>
+<g id="a_edge50"><a xlink:title="handle_success">
 <path fill="none" stroke="black" d="M3465.27,-49.86C3374,-38.57 3195.97,-25.34 3053.3,-68.26 2980.46,-90.17 2910.87,-148.23 2873.55,-183.41"/>
 <polygon fill="black" stroke="black" points="2871.54,-180.49 2866.74,-189.93 2876.38,-185.55 2871.54,-180.49"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="3217.05" y="-71.46" font-family="Times,serif" font-size="14.00">handle_success</text>
 </g>
 <!-- fetch&#45;weather&#45;&gt;day&#45;log&#45;populated -->
 <g id="edge51" class="edge">
 <title>fetch&#45;weather&#45;&gt;day&#45;log&#45;populated</title>
+<g id="a_edge51"><a xlink:title="handle_error">
 <path fill="none" stroke="black" d="M3475.24,-41.07C3447.74,-32.3 3412.82,-22.66 3380.8,-18.26 3236.6,1.56 3196.22,9.32 3053.3,-18.26 2990.54,-30.36 2967.37,-29.06 2919.8,-71.76 2886.95,-101.24 2866.03,-148.7 2854.98,-180.06"/>
 <polygon fill="black" stroke="black" points="2851.71,-178.79 2851.83,-189.38 2858.35,-181.03 2851.71,-178.79"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="3217.05" y="-21.46" font-family="Times,serif" font-size="14.00">handle_error</text>
 </g>
 <!-- manual&#45;weather&#45;&gt;day&#45;log&#45;populated -->
 <g id="edge52" class="edge">
 <title>manual&#45;weather&#45;&gt;day&#45;log&#45;populated</title>
+<g id="a_edge52"><a xlink:title="submit">
 <path fill="none" stroke="black" d="M3474.12,-176.18C3464.32,-177.47 3454.13,-178.73 3444.55,-179.76 3416.29,-182.78 3409.16,-182.93 3380.8,-184.76 3212.87,-195.57 3015.07,-204.58 2913.33,-208.93"/>
 <polygon fill="black" stroke="black" points="2913.36,-205.43 2903.51,-209.35 2913.65,-212.42 2913.36,-205.43"/>
+</a>
+</g>
 <text xml:space="preserve" text-anchor="middle" x="3217.05" y="-205.52" font-family="Times,serif" font-size="14.00">submit</text>
 </g>
 </g>

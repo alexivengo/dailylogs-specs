@@ -12,6 +12,8 @@
   {% endif %}
 </p>
 
+{% include "_header_meta.j2" %}
+
 {{ principle.title or '' }}
 
 {% if principle.rationale %}
@@ -31,5 +33,4 @@
 {% endfor %}
 {% endif %}
 
----
-✏️ Edit source: {{ edit_href }}
+{% include "_footer_meta.j2" %}

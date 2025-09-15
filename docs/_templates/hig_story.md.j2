@@ -12,6 +12,8 @@
   {% endif %}
 </p>
 
+{% include "_header_meta.j2" %}
+
 {{ hig_story.title or '' }}
 
 **Role:** {{ hig_story.role }}  
@@ -58,6 +60,4 @@
   - Flow: {{ ", ".join(hig_story.recommendation.refs.flow_nodes or []) }}
   - Story: {{ hig_story.recommendation.refs.user_story_id }}
 {% endif %}
-
----
-✏️ Edit source: {{ edit_href }}
+{% include "_footer_meta.j2" %}

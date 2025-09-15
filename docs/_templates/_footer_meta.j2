@@ -1,0 +1,6 @@
+---
+✏️ Edit source: {{ edit_href }}
+
+<p class="page-meta">
+  View in GitHub: {% if REPO_URL %}<a href="{{ REPO_URL }}/commit/{{ build_info.git_sha }}" target="_blank" rel="noopener">@{{ build_info.git_sha }}</a>{% else %}@{{ build_info.git_sha }}{% endif %}
+</p>

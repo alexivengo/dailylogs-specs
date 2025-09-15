@@ -55,6 +55,10 @@ jobs:
         run: |
           python3 docs/generate_docs.py
 
+      - name: Optimize SVGs (svgo)
+        run: |
+          npx -y svgo docs/_media/*.svg || true
+
       - name: Build MkDocs site
         run: |
           mkdocs build --strict
@@ -79,6 +83,14 @@ jobs:
         continue-on-error: true
         with:
           args: --no-progress --timeout 10 --verbose --exclude "https://json-schema.org,https://github.com" ./site/**/*.html
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Link check (fragments on index pages; warnings only)
+        uses: lycheeverse/lychee-action@v1
+        continue-on-error: true
+        with:
+          args: --offline --include-fragments --no-progress --timeout 10 --verbose ./site/stories/index.html ./site/prd/index.html ./site/flow/index.html
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

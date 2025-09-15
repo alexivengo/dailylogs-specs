@@ -13,7 +13,7 @@
   <span class="badge schema unknown">Schema unknown</span>
   {% endif %}
 </p>
-✏️ Edit source: {{ edit_href }}
+{% include "_header_meta.j2" %}
 
 {% if xlinks %}
 ## Related
@@ -53,5 +53,4 @@ Stories:
 {% endfor %}
 {% endif %}
 
----
-✏️ Edit source: {{ edit_href }}
+{% include "_footer_meta.j2" %}

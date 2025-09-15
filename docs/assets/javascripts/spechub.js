@@ -37,6 +37,8 @@
   }
 
   // Basic pan/zoom for embedded SVG via <object>
+  // Exposed as window.spechubInitZoom and window.spechubResetView
+  const zoomStates = new Map();
   function initPanZoomForObject(objId){
     var obj = document.getElementById(objId);
     if(!obj) return;
@@ -53,12 +55,16 @@
         }
         svg.setAttribute('preserveAspectRatio','xMidYMid meet');
         var vb = svg.getAttribute('viewBox').split(/\s+/).map(parseFloat);
-        var state = { dragging:false, lastX:0, lastY:0, minScale:0.3, maxScale:8 };
+        var initVB = vb.slice();
+        var state = { dragging:false, lastX:0, lastY:0, minScale:0.3, maxScale:8, pinchDist:null };
+        zoomStates.set(objId, { svg: svg, get vb(){return vb;}, setVB: setViewBox, initVB: initVB });
         function setViewBox(x,y,w,h){ svg.setAttribute('viewBox', [x,y,w,h].join(' ')); vb=[x,y,w,h]; }
         function onWheel(e){
           e.preventDefault();
           var delta = e.deltaY < 0 ? -1 : 1;
-          var scale = (delta>0) ? 1.1 : 0.9;
+          // Ctrl+wheel -> stronger zoom
+          var scaleBase = e.ctrlKey ? 1.25 : 1.1;
+          var scale = (delta>0) ? scaleBase : (1/scaleBase);
           var newW = Math.max(10, Math.min(vb[2]*scale, vb[2]/state.minScale*state.maxScale));
           // Keep center on cursor
           var pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY;
@@ -70,19 +76,35 @@
           var ny = loc.y - (loc.y - vb[1]) * k;
           setViewBox(nx, ny, newW, newH);
         }
-        function onDown(e){ state.dragging=true; state.lastX=e.clientX; state.lastY=e.clientY; }
-        function onMove(e){ if(!state.dragging) return; var dx=e.clientX-state.lastX; var dy=e.clientY-state.lastY; state.lastX=e.clientX; state.lastY=e.clientY; setViewBox(vb[0]-dx, vb[1]-dy, vb[2], vb[3]); }
+        function onDown(e){ state.dragging=true; state.lastX=e.clientX; state.lastY=e.clientY; e.preventDefault(); }
+        function onMove(e){ if(!state.dragging) return; var dx=e.clientX-state.lastX; var dy=e.clientY-state.lastY; state.lastX=e.clientX; state.lastY=e.clientY; setViewBox(vb[0]-dx, vb[1]-dy, vb[2], vb[3]); e.preventDefault(); }
         function onUp(){ state.dragging=false; }
+        // Basic pinch-zoom
+        function dist(t1, t2){ var dx=t2.clientX-t1.clientX, dy=t2.clientY-t1.clientY; return Math.hypot(dx,dy); }
+        function onTouchStart(e){ if(e.touches.length===2){ state.pinchDist=dist(e.touches[0], e.touches[1]); e.preventDefault(); } }
+        function onTouchMove(e){ if(e.touches.length===2 && state.pinchDist){ e.preventDefault(); var d=dist(e.touches[0], e.touches[1]); var scale = d/state.pinchDist; var newW = Math.max(10, Math.min(vb[2]/scale, vb[2]/state.minScale*state.maxScale)); var k = newW / vb[2]; var newH = vb[3]*k; setViewBox(vb[0], vb[1], newW, newH); state.pinchDist=d; } }
+        function onTouchEnd(){ state.pinchDist=null; }
         svg.addEventListener('wheel', onWheel, {passive:false});
         svg.addEventListener('mousedown', onDown);
         svg.addEventListener('mousemove', onMove);
         svg.addEventListener('mouseup', onUp);
         svg.addEventListener('mouseleave', onUp);
+        svg.addEventListener('touchstart', onTouchStart, {passive:false});
+        svg.addEventListener('touchmove', onTouchMove, {passive:false});
+        svg.addEventListener('touchend', onTouchEnd);
+        svg.addEventListener('touchcancel', onTouchEnd);
       }catch(e){}
     };
     if(obj.contentDocument && obj.contentDocument.readyState === 'complete') setup();
     else obj.addEventListener('load', setup, { once:true });
   }
+  function resetView(objId){
+    try{
+      var s = zoomStates.get(objId); if(!s) return; var vb = s.initVB; s.setVB(vb[0],vb[1],vb[2],vb[3]);
+    }catch(e){}
+  }
+  window.spechubInitZoom = initPanZoomForObject;
+  window.spechubResetView = resetView;
 
   document.addEventListener('DOMContentLoaded', function(){
     initPanZoomForObject('userflow-object');

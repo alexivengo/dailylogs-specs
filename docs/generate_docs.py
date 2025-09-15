@@ -268,6 +268,7 @@ def render_flow(env: Environment, flow: Dict[str, Any], graph: Dict[str, Any]) -
         "# User Flow\n\n"
         "<figure class=\"graph\">\n"
         "  <object type=\"image/svg+xml\" data=\"../_media/userflow.svg\" id=\"userflow-object\" aria-label=\"User Flow diagram\"></object>\n"
+        "  <div><button class=\"zoom-reset\" aria-label=\"Reset zoom\" onclick=\"window.spechubResetView && window.spechubResetView('userflow-object')\">Reset view</button></div>\n"
         "</figure>\n"
     )
     write_file(DOCS_DIR / "flow" / "overview.md", overview)
@@ -392,12 +393,38 @@ def render_hig(env: Environment, hig: Dict[str, Any], graph: Dict[str, Any]) -> 
         write_file(path, content)
 
 
-# ---------- Diagram rendering ----------
 
 def render_userflow_svg(flow: Dict[str, Any]) -> None:
     if not flow:
         return
-    graph = pydot.Dot(graph_type="digraph", rankdir="LR", splines="spline", overlap="false")
+    graph = pydot.Dot(
+        graph_type="digraph",
+        rankdir="LR",
+        bgcolor="white",
+        fontname="Inter",
+        fontsize="12",
+        splines="true",
+        overlap="false",
+        concentrate="true",
+        nodesep="0.35",
+        ranksep="0.45",
+    )
+    graph.set_node_defaults(
+        shape="box",
+        style="rounded,filled",
+        fillcolor="#F6F8FA",
+        color="#D0D7DE",
+        fontname="Inter",
+        fontsize="12",
+    )
+    graph.set_edge_defaults(color="#8B949E", arrowsize="0.7", penwidth="1.1")
+
+    # Domain clusters
+    domains = ["projects", "daily", "weather", "export", "documents", "gallery"]
+    clusters: Dict[str, pydot.Subgraph] = {}
+    for d in domains:
+        clusters[d] = pydot.Subgraph(name=f"cluster_{d}", label=d.title(), color="#D0D7DE")
+
     # Add nodes
     for node in flow.get("user_flow", []):
         nid = node.get("id")
@@ -405,17 +432,23 @@ def render_userflow_svg(flow: Dict[str, Any]) -> None:
         label = f"{nid}\n({ntype})"
         doc_path = DOCS_DIR / "flow" / "nodes" / f"{slugify(nid)}.md"
         url = f"./flow/nodes/{slugify(nid)}.md" if doc_path.exists() else None
-        shape = {
-            "screen": "box",
-            "system": "ellipse",
-            "decision": "diamond",
-            "error": "octagon",
-            "terminator": "oval",
-        }.get(ntype, "box")
+        shape = {"screen": "box", "system": "ellipse", "decision": "diamond"}.get(ntype, "box")
         kwargs = {"label": label, "shape": shape, "tooltip": label}
         if url:
-            kwargs.update({"URL": url})
-        graph.add_node(pydot.Node(nid, **kwargs))
+            kwargs["URL"] = url
+        node_obj = pydot.Node(nid, **kwargs)
+        # Assign to cluster if prefix matches
+        bucket = next((d for d in domains if nid and nid.startswith(d + "-")), None)
+        if bucket:
+            clusters[bucket].add_node(node_obj)
+        else:
+            graph.add_node(node_obj)
+
+    # Attach clusters with nodes
+    for sg in clusters.values():
+        if sg.get_nodes():
+            graph.add_subgraph(sg)
+
     # Add edges
     node_index = {n.get("id"): n for n in flow.get("user_flow", [])}
     for n in flow.get("user_flow", []):
@@ -426,13 +459,28 @@ def render_userflow_svg(flow: Dict[str, Any]) -> None:
                 continue
             elabel = e.get("action") or e.get("id") or ""
             graph.add_edge(pydot.Edge(src, tgt, label=elabel, tooltip=elabel))
+
+    # Legend cluster
+    legend = pydot.Subgraph(name="cluster_legend", label="Legend", color="#D0D7DE")
+    legend.add_node(pydot.Node(
+        "legend_node",
+        label="Node types: box(screen) / ellipse(system) / diamond(decision)\nEdge label = action",
+        shape="note",
+        fillcolor="#FFFFFF",
+        style="filled",
+    ))
+    graph.add_subgraph(legend)
     MEDIA_DIR.mkdir(parents=True, exist_ok=True)
     graph.write_svg(str(MEDIA_DIR / "userflow.svg"))
 
 
 def render_coverage_svg(graph_data: Dict[str, Any]) -> None:
-    # Simple clustered landscape placeholder for MVP
-    g = pydot.Dot(graph_type="digraph", rankdir="LR", compound="true", concentrate="true")
+    # Clustered coverage diagram with styling
+    g = pydot.Dot(graph_type="digraph", rankdir="LR", compound="true", concentrate="true",
+                  bgcolor="white", fontname="Inter", fontsize="12", nodesep="0.35", ranksep="0.45")
+    g.set_node_defaults(shape="box", style="rounded,filled", fillcolor="#F6F8FA",
+                        color="#D0D7DE", fontname="Inter", fontsize="12")
+    g.set_edge_defaults(color="#8B949E", arrowsize="0.7", penwidth="1.1")
 
     clusters = {
         "PRD": [],
@@ -640,9 +688,13 @@ def build_nav() -> str:
         lines.append("      - Overview: flow/overview.md")
         if (DOCS_DIR / "flow" / "index.md").exists():
             lines.append("      - Index: flow/index.md")
-        for fname in list_md(DOCS_DIR / "flow" / "nodes"):
-            name = os.path.splitext(fname)[0]
-            lines.append(f"      - {name}: flow/nodes/{fname}")
+        # Nodes subgroup
+        node_files = list_md(DOCS_DIR / "flow" / "nodes")
+        if node_files:
+            lines.append("      - Nodes:")
+            for fname in node_files:
+                name = os.path.splitext(fname)[0]
+                lines.append(f"          - {name}: flow/nodes/{fname}")
     # nested helper to add sections with optional Index
     def section(title: str, rel: str, dir_path: Path):
         files = list_md(dir_path)
@@ -656,10 +708,25 @@ def build_nav() -> str:
             name = os.path.splitext(fname)[0]
             lines.append(f"      - {name}: {rel}/{fname}")
 
-    section("User Stories", "stories", DOCS_DIR / "stories")
-    section("Global UX Principles", "ux", DOCS_DIR / "ux")
-    section("Contextual UX", "ctxux", DOCS_DIR / "ctxux")
-    section("HIG Patterns", "hig", DOCS_DIR / "hig")
+    # Generic sections with 'by ID' subgroup
+    def section_with_group(title: str, rel: str, dir_path: Path, group_label: str = "by ID"):
+        files = list_md(dir_path)
+        has_index = (dir_path / "index.md").exists()
+        if not files and not has_index:
+            return
+        lines.append(f"  - {title}:")
+        if has_index:
+            lines.append(f"      - Index: {rel}/index.md")
+        if files:
+            lines.append(f"      - {group_label}:")
+            for fname in files:
+                name = os.path.splitext(fname)[0]
+                lines.append(f"          - {name}: {rel}/{fname}")
+
+    section_with_group("User Stories", "stories", DOCS_DIR / "stories")
+    section_with_group("Global UX Principles", "ux", DOCS_DIR / "ux")
+    section_with_group("Contextual UX", "ctxux", DOCS_DIR / "ctxux")
+    section_with_group("HIG Patterns", "hig", DOCS_DIR / "hig")
 
     return "\n".join(lines) + "\n"
 
@@ -691,7 +758,7 @@ theme:
 plugins:
   - search:
       lang: [ru, en]
-      separator: '[\\s\\-]+'
+      separator: '[\\s_/\\-]+'
 markdown_extensions:
   - admonition
   - toc:
@@ -700,6 +767,7 @@ extra:
   generator: spechub
 # We add custom 'Edit source' links inside pages instead of using edit_uri
 extra_javascript:
+  - assets/javascripts/spechub.zoom.js?v={cache_bust}
   - assets/javascripts/spechub.js?v={cache_bust}
 extra_css:
   - assets/stylesheets/spechub.css?v={cache_bust}
