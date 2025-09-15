@@ -57,6 +57,7 @@
     // aria-sort
     $all('th', tbl).forEach(function(th){ th.setAttribute('aria-sort','none'); th.removeAttribute('data-sort'); });
     var th = $all('th', tbl)[colIdx]; if(th){ th.setAttribute('aria-sort', dir==='asc'?'ascending':'descending'); th.setAttribute('data-sort', dir); }
+    var live = $('#live-'+tbl.id); if(live && th){ live.textContent = 'Sorted by '+(th.textContent||'')+' '+(dir==='asc'?'ascending':'descending'); }
   }
   function attachTable(tbl){
     var thead = $('thead', tbl); if(!thead) return;

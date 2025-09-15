@@ -29,11 +29,11 @@ extra:
   generator: spechub
 # We add custom 'Edit source' links inside pages instead of using edit_uri
 extra_javascript:
-  - assets/javascripts/spechub.zoom.js?v=a1a6d8b
-  - assets/javascripts/spechub.js?v=a1a6d8b
-  - assets/javascripts/spechub.tables.js?v=a1a6d8b
+  - assets/javascripts/spechub.zoom.js?v=fb31dd8
+  - assets/javascripts/spechub.js?v=fb31dd8
+  - assets/javascripts/spechub.tables.js?v=fb31dd8
 extra_css:
-  - assets/stylesheets/spechub.css?v=a1a6d8b
+  - assets/stylesheets/spechub.css?v=fb31dd8
 nav:
   - Overview: index.md
   - Orphans: orphans.md

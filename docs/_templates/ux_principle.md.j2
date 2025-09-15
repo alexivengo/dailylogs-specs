@@ -16,6 +16,19 @@
 
 {{ principle.title or '' }}
 
+{% if xlinks %}
+## Related
+<p>
+  {% set pid = (principle.id or principle.principle_id) %}
+  {% if xlinks.stories and xlinks.stories|length %}
+  <span class="chip"><a href="../stories/index.md#?ux={{ pid | slugify }}">Stories ({{ xlinks.stories|length }})</a></span>
+  {% endif %}
+  {% if xlinks.ctxux and xlinks.ctxux|length %}
+  <span class="chip"><a href="../ctxux/index.md#?principles={{ pid | slugify }}">CtxUX ({{ xlinks.ctxux|length }})</a></span>
+  {% endif %}
+</p>
+{% endif %}
+
 {% if principle.rationale %}
 ## Rationale
 {{ principle.rationale }}

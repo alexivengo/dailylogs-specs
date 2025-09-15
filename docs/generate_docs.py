@@ -318,11 +318,11 @@ def render_stories(env: Environment, stories: Dict[str, Any], graph: Dict[str, A
         flow_nodes = [n.split(":",2)[2] for n in _connected(graph, story_nid, "flow:node:")]
         ctx_screens = [n.split(":",2)[2] for n in _connected(graph, story_nid, "ctxux:screen:")]
         ux_principles = [n.split(":",2)[2] for n in _connected(graph, story_nid, "ux:principle:")]
+        ux_principles = [n.split(":",2)[2] for n in _connected(graph, story_nid, "ux:principle:")]
         # Metrics counts
-        met = s.get("metrics", {}) or {}
+        met = story.get("metrics", {}) or {}
         leading = len(met.get("leading", []) or [])
         lagging = len(met.get("lagging", []) or [])
-        ux_principles = [n.split(":",2)[2] for n in _connected(graph, story_nid, "ux:principle:")]
         prd_chips = [{"label": pid, "href": f"../prd/{slugify(pid)}.md"} for pid in prd_ids if page_exists(f"prd/{slugify(pid)}.md")]
         cjm_chips = [{"label": cid, "href": f"../cjm/{slugify(cid)}.md"} for cid in cjm_ids if page_exists(f"cjm/{slugify(cid)}.md")]
         flow_chips = [{"label": fn, "href": f"../flow/nodes/{slugify(fn)}.md"} for fn in flow_nodes if page_exists(f"flow/nodes/{slugify(fn)}.md")]
@@ -346,9 +346,16 @@ def render_ux(env: Environment, ux: Dict[str, Any], graph: Dict[str, Any]) -> No
             continue
         path = DOCS_DIR / "ux" / f"{slugify(pid)}.md"
         edit_href = edit_link(f"specs/03_ux_principles/principles/{pid}.json")
+        # Cross-links for chips
+        ux_nid = f"ux:principle:{pid}"
+        story_ids = [n.split(":",1)[1] for n in _connected(graph, ux_nid, "story:")]
+        ctx_ids = [n.split(":",2)[2] for n in _connected(graph, ux_nid, "ctxux:screen:")]
+        story_chips = [{"label": sid, "href": f"../stories/{slugify(sid)}.md"} for sid in story_ids if page_exists(f"stories/{slugify(sid)}.md")]
+        ctx_chips = [{"label": cid, "href": f"../ctxux/{slugify(cid)}.md"} for cid in ctx_ids if page_exists(f"ctxux/{slugify(cid)}.md")]
+        xlinks = {"stories": story_chips, "ctxux": ctx_chips}
         schema_status = os.environ.get("SPECHUB_SCHEMA_STATUS", "unknown").lower()
         schema_ok = True if schema_status == "ok" else False if schema_status == "failed" else None
-        content = tmpl.render(principle=principle, edit_href=edit_href, version=ux_version, build_info=get_build_info(), schema_ok=schema_ok)
+        content = tmpl.render(principle=principle, edit_href=edit_href, version=ux_version, build_info=get_build_info(), schema_ok=schema_ok, xlinks=xlinks)
         write_file(path, content)
 
 
@@ -393,9 +400,21 @@ def render_hig(env: Environment, hig: Dict[str, Any], graph: Dict[str, Any]) -> 
             continue
         path = DOCS_DIR / "hig" / f"{slugify(sid)}.md"
         edit_href = edit_link(f"specs/05_hig/stories/{sid}/candidates.json")
+        # Cross-links based on story relationships for chips
+        story_nid = f"story:{sid}"
+        prd_ids = [p.split(":",1)[1] for p in _connected(graph, story_nid, "prd:")]
+        cjm_ids = [c.split(":",1)[1] for c in _connected(graph, story_nid, "cjm:")]
+        flow_nodes = [n.split(":",2)[2] for n in _connected(graph, story_nid, "flow:node:")]
+        ctx_screens = [n.split(":",2)[2] for n in _connected(graph, story_nid, "ctxux:screen:")]
+        xlinks = {
+            "prd": prd_ids,
+            "cjm": cjm_ids,
+            "flow": flow_nodes,
+            "ctxux": ctx_screens,
+        }
         schema_status = os.environ.get("SPECHUB_SCHEMA_STATUS", "unknown").lower()
         schema_ok = True if schema_status == "ok" else False if schema_status == "failed" else None
-        content = tmpl.render(hig_story=story, edit_href=edit_href, version=hig_version, build_info=get_build_info(), schema_ok=schema_ok)
+        content = tmpl.render(hig_story=story, edit_href=edit_href, version=hig_version, build_info=get_build_info(), schema_ok=schema_ok, xlinks=xlinks)
         write_file(path, content)
 
 

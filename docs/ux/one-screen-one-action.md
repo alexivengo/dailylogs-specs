@@ -2,12 +2,17 @@
 
 <p class="badges">
   <span class="badge version">v1.0.0</span>
-  <span class="badge build">2025-09-15T11:28:53Z · <a href="https://github.com/alexivengo/dailylogs-specs/commit/a1a6d8b" target="_blank" rel="noopener" class="sha">a1a6d8b</a></span>
+  <span class="badge build">2025-09-15T11:48:21Z · <a href="https://github.com/alexivengo/dailylogs-specs/commit/fb31dd8" target="_blank" rel="noopener" class="sha">fb31dd8</a></span>
   <span class="badge schema unknown">Schema unknown</span>
 </p>
 
 ✏️ Edit source: https://github.com/alexivengo/dailylogs-specs/blob/main/specs/03_ux_principles/principles/one-screen-one-action.json
 One screen — one key action
+
+## Related
+<p>
+  <span class="chip"><a href="../ctxux/index.md#?principles=one-screen-one-action">CtxUX (4)</a></span>
+</p>
 
 ## Rationale
 Under time pressure, a single dominant goal per screen reduces cognitive load and navigation errors while preserving the shortest happy path
@@ -18,4 +23,4 @@ Under time pressure, a single dominant goal per screen reduces cognitive load an
 ✏️ Edit source: https://github.com/alexivengo/dailylogs-specs/blob/main/specs/03_ux_principles/principles/one-screen-one-action.json
 
 <p class="page-meta">
-  View in GitHub: <a href="https://github.com/alexivengo/dailylogs-specs/commit/a1a6d8b" target="_blank" rel="noopener">@a1a6d8b</a></p>
+  View in GitHub: <a href="https://github.com/alexivengo/dailylogs-specs/commit/fb31dd8" target="_blank" rel="noopener">@fb31dd8</a></p>
