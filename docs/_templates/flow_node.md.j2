@@ -16,6 +16,11 @@
 
 {% if xlinks %}
 ## Related
+<p>
+  <span class="chip">
+    <a href="../stories/index.md#?flow={{ node.id | slugify }}">Used in Stories ({{ xlinks.stories|length }})</a>
+  </span>
+</p>
 {% if xlinks.prd and xlinks.prd|length %}
 PRD:
 {% for c in xlinks.prd %}<span class="chip">{% if c.href %}[{{ c.label }}]({{ c.href }}){% else %}{{ c.label }}{% endif %}</span>{% endfor %}
