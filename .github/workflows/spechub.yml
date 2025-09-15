@@ -68,23 +68,19 @@ jobs:
           path: ./site
 
       - name: Link check (internal only)
-        run: |
-          docker run --rm -v "$PWD/site":/site ghcr.io/lycheeverse/lychee:latest \
-            --offline \
-            --no-progress \
-            --timeout 10 \
-            --verbose \
-            "/site/**/*.html"
+        uses: lycheeverse/lychee-action@v1
+        with:
+          args: --offline --no-progress --timeout 10 --verbose ./site/**/*.html
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Link check (external; warnings only)
+        uses: lycheeverse/lychee-action@v1
         continue-on-error: true
-        run: |
-          docker run --rm -v "$PWD/site":/site ghcr.io/lycheeverse/lychee:latest \
-            --no-progress \
-            --timeout 10 \
-            --verbose \
-            --exclude "https://json-schema.org,https://github.com" \
-            "/site/**/*.html"
+        with:
+          args: --no-progress --timeout 10 --verbose --exclude "https://json-schema.org,https://github.com" ./site/**/*.html
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Markdown lint (warnings only)
         continue-on-error: true
