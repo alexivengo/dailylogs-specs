@@ -2,13 +2,15 @@
 
 <p class="badges">
   <span class="badge version">v1.0.0</span>
-  <span class="badge build">2025-09-15T10:16:01Z · <a href="https://github.com/alexivengo/dailylogs-specs/commit/8e5537c" target="_blank" rel="noopener" class="sha">8e5537c</a></span>
+  <span class="badge build">2025-09-15T12:04:14Z · <a href="https://github.com/alexivengo/dailylogs-specs/commit/b310327" target="_blank" rel="noopener" class="sha">b310327</a></span>
   <span class="badge schema unknown">Schema unknown</span>
 </p>
 
 ✏️ Edit source: https://github.com/alexivengo/dailylogs-specs/blob/main/specs/04_userstories/us/us-5.json
-
 ## Related
+<p>
+  <span class="chip"><a href="../stories/index.md#?flow=check-network-for-weather,fetch-weather,manual-weather">Flow nodes (3)</a></span>
+</p>
 Flow nodes:
 <span class="chip">[`check-network-for-weather`](../flow/nodes/check-network-for-weather.md)</span><span class="chip">[`fetch-weather`](../flow/nodes/fetch-weather.md)</span><span class="chip">[`manual-weather`](../flow/nodes/manual-weather.md)</span>HIG: <span class="chip"><a href="../hig/us-5.md">кандидаты</a></span>
 
@@ -48,3 +50,6 @@ Flow nodes:
 
 ---
 ✏️ Edit source: https://github.com/alexivengo/dailylogs-specs/blob/main/specs/04_userstories/us/us-5.json
+
+<p class="page-meta">
+  View in GitHub: <a href="https://github.com/alexivengo/dailylogs-specs/commit/b310327" target="_blank" rel="noopener">@b310327</a></p>

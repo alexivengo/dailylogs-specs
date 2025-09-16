@@ -317,6 +317,12 @@ def render_stories(env: Environment, stories: Dict[str, Any], graph: Dict[str, A
         cjm_ids = [c.split(":",1)[1] for c in _connected(graph, story_nid, "cjm:")]
         flow_nodes = [n.split(":",2)[2] for n in _connected(graph, story_nid, "flow:node:")]
         ctx_screens = [n.split(":",2)[2] for n in _connected(graph, story_nid, "ctxux:screen:")]
+        ux_principles = [n.split(":",2)[2] for n in _connected(graph, story_nid, "ux:principle:")]
+        ux_principles = [n.split(":",2)[2] for n in _connected(graph, story_nid, "ux:principle:")]
+        # Metrics counts
+        met = story.get("metrics", {}) or {}
+        leading = len(met.get("leading", []) or [])
+        lagging = len(met.get("lagging", []) or [])
         prd_chips = [{"label": pid, "href": f"../prd/{slugify(pid)}.md"} for pid in prd_ids if page_exists(f"prd/{slugify(pid)}.md")]
         cjm_chips = [{"label": cid, "href": f"../cjm/{slugify(cid)}.md"} for cid in cjm_ids if page_exists(f"cjm/{slugify(cid)}.md")]
         flow_chips = [{"label": fn, "href": f"../flow/nodes/{slugify(fn)}.md"} for fn in flow_nodes if page_exists(f"flow/nodes/{slugify(fn)}.md")]
@@ -340,9 +346,16 @@ def render_ux(env: Environment, ux: Dict[str, Any], graph: Dict[str, Any]) -> No
             continue
         path = DOCS_DIR / "ux" / f"{slugify(pid)}.md"
         edit_href = edit_link(f"specs/03_ux_principles/principles/{pid}.json")
+        # Cross-links for chips
+        ux_nid = f"ux:principle:{pid}"
+        story_ids = [n.split(":",1)[1] for n in _connected(graph, ux_nid, "story:")]
+        ctx_ids = [n.split(":",2)[2] for n in _connected(graph, ux_nid, "ctxux:screen:")]
+        story_chips = [{"label": sid, "href": f"../stories/{slugify(sid)}.md"} for sid in story_ids if page_exists(f"stories/{slugify(sid)}.md")]
+        ctx_chips = [{"label": cid, "href": f"../ctxux/{slugify(cid)}.md"} for cid in ctx_ids if page_exists(f"ctxux/{slugify(cid)}.md")]
+        xlinks = {"stories": story_chips, "ctxux": ctx_chips}
         schema_status = os.environ.get("SPECHUB_SCHEMA_STATUS", "unknown").lower()
         schema_ok = True if schema_status == "ok" else False if schema_status == "failed" else None
-        content = tmpl.render(principle=principle, edit_href=edit_href, version=ux_version, build_info=get_build_info(), schema_ok=schema_ok)
+        content = tmpl.render(principle=principle, edit_href=edit_href, version=ux_version, build_info=get_build_info(), schema_ok=schema_ok, xlinks=xlinks)
         write_file(path, content)
 
 
@@ -387,9 +400,21 @@ def render_hig(env: Environment, hig: Dict[str, Any], graph: Dict[str, Any]) -> 
             continue
         path = DOCS_DIR / "hig" / f"{slugify(sid)}.md"
         edit_href = edit_link(f"specs/05_hig/stories/{sid}/candidates.json")
+        # Cross-links based on story relationships for chips
+        story_nid = f"story:{sid}"
+        prd_ids = [p.split(":",1)[1] for p in _connected(graph, story_nid, "prd:")]
+        cjm_ids = [c.split(":",1)[1] for c in _connected(graph, story_nid, "cjm:")]
+        flow_nodes = [n.split(":",2)[2] for n in _connected(graph, story_nid, "flow:node:")]
+        ctx_screens = [n.split(":",2)[2] for n in _connected(graph, story_nid, "ctxux:screen:")]
+        xlinks = {
+            "prd": prd_ids,
+            "cjm": cjm_ids,
+            "flow": flow_nodes,
+            "ctxux": ctx_screens,
+        }
         schema_status = os.environ.get("SPECHUB_SCHEMA_STATUS", "unknown").lower()
         schema_ok = True if schema_status == "ok" else False if schema_status == "failed" else None
-        content = tmpl.render(hig_story=story, edit_href=edit_href, version=hig_version, build_info=get_build_info(), schema_ok=schema_ok)
+        content = tmpl.render(hig_story=story, edit_href=edit_href, version=hig_version, build_info=get_build_info(), schema_ok=schema_ok, xlinks=xlinks)
         write_file(path, content)
 
 
@@ -420,10 +445,11 @@ def render_userflow_svg(flow: Dict[str, Any]) -> None:
     graph.set_edge_defaults(color="#8B949E", arrowsize="0.7", penwidth="1.1")
 
     # Domain clusters
-    domains = ["projects", "daily", "weather", "export", "documents", "gallery"]
+    domains = ["projects", "daily", "weather", "export", "documents", "gallery", "entries", "app"]
     clusters: Dict[str, pydot.Subgraph] = {}
     for d in domains:
         clusters[d] = pydot.Subgraph(name=f"cluster_{d}", label=d.title(), color="#D0D7DE")
+    misc = pydot.Subgraph(name="cluster_misc", label="Misc", color="#D0D7DE")
 
     # Add nodes
     for node in flow.get("user_flow", []):
@@ -442,12 +468,14 @@ def render_userflow_svg(flow: Dict[str, Any]) -> None:
         if bucket:
             clusters[bucket].add_node(node_obj)
         else:
-            graph.add_node(node_obj)
+            misc.add_node(node_obj)
 
     # Attach clusters with nodes
     for sg in clusters.values():
         if sg.get_nodes():
             graph.add_subgraph(sg)
+    if misc.get_nodes():
+        graph.add_subgraph(misc)
 
     # Add edges
     node_index = {n.get("id"): n for n in flow.get("user_flow", [])}
@@ -461,14 +489,10 @@ def render_userflow_svg(flow: Dict[str, Any]) -> None:
             graph.add_edge(pydot.Edge(src, tgt, label=elabel, tooltip=elabel))
 
     # Legend cluster
+    present = [d.title() for d, sg in clusters.items() if sg.get_nodes()] + (["Misc"] if misc.get_nodes() else [])
+    legend_text = "Node types: box(screen) / ellipse(system) / diamond(decision)\nDomains: " + ", ".join(present)
     legend = pydot.Subgraph(name="cluster_legend", label="Legend", color="#D0D7DE")
-    legend.add_node(pydot.Node(
-        "legend_node",
-        label="Node types: box(screen) / ellipse(system) / diamond(decision)\nEdge label = action",
-        shape="note",
-        fillcolor="#FFFFFF",
-        style="filled",
-    ))
+    legend.add_node(pydot.Node("legend_node", label=legend_text, shape="note", fillcolor="#FFFFFF", style="filled"))
     graph.add_subgraph(legend)
     MEDIA_DIR.mkdir(parents=True, exist_ok=True)
     graph.write_svg(str(MEDIA_DIR / "userflow.svg"))
@@ -769,6 +793,7 @@ extra:
 extra_javascript:
   - assets/javascripts/spechub.zoom.js?v={cache_bust}
   - assets/javascripts/spechub.js?v={cache_bust}
+  - assets/javascripts/spechub.tables.js?v={cache_bust}
 extra_css:
   - assets/stylesheets/spechub.css?v={cache_bust}
 {build_nav()}""".lstrip()
@@ -791,16 +816,15 @@ def _connected(graph: Dict[str, Any], node_id: str, prefix: str) -> List[str]:
             out.add(f)
     return sorted(out)
 
-def render_stories_index(artifacts: Dict[str, Any], graph: Dict[str, Any]) -> None:
+def render_stories_index(env: Environment, artifacts: Dict[str, Any], graph: Dict[str, Any]) -> None:
     data = artifacts.get("stories", {})
     stories = data.get("stories", []) or []
-    lines: List[str] = []
-    lines.append("# User Stories\n")
-    lines.append("| ID | Название | PRD | CJM | Flow | HIG | CtxUX |")
-    lines.append("|---|---|---|---|---|---|---|")
+    has_priority = any((s.get("priority") for s in stories))
+    has_status = any((s.get("status") for s in stories))
+    rows = []
     for s in stories:
-        sid = s.get("story_id")
-        if not sid: 
+        sid = s.get("story_id");
+        if not sid:
             continue
         title = s.get("title", "")
         story_nid = f"story:{sid}"
@@ -808,122 +832,296 @@ def render_stories_index(artifacts: Dict[str, Any], graph: Dict[str, Any]) -> No
         cjm_ids = [c.split(":",1)[1] for c in _connected(graph, story_nid, "cjm:")]
         flow_nodes = [n.split(":",2)[2] for n in _connected(graph, story_nid, "flow:node:")]
         ctx_screens = [n.split(":",2)[2] for n in _connected(graph, story_nid, "ctxux:screen:")]
-        prd_cell = ", ".join(f"[{p}](../prd/{slugify(p)}.md)" for p in prd_ids) or "—"
-        cjm_cell = ", ".join(f"[{c}](../cjm/{slugify(c)}.md)" for c in cjm_ids) or "—"
-        if flow_nodes:
-            flow_links = " ".join(f"[`{n}`](../flow/nodes/{slugify(n)}.md)" for n in flow_nodes[:6])
-            if len(flow_nodes) > 6:
-                flow_links += f" +{len(flow_nodes)-6}"
+        ux_principles = [n.split(":",2)[2] for n in _connected(graph, story_nid, "ux:principle:")]
+        hig_exists = (DOCS_DIR/"hig"/f"{slugify(sid)}.md").exists()
+        met = s.get("metrics", {}) or {}
+        leading = len(met.get("leading", []) or [])
+        lagging = len(met.get("lagging", []) or [])
+        # Cells HTML with threshold for inline listing
+        TH = 20
+        if len(prd_ids) > TH:
+            prd_html = f"{TH} из {len(prd_ids)}"
         else:
-            flow_links = "—"
-        hig_link = f"[кандидаты](../hig/{slugify(sid)}.md)" if (DOCS_DIR/"hig"/f"{slugify(sid)}.md").exists() else "—"
-        ctx_cell = f"[{len(ctx_screens)}](../ctxux/index.md#by-story-{slugify(sid)})" if ctx_screens else "—"
-        lines.append(f"| [{sid}]({slugify(sid)}.md) | {title} | {prd_cell} | {cjm_cell} | {flow_links} | {hig_link} | {ctx_cell} |")
-    write_file(DOCS_DIR/"stories"/"index.md", "\n".join(lines)+"\n")
+            prd_html = ", ".join(f"<a href=\"../prd/{slugify(p)}.md\">{p}</a>" for p in prd_ids[:5]) or "—"
+        if len(cjm_ids) > TH:
+            cjm_html = f"{TH} из {len(cjm_ids)}"
+        else:
+            cjm_html = ", ".join(f"<a href=\"../cjm/{slugify(c)}.md\">{c}</a>" for c in cjm_ids[:5]) or "—"
+        if len(flow_nodes) > TH:
+            flow_html = f"{TH} из {len(flow_nodes)}"
+        else:
+            flow_html = ", ".join(f"<a href=\"../flow/nodes/{slugify(f)}.md\"><code>{f}</code></a>" for f in flow_nodes[:5]) or "—"
+        hig_html = f"<a href=\"../hig/{slugify(sid)}.md\">yes</a>" if hig_exists else "—"
+        ctx_html = f"<a href=\"../ctxux/index.md#by-story-{slugify(sid)}\">{len(ctx_screens)}</a>" if ctx_screens else "—"
+        # Row
+        # Build cells dynamically with optional columns and dynamic title indices
+        cells: List[str] = []
+        title_map: Dict[int, str] = {}
+        cells.append(f"<a href=\"{slugify(sid)}.md\">{sid}</a>")  # 0
+        cells.append(title or "")  # 1
+        if has_priority:
+            pri = (s.get("priority") or "")
+            cells.append(pri)
+        if has_status:
+            stat = (s.get("status") or "").lower().replace(' ', '-')
+            label = (s.get("status") or "")
+            cells.append(f"<span class=\"badge status {slugify(stat)}\">{label}</span>")
+        i_prd = len(cells); cells.append(prd_html); title_map[i_prd] = ", ".join(prd_ids)
+        i_cjm = len(cells); cells.append(cjm_html); title_map[i_cjm] = ", ".join(cjm_ids)
+        i_flow = len(cells); cells.append(flow_html); title_map[i_flow] = ", ".join(flow_nodes)
+        cells.append(hig_html)
+        cells.append(ctx_html)
+        cells.append(f"{leading}/{lagging}")
 
-def render_prd_index(artifacts: Dict[str, Any], graph: Dict[str, Any]) -> None:
+        rows.append({
+            "row_id": f"row-{slugify(sid)}",
+            "data": {
+                "prd": " ".join(slugify(p) for p in prd_ids),
+                "cjm": " ".join(slugify(c) for c in cjm_ids),
+                "flow": " ".join(slugify(f) for f in flow_nodes),
+                "hig": "true" if hig_exists else "false",
+                "ctxux": " ".join(slugify(c) for c in ctx_screens),
+                "ux": " ".join(slugify(u) for u in ux_principles),
+            },
+            "cells": cells,
+            "titles": title_map,
+        })
+    columns: List[Dict[str, str]] = [
+        {"title": "ID", "type": "text"},
+        {"title": "Название", "type": "text"},
+    ]
+    if has_priority:
+        columns.append({"title": "Priority", "type": "text"})
+    if has_status:
+        columns.append({"title": "Status", "type": "text"})
+    columns += [
+        {"title": "PRD", "type": "text"},
+        {"title": "CJM", "type": "text"},
+        {"title": "Flow", "type": "text"},
+        {"title": "HIG", "type": "text"},
+        {"title": "CtxUX", "type": "number"},
+        {"title": "Metrics (L/Lg)", "type": "text"},
+    ]
+    tmpl = env.get_template("index_table.md.j2")
+    html = tmpl.render(
+        page_title="User Stories",
+        table_id="tbl-stories",
+        columns=columns,
+        rows=rows,
+        search_placeholder="Поиск stories…",
+    )
+    write_file(DOCS_DIR/"stories"/"index.md", html)
+
+def render_prd_index(env: Environment, artifacts: Dict[str, Any], graph: Dict[str, Any]) -> None:
     prd = artifacts.get("prd", {})
     sections = prd.get("sections", []) or prd.get("prd", []) or []
-    lines: List[str] = []
-    lines.append("# PRD\n")
-    lines.append("| Раздел | Цели | Stories | Flow | Ссылки |")
-    lines.append("|---|---|---:|---:|---|")
+    rows = []
     for sec in sections:
         sid = sec.get("id") or sec.get("section_id")
-        if not sid: continue
+        if not sid: 
+            continue
         goals = "; ".join((sec.get("goals") or [])[:2])
         prd_nid = f"prd:{sid}"
-        stories = [n.split(":",1)[1] for n in _connected(graph, prd_nid, "story:")]
+        story_ids = [n.split(":",1)[1] for n in _connected(graph, prd_nid, "story:")]
         flow_nodes = [n.split(":",2)[2] for n in _connected(graph, prd_nid, "flow:node:")]
-        link = f"[страница]({slugify(str(sid))}.md)"
-        lines.append(f"| {sid} | {goals or '—'} | {len(stories)} | {len(flow_nodes)} | {link} |")
-    write_file(DOCS_DIR/"prd"/"index.md", "\n".join(lines)+"\n")
+        cjm_ids = [n.split(":",1)[1] for n in _connected(graph, prd_nid, "cjm:")]
+        rows.append({
+            "row_id": f"row-{slugify(str(sid))}",
+            "data": {
+                "stories": " ".join(slugify(s) for s in story_ids),
+                "flow": " ".join(slugify(f) for f in flow_nodes),
+                "cjm": " ".join(slugify(c) for c in cjm_ids),
+            },
+            "cells": [
+                f"<a href=\"{slugify(str(sid))}.md\">{sid}</a>",
+                goals or "—",
+                str(len(story_ids)),
+                str(len(flow_nodes)),
+                (("20 из "+str(len(cjm_ids))) if len(cjm_ids)>20 else (", ".join(f"<a href=\"../cjm/{slugify(c)}.md\">{c}</a>" for c in cjm_ids[:5]) or "—")),
+            ],
+            "titles": {4: ", ".join(cjm_ids)}
+        })
+    columns = [
+        {"title": "Раздел", "type": "text"},
+        {"title": "Цели", "type": "text"},
+        {"title": "Stories", "type": "number"},
+        {"title": "Flow", "type": "number"},
+        {"title": "CJM", "type": "text"},
+    ]
+    tmpl = env.get_template("index_table.md.j2")
+    html = tmpl.render(page_title="PRD", table_id="tbl-prd", columns=columns, rows=rows, search_placeholder="Поиск PRD…")
+    write_file(DOCS_DIR/"prd"/"index.md", html)
 
-def render_flow_index(artifacts: Dict[str, Any], graph: Dict[str, Any]) -> None:
+def render_flow_index(env: Environment, artifacts: Dict[str, Any], graph: Dict[str, Any]) -> None:
     flow = artifacts.get("flow", {})
     nodes = flow.get("user_flow", []) or []
-    lines: List[str] = []
-    lines.append("# User Flow\n")
-    lines.append("| Узел | Тип | Исходящие | Аналитика | Refs |")
-    lines.append("|---|---|---:|---|---|")
+    rows: List[Dict[str, Any]] = []
     for n in nodes:
         nid = n.get("id"); ntype = n.get("type", "node")
-        if not nid: continue
+        if not nid: 
+            continue
         outc = len(n.get("edges", []) or [])
-        analytics = ", ".join(n.get("analytics", []) or n.get("telemetry", []) or []) or "—"
-        refs_prd = [p.split(":",1)[1] for p in _connected(graph, f"flow:node:{nid}", "prd:")]
-        refs_cjm = [c.split(":",1)[1] for c in _connected(graph, f"flow:node:{nid}", "cjm:")]
-        refs = []
-        if refs_prd:
-            refs.append("PRD: " + ", ".join(f"[{p}](../prd/{slugify(p)}.md)" for p in refs_prd))
-        if refs_cjm:
-            refs.append("CJM: " + ", ".join(f"[{c}](../cjm/{slugify(c)}.md)" for c in refs_cjm))
-        ref_cell = "; ".join(refs) or "—"
-        lines.append(f"| [{nid}]({ 'nodes/'+slugify(nid)+'.md' }) | {ntype} | {outc} | {analytics} | {ref_cell} |")
-    write_file(DOCS_DIR/"flow"/"index.md", "\n".join(lines)+"\n")
+        prd_ids = [p.split(":",1)[1] for p in _connected(graph, f"flow:node:{nid}", "prd:")]
+        cjm_ids = [c.split(":",1)[1] for c in _connected(graph, f"flow:node:{nid}", "cjm:")]
+        story_ids = [s.split(":",1)[1] for s in _connected(graph, f"flow:node:{nid}", "story:")]
+        ctx_ids = [x.split(":",2)[2] for x in _connected(graph, f"flow:node:{nid}", "ctxux:screen:")]
+        TH = 20
+        if len(prd_ids) > TH:
+            prd_html = f"{TH} из {len(prd_ids)}"
+        else:
+            prd_html = (", ".join(f"<a href=\"../prd/{slugify(p)}.md\">{p}</a>" for p in prd_ids[:5])) or "—"
+        if len(cjm_ids) > TH:
+            cjm_html = f"{TH} из {len(cjm_ids)}"
+        else:
+            cjm_html = (", ".join(f"<a href=\"../cjm/{slugify(c)}.md\">{c}</a>" for c in cjm_ids[:5])) or "—"
+        rows.append({
+            "row_id": f"row-{slugify(nid)}",
+            "data": {
+                "prd": " ".join(slugify(p) for p in prd_ids),
+                "cjm": " ".join(slugify(c) for c in cjm_ids),
+                "stories": " ".join(slugify(s) for s in story_ids),
+                "ctxux": " ".join(slugify(x) for x in ctx_ids),
+            },
+            "cells": [
+                f"<a href=\"nodes/{slugify(nid)}.md\">{nid}</a>",
+                ntype,
+                prd_html,
+                cjm_html,
+                str(len(story_ids)),
+            ],
+            "titles": {2: ", ".join(prd_ids), 3: ", ".join(cjm_ids)}
+        })
+    columns = [
+        {"title": "Узел", "type": "text"},
+        {"title": "Тип", "type": "text"},
+        {"title": "PRD", "type": "text"},
+        {"title": "CJM", "type": "text"},
+        {"title": "Stories", "type": "number"},
+    ]
+    tmpl = env.get_template("index_table.md.j2")
+    html = tmpl.render(page_title="User Flow", table_id="tbl-flow", columns=columns, rows=rows, search_placeholder="Поиск узлов…")
+    write_file(DOCS_DIR/"flow"/"index.md", html)
 
-def render_ctxux_index(artifacts: Dict[str, Any], graph: Dict[str, Any]) -> None:
+def render_ctxux_index(env: Environment, artifacts: Dict[str, Any], graph: Dict[str, Any]) -> None:
     ctx = artifacts.get("ctxux", {})
     screens = ctx.get("screens", []) or []
-    lines: List[str] = []
-    lines.append("# Contextual UX\n")
-    lines.append("| Экран | Local principles | Telemetry | Flow |")
-    lines.append("|---|---:|---|---|")
-    # Aggregate story->screens for anchors
+    rows: List[Dict[str, Any]] = []
     by_story: Dict[str, List[str]] = {}
     for s in screens:
-        sid = s.get("id"); 
-        if not sid: continue
-        lcount = len(s.get("local_principles", []) or [])
-        telemetry = ", ".join(s.get("telemetry", []) or []) or "—"
+        sid = s.get("id");
+        if not sid: 
+            continue
+        lp = s.get("local_principles", []) or []
         flow_nodes = [n.split(":",2)[2] for n in _connected(graph, f"ctxux:screen:{sid}", "flow:node:")]
-        flow_cell = ", ".join(f"[`{n}`](../flow/nodes/{slugify(n)}.md)" for n in flow_nodes) or "—"
-        lines.append(f"| [{sid}]({slugify(sid)}.md) | {lcount} | {telemetry} | {flow_cell} |")
-        # collect story links for anchor section
+        story_ids = [n.split(":",1)[1] for n in _connected(graph, f"ctxux:screen:{sid}", "story:")]
+        rows.append({
+            "row_id": f"row-{slugify(sid)}",
+            "data": {
+                "principles": " ".join(slugify(p.get('id') if isinstance(p, dict) else str(p)) for p in lp[:10]),
+                "flow": " ".join(slugify(f) for f in flow_nodes),
+                "stories": " ".join(slugify(st) for st in story_ids),
+            },
+            "cells": [
+                f"<a href=\"{slugify(sid)}.md\">{sid}</a>",
+                str(len(lp)),
+                str(len(flow_nodes)),
+                str(len(story_ids)),
+            ],
+        })
+        # anchors by story
         for st in _connected(graph, f"ctxux:screen:{sid}", "story:"):
             story_id = st.split(":",1)[1]
             by_story.setdefault(story_id, []).append(sid)
-    # Anchors by story
-    if by_story:
-        lines.append("\n## По сториз\n")
-        for st, scrs in sorted(by_story.items()):
-            lines.append(f"<a id=\"by-story-{slugify(st)}\"></a>")
-            lines.append(f"### {st}")
-            for sc in sorted(scrs):
-                lines.append(f"- [{sc}](./{slugify(sc)}.md)")
-    write_file(DOCS_DIR/"ctxux"/"index.md", "\n".join(lines)+"\n")
+    columns = [
+        {"title": "Экран", "type": "text"},
+        {"title": "Local principles", "type": "number"},
+        {"title": "Flow", "type": "number"},
+        {"title": "Stories", "type": "number"},
+    ]
+    tmpl = env.get_template("index_table.md.j2")
+    html = tmpl.render(page_title="Contextual UX", table_id="tbl-ctxux", columns=columns, rows=rows, search_placeholder="Поиск экранов…", anchors_by_story=by_story)
+    write_file(DOCS_DIR/"ctxux"/"index.md", html)
 
-def render_hig_index(artifacts: Dict[str, Any], graph: Dict[str, Any]) -> None:
+def render_hig_index(env: Environment, artifacts: Dict[str, Any], graph: Dict[str, Any]) -> None:
     hig = artifacts.get("hig", {})
     stories = hig.get("stories", []) or []
-    lines: List[str] = []
-    lines.append("# HIG Patterns\n")
-    lines.append("| Story | Паттерны | Recommendation | Ссылки |")
-    lines.append("|---|---:|---|---|")
+    rows: List[Dict[str, Any]] = []
     for s in stories:
         sid = s.get("story_id")
-        if not sid: continue
+        if not sid: 
+            continue
         cand = s.get("candidates", []) or []
-        rec = (s.get("recommendation", {}) or {}).get("pattern_id", "—")
-        link = f"[страница]({slugify(sid)}.md)" if (DOCS_DIR/"hig"/f"{slugify(sid)}.md").exists() else "—"
-        lines.append(f"| {sid} | {len(cand)} | {rec} | {link} |")
-    write_file(DOCS_DIR/"hig"/"index.md", "\n".join(lines)+"\n")
+        selected = bool((s.get("recommendation", {}) or {}).get("pattern_id"))
+        # gather principles from candidates
+        principles: List[str] = []
+        for c in cand:
+            for p in (c.get("swiftui_primitives") or []):
+                pass
+        # If domain provides a specific principles list, use it; else compute from candidates fields if available
+        principles = sorted({p for c in cand for p in (c.get("principles", []) or [])}) if any((c.get("principles") for c in cand)) else []
+        rows.append({
+            "row_id": f"row-{slugify(sid)}",
+            "data": {
+                "candidates": str(len(cand)),
+                "selected": "true" if selected else "false",
+                "principles": " ".join(slugify(p) for p in principles[:10]),
+                "story": slugify(sid),
+            },
+            "cells": [
+                f"<a href=\"{slugify(sid)}.md\">{sid}</a>",
+                str(len(cand)),
+                "true" if selected else "false",
+                str(len(principles)) if principles else "—",
+            ],
+        })
+    columns = [
+        {"title": "Story", "type": "text"},
+        {"title": "Candidates", "type": "number"},
+        {"title": "Selected?", "type": "text"},
+        {"title": "Principles", "type": "number"},
+    ]
+    tmpl = env.get_template("index_table.md.j2")
+    html = tmpl.render(page_title="HIG Patterns", table_id="tbl-hig", columns=columns, rows=rows, search_placeholder="Поиск HIG…")
+    write_file(DOCS_DIR/"hig"/"index.md", html)
 
-def render_ux_index(artifacts: Dict[str, Any], graph: Dict[str, Any]) -> None:
+def render_ux_index(env: Environment, artifacts: Dict[str, Any], graph: Dict[str, Any]) -> None:
     ux = artifacts.get("ux", {})
     principles = ux.get("principles", []) or ux.get("global_principles", []) or []
-    lines: List[str] = []
-    lines.append("# Global UX Principles\n")
-    lines.append("| ID | Title | Examples | Ссылки |")
-    lines.append("|---|---|---:|---|")
+    rows: List[Dict[str, Any]] = []
     for p in principles:
         pid = p.get("id") or p.get("principle_id")
-        if not pid: continue
+        if not pid: 
+            continue
         title = p.get("title", "")
         ex_count = len(p.get("examples", []) or [])
-        link = f"[страница]({slugify(pid)}.md)"
-        lines.append(f"| {pid} | {title} | {ex_count} | {link} |")
-    write_file(DOCS_DIR/"ux"/"index.md", "\n".join(lines)+"\n")
+        ux_nid = f"ux:principle:{pid}"
+        story_ids = [n.split(":",1)[1] for n in _connected(graph, ux_nid, "story:")]
+        ctx_ids = [n.split(":",2)[2] for n in _connected(graph, ux_nid, "ctxux:screen:")]
+        rows.append({
+            "row_id": f"row-{slugify(pid)}",
+            "data": {
+                "antipatterns": str(len(p.get("antipatterns", []) or [])),
+                "stories": " ".join(slugify(s) for s in story_ids),
+                "ctxux": " ".join(slugify(c) for c in ctx_ids),
+            },
+            "cells": [
+                f"<a href=\"{slugify(pid)}.md\">{pid}</a>",
+                title,
+                str(len(p.get("antipatterns", []) or [])) or "—",
+                str(len(story_ids)) or "0",
+                str(len(ctx_ids)) or "0",
+            ],
+        })
+    columns = [
+        {"title": "ID", "type": "text"},
+        {"title": "Title", "type": "text"},
+        {"title": "Antipatterns", "type": "number"},
+        {"title": "Stories", "type": "number"},
+        {"title": "CtxUX", "type": "number"},
+    ]
+    tmpl = env.get_template("index_table.md.j2")
+    html = tmpl.render(page_title="Global UX Principles", table_id="tbl-ux", columns=columns, rows=rows, search_placeholder="Поиск UX…")
+    write_file(DOCS_DIR/"ux"/"index.md", html)
 
 
 def main() -> int:
@@ -960,12 +1158,12 @@ def main() -> int:
 
     # Index pages
     try:
-        render_stories_index(artifacts, graph)
-        render_prd_index(artifacts, graph)
-        render_flow_index(artifacts, graph)
-        render_ctxux_index(artifacts, graph)
-        render_hig_index(artifacts, graph)
-        render_ux_index(artifacts, graph)
+        render_stories_index(env, artifacts, graph)
+        render_prd_index(env, artifacts, graph)
+        render_flow_index(env, artifacts, graph)
+        render_ctxux_index(env, artifacts, graph)
+        render_hig_index(env, artifacts, graph)
+        render_ux_index(env, artifacts, graph)
     except Exception as e:
         print(f"[WARN] indexes generation failed: {e}")
 

@@ -1,0 +1,38 @@
+# {{ page_title }}
+
+<div class="table-toolbar" data-table-id="{{ table_id }}">
+  <input id="filter-{{ table_id }}" type="search" placeholder="{{ search_placeholder or 'Поиск…' }}" aria-label="Search in table {{ page_title }}" />
+  <button id="clear-{{ table_id }}" class="btn-clear" type="button" title="Clear filters">Clear filters</button>
+  <button id="copy-{{ table_id }}" class="btn-export" type="button" title="Copy filter link">Copy filter link</button>
+  <button id="export-{{ table_id }}" class="btn-export" type="button" title="Export visible rows to CSV">Export CSV</button>
+  <div class="sr-only" aria-live="polite" id="live-{{ table_id }}"></div>
+</div>
+
+<table id="{{ table_id }}" class="spechub-table" data-table>
+  <thead>
+    <tr>
+    {% for col in columns %}
+      <th scope="col" data-type="{{ col.type or 'text' }}" tabindex="0" role="columnheader" aria-sort="none" title="Enter/Space — sort">{{ col.title }}</th>
+    {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+  {% for row in rows %}
+    <tr id="{{ row.row_id }}"{% for k, v in (row.data or {}).items() %} data-{{ k }}="{{ v }}"{% endfor %}>
+      {% for cell in row.cells %}
+      <td{% if row.titles and (loop.index0 in row.titles) %} title="{{ row.titles[loop.index0] }}"{% endif %}>{{ cell | safe }}</td>
+      {% endfor %}
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+{% if anchors_by_story %}
+## По сториз
+{% for st, scrs in anchors_by_story.items() %}
+<a id="by-story-{{ st | slugify }}"></a>
+### {{ st }}
+{% for sc in scrs %}- [{{ sc }}](./{{ sc | slugify }}.md)
+{% endfor %}
+{% endfor %}
+{% endif %}

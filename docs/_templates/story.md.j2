@@ -16,6 +16,17 @@
 
 {% if xlinks %}
 ## Related
+<p>
+  {% if xlinks.flow and xlinks.flow|length %}
+  <span class="chip"><a href="../stories/index.md#?flow={% for c in xlinks.flow %}{{ c.label | slugify }}{% if not loop.last %},{% endif %}{% endfor %}">Flow nodes ({{ xlinks.flow|length }})</a></span>
+  {% endif %}
+  {% if xlinks.prd and xlinks.prd|length %}
+  <span class="chip"><a href="../stories/index.md#?prd={% for c in xlinks.prd %}{{ c.label | slugify }}{% if not loop.last %},{% endif %}{% endfor %}">PRD ({{ xlinks.prd|length }})</a></span>
+  {% endif %}
+  {% if xlinks.ctxux and xlinks.ctxux|length %}
+  <span class="chip"><a href="../stories/index.md#?ctxux={% for c in xlinks.ctxux %}{{ c.label | slugify }}{% if not loop.last %},{% endif %}{% endfor %}">CtxUX ({{ xlinks.ctxux|length }})</a></span>
+  {% endif %}
+</p>
 {% if xlinks.prd and xlinks.prd|length %}
 PRD:
 {% for c in xlinks.prd %}<span class="chip">{% if c.href %}[{{ c.label }}]({{ c.href }}){% else %}{{ c.label }}{% endif %}</span>{% endfor %}

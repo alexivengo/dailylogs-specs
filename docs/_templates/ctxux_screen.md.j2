@@ -17,6 +17,14 @@
 
 {% if xlinks %}
 ## Related
+<p>
+  {% if xlinks.stories and xlinks.stories|length %}
+  <span class="chip"><a href="../stories/index.md#?ctxux={{ screen.id | slugify }}">Stories ({{ xlinks.stories|length }})</a></span>
+  {% endif %}
+  {% if xlinks.flow and xlinks.flow|length %}
+  <span class="chip"><a href="../flow/index.md#?ctxux={{ screen.id | slugify }}">Flow ({{ xlinks.flow|length }})</a></span>
+  {% endif %}
+</p>
 {% if xlinks.flow and xlinks.flow|length %}
 Flow nodes:
 {% for c in xlinks.flow %}<span class="chip">{% if c.href %}[`{{ c.label }}`]({{ c.href }}){% else %}`{{ c.label }}`{% endif %}</span>{% endfor %}
