@@ -5,6 +5,18 @@
   <button id="clear-{{ table_id }}" class="btn-clear" type="button" title="Clear filters">Clear filters</button>
   <button id="copy-{{ table_id }}" class="btn-export" type="button" title="Copy filter link">Copy filter link</button>
   <button id="export-{{ table_id }}" class="btn-export" type="button" title="Export visible rows to CSV">Export CSV</button>
+  <button id="export-json-{{ table_id }}" class="btn-export" type="button" title="Export visible rows to JSON">Export JSON</button>
+  <div class="column-visibility" data-column-menu="{{ table_id }}">
+    <button class="btn-columns" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="columns-{{ table_id }}">Columns</button>
+    <div class="column-visibility-menu" id="columns-{{ table_id }}" role="menu" hidden>
+    {% for col in columns %}
+      <label class="column-visibility-option" role="menuitemcheckbox" aria-checked="true">
+        <input type="checkbox" data-col-index="{{ loop.index0 }}"{% if col.locked or loop.first %} checked disabled data-locked="true"{% else %} checked{% endif %} />
+        <span>{{ col.title }}</span>
+      </label>
+    {% endfor %}
+    </div>
+  </div>
   <div class="sr-only" aria-live="polite" id="live-{{ table_id }}"></div>
 </div>
 
@@ -12,7 +24,7 @@
   <thead>
     <tr>
     {% for col in columns %}
-      <th scope="col" data-type="{{ col.type or 'text' }}" tabindex="0" role="columnheader" aria-sort="none" title="Enter/Space — sort">{{ col.title }}</th>
+      <th scope="col" data-type="{{ col.type or 'text' }}" data-col-index="{{ loop.index0 }}" tabindex="0" role="columnheader" aria-sort="none" title="Enter/Space — sort">{{ col.title }}</th>
     {% endfor %}
     </tr>
   </thead>
